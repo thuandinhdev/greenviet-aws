@@ -6266,7 +6266,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var HeaderComponent = /** @class */ (function () {
-    function HeaderComponent(translate, toastr, router, authenticationService, helperService, notificationService, 
+    function HeaderComponent(translate, toastr, router, authenticationService, helperService, notificationService,
     // private mailService: MailService,
     translationService, userService) {
         var _this = this;
@@ -10079,7 +10079,7 @@ var environment;
 environment = {
     production: false,
     // apiUrl: 'http://127.0.0.1'
-    apiUrl: 'http://127.0.0.1/gv-developer/laravel/public'
+    apiUrl: 'https://greenviet.cuortech.com'
     // apiUrl: 'https://greenviet.azurewebsites.net'
     // apiUrl: 'http://chetsapp.de:8899'
 };
