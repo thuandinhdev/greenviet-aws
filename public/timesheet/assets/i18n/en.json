@@ -1,5 +1,6 @@
 {
 	"Activate Account": "Activate Account",
+	"status": "Status",
 	"Administration": "Administration",
 	"Announcement": "Announcement",
 	"Announcements": "Announcements",
@@ -3235,7 +3236,7 @@
 			"creator": "Creator",
 			"end": "End",
 			"end_date": "End Date",
-			"hours": "Hours",
+			"hours": "Actual Hours",
 			"id": "ID",
 			"planned_end": "Planned End",
 			"planned_start": "Planned Start",

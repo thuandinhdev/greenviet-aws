@@ -1363,21 +1363,30 @@ class TaskRepository
     public function getTasksForCalendar()
     {
         $user = Auth::user();
-        $tasks = Task::with(
+        $setting = Setting::select(
+            [
+            'allowed_for_all_task', 'working_hours', 'ot_rate'
+            ]
+        )->first();
+        $querys = Task::with(
             [
             'assignUser' => function ($query) {
                 $query->select('id', 'firstname', 'lastname', 'avatar');
             },
             ]
-        )->join('gv_projects', 'gv_projects.id', '=', 'gv_tasks.project_id')
-            ->where(
+        )->join('gv_projects', 'gv_projects.id', '=', 'gv_tasks.project_id');
+        if($setting->allowed_for_all_task == 0){
+            $querys = $querys->where(
                 function ($query) use ($user) {
                     $query->where('gv_tasks.assign_to', $user->id)->orWhere('gv_tasks.created_by', $user->id);
                 }
-            )
-            ->whereNotIn('gv_tasks.status', [5, 6])
+            );
+        }
+
+            // ->whereNotIn('gv_tasks.status', [5, 6])
+            $tasks = $querys->where('gv_tasks.status', 2)
             ->orderBy('gv_tasks.created_at', 'DESC')
-            ->select('gv_tasks.*', 'gv_projects.project_name')
+            ->select('gv_tasks.*', 'gv_projects.project_name', DB::raw("CONCAT(gv_tasks.name, ' - ', gv_projects.project_name) as full_name"))
             ->get();
         return $tasks;
     }

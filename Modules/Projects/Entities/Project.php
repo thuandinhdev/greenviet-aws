@@ -54,6 +54,7 @@ class Project extends Model
         'end_date',
         'billing_type',
         'price_rate',
+        'cost',
         'estimated_hours',
         'status',
         'demo_url',

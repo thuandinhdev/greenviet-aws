@@ -2660,7 +2660,9 @@ var UserCreateComponent = /** @class */ (function () {
                 return;
             }
             else {
-                this.createUserForm.value.contract.salary = this.createUserForm.value.contract.salary.replace(/,/g, '');
+                if (typeof this.createUserForm.value.contract.salary === 'string') {
+                    this.createUserForm.value.contract.salary = this.createUserForm.value.contract.salary.replace(/,/g, '');
+                }
             }
         }
         this.createUserForm.value.emp_id = this.createUserForm.value.user_generated_id;
@@ -3259,7 +3261,9 @@ var UserEditComponent = /** @class */ (function () {
                 return;
             }
             else {
-                this.editUserForm.value.contract.salary = this.editUserForm.value.contract.salary.replace(/,/g, '');
+                if (typeof this.editUserForm.value.contract.salary === 'string') {
+                    this.editUserForm.value.contract.salary = this.editUserForm.value.contract.salary.replace(/,/g, '');
+                }
             }
         }
         this.editUserForm.value.UserAvatars = this.avatars;
@@ -3892,7 +3896,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_user_tasks_user_tasks_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./components/user-tasks/user-tasks.component */ "./src/app/modules/admin/user/components/user-tasks/user-tasks.component.ts");
 /* harmony import */ var _components_import_user_import_user_component__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./components/import-user/import-user.component */ "./src/app/modules/admin/user/components/import-user/import-user.component.ts");
 /* harmony import */ var _components_user_incidents_user_incidents_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./components/user-incidents/user-incidents.component */ "./src/app/modules/admin/user/components/user-incidents/user-incidents.component.ts");
-/* harmony import */ var _shared_directives_number_format_directive__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ../../../shared/directives/number-format.directive */ "./src/app/shared/directives/number-format.directive.ts");
 
 
 
@@ -3905,7 +3908,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 ;
-
 
 
 
@@ -3948,7 +3950,6 @@ var UserModule = /** @class */ (function () {
                 _components_user_tasks_user_tasks_component__WEBPACK_IMPORTED_MODULE_29__["UserTasksComponent"],
                 _components_import_user_import_user_component__WEBPACK_IMPORTED_MODULE_30__["ImportUserComponent"],
                 _components_user_incidents_user_incidents_component__WEBPACK_IMPORTED_MODULE_31__["UserIncidentsComponent"],
-                _shared_directives_number_format_directive__WEBPACK_IMPORTED_MODULE_32__["NumberFormatDirective"]
             ],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_3__["CommonModule"],
@@ -4002,68 +4003,6 @@ var UserModule = /** @class */ (function () {
 function HttpLoaderFactory(http) {
     return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_12__["TranslateHttpLoader"](http, '../assets/i18n/', '.json');
 }
-
-
-/***/ }),
-
-/***/ "./src/app/shared/directives/number-format.directive.ts":
-/*!**************************************************************!*\
-  !*** ./src/app/shared/directives/number-format.directive.ts ***!
-  \**************************************************************/
-/*! exports provided: NumberFormatDirective */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NumberFormatDirective", function() { return NumberFormatDirective; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-
-
-var NumberFormatDirective = /** @class */ (function () {
-    function NumberFormatDirective(el) {
-        this.el = el;
-    }
-    NumberFormatDirective.prototype.ngOnInit = function () {
-        this.formatInitialValue();
-    };
-    NumberFormatDirective.prototype.onInput = function (event) {
-        var inputElement = this.el.nativeElement;
-        var value = inputElement.value;
-        // Định dạng số với dấu phẩy khi người dùng nhập dữ liệu
-        inputElement.value = this.formatNumber(value);
-    };
-    NumberFormatDirective.prototype.formatNumber = function (value) {
-        // Loại bỏ các ký tự không phải số trước khi định dạng
-        value = value.replace(/[^0-9]/g, '');
-        // Thêm dấu phẩy vào vị trí hàng nghìn
-        return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    };
-    NumberFormatDirective.prototype.formatInitialValue = function () {
-        var inputElement = this.el.nativeElement;
-        var value = inputElement.value;
-        if (value) {
-            inputElement.value = this.formatNumber(value);
-        }
-    };
-    NumberFormatDirective.ctorParameters = function () { return [
-        { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"] }
-    ]; };
-    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostListener"])('input', ['$event']),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", Function),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [Event]),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:returntype", void 0)
-    ], NumberFormatDirective.prototype, "onInput", null);
-    NumberFormatDirective = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"])({
-            selector: '[appNumberFormat]'
-        }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_1__["ElementRef"]])
-    ], NumberFormatDirective);
-    return NumberFormatDirective;
-}());
-
 
 
 /***/ })

@@ -23,7 +23,7 @@ class ConvertTaskRequest extends FormRequest
             'start_date' => 'nullable|date',
             'end_date' => 'nullable|date|after_or_equal:start_date',
             'status' => 'required',
-            'estimated_hours' => ['nullable', new EstimatedHours],
+            // 'estimated_hours' => ['nullable', new EstimatedHours],
         ];
 
         return $rules;

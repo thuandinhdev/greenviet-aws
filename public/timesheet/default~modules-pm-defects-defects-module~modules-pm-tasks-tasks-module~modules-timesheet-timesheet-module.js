@@ -48,7 +48,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<section class=\"hide_empty_message\">\n\t<div class=\"row\">\n\t\t<div class=\"col-sm-12\">\n\t\t\t<div class=\"card pl-2 pr-2\">\n\t\t\t\t<div class=\"card-header pl-0 pr-0 border-bottom\">\n\t\t\t\t\t<h4 class=\"main-title mt-2\"><span>{{'timesheet.title' | translate}}</span></h4>\n\t\t\t\t\t<!-- <div class=\"card-buttons\">\n\t\t\t\t\t\t<a *ngxPermissionsOnly=\"['admin', 'super_admin', 'holidays_view']\" class=\"btn btn-create mb-0\" [routerLink]=\"['/holidays']\" placement=\"top\" tooltip=\"{{'holidays.title' | translate}}\"><i class=\"fa fa-tree\"></i></a>\n\t\t\t\t\t\t<a *ngxPermissionsOnly=\"['admin', 'super_admin', 'reports_view']\" [routerLink]=\"['/timesheet/all']\" class=\"btn btn-create mb-0\" tooltip=\"{{'timesheet.title2' | translate}}\"><i class=\"fa fa-clock-o\"></i></a>\n\t\t\t\t\t\t<a class=\"btn btn-create mb-0\" *ngxPermissionsOnly=\"['admin', 'super_admin', 'timesheet_create']\" (click)=\"openTimesheetCreateModal()\" placement=\"top\" tooltip=\"{{'common.add' | translate}}\"><i class=\"fa fa-plus\"></i></a>\n\t\t\t\t\t</div> -->\n\t\t\t\t</div>\n\t\t\t\t<!-- Card content -->\n\t\t\t\t<div class=\"card-content pt-3 pb-3\">\n\t\t\t\t\t<!-- Card body -->\n\t\t\t\t\t<div class=\"card-body\">\n\t\t\t\t\t\t<!-- Filter buttons -->\n                        <div class=\"row d-flex\" *ngIf=\"isPageLoaded\">\n                            <div class=\"col-md-6 d-flex mb-lg-0 mb-2 ml-lg-0 ml-4\">\n                                <div class=\"btn calender-day\" (click)=\"preWeek()\">\n                                    <i class=\"calendar-icon fa fa-chevron-left\"></i>\n                                </div>\n                                <div class=\"ml-2\">\n                                    <a class=\"btn btn-create mb-0\" (bsValueChange)=\"changeDate($event)\" #dp1=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" ><i class=\"fa fa-calendar-plus-o\"></i></a>\n                                </div>\n                                <div class=\"mr-2\">\n                                   <input type=\"text\" class=\"form-control\" [(ngModel)]=\"startEndWeek\" readonly />\n                                </div>\n                                <div class=\"btn calender-day\" (click)=\"nextWeek()\"  *ngIf=\"endOfWeek <= currentDate\">\n                                    <i class=\"calendar-icon fa fa-chevron-right\"></i>\n                                </div>\n                            </div>\n                            <div class=\"col-sm-3\">\n                                <form [formGroup]=\"timesheetFilterForm\" (ngSubmit)=\"onSubmit()\">\n                                    <div class=\"form-group\">\n                                        <label for=\"client_id\" class=\"sr-only\"></label>\n                                        <ng-select [searchable]=\"true\"\n                                            [items]=\"users\"\n                                            [selectOnTab]=\"true\"\n                                            [multiple]=\"false\"\n                                            [selectableGroup]=\"false\"\n                                            bindLabel=\"firstname\"\n                                            bindValue=\"id\"\n                                            labelForId=\"user_id\"\n                                            formControlName=\"user_id\"\n                                            placeholder=\"{{'timesheet.filter.placeholders.placeholder5' | translate }}\"\n                                            (change)=\"changeUser($event)\">\n                                            <ng-template ng-option-tmp let-item=\"item\">\n                                                {{item.firstname}} {{item.lastname}}\n                                            </ng-template>\n                                        </ng-select>\n                                    </div>\n                                </form>\n                            </div>\n                            <div class=\"col text-right btn_apply\">\n                                <a class=\"btn btn-create mb-0\" (click)=\"approvedTimeSheet()\" *ngIf=\"department['department_name'] == 'Administration' || department['department_name'] == 'HR' || (department['department_name'] == 'Project' && department['role_name'] == 'Manager' && users_id != 'my')\">Approved</a>\n                                <!-- <a class=\"btn btn-create mb-0\" (click)=\"disApprovedTimeSheet()\" *ngIf=\"department['department_name'] == 'Administration' || department['department_name'] == 'HR' || (department['department_name'] == 'Project' && department['role_name'] == 'Manager' && users_id != 'my')\">Disapprove All</a> -->\n                                <a class=\"btn btn-create mb-0\" (click)=\"saveTimeSheet()\" *ngIf=\"users_id == 'my'\">Save</a>\n                            </div>\n                        </div>\n\t\t\t\t\t\t<!-- Timesheet list datatable -->\n\t\t\t\t\t\t<div class=\"row\">\n\t\t\t\t\t\t\t<div class=\"col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl\">\n\t\t\t\t\t\t\t\t\t<table datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\" class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"timesheets_table\">\n\t\t\t\t\t\t\t\t\t\t<thead>\n\t\t\t\t\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t\t\t\t\t<th>{{'Projects' | translate}} - {{'Tasks' | translate}}</th>\n\t\t\t\t\t\t\t\t\t\t\t\t<th *ngFor=\"let day of weekdays\"><div *ngIf=\"timesheets[0]\">{{timesheets[0][day].date}}</div>{{day}}</th>\n\t\t\t\t\t\t\t\t\t\t\t\t<th>{{'common.action' | translate}}</th>\n\t\t\t\t\t\t\t\t\t\t\t\t<th>{{'common.total' | translate}}</th>\n\t\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\t\t</thead>\n\t\t\t\t\t\t\t\t\t\t<tbody *ngIf=\"timesheets?.length > 0\">\n\t\t\t\t\t\t\t\t\t\t\t<tr *ngFor=\"let timesheet of timesheets; index as i;\">\n\t\t\t\t\t\t\t\t\t\t\t\t<td class=\"timesheet_task_{{i}}\">\n                                                    <ng-select\n                                                        [items]=\"tasks\"\n                                                        [selectOnTab]=\"true\"\n                                                        [multiple]=\"false\"\n                                                        [selectableGroup]=\"false\"\n                                                        bindValue=\"id\"\n                                                        labelForId=\"task_id\"\n                                                        [(ngModel)]=\"timesheet.task_id\"\n                                                        placeholder=\"{{'timesheet.filter.placeholders.placeholder1' | translate }}{{'Tasks' | translate}} --\"\n                                                        >\n                                                        <ng-template ng-label-tmp let-item=\"item\">{{ item.project_name }} - {{ item.name }}</ng-template>\n                                                        <ng-template ng-option-tmp let-item=\"item\">{{item.project_name}} - {{ item.name }}</ng-template>\n                                                    </ng-select>\n\t\t\t\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t\t\t\t<td *ngFor=\"let day of weekdays\">\n                                                    <input type=\"number\" class=\"success-input\" (change)=\"changeTimeSheet()\" [(ngModel)]=\"timesheet[day].hours\" placeholder=\"{{'common.hours' | translate}}\" style=\"width: 100px;\"  [ngClass]=\"{'error-input':timesheet_total[day].hours > working_hours, 'empty-input': timesheet[day].hours === 0 || timesheet[day].hours === null || timesheet[day].hours === undefined || timesheet[day].hours === ''}\">\n                                                </td>\n\t\t\t\t\t\t\t\t\t\t\t\t<td style=\"display: inline-flex;\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<a class=\"btn btn-danger btn-delete btn-raised\" (click)=\"removeRow(i)\" tooltip=\"{{'common.delete' | translate}}\"><i class=\"fa fa-trash-o\"></i></a>\n\n                                                    <a *ngIf=\"timesheets?.length-1 == i\" class=\"btn btn-create mb-0\" (click)=\"addRow()\" placement=\"top\" tooltip=\"{{'common.add' | translate}}\"><i class=\"fa fa-plus\"></i></a>\n\t\t\t\t\t\t\t\t\t\t\t\t</td>\n                                                <td style=\"background-color: rgb(119 118 114 / 11%);\">\n                                                    {{timesheet.total}}h\n                                                </td>\n\t\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\t\t</tbody>\n                                        <tbody *ngIf=\"timesheets?.length != 0\">\n\t\t\t\t\t\t\t\t\t\t\t<tr style=\"background-color: rgb(119 118 114 / 11%);\">\n\t\t\t\t\t\t\t\t\t\t\t\t<td><b>{{'common.total' | translate}}</b></td>\n                                                <td *ngFor=\"let day of weekdays\" [ngClass]=\"{'error-input':timesheet_total[day].hours > working_hours}\">\n                                                    {{timesheet_total[day].hours}}h\n                                                </td>\n                                                <td></td>\n                                                <td>{{timesheet_total.total}}h</td>\n\t\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t\t\t\t\t<td colspan=\"9\" style=\"background-color: rgba(160, 136, 0, 0.11);text-align: center;\"><b>OT</b> </td>\n                                                <td style=\"background-color: rgb(119 118 114 / 11%);\"></td>\n\t\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\t\t</tbody>\n\t\t\t\t\t\t\t\t\t\t<tbody *ngIf=\"timesheets_ot?.length > 0\">\n\t\t\t\t\t\t\t\t\t\t\t<tr *ngFor=\"let timesheet_ot of timesheets_ot; index as i\">\n\t\t\t\t\t\t\t\t\t\t\t\t<td  class=\"timesheet_ot_task_{{i}}\"  style=\"background-color: rgba(160, 136, 0, 0.11);\">\n                                                    <ng-select\n                                                        [items]=\"tasks\"\n                                                        [selectOnTab]=\"true\"\n                                                        [multiple]=\"false\"\n                                                        [selectableGroup]=\"false\"\n                                                        bindValue=\"id\"\n                                                        labelForId=\"task_id\"\n                                                        [(ngModel)]=\"timesheet_ot.task_id\"\n                                                        placeholder=\"{{'timesheet.filter.placeholders.placeholder1' | translate }}{{'Tasks' | translate}} --\"\n                                                        >\n                                                        <ng-template ng-label-tmp let-item=\"item\">{{ item.project_name }} - {{ item.name }}</ng-template>\n                                                        <ng-template ng-option-tmp let-item=\"item\">{{item.project_name}} - {{ item.name }}</ng-template>\n                                                    </ng-select>\n\t\t\t\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t\t\t\t<td *ngFor=\"let day of weekdays\"  style=\"background-color: rgba(160, 136, 0, 0.11);\">\n                                                    <input type=\"number\" class=\"success-input\" (change)=\"changeTimeSheet()\" [(ngModel)]=\"timesheet_ot[day].hours\" placeholder=\"{{'common.hours' | translate}}\" style=\"width: 100px;\" [ngClass]=\"{'error-input':timesheet_total[day].hours < working_hours && timesheet_ot[day].hours > 0, 'empty-input': timesheet_ot[day].hours === 0 || timesheet_ot[day].hours === null || timesheet_ot[day].hours === undefined || timesheet_ot[day].hours === ''}\">\n                                                </td>\n\t\t\t\t\t\t\t\t\t\t\t\t<td style=\"display: inline-flex;\"  style=\"background-color: rgba(160, 136, 0, 0.11);\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<a class=\"btn btn-danger btn-delete btn-raised\" (click)=\"removeRowOT(i)\" tooltip=\"{{'common.delete' | translate}}\"><i class=\"fa fa-trash-o\"></i></a>\n                                                    <a *ngIf=\"timesheets_ot?.length-1 == i\" class=\"btn btn-create mb-0\" (click)=\"addRowOT()\" placement=\"top\" tooltip=\"{{'common.add' | translate}}\"><i class=\"fa fa-plus\"></i></a>\n\t\t\t\t\t\t\t\t\t\t\t\t</td>\n                                                <td style=\"background-color: rgb(119 118 114 / 11%);\">{{timesheet_ot.total}}h</td>\n\t\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\t\t</tbody>\n                                        <tbody *ngIf=\"timesheets_ot?.length != 0\">\n\t\t\t\t\t\t\t\t\t\t\t<tr style=\"background-color: rgb(119 118 114 / 11%);\">\n\t\t\t\t\t\t\t\t\t\t\t\t<td><b>{{'common.total' | translate}}</b></td>\n                                                <td *ngFor=\"let day of weekdays\" [ngClass]=\"{'error-input':timesheet_total[day].hours < working_hours && timesheet_ot_total[day].hours > 0}\">\n                                                    {{timesheet_ot_total[day].hours}}h\n                                                </td>\n                                                <td></td>\n                                                <td>{{timesheet_ot_total.total}}h</td>\n\t\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\t\t</tbody>\n\t\t\t\t\t\t\t\t\t\t<tfoot class=\"tfoot_dt d-none\">\n\t\t\t\t\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t\t\t\t\t<td colspan=\"10\" class=\"no-data-available text-center\">{{'common.datatable.sEmptyTable' | translate}}</td>\n\t\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\t\t</tfoot>\n\t\t\t\t\t\t\t\t\t</table>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</section>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<section class=\"hide_empty_message\">\n\t<div class=\"row\">\n\t\t<div class=\"col-sm-12\">\n\t\t\t<div class=\"card pl-2 pr-2\">\n\t\t\t\t<div class=\"card-header pl-0 pr-0 border-bottom\">\n\t\t\t\t\t<h4 class=\"main-title mt-2\"><span>{{'timesheet.title' | translate}}</span></h4>\n\t\t\t\t\t<!-- <div class=\"card-buttons\">\n\t\t\t\t\t\t<a *ngxPermissionsOnly=\"['admin', 'super_admin', 'holidays_view']\" class=\"btn btn-create mb-0\" [routerLink]=\"['/holidays']\" placement=\"top\" tooltip=\"{{'holidays.title' | translate}}\"><i class=\"fa fa-tree\"></i></a>\n\t\t\t\t\t\t<a *ngxPermissionsOnly=\"['admin', 'super_admin', 'reports_view']\" [routerLink]=\"['/timesheet/all']\" class=\"btn btn-create mb-0\" tooltip=\"{{'timesheet.title2' | translate}}\"><i class=\"fa fa-clock-o\"></i></a>\n\t\t\t\t\t\t<a class=\"btn btn-create mb-0\" *ngxPermissionsOnly=\"['admin', 'super_admin', 'timesheet_create']\" (click)=\"openTimesheetCreateModal()\" placement=\"top\" tooltip=\"{{'common.add' | translate}}\"><i class=\"fa fa-plus\"></i></a>\n\t\t\t\t\t</div> -->\n\n                    <!-- <div class=\"col-md-6 d-flex mb-lg-0 mb-2 ml-lg-0 ml-4\"> -->\n                    <div class=\"card-buttons d-flex\" *ngIf=\"isPageLoaded\">\n                        <div class=\"btn calender-day\" (click)=\"preWeek()\">\n                            <i class=\"calendar-icon fa fa-chevron-left\"></i>\n                        </div>\n                        <div class=\"ml-2\">\n                            <a class=\"btn btn-create mb-0\" id=\"calendar-filter\" (bsValueChange)=\"changeDate($event)\" #dp1=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" ><i class=\"fa fa-calendar-plus-o\"></i></a>\n                        </div>\n                        <div class=\"mr-2\">\n                           <input type=\"text\" class=\"form-control\" [(ngModel)]=\"startEndWeek\" readonly />\n                        </div>\n                        <div class=\"btn calender-day\" (click)=\"nextWeek()\"  *ngIf=\"endOfWeek <= currentDate\">\n                            <i class=\"calendar-icon fa fa-chevron-right\"></i>\n                        </div>\n                    </div>\n\t\t\t\t</div>\n\t\t\t\t<!-- Card content -->\n\t\t\t\t<div class=\"card-content pt-3 pb-3\">\n\t\t\t\t\t<!-- Card body -->\n\t\t\t\t\t<div class=\"card-body\">\n                        <div class=\"row d-flex\" *ngIf=\"isPageLoaded\" style=\"height: 62px;\">\n                            <div class=\"col-sm-3\">\n                                <form [formGroup]=\"timesheetFilterForm\" (ngSubmit)=\"onSubmit()\">\n                                    <div class=\"form-group\">\n                                        <ng-select\n                                            *ngIf=\"department['department_name'] == 'Administration' || department['department_name'] == 'HR' || (department['department_name'] == 'Project' && department['role_name'] == 'Manager')\"\n                                            [searchable]=\"true\"\n                                            [items]=\"users\"\n                                            [selectOnTab]=\"true\"\n                                            [multiple]=\"false\"\n                                            [selectableGroup]=\"false\"\n                                            bindLabel=\"firstname\"\n                                            bindValue=\"id\"\n                                            labelForId=\"user_id\"\n                                            formControlName=\"user_id\"\n                                            placeholder=\"{{'timesheet.filter.placeholders.placeholder5' | translate }}\"\n                                            (change)=\"changeUser($event)\">\n                                            <ng-template ng-option-tmp let-item=\"item\">\n                                                {{item.firstname}} {{item.lastname}}\n                                            </ng-template>\n                                        </ng-select>\n                                    </div>\n                                </form>\n                            </div>\n\n                            <span class=\"card-title text-info\" *ngIf=\"actionWeek.status > 0 && actionWeek.approved1\"><b>Approved1: {{actionWeek.approved1}}</b></span>\n                            <span class=\"card-title text-success\" *ngIf=\"actionWeek.status > 1 && actionWeek.approved2\"><b> - Approved2: {{actionWeek.approved2}}</b></span>\n                            <span class=\"card-title text-danger\" *ngIf=\"actionWeek.status > 2\"><b> - Disapprove: {{actionWeek.dis_approved}}</b></span>\n\n                            <div class=\"col text-right btn_apply\">\n                                <a *ngIf=\"((actionWeek.status == 0) || (actionWeek.status == 1 && (department['department_name'] == 'Administration' || department['department_name'] == 'HR'))) && (department['department_name'] == 'Administration' || department['department_name'] == 'HR' || (department['department_name'] == 'Project' && department['role_name'] == 'Manager' && users_id != 'my'))\" class=\"btn btn-create mb-0\" style=\"background: #34a853 !important; color: #fff !important;\" (click)=\"approvedTimeSheet()\">Approved</a>\n                                <a *ngIf=\"(actionWeek.status == 1) && (department['department_name'] == 'Administration' || department['department_name'] == 'HR')\" class=\"btn btn-create mb-0 btn-danger\" (click)=\"disApprovedTimeSheet()\" >Disapprove All</a>\n                                <!--  || (department['department_name'] == 'Project' && department['role_name'] == 'Manager' && users_id != 'my') -->\n                                <a *ngIf=\"((actionWeek.status == 0 || actionWeek.status == 3) || actionWeek.status == 3) && users_id == 'my'\" class=\"btn btn-create mb-0 btn-raised\" style=\"background: #1cbcd8; color: #FFFFFF;\" (click)=\"saveTimeSheet()\" >Save</a>\n                            </div>\n                        </div>\n\t\t\t\t\t\t<!-- Timesheet list datatable -->\n\t\t\t\t\t\t<div class=\"row\">\n\t\t\t\t\t\t\t<div class=\"col-sm-12\">\n\t\t\t\t\t\t\t\t<div class=\"table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl\">\n\t\t\t\t\t\t\t\t\t<table datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\" class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"timesheets_table\">\n\t\t\t\t\t\t\t\t\t\t<thead>\n\t\t\t\t\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t\t\t\t\t<th>{{'Projects' | translate}} - {{'Tasks' | translate}}</th>\n\t\t\t\t\t\t\t\t\t\t\t\t<th *ngFor=\"let day of weekdays\"><div *ngIf=\"timesheets[0]\">{{timesheets[0][day].date}}</div>{{day}}</th>\n\t\t\t\t\t\t\t\t\t\t\t\t<th>{{'common.action' | translate}}</th>\n\t\t\t\t\t\t\t\t\t\t\t\t<th>{{'common.total' | translate}}</th>\n\t\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\t\t</thead>\n\t\t\t\t\t\t\t\t\t\t<tbody *ngIf=\"timesheets?.length > 0\">\n\t\t\t\t\t\t\t\t\t\t\t<tr *ngFor=\"let timesheet of timesheets; index as i;\">\n\t\t\t\t\t\t\t\t\t\t\t\t<td class=\"timesheet_task_{{i}}\">\n                                                    <ng-select\n                                                        [items]=\"tasks\"\n                                                        [selectOnTab]=\"true\"\n                                                        [multiple]=\"false\"\n                                                        [selectableGroup]=\"false\"\n                                                        bindValue=\"id\"\n                                                        labelForId=\"task_id\"\n                                                        [(ngModel)]=\"timesheet.task_id\"\n                                                        placeholder=\"{{'timesheet.filter.placeholders.placeholder1' | translate }}{{'Tasks' | translate}} --\"\n                                                        [disabled]=\"users_id !== 'my' || ((actionWeek.status != 0 && actionWeek.status != 3) && actionWeek.status != 3)\"\n                                                        >\n                                                        <ng-template ng-label-tmp let-item=\"item\">{{ item.full_name ? item.full_name : timesheet.full_name }}</ng-template>\n                                                        <ng-template ng-option-tmp let-item=\"item\">{{item.full_name}}</ng-template>\n                                                    </ng-select>\n\t\t\t\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t\t\t\t<td *ngFor=\"let day of weekdays\">\n                                                    <div *ngIf=\"users_id != 'my' || (actionWeek.status != 0 && actionWeek.status != 3)\">{{timesheet[day].hours}}</div>\n                                                    <input *ngIf=\"users_id == 'my' && (actionWeek.status == 0 || actionWeek.status == 3)\" type=\"number\" class=\"success-input\" (change)=\"changeTimeSheet()\" [(ngModel)]=\"timesheet[day].hours\" placeholder=\"{{'common.hours' | translate}}\" style=\"width: 100px;\"  [ngClass]=\"{'error-input':timesheet_total[day].hours > working_hours, 'empty-input': timesheet[day].hours === 0 || timesheet[day].hours === null || timesheet[day].hours === undefined || timesheet[day].hours === ''}\">\n                                                </td>\n\t\t\t\t\t\t\t\t\t\t\t\t<td>\n                                                    <div  style=\"display: inline-flex;\" *ngIf=\"users_id == 'my'\">\n                                                        <a *ngIf=\"(actionWeek.status == 0 || actionWeek.status == 3)\" class=\"btn btn-danger btn-delete btn-raised\" (click)=\"removeRow(i)\" tooltip=\"{{'common.delete' | translate}}\"><i class=\"fa fa-trash-o\"></i></a>\n                                                        <a *ngIf=\"(actionWeek.status == 0 || actionWeek.status == 3) && timesheets?.length-1 == i\" class=\"btn btn-create mb-0\" (click)=\"addRow()\" placement=\"top\" tooltip=\"{{'common.add' | translate}}\"><i class=\"fa fa-plus\"></i></a>\n                                                    </div>\n                                                </td>\n                                                <td style=\"background-color: rgb(119 118 114 / 11%);\">\n                                                    {{timesheet.total}}h\n                                                </td>\n\t\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\t\t</tbody>\n                                        <tbody *ngIf=\"timesheets?.length != 0\">\n\t\t\t\t\t\t\t\t\t\t\t<tr style=\"background-color: rgb(119 118 114 / 11%);\">\n\t\t\t\t\t\t\t\t\t\t\t\t<td><b>{{'common.total' | translate}}</b></td>\n                                                <td *ngFor=\"let day of weekdays\" [ngClass]=\"{'error-input':timesheet_total[day].hours > working_hours}\">\n                                                    {{timesheet_total[day].hours}}h\n                                                </td>\n                                                <td></td>\n                                                <td>{{timesheet_total.total}}h</td>\n\t\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t\t\t\t\t<td colspan=\"9\" style=\"background-color: rgba(160, 136, 0, 0.11);text-align: center;\"><b>OT</b> </td>\n                                                <td style=\"background-color: rgb(119 118 114 / 11%);\"></td>\n\t\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\t\t</tbody>\n\t\t\t\t\t\t\t\t\t\t<tbody *ngIf=\"timesheets?.length > 0\">\n\t\t\t\t\t\t\t\t\t\t\t<tr *ngFor=\"let timesheet_ot of timesheets_ot; index as i\">\n\t\t\t\t\t\t\t\t\t\t\t\t<td  class=\"timesheet_ot_task_{{i}} background-ot\">\n                                                    <ng-select\n                                                        [items]=\"tasks\"\n                                                        [selectOnTab]=\"true\"\n                                                        [multiple]=\"false\"\n                                                        [selectableGroup]=\"false\"\n                                                        bindValue=\"id\"\n                                                        labelForId=\"task_id\"\n                                                        [(ngModel)]=\"timesheet_ot.task_id\"\n                                                        placeholder=\"{{'timesheet.filter.placeholders.placeholder1' | translate }}{{'Tasks' | translate}} --\"\n                                                        [disabled]=\"users_id !== 'my' || (actionWeek.status != 0 && actionWeek.status != 3)\"\n                                                        >\n                                                        <ng-template ng-label-tmp let-item=\"item\">{{ item.full_name ? item.full_name : timesheet_ot.full_name }}</ng-template>\n                                                        <ng-template ng-option-tmp let-item=\"item\">{{item.project_name}} - {{ item.name }}</ng-template>\n                                                    </ng-select>\n\t\t\t\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t\t\t\t<td *ngFor=\"let day of weekdays\">\n                                                    <div *ngIf=\"users_id != 'my' || (actionWeek.status != 0 && actionWeek.status != 3)\">{{timesheet_ot[day].hours}}</div>\n                                                    <input *ngIf=\"users_id == 'my' && (actionWeek.status == 0 || actionWeek.status == 3)\" type=\"number\" class=\"success-input\" (change)=\"changeTimeSheet()\" [(ngModel)]=\"timesheet_ot[day].hours\" placeholder=\"{{'common.hours' | translate}}\" style=\"width: 100px;\" [ngClass]=\"{'error-input':timesheet_total[day].hours < working_hours && timesheet_ot[day].hours > 0, 'empty-input': timesheet_ot[day].hours === 0 || timesheet_ot[day].hours === null || timesheet_ot[day].hours === undefined || timesheet_ot[day].hours === ''}\">\n                                                </td>\n\t\t\t\t\t\t\t\t\t\t\t\t<td >\n                                                    <div  style=\"display: inline-flex;\" *ngIf=\"users_id == 'my'\">\n                                                        <a *ngIf=\"(actionWeek.status == 0 || actionWeek.status == 3)\" class=\"btn btn-danger btn-delete btn-raised\" (click)=\"removeRowOT(i)\" tooltip=\"{{'common.delete' | translate}}\"><i class=\"fa fa-trash-o\"></i></a>\n                                                        <a *ngIf=\"(actionWeek.status == 0 || actionWeek.status == 3) && timesheets_ot?.length-1 == i\" class=\"btn btn-create mb-0\" (click)=\"addRowOT()\" placement=\"top\" tooltip=\"{{'common.add' | translate}}\"><i class=\"fa fa-plus\"></i></a>\n                                                    </div>\n                                                </td>\n                                                <td style=\"background-color: rgb(119 118 114 / 11%);\">{{timesheet_ot.total}}h</td>\n\t\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\t\t</tbody>\n                                        <tbody *ngIf=\"timesheets?.length != 0\">\n\t\t\t\t\t\t\t\t\t\t\t<tr style=\"background-color: rgb(119 118 114 / 11%);\">\n\t\t\t\t\t\t\t\t\t\t\t\t<td><b>{{'common.total' | translate}}</b></td>\n                                                <td *ngFor=\"let day of weekdays\" [ngClass]=\"{'error-input':(timesheet_total[day].hours < working_hours && timesheet_ot_total[day].hours > 0) || (timesheet_total[day].hours+timesheet_ot_total[day].hours) > 24}\">\n                                                    {{timesheet_ot_total[day].hours}}h\n                                                </td>\n                                                <td></td>\n                                                <td>{{timesheet_ot_total.total}}h</td>\n\t\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\t\t</tbody>\n\t\t\t\t\t\t\t\t\t\t<tfoot class=\"tfoot_dt d-none\">\n\t\t\t\t\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t\t\t\t\t<td colspan=\"10\" class=\"no-data-available text-center\">{{'common.datatable.sEmptyTable' | translate}}</td>\n\t\t\t\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t\t\t</tfoot>\n\t\t\t\t\t\t\t\t\t</table>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</section>\n");
 
 /***/ }),
 
@@ -693,7 +693,7 @@ var TimesheetListComponent = /** @class */ (function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".hide_empty_message ::ng-deep .odd {\n  display: none;\n}\n\n.success-input {\n  background-color: #92eea9;\n}\n\n.empty-input {\n  background-color: #f0f0f0;\n}\n\n.error-input {\n  background-color: #cf5050;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW9kdWxlcy90aW1lc2hlZXQvcGFnZXMvbXktdGltZXNoZWV0L0M6XFx4YW1wcFxcaHRkb2NzXFxndi1kZXZlbG9wZXJcXGFuZ3VsYXIvc3JjXFxhcHBcXG1vZHVsZXNcXHRpbWVzaGVldFxccGFnZXNcXG15LXRpbWVzaGVldFxcbXktdGltZXNoZWV0LmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9tb2R1bGVzL3RpbWVzaGVldC9wYWdlcy9teS10aW1lc2hlZXQvbXktdGltZXNoZWV0LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksYUFBQTtBQ0NKOztBRENBO0VBQ0kseUJBQUE7QUNFSjs7QURBQTtFQUNJLHlCQUFBO0FDR0o7O0FEREE7RUFDSSx5QkFBQTtBQ0lKIiwiZmlsZSI6InNyYy9hcHAvbW9kdWxlcy90aW1lc2hlZXQvcGFnZXMvbXktdGltZXNoZWV0L215LXRpbWVzaGVldC5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5oaWRlX2VtcHR5X21lc3NhZ2UgOjpuZy1kZWVwIC5vZGQge1xuICAgIGRpc3BsYXk6IG5vbmVcbn1cbi5zdWNjZXNzLWlucHV0IHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjOTJlZWE5O1xufVxuLmVtcHR5LWlucHV0IHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZjBmMGYwO1xufVxuLmVycm9yLWlucHV0IHtcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjY2Y1MDUwO1xufVxuIiwiLmhpZGVfZW1wdHlfbWVzc2FnZSA6Om5nLWRlZXAgLm9kZCB7XG4gIGRpc3BsYXk6IG5vbmU7XG59XG5cbi5zdWNjZXNzLWlucHV0IHtcbiAgYmFja2dyb3VuZC1jb2xvcjogIzkyZWVhOTtcbn1cblxuLmVtcHR5LWlucHV0IHtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2YwZjBmMDtcbn1cblxuLmVycm9yLWlucHV0IHtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2NmNTA1MDtcbn0iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = (".hide_empty_message ::ng-deep .odd {\n  display: none;\n}\n\n.background-ot {\n  background-color: rgba(160, 136, 0, 0.11);\n}\n\n.success-input {\n  background-color: #92eea9;\n}\n\n.empty-input {\n  background-color: #f0f0f0;\n}\n\n.error-input {\n  background-color: #cf5050;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW9kdWxlcy90aW1lc2hlZXQvcGFnZXMvbXktdGltZXNoZWV0L0M6XFx4YW1wcFxcaHRkb2NzXFxndi1kZXZlbG9wZXJcXGFuZ3VsYXIvc3JjXFxhcHBcXG1vZHVsZXNcXHRpbWVzaGVldFxccGFnZXNcXG15LXRpbWVzaGVldFxcbXktdGltZXNoZWV0LmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9tb2R1bGVzL3RpbWVzaGVldC9wYWdlcy9teS10aW1lc2hlZXQvbXktdGltZXNoZWV0LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksYUFBQTtBQ0NKOztBRENBO0VBQ0kseUNBQUE7QUNFSjs7QURBQTtFQUNJLHlCQUFBO0FDR0o7O0FEREE7RUFDSSx5QkFBQTtBQ0lKOztBREZBO0VBQ0kseUJBQUE7QUNLSiIsImZpbGUiOiJzcmMvYXBwL21vZHVsZXMvdGltZXNoZWV0L3BhZ2VzL215LXRpbWVzaGVldC9teS10aW1lc2hlZXQuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuaGlkZV9lbXB0eV9tZXNzYWdlIDo6bmctZGVlcCAub2RkIHtcbiAgICBkaXNwbGF5OiBub25lXG59XG4uYmFja2dyb3VuZC1vdCB7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogcmdiYSgxNjAsIDEzNiwgMCwgMC4xMSk7XG59XG4uc3VjY2Vzcy1pbnB1dCB7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogIzkyZWVhOTtcbn1cbi5lbXB0eS1pbnB1dCB7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2YwZjBmMDtcbn1cbi5lcnJvci1pbnB1dCB7XG4gICAgYmFja2dyb3VuZC1jb2xvcjogI2NmNTA1MDtcbn1cbiIsIi5oaWRlX2VtcHR5X21lc3NhZ2UgOjpuZy1kZWVwIC5vZGQge1xuICBkaXNwbGF5OiBub25lO1xufVxuXG4uYmFja2dyb3VuZC1vdCB7XG4gIGJhY2tncm91bmQtY29sb3I6IHJnYmEoMTYwLCAxMzYsIDAsIDAuMTEpO1xufVxuXG4uc3VjY2Vzcy1pbnB1dCB7XG4gIGJhY2tncm91bmQtY29sb3I6ICM5MmVlYTk7XG59XG5cbi5lbXB0eS1pbnB1dCB7XG4gIGJhY2tncm91bmQtY29sb3I6ICNmMGYwZjA7XG59XG5cbi5lcnJvci1pbnB1dCB7XG4gIGJhY2tncm91bmQtY29sb3I6ICNjZjUwNTA7XG59Il19 */");
 
 /***/ }),
 
@@ -711,33 +711,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-bootstrap/modal */ "./node_modules/ngx-bootstrap/modal/fesm5/ngx-bootstrap-modal.js");
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-export-as */ "./node_modules/ngx-export-as/fesm2015/ngx-export-as.js");
-/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
-/* harmony import */ var ngx_permissions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-permissions */ "./node_modules/ngx-permissions/ngx-permissions.umd.js");
-/* harmony import */ var ngx_permissions__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(ngx_permissions__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
-/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/index.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(date_fns__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _core_services_timesheet_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../../core/services/timesheet.service */ "./src/app/core/services/timesheet.service.ts");
-/* harmony import */ var _core_services_project_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../../../core/services/project.service */ "./src/app/core/services/project.service.ts");
-/* harmony import */ var _core_services_client_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../../../core/services/client.service */ "./src/app/core/services/client.service.ts");
-/* harmony import */ var _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ../../../../core/services/authentication.service */ "./src/app/core/services/authentication.service.ts");
-/* harmony import */ var _core_services_task_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./../../../../core/services/task.service */ "./src/app/core/services/task.service.ts");
-/* harmony import */ var _components_create_timesheet_modal_create_timesheet_modal_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ../../components/create-timesheet-modal/create-timesheet-modal.component */ "./src/app/modules/timesheet/components/create-timesheet-modal/create-timesheet-modal.component.ts");
-/* harmony import */ var _components_edit_timesheet_modal_edit_timesheet_modal_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ../../components/edit-timesheet-modal/edit-timesheet-modal.component */ "./src/app/modules/timesheet/components/edit-timesheet-modal/edit-timesheet-modal.component.ts");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ../../../../../environments/environment */ "./src/environments/environment.ts");
-/* harmony import */ var ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ngx-bootstrap/chronos */ "./node_modules/ngx-bootstrap/chronos/fesm5/ngx-bootstrap-chronos.js");
-/* harmony import */ var ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ngx-bootstrap/locale */ "./node_modules/ngx-bootstrap/locale/fesm5/ngx-bootstrap-locale.js");
-/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
-/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(datatables_net__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
-/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(datatables_net_bs4__WEBPACK_IMPORTED_MODULE_25__);
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
+/* harmony import */ var ngx_permissions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-permissions */ "./node_modules/ngx-permissions/ngx-permissions.umd.js");
+/* harmony import */ var ngx_permissions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(ngx_permissions__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(date_fns__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _core_services_timesheet_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../../core/services/timesheet.service */ "./src/app/core/services/timesheet.service.ts");
+/* harmony import */ var _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../../core/services/authentication.service */ "./src/app/core/services/authentication.service.ts");
+/* harmony import */ var _core_services_task_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./../../../../core/services/task.service */ "./src/app/core/services/task.service.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../../../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ngx-bootstrap/chronos */ "./node_modules/ngx-bootstrap/chronos/fesm5/ngx-bootstrap-chronos.js");
+/* harmony import */ var ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ngx-bootstrap/locale */ "./node_modules/ngx-bootstrap/locale/fesm5/ngx-bootstrap-locale.js");
+/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
+/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(datatables_net__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(datatables_net_bs4__WEBPACK_IMPORTED_MODULE_19__);
 
 
 
@@ -751,38 +745,38 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+// import { ProjectService } from '../../../../core/services/project.service';
+// import { ClientService } from '../../../../core/services/client.service';
+
+
+// import { datepickerConfig } from '../../../../core/helpers/admin.helper';
 
 
 
-
-
-
-
-
-
-
-
-Object(ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_22__["defineLocale"])('vi', ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_23__["viLocale"]);
+Object(ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_16__["defineLocale"])('vi', ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_17__["viLocale"]);
 
 
 var MyTimesheetComponent = /** @class */ (function () {
-    function MyTimesheetComponent(translate, ngxRolesService, formBuilder, modalService, http, exportAsService, taskService, toastr, timesheetService, datePipe, projectService, clientService, authenticationService) {
+    function MyTimesheetComponent(translate, ngxRolesService, formBuilder, 
+    // private modalService: BsModalService,
+    http, 
+    // private exportAsService: ExportAsService,
+    taskService, toastr, timesheetService, datePipe, 
+    // private projectService: ProjectService,
+    // private clientService: ClientService,
+    authenticationService) {
         var _this = this;
         this.translate = translate;
         this.ngxRolesService = ngxRolesService;
         this.formBuilder = formBuilder;
-        this.modalService = modalService;
         this.http = http;
-        this.exportAsService = exportAsService;
         this.taskService = taskService;
         this.toastr = toastr;
         this.timesheetService = timesheetService;
         this.datePipe = datePipe;
-        this.projectService = projectService;
-        this.clientService = clientService;
         this.authenticationService = authenticationService;
-        this.apiUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_21__["environment"].apiUrl;
-        this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_10__["Subject"]();
+        this.apiUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_15__["environment"].apiUrl;
+        this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_8__["Subject"]();
         this.dtOptions = {};
         this.preload = true;
         this.users_id = 'my';
@@ -793,6 +787,7 @@ var MyTimesheetComponent = /** @class */ (function () {
         this.viewDate = new Date();
         this.currentDate = this.datePipe.transform(new Date(), 'yyyy/MM/dd');
         this.clients = [];
+        this.actionWeek = [];
         this.isPageLoaded = false;
         this.isFormSubmitted = false;
         this.weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
@@ -819,14 +814,14 @@ var MyTimesheetComponent = /** @class */ (function () {
         this.working_hours = this.loginUser.settings.working_hours;
     }
     MyTimesheetComponent.prototype.ngOnInit = function () {
-        this.getProjects();
-        this.getClients();
+        // this.getProjects();
+        // this.getClients();
         this.loadForms();
         this.getTasks();
         this.getUsers();
         this.changeDate(this.viewDate);
-        this.timesheet_total = { monday: { hours: 0, date: this.startOfWeek }, tuesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 6), 'yyyy/MM/dd') } };
-        this.timesheet_ot_total = { monday: { hours: 0, date: this.startOfWeek }, tuesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 6), 'yyyy/MM/dd') } };
+        this.timesheet_total = { monday: { hours: 0, date: this.startOfWeek }, tuesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 6), 'yyyy/MM/dd') } };
+        this.timesheet_ot_total = { monday: { hours: 0, date: this.startOfWeek }, tuesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 6), 'yyyy/MM/dd') } };
     };
     MyTimesheetComponent.prototype.getTasks = function () {
         var _this = this;
@@ -836,8 +831,8 @@ var MyTimesheetComponent = /** @class */ (function () {
     };
     MyTimesheetComponent.prototype.changeDate = function (selectedDate) {
         this.viewDate = this.datePipe.transform(selectedDate, 'yyyy/MM/dd');
-        this.startOfWeek = this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["startOfWeek"])(selectedDate, { weekStartsOn: 1 }), 'yyyy/MM/dd');
-        this.endOfWeek = this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["endOfWeek"])(selectedDate, { weekStartsOn: 1 }), 'yyyy/MM/dd');
+        this.startOfWeek = this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["startOfWeek"])(selectedDate, { weekStartsOn: 1 }), 'yyyy/MM/dd');
+        this.endOfWeek = this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["endOfWeek"])(selectedDate, { weekStartsOn: 1 }), 'yyyy/MM/dd');
         this.startEndWeek = this.startOfWeek + ' - ' + this.endOfWeek;
         if (this.preload) {
             this.preload = false;
@@ -848,17 +843,16 @@ var MyTimesheetComponent = /** @class */ (function () {
         }
     };
     MyTimesheetComponent.prototype.nextWeek = function () {
-        this.changeDate(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addWeeks"])(this.viewDate, 1));
+        this.changeDate(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addWeeks"])(this.viewDate, 1));
     };
     MyTimesheetComponent.prototype.preWeek = function () {
-        this.changeDate(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["subWeeks"])(this.viewDate, 1));
+        this.changeDate(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["subWeeks"])(this.viewDate, 1));
     };
-    MyTimesheetComponent.prototype.getProjects = function () {
-        var _this = this;
-        this.projectService.getMyProjects().subscribe(function (data) {
-            _this.projects = data;
-        });
-    };
+    // getProjects() {
+    // 	this.projectService.getMyProjects().subscribe(data => {
+    // 		this.projects = data;
+    // 	});
+    // }
     MyTimesheetComponent.prototype.getUsers = function () {
         var _this = this;
         this.timesheetService.getUserSelect().subscribe(function (data) {
@@ -875,12 +869,11 @@ var MyTimesheetComponent = /** @class */ (function () {
         }
         this.onSubmit();
     };
-    MyTimesheetComponent.prototype.getClients = function () {
-        var _this = this;
-        this.clientService.getClientsWithTrashed().subscribe(function (data) {
-            _this.clients = data;
-        });
-    };
+    // getClients() {
+    // 	this.clientService.getClientsWithTrashed().subscribe(data => {
+    // 		this.clients = data;
+    // 	});
+    // }
     MyTimesheetComponent.prototype.loadForms = function () {
         this.timesheetFilterForm = this.formBuilder.group({
             range: [this.range[0].id, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
@@ -890,27 +883,27 @@ var MyTimesheetComponent = /** @class */ (function () {
             start_date: [null],
         });
     };
-    MyTimesheetComponent.prototype.rangeChange = function (event) {
-        var fromControl = this.timesheetFilterForm.get('period_from');
-        var toControl = this.timesheetFilterForm.get('period_to');
-        if (event.id === 'period') {
-            fromControl.setValidators([_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]);
-            toControl.setValidators([_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]);
-            $('.btn_apply').removeClass('d-none');
-        }
-        else {
-            fromControl.clearValidators();
-            toControl.clearValidators();
-            $('.btn_apply').addClass('d-none');
-            this.onSubmit();
-        }
-        fromControl.updateValueAndValidity();
-        toControl.updateValueAndValidity();
-    };
-    MyTimesheetComponent.prototype.periodFromDateChange = function (event) {
-        this.timesheetFilterForm.patchValue({ period_to: event });
-    };
     Object.defineProperty(MyTimesheetComponent.prototype, "filterControl", {
+        // rangeChange(event: any){
+        // 	const fromControl = this.timesheetFilterForm.get('period_from');
+        // 	const toControl = this.timesheetFilterForm.get('period_to');
+        // 	if (event.id === 'period') {
+        //         fromControl.setValidators([Validators.required]);
+        //         toControl.setValidators([Validators.required]);
+        //         $('.btn_apply').removeClass('d-none');
+        //     }
+        //     else {
+        //         fromControl.clearValidators();
+        //         toControl.clearValidators();
+        //         $('.btn_apply').addClass('d-none');
+        //         this.onSubmit();
+        //     }
+        //     fromControl.updateValueAndValidity();
+        //     toControl.updateValueAndValidity();
+        // }
+        // periodFromDateChange(event: any) {
+        // 	this.timesheetFilterForm.patchValue({ period_to: event });
+        // }
         get: function () { return this.timesheetFilterForm.controls; },
         enumerable: true,
         configurable: true
@@ -1016,8 +1009,10 @@ var MyTimesheetComponent = /** @class */ (function () {
                     _this.http.post(_this.apiUrl + '/api/get-timesheets-calendar', dataTablesParameters, {}).subscribe(function (resp) {
                         _this.isPageLoaded = true;
                         that.timesheets = [];
+                        that.timesheets_ot = [];
+                        _this.actionWeek = resp.other;
                         resp.data.forEach(function (element, index) {
-                            var dataPush = { task_id: element.module_related_id, monday: { hours: 0, date: _this.startOfWeek }, tuesday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 6), 'yyyy/MM/dd') } };
+                            var dataPush = { task_id: element.module_related_id, full_name: element.project_name + ' - ' + element.related_name, monday: { hours: 0, date: _this.startOfWeek }, tuesday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 6), 'yyyy/MM/dd') } };
                             element.timesheets.forEach(function (valueTimesheets) {
                                 _this.weekdays.forEach(function (day) {
                                     if (dataPush[day].date == _this.datePipe.transform(valueTimesheets.start_time, 'yyyy/MM/dd')) {
@@ -1028,15 +1023,27 @@ var MyTimesheetComponent = /** @class */ (function () {
                             });
                             that.timesheets.push(dataPush);
                         });
+                        resp.ot.forEach(function (element, index) {
+                            var dataPush = { task_id: element.module_related_id, full_name: element.project_name + ' - ' + element.related_name, monday: { hours: 0, date: _this.startOfWeek }, tuesday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 6), 'yyyy/MM/dd') } };
+                            element.timesheets.forEach(function (valueTimesheets) {
+                                _this.weekdays.forEach(function (day) {
+                                    if (dataPush[day].date == _this.datePipe.transform(valueTimesheets.start_time, 'yyyy/MM/dd')) {
+                                        dataPush[day].hours += _this.roundDownToHalf(valueTimesheets.decimal_time);
+                                        dataPush[day].id = valueTimesheets.id;
+                                    }
+                                });
+                            });
+                            that.timesheets_ot.push(dataPush);
+                        });
                         // that.timesheets = resp.data;
                         if (that.timesheets.length < 4) {
                             for (var index = that.timesheets.length; index < 4; index++) {
-                                that.timesheets.push({ task_id: null, monday: { hours: 0, date: _this.startOfWeek }, tuesday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 6), 'yyyy/MM/dd') } });
+                                that.timesheets.push({ task_id: null, monday: { hours: 0, date: _this.startOfWeek }, tuesday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 6), 'yyyy/MM/dd') } });
                             }
                         }
                         if (that.timesheets_ot.length < 1) {
                             for (var index = that.timesheets_ot.length; index < 1; index++) {
-                                that.timesheets_ot.push({ task_id: null, monday: { hours: 0, date: _this.startOfWeek }, tuesday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(_this.startOfWeek, 6), 'yyyy/MM/dd') } });
+                                that.timesheets_ot.push({ task_id: null, monday: { hours: 0, date: _this.startOfWeek }, tuesday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(_this.startOfWeek, 6), 'yyyy/MM/dd') } });
                             }
                         }
                         _this.totalHours = resp;
@@ -1046,6 +1053,7 @@ var MyTimesheetComponent = /** @class */ (function () {
                             recordsTotal: resp.recordsTotal,
                             recordsFiltered: resp.recordsFiltered,
                             data: [],
+                            ot: [],
                         });
                         setTimeout(function () {
                             _this.setMessage();
@@ -1078,94 +1086,90 @@ var MyTimesheetComponent = /** @class */ (function () {
             $('.tfoot_dt').removeClass('d-none');
         }
     };
-    MyTimesheetComponent.prototype.exportFiles = function (type) {
-        this.exportAsConfig.type = type;
-        this.exportAsService.save(this.exportAsConfig, this.translate.instant('timesheet.title')).subscribe(function () { });
-    };
-    MyTimesheetComponent.prototype.openTimesheetCreateModal = function () {
-        var _this = this;
-        var modalConfigs = {
-            animated: true,
-            keyboard: true,
-            backdrop: true,
-            ignoreBackdropClick: false,
-            class: "inmodal modal-dialog-centered modal-md animated fadeIn",
-            initialState: {
-                params: {
-                    module_id: 6,
-                    module_related_id: null,
-                    project_id: null
-                }
-            }
-        };
-        this.modalRef = this.modalService.show(_components_create_timesheet_modal_create_timesheet_modal_component__WEBPACK_IMPORTED_MODULE_19__["CreateTimesheetModalComponent"], modalConfigs);
-        this.modalRef.content.event.subscribe(function (data) {
-            _this.rerender();
-        });
-    };
-    MyTimesheetComponent.prototype.openTimesheetEditModal = function (timesheet) {
-        var _this = this;
-        var modalConfigs = {
-            animated: true,
-            keyboard: true,
-            backdrop: true,
-            ignoreBackdropClick: false,
-            class: "inmodal modal-dialog-centered modal-md animated fadeIn",
-            initialState: {
-                timesheet: timesheet
-            }
-        };
-        this.modalRef = this.modalService.show(_components_edit_timesheet_modal_edit_timesheet_modal_component__WEBPACK_IMPORTED_MODULE_20__["EditTimesheetModalComponent"], modalConfigs);
-        this.modalRef.content.event.subscribe(function (data) {
-            _this.rerender();
-        });
-    };
-    MyTimesheetComponent.prototype.deleteTimesheet = function (id) {
-        var _this = this;
-        sweetalert2__WEBPACK_IMPORTED_MODULE_11___default.a.fire({
-            title: this.translate.instant('common.swal.title'),
-            text: this.translate.instant('common.swal.text') + this.translate.instant('timesheet.title').toLowerCase() + '!',
-            type: 'warning',
-            showCancelButton: true,
-            confirmButtonText: this.translate.instant('common.swal.confirmButtonText'),
-            cancelButtonText: this.translate.instant('common.swal.cancelButtonText')
-        }).then(function (result) {
-            if (result.value) {
-                _this.timesheetService.delete(id).subscribe(function (data) {
-                    _this.rerender();
-                    _this.toastr.success(_this.translate.instant('timesheet.messages.delete'), _this.translate.instant('timesheet.title'));
-                });
-            }
-        });
-    };
-    MyTimesheetComponent.prototype.saveTimesheetDetail = function (index, name, value) {
-        var _this = this;
-        this.timesheets[index][name] = value;
-        this.timesheetService.update(this.timesheets[index]).subscribe(function (data) {
-            _this.toastr.success(_this.translate.instant('timesheet.messages.update'), _this.translate.instant('timesheet.title'));
-            _this.rerender();
-        });
-    };
+    // exportFiles(type) {
+    // 	this.exportAsConfig.type = type;
+    // 	this.exportAsService.save(this.exportAsConfig, this.translate.instant('timesheet.title')).subscribe(() => {});
+    // }
+    // openTimesheetCreateModal() {
+    // 	let modalConfigs = {
+    // 		animated: true,
+    // 		keyboard: true,
+    // 		backdrop: true,
+    // 		ignoreBackdropClick: false,
+    // 		class: "inmodal modal-dialog-centered modal-md animated fadeIn",
+    // 		initialState: {
+    // 			params: {
+    // 				module_id: 6,
+    // 				module_related_id: null,
+    // 				project_id: null
+    // 			}
+    // 		}
+    // 	};
+    // 	this.modalRef = this.modalService.show(CreateTimesheetModalComponent, modalConfigs);
+    // 	this.modalRef.content.event.subscribe(data => {
+    // 		this.rerender();
+    // 	});
+    // }
+    // openTimesheetEditModal(timesheet){
+    // 	let modalConfigs = {
+    // 		animated: true,
+    // 		keyboard: true,
+    // 		backdrop: true,
+    // 		ignoreBackdropClick: false,
+    // 		class: "inmodal modal-dialog-centered modal-md animated fadeIn",
+    // 		initialState: {
+    // 			timesheet: timesheet
+    // 		}
+    // 	};
+    // 	this.modalRef = this.modalService.show(EditTimesheetModalComponent, modalConfigs);
+    // 	this.modalRef.content.event.subscribe(data => {
+    // 		this.rerender();
+    // 	});
+    // }
+    // deleteTimesheet(id){
+    // 	Swal.fire({
+    // 		title: this.translate.instant('common.swal.title'),
+    // 		text: this.translate.instant('common.swal.text') + this.translate.instant('timesheet.title').toLowerCase() + '!',
+    // 		type: 'warning',
+    // 		showCancelButton: true,
+    // 		confirmButtonText: this.translate.instant('common.swal.confirmButtonText'),
+    // 		cancelButtonText: this.translate.instant('common.swal.cancelButtonText')
+    // 	}).then((result) => {
+    // 		if (result.value) {
+    // 			this.timesheetService.delete(id).subscribe(data => {
+    // 				this.rerender();
+    // 				this.toastr.success(this.translate.instant('timesheet.messages.delete'), this.translate.instant('timesheet.title'));
+    // 			});
+    // 		}
+    // 	});
+    // }
+    // saveTimesheetDetail(index, name, value){
+    // 	this.timesheets[index][name] = value;
+    // 	this.timesheetService.update(this.timesheets[index]).subscribe(data => {
+    // 		this.toastr.success(this.translate.instant('timesheet.messages.update'), this.translate.instant('timesheet.title'));
+    // 		this.rerender();
+    // 	});
+    // }
     MyTimesheetComponent.prototype.removeRowOT = function (index) {
         this.timesheets_ot.splice(index, 1);
         if (this.timesheets_ot.length == 0) {
-            this.timesheets_ot.push({ task_id: null, monday: { hours: 0, date: this.startOfWeek }, tuesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 6), 'yyyy/MM/dd') } });
+            this.timesheets_ot.push({ task_id: null, monday: { hours: 0, date: this.startOfWeek }, tuesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 6), 'yyyy/MM/dd') } });
         }
         this.changeTimeSheet();
     };
     MyTimesheetComponent.prototype.addRowOT = function () {
-        this.timesheets_ot.push({ task_id: null, monday: { hours: 0, date: this.startOfWeek }, tuesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 6), 'yyyy/MM/dd') } });
+        this.timesheets_ot.push({ task_id: null, monday: { hours: 0, date: this.startOfWeek }, tuesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 6), 'yyyy/MM/dd') } });
         this.changeTimeSheet();
     };
     MyTimesheetComponent.prototype.removeRow = function (index) {
         this.timesheets.splice(index, 1);
         if (this.timesheets.length == 1) {
-            this.timesheets.push({ task_id: null, monday: { hours: 0, date: this.startOfWeek }, tuesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 6), 'yyyy/MM/dd') } });
+            this.timesheets.push({ task_id: null, monday: { hours: 0, date: this.startOfWeek }, tuesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 6), 'yyyy/MM/dd') } });
         }
         this.changeTimeSheet();
     };
     MyTimesheetComponent.prototype.addRow = function () {
-        this.timesheets.push({ task_id: null, monday: { hours: 0, date: this.startOfWeek }, tuesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addDays"])(this.startOfWeek, 6), 'yyyy/MM/dd') } });
+        this.timesheets.push({ task_id: null, monday: { hours: 0, date: this.startOfWeek }, tuesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, date: this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addDays"])(this.startOfWeek, 6), 'yyyy/MM/dd') } });
         this.changeTimeSheet();
     };
     MyTimesheetComponent.prototype.changeTimeSheet = function () {
@@ -1228,8 +1232,11 @@ var MyTimesheetComponent = /** @class */ (function () {
                         data['task_id'] = element.task_id;
                         data['date'] = element[day].date;
                         data['start_time'] = element[day].date + ' 00:00:00';
-                        data['end_time'] = _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addHours"])(data['start_time'], element[day].hours), 'yyyy/MM/dd HH:mm:ss');
+                        data['end_time'] = _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addHours"])(data['start_time'], element[day].hours), 'yyyy/MM/dd HH:mm:ss');
                         timesheetsSave.push(data);
+                        if (_this.timesheet_total[day].hours > _this.working_hours) {
+                            checkSubmit = false;
+                        }
                     }
                 });
                 $('.timesheet_task_' + index).removeClass('error-input');
@@ -1258,38 +1265,86 @@ var MyTimesheetComponent = /** @class */ (function () {
                         data['task_id'] = element.task_id;
                         data['date'] = element[day].date;
                         data['start_time'] = element[day].date + ' 00:00:00';
-                        data['end_time'] = _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_13__["addHours"])(data['start_time'], element[day].hours), 'yyyy/MM/dd HH:mm:ss');
+                        data['end_time'] = _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_11__["addHours"])(data['start_time'], element[day].hours), 'yyyy/MM/dd HH:mm:ss');
                         timesheetsOTSave.push(data);
+                    }
+                    if ((_this.timesheet_total[day].hours < _this.working_hours && _this.timesheet_ot_total[day].hours > 0) || (_this.timesheet_total[day].hours + _this.timesheet_ot_total[day].hours) > 24) {
+                        checkSubmit = false;
                     }
                 });
                 $('.timesheet_ot_task_' + index).removeClass('error-input');
             }
         });
-        console.log(timesheetsSave);
         if (checkSubmit && timesheetsSave.length > 0) {
             this.timesheetService.saveTimeSheet({ data: timesheetsSave, ot: timesheetsOTSave, rangeDate: { start: this.startOfWeek, end: this.endOfWeek } }).subscribe(function (data) {
                 _this.rerender();
             });
         }
     };
+    MyTimesheetComponent.prototype.approvedTimeSheet = function () {
+        var _this = this;
+        sweetalert2__WEBPACK_IMPORTED_MODULE_9___default.a.fire({
+            title: this.translate.instant('common.swal.title'),
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: this.translate.instant('common.swal.confirmButtonText1'),
+            cancelButtonText: this.translate.instant('common.swal.cancelButtonText')
+        }).then(function (result) {
+            if (result.value) {
+                _this.timesheetService.approvedTimeSheet({ users_id: _this.users_id, start: _this.startOfWeek, end: _this.endOfWeek }).subscribe(function (data) {
+                    if (data == 'success') {
+                        _this.rerender();
+                    }
+                    else {
+                        _this.toastr.error('Không có hợp đồng!');
+                    }
+                });
+            }
+        });
+    };
+    MyTimesheetComponent.prototype.checkPermission = function () {
+        // if(this.actionWeek.status == 0){
+        //     return true;
+        // }
+        return false;
+    };
+    MyTimesheetComponent.prototype.disApprovedTimeSheet = function () {
+        var _this = this;
+        sweetalert2__WEBPACK_IMPORTED_MODULE_9___default.a.fire({
+            title: this.translate.instant('common.swal.title'),
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: this.translate.instant('common.swal.confirmButtonText1'),
+            cancelButtonText: this.translate.instant('common.swal.cancelButtonText')
+        }).then(function (result) {
+            if (result.value) {
+                if (result.value) {
+                    _this.timesheetService.disapprovedTimeSheet({ users_id: _this.users_id, start: _this.startOfWeek, end: _this.endOfWeek }).subscribe(function (data) {
+                        if (data == 'success') {
+                            _this.rerender();
+                        }
+                        else {
+                            _this.toastr.error('Không có hợp đồng!');
+                        }
+                    });
+                }
+            }
+        });
+    };
     MyTimesheetComponent.ctorParameters = function () { return [
-        { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateService"] },
-        { type: ngx_permissions__WEBPACK_IMPORTED_MODULE_7__["NgxRolesService"] },
+        { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateService"] },
+        { type: ngx_permissions__WEBPACK_IMPORTED_MODULE_5__["NgxRolesService"] },
         { type: _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"] },
-        { type: ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_4__["BsModalService"] },
         { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
-        { type: ngx_export_as__WEBPACK_IMPORTED_MODULE_5__["ExportAsService"] },
-        { type: _core_services_task_service__WEBPACK_IMPORTED_MODULE_18__["TaskService"] },
-        { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrService"] },
-        { type: _core_services_timesheet_service__WEBPACK_IMPORTED_MODULE_14__["TimesheetService"] },
-        { type: _angular_common__WEBPACK_IMPORTED_MODULE_12__["DatePipe"] },
-        { type: _core_services_project_service__WEBPACK_IMPORTED_MODULE_15__["ProjectService"] },
-        { type: _core_services_client_service__WEBPACK_IMPORTED_MODULE_16__["ClientService"] },
-        { type: _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_17__["AuthenticationService"] }
+        { type: _core_services_task_service__WEBPACK_IMPORTED_MODULE_14__["TaskService"] },
+        { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_4__["ToastrService"] },
+        { type: _core_services_timesheet_service__WEBPACK_IMPORTED_MODULE_12__["TimesheetService"] },
+        { type: _angular_common__WEBPACK_IMPORTED_MODULE_10__["DatePipe"] },
+        { type: _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_13__["AuthenticationService"] }
     ]; };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_9__["DataTableDirective"], { static: true }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", angular_datatables__WEBPACK_IMPORTED_MODULE_9__["DataTableDirective"])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_7__["DataTableDirective"], { static: true }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", angular_datatables__WEBPACK_IMPORTED_MODULE_7__["DataTableDirective"])
     ], MyTimesheetComponent.prototype, "dtElement", void 0);
     MyTimesheetComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -1297,19 +1352,15 @@ var MyTimesheetComponent = /** @class */ (function () {
             template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./my-timesheet.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/modules/timesheet/pages/my-timesheet/my-timesheet.component.html")).default,
             styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./my-timesheet.component.scss */ "./src/app/modules/timesheet/pages/my-timesheet/my-timesheet.component.scss")).default]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateService"],
-            ngx_permissions__WEBPACK_IMPORTED_MODULE_7__["NgxRolesService"],
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateService"],
+            ngx_permissions__WEBPACK_IMPORTED_MODULE_5__["NgxRolesService"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormBuilder"],
-            ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_4__["BsModalService"],
             _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
-            ngx_export_as__WEBPACK_IMPORTED_MODULE_5__["ExportAsService"],
-            _core_services_task_service__WEBPACK_IMPORTED_MODULE_18__["TaskService"],
-            ngx_toastr__WEBPACK_IMPORTED_MODULE_6__["ToastrService"],
-            _core_services_timesheet_service__WEBPACK_IMPORTED_MODULE_14__["TimesheetService"],
-            _angular_common__WEBPACK_IMPORTED_MODULE_12__["DatePipe"],
-            _core_services_project_service__WEBPACK_IMPORTED_MODULE_15__["ProjectService"],
-            _core_services_client_service__WEBPACK_IMPORTED_MODULE_16__["ClientService"],
-            _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_17__["AuthenticationService"]])
+            _core_services_task_service__WEBPACK_IMPORTED_MODULE_14__["TaskService"],
+            ngx_toastr__WEBPACK_IMPORTED_MODULE_4__["ToastrService"],
+            _core_services_timesheet_service__WEBPACK_IMPORTED_MODULE_12__["TimesheetService"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_10__["DatePipe"],
+            _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_13__["AuthenticationService"]])
     ], MyTimesheetComponent);
     return MyTimesheetComponent;
 }());

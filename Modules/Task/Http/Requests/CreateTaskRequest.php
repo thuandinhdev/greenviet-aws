@@ -43,7 +43,7 @@ class CreateTaskRequest extends FormRequest
             'task_end_date' => 'nullable|date|after_or_equal:task_start_date',
             'status' => 'required',
             'priority' => 'required',
-            'estimated_hours' => ['nullable', new EstimatedHours],
+            // 'estimated_hours' => ['nullable', new EstimatedHours],
         ];
 
         return $rules;

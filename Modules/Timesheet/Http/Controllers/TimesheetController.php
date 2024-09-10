@@ -83,6 +83,8 @@ class TimesheetController extends Controller
     {
         if ($this->timesheetRepo->approvedTimesheet($request)) {
             return response()->json('success');
+        } else {
+            return response()->json('error');
         }
     }
     public function disapprovedTimesheet(Request $request)

@@ -11,6 +11,7 @@ use Modules\Projects\Entities\Project;
 use Modules\Task\Entities\Task;
 use Modules\User\Entities\User\User;
 use Modules\Timesheet\Entities\Timesheet;
+use Modules\Setting\Entities\Setting;
 
 /**
  * Class TimesheetRepository
@@ -78,13 +79,14 @@ class TimesheetRepository
     public function getUserSelect(){
         $user = Auth::user();
         $department = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $user->id)->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
+        $data = [];
         if($department->department_name == 'Administration' || $department->department_name == 'HR'){
             $data = User::with(['departments', 'roles'])
             ->where('is_client', false)
             ->get();
         }
         if($department->department_name == 'Project' && $department->role_name == 'Manager'){
-            $listTeam = DB::table('gv_teams')->where('team_leader', 12)->pluck('id');
+            $listTeam = DB::table('gv_teams')->where('team_leader', $user->id)->pluck('id');
             $list = DB::table('gv_teams_members')->whereIn('team_id', $listTeam)->pluck('user_id');
             $data = User::with(['departments', 'roles'])
             ->where('is_client', false)
@@ -108,7 +110,7 @@ class TimesheetRepository
         $incidents_table = config('core.acl.incidents_table');
         $meetings_table = config('core.acl.meetings');
 
-        $timesheets = Timesheet::with(
+        $querys = Timesheet::with(
             [
             'user' => function ($query) {
                 $query->select('id', 'firstname', 'lastname', 'avatar');
@@ -126,9 +128,15 @@ class TimesheetRepository
                 $task_table . '.name as related_name',
                 $project_table . '.project_name'
             )
-                ->join($task_table, $task_table . '.id', '=', $timesheet_table . '.module_related_id')
-                ->join($project_table, $project_table . '.id', '=', $task_table . '.project_id')
-                ->orderBy($timesheet_table . '.id', 'desc')->get();
+            ->join($task_table, $task_table . '.id', '=', $timesheet_table . '.module_related_id')
+            ->join($project_table, $project_table . '.id', '=', $task_table . '.project_id')
+            ->orderBy($timesheet_table . '.id');
+
+
+            $querys_ot = clone $querys;
+            $timesheets = $querys->where($timesheet_table . '.ot', 0)->get();
+            $timesheets_ot = $querys_ot->where($timesheet_table . '.ot', 1)->get();
+
             $groupedTimesheets  = $timesheets->groupBy('module_related_id')->map(function ($row) {
                 return [
                     'module_related_id' => $row->first()->module_related_id,
@@ -145,7 +153,51 @@ class TimesheetRepository
                     })
                 ];
             })->values();
-        return  ['data'=>$groupedTimesheets];
+
+            $groupedTimesheets_ot  = $timesheets_ot->groupBy('module_related_id')->map(function ($row) {
+                return [
+                    'module_related_id' => $row->first()->module_related_id,
+                    'module_name' => $row->first()->module_name,
+                    'project_name' => $row->first()->project_name,
+                    'related_name' => $row->first()->related_name,
+                    'timesheets' => $row->map(function ($timesheet) {
+                        return [
+                            'id' => $timesheet->id,
+                            'start_time' => $timesheet->start_time,
+                            'decimal_time' => $timesheet->decimal_time,
+                            'end_time' => $timesheet->end_time,
+                        ];
+                    })
+                ];
+            })->values();
+        $userAction = [];
+        $userAction['status'] = 0;
+        if(count($groupedTimesheets) > 0){
+            $timesheetAction = DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
+            ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['end']. ' 23:59:59')))->where('created_user_id', $input['user_id'])
+            ->select('approved1', 'approved2', 'dis_approved', 'status')->first();
+
+            $userAction['status'] = $timesheetAction->status;
+            if($timesheetAction->status > 0){
+                $userApproved = DB::table('gv_users')->where('id', $timesheetAction->approved1)->first();
+                if($userApproved && ($userApproved->username)){
+                    $userAction['approved1'] = $userApproved->username;
+                }
+            }
+            if($timesheetAction->status > 1){
+                $userApproved = DB::table('gv_users')->where('id', $timesheetAction->approved2)->first();
+                if($userApproved && ($userApproved->username)){
+                    $userAction['approved2'] = $userApproved->username;
+                }
+            }
+            if($timesheetAction->status > 2){
+                $userApproved = DB::table('gv_users')->where('id', $timesheetAction->dis_approved)->first();
+                if($userApproved && ($userApproved->username)){
+                    $userAction['dis_approved'] = $userApproved->username;
+                }
+            }
+        }
+        return  ['data'=>$groupedTimesheets, 'ot'=>$groupedTimesheets_ot, 'other'=>$userAction];
     }
     public function getTimesheetsByModule($request)
     {
@@ -592,53 +644,50 @@ class TimesheetRepository
     public function disapprovedTimesheet($request){
         $user = Auth::user();
         $input = $request->all();
-        foreach($input as $value){
-            // if($user->is_super_admin){
-
-            // } else {
-                if($value['id']){
-                    $timesheet = Timesheet::findOrFail($value['id']);
-                    $contract = DB::table('gv_users_contract')->where('user_id', $user->id)->where('start_date', '<', date('y-m-d', strtotime($timesheet->start)))->where('end_date', '>', date('y-m-d', strtotime($timesheet->end)))->orderBy('id', 'desc')->first();
-                    if($contract){
-                        $dayInMonth = $this->getWeekdaysInMonthFromDate($timesheet->start_date);
-                        $cost = round($contract->salary/$dayInMonth)*($timesheet->decimal_time/8);
-                        // $timesheet = Timesheet::findOrFail($timesheet->id);
-                        if(is_null($timesheet->approved2)){
-                            $data = ['dis_approved'=>$user->id, 'cost'=>$cost];
-                            $timesheet->fill($data);
-                            $timesheet->save();
-                        }
-                    }
-                }
-            // }
+        if($input['users_id'] == 'my'){
+            $input['users_id'] = $user->id;
         }
+        $user = Auth::user();
+        // $department = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $user->id)->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
+
+        $dataUpdate = ['dis_approved'=>$user->id, 'status'=>3];
+        DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
+        ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['end']. ' 23:59:59')))
+        ->where('created_user_id', $input['users_id'])->update($dataUpdate);
         return true;
     }
 
     public function approvedTimesheet($request){
         $user = Auth::user();
         $input = $request->all();
-        foreach($input as $value){
-            // if($user->is_super_admin){
+        if($input['users_id'] == 'my'){
+            $input['users_id'] = $user->id;
+        }
+        $user = Auth::user();
+        // $department = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $user->id)->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
 
-            // } else {
-                if($value['id']){
-                    $timesheet = Timesheet::findOrFail($value['id']);
-                    $contract = DB::table('gv_users_contract')->where('user_id', $user->id)->where('start_date', '<', date('y-m-d', strtotime($timesheet->start)))->where('end_date', '>', date('y-m-d', strtotime($timesheet->end)))->orderBy('id', 'desc')->first();
-                    if($contract){
-                        $dayInMonth = $this->getWeekdaysInMonthFromDate($timesheet->start_date);
-                        $cost = round($contract->salary/$dayInMonth)*($timesheet->decimal_time/8);
-                        $timesheet = Timesheet::findOrFail($timesheet->id);
-                        if($timesheet->approved1 > 0){
-                            $data = ['approved2'=>$user->id, 'cost'=>$cost];
-                        } else {
-                            $data = ['approved1'=>$user->id, 'cost'=>$cost];
-                        }
-                        $timesheet->fill();
-                        $timesheet->save();
-                    }
-                }
-            // }
+        $contract = DB::table('gv_users_contract')
+            ->where('user_id', $input['users_id'])
+            ->where('start_date', '<', $input['start'])
+            ->where('end_date', '>=', $input['end'])
+            ->orderBy('id', 'desc')->first();
+        if($contract){
+            $dataUpdate = [];
+            $checkTimeSheet = DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
+            ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['end']. ' 23:59:59')))
+            ->where('created_user_id', $input['users_id'])->first();
+            if($checkTimeSheet->status == 0){
+                $dataUpdate = ['approved1'=>$user->id, 'status'=>1];
+            }
+            if($checkTimeSheet->status == 1){
+                $dataUpdate = ['approved2'=>$user->id, 'status'=>2];
+            }
+            DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
+            ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['end']. ' 23:59:59')))
+            ->where('created_user_id', $input['users_id'])->update($dataUpdate);
+            return true;
+        } else {
+            return false;
         }
         return true;
     }
@@ -662,7 +711,7 @@ class TimesheetRepository
         return $weekdays;
     }
 
-    public function updateCost($timesheet){
+    public function updateCost($timesheet, $setting, $type_ot){
         $user = Auth::user();
         $contract = DB::table('gv_users_contract')
             ->where('user_id', $user->id)
@@ -671,23 +720,46 @@ class TimesheetRepository
             ->orderBy('id', 'desc')->first();
         if($contract){
             $dayInMonth = $this->getWeekdaysInMonthFromDate($timesheet->start_time);
-            $cost = round($contract->salary/$dayInMonth)*($timesheet->decimal_time/8);
+            $cost = round($contract->salary/$dayInMonth*$timesheet->decimal_time/$setting->working_hours);
             $timesheet = Timesheet::findOrFail($timesheet->id);
-            $timesheet->fill(['cost'=>$cost]);
+            if($type_ot == 1){
+                $dataUpdate = [ 'ot'=>$type_ot, 'ot_rate' => $setting->ot_rate, 'cost' => round($cost *$setting->ot_rate) ];
+            } else {
+                $dataUpdate = ['cost'=>$cost];
+            }
+            $timesheet->fill($dataUpdate);
             $timesheet->save();
             DB::table('gv_users_contract')->where('id', $contract->id)->update(['status'=> 1]);
         } else {
-            return 0;
+            $dayInMonth = $this->getWeekdaysInMonthFromDate($timesheet->start_time);
+            $timesheet = Timesheet::findOrFail($timesheet->id);
+            if($type_ot == 1){
+                $dataUpdate = [ 'ot'=>$type_ot, 'ot_rate' => $setting->ot_rate];
+                $timesheet->fill($dataUpdate);
+                $timesheet->save();
+            }
+            return;
         }
-        return true;
+        return;
     }
     public function saveTimesheet($request){
         $user = Auth::user();
         $input = $request->all();
-        // Timesheet::whereIn('id', $input['removeData'])->delete();
-        Timesheet::where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['rangeDate']['start']. ' 00:00:00')))->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['rangeDate']['end']. ' 23:59:59')))->where('created_user_id', $user->id)->delete();
+        DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['rangeDate']['start']. ' 00:00:00')))
+        ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['rangeDate']['end']. ' 23:59:59')))->where('created_user_id', $user->id)->delete();
+        $setting = Setting::select(
+            [
+            'login_background', 'company_logo', 'theme_layout', 'default_language', 'allowed_for_registration', 'is_demo', 'working_hours', 'ot_rate'
+            ]
+        )->first();
 
-        foreach($input['data'] as $value){
+        $this->saveTimesheetExecute($request, $input['data'], 0, $user, $setting);
+        $this->saveTimesheetExecute($request, $input['ot'], 1, $user, $setting);
+        return true;
+    }
+
+    public function saveTimesheetExecute($request, $timesheetData, $type_ot, $user, $setting){
+        foreach($timesheetData as $value){
             $data = [];
             $data['project_id'] = Project::join('gv_tasks', 'gv_projects.id', '=',  'gv_tasks.project_id')->where('gv_tasks.id', $value['task_id'])->pluck('gv_projects.id')[0];
             $data['created_user_id'] = $user->id;
@@ -718,7 +790,7 @@ class TimesheetRepository
                             }
                         }
                     }
-                    $this->updateCost($timesheet);
+                    $this->updateCost($timesheet, $setting, $type_ot);
                     // --
                     // Add activities.
                     createUserActivity(
@@ -750,7 +822,7 @@ class TimesheetRepository
                             }
                         }
                     }
-                    $this->updateCost($timesheet);
+                    $this->updateCost($timesheet, $setting, $type_ot);
                     // --
                     // Add activities
                     createUserActivity(
@@ -763,8 +835,7 @@ class TimesheetRepository
                 }
             }
         }
-
-        return true;
+        return;
     }
 
     /**
