@@ -493,12 +493,12 @@ class UserRepository
     public function getAllUsers($request)
     {
         $user = auth()->user();
-        if ($user->hasRole('admin') || $user->can_view_all_users) {
+        // if ($user->hasRole('admin') || $user->can_view_all_users) {
             $users = User::with(['roles.userDepartments', 'roles'])->where('is_client', false);
-        } else {
-            $userIds = DepartmentRoleUser::whereIn('department_id', $user->departments->pluck('id'))->pluck('user_id');
-            $users = User::with(['roles.userDepartments', 'roles'])->whereIn('id', $userIds)->where('is_client', false);
-        }
+        // } else {
+        //     $userIds = DepartmentRoleUser::whereIn('department_id', $user->departments->pluck('id'))->pluck('user_id');
+        //     $users = User::with(['roles.userDepartments', 'roles'])->whereIn('id', $userIds)->where('is_client', false);
+        // }
 
         $userLists = $users;
         $totalData = $users->count();

@@ -190,8 +190,8 @@ class LeaveRepository
         )
             ->join($leave_types_table, $leave_types_table . '.id', '=', $leaves_table . '.leave_type_id')
             ->join($user_table, $user_table . '.id', '=', $leaves_table . '.user_id');
-
-        if (!$user->hasRole('admin') && !$user->is_super_admin) {
+        $checkRole = DB::table('gv_user_role_department')->where('user_id', $user->id)->first();
+        if (!$user->hasRole('admin') && !$user->is_super_admin && $checkRole->department_id != 3) {
             $childUser = User::where('primary_manager', $user->id)->orWhere('secondary_manager', $user->id)->pluck('id');
             $childUser->push($user->id);
             $leaves->whereIn('user_id', $childUser);
@@ -249,6 +249,7 @@ class LeaveRepository
             "recordsTotal" => intval($totalData),
             "recordsFiltered" => intval($totalFiltered),
             "data" => $data,
+            'other' => $checkRole->department_id
         );
     }
 
