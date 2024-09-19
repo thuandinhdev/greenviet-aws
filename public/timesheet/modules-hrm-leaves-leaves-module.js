@@ -1380,7 +1380,6 @@ var LeavesListComponent = /** @class */ (function () {
     };
     LeavesListComponent.prototype.getCheckStatusChangePermission = function (leave) {
         var role = this.ngxRolesService.getRole('admin');
-        console.log(role);
         if (leave.status == 1) {
             if ((role && role.name == 'admin') || this.loginUser.is_super_admin || this.editStatus == 3) {
                 return true;
@@ -1586,8 +1585,14 @@ var LeavesListComponent = /** @class */ (function () {
         var _this = this;
         this.leaveService.changeStatus(leave)
             .subscribe(function (data) {
-            _this.toastr.success(_this.translate.instant('leaves.messages.status'), _this.translate.instant('leaves.title'));
-            _this.rerender();
+            if (data == 'error') {
+                _this.toastr.error('No more leave!');
+                _this.rerender();
+            }
+            else {
+                _this.toastr.success(_this.translate.instant('leaves.messages.status'), _this.translate.instant('leaves.title'));
+                _this.rerender();
+            }
         });
     };
     LeavesListComponent.prototype.deleteLeave = function (id) {

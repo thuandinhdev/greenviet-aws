@@ -492,6 +492,10 @@ class TaskRepository
         $input = $request->all();
         $user = Auth::user();
 
+        $sumPriceRate = Task::where('project_id', $task->project_id)->where('id', '!=', $id)->sum('price_rate');
+        if($project->price_rate < ($sumPriceRate+$input['price_rate']) ){
+            return false;
+        }
         // --
         // Update subtask hours to parent task hours.
         $parentTask = [];

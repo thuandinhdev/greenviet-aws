@@ -75,6 +75,7 @@ class TeamRepository
                     config('core.acl.users_table') . '.id',
                     config('core.acl.users_table') . '.firstname',
                     config('core.acl.users_table') . '.lastname',
+                    config('core.acl.users_table') . '.username',
                     config('core.acl.users_table') . '.avatar'
                 );
             }]
@@ -84,6 +85,7 @@ class TeamRepository
                 config('core.acl.teams') . '.*',
                 'user.firstname',
                 'user.lastname',
+                'user.username',
                 'user.avatar'
             );
 

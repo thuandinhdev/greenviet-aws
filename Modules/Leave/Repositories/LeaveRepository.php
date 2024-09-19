@@ -476,6 +476,24 @@ class LeaveRepository
         if ($input['status'] == 3) {
             $input['reject_reason'] = $request->get('reject_reason');
         }
+        if ($input['status'] == 2) {
+            $contract = DB::table('gv_users_contract')
+                ->where('user_id', $leave->user_id)
+                ->where('start_date', '<=', date('y-m-d', strtotime($leave->leave_date)))
+                ->where('end_date', '>=', date('y-m-d', strtotime($leave->leave_date)))
+                ->orderBy('id', 'desc')->first();
+            if($contract){
+                $countUsed = Leave::where('user_id', $leave->user_id)->where('status', 2)->where('contract_id', $contract->id)->count();
+                if($contract->on_leave > $countUsed){
+                    $input['contract_id'] = $contract->id;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+
 
         if ($leave->fill($input)->save()) {
             // --

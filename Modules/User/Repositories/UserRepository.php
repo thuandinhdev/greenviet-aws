@@ -271,6 +271,9 @@ class UserRepository
                 $user->contract = [];
             }
             $user->contract_list = DB::table('gv_users_contract')->where('user_id', $id)->where('status', 1)->get();
+            foreach ($user->contract_list as $key => $value) {
+                $value->used = DB::table('gv_leaves')->where('user_id', $id)->where('status', 2)->where('contract_id', $value->id)->count();
+            }
         }
 
         return $user;

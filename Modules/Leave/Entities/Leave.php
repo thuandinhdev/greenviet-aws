@@ -51,6 +51,7 @@ class Leave extends Model
         'leave_date',
         'reason',
         'reject_reason',
+        'contract_id',
         'status',
     ];
 
