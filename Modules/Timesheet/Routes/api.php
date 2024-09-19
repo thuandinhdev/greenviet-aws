@@ -24,6 +24,7 @@ Route::group(
         Route::post('approved-timesheet', 'TimesheetController@approvedTimesheet');
         Route::post('disapproved-timesheet', 'TimesheetController@disapprovedTimesheet');
         Route::post('timesheets-report', 'TimesheetController@getTimesheetsReport');
+        Route::post('getHolidaysLeavesForUser', 'TimesheetController@getHolidaysLeavesForUser');
         Route::get('get-user-select', 'TimesheetController@getUserSelect');
         Route::resource('timesheets', 'TimesheetController');
         Route::resource('timer-logs', 'TimerLogsController');

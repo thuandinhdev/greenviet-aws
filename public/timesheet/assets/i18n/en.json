@@ -2999,6 +2999,8 @@
 					"time_format": "Time Format",
 					"working_hours": "Working hours",
 					"ot_rate": "OT rate",
+					"sunday_rate": "Sunday rate",
+					"holiday_rate": "Holiday rate",
 					"timezone": "Timezone"
 				},
 				"placeholders": {
@@ -3010,7 +3012,7 @@
 					"placeholder6": "-- Select Time Format --",
 					"placeholder7": "-- Select Default Currency --",
 					"placeholder8": "Enter working hours",
-					"placeholder9": "Enter overtime rate"
+					"placeholder9": "Enter rate"
 				}
 			},
 			"estimate_settings": {

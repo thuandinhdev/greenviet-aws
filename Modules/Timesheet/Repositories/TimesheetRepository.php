@@ -12,6 +12,8 @@ use Modules\Task\Entities\Task;
 use Modules\User\Entities\User\User;
 use Modules\Timesheet\Entities\Timesheet;
 use Modules\Setting\Entities\Setting;
+use Modules\Holiday\Entities\Holiday;
+use Modules\Leave\Entities\Leave;
 
 /**
  * Class TimesheetRepository
@@ -643,6 +645,35 @@ class TimesheetRepository
         );
     }
 
+    public function getHolidaysLeavesForUser($request){
+        $user = Auth::user();
+        $input = $request->all();
+        if($input['users_id'] == 'my'){
+            $input['users_id'] = $user->id;
+        }
+        $holidays = Holiday::where('date', '>=', $input['start'])
+            ->where('date', '<=', $input['end'])
+            ->get();
+
+        $leavesQuery = Leave::with(
+            [
+            'leaveType',
+            'user' => function ($query) {
+                $query->select(
+                    'id',
+                    'firstname',
+                    'lastname',
+                    'avatar'
+                );
+            },
+            ]
+        )->where('leave_date', '>=', $input['start'])
+        ->where('leave_date', '<=', $input['end'])
+        ->whereIn('status', [1, 2])->where('user_id', $input['users_id']);
+
+        $leaves = $leavesQuery->select('*', DB::raw('DATE_FORMAT(leave_date, "%Y-%m-%d") as formatted_date'))->get();
+        return ['holidays'=>$holidays, 'leaves'=>$leaves];
+    }
 
     public function disapprovedTimesheet($request){
         $user = Auth::user();
@@ -669,23 +700,32 @@ class TimesheetRepository
         $user = Auth::user();
         // $department = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $user->id)->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
 
-        $contract = DB::table('gv_users_contract')
-            ->where('user_id', $input['users_id'])
-            ->where('start_date', '<', $input['start'])
-            ->where('end_date', '>=', $input['end'])
-            ->orderBy('id', 'desc')->first();
-        if($contract){
+        // if($contract){
             // $dataUpdate = [];
-            $checkTimeSheet = DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
+            $checkTimeSheet = Timesheet::where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
             ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['end']. ' 23:59:59')))
             ->where('created_user_id', $input['users_id'])->get();
             $setting = Setting::select(
                 [
-                'login_background', 'company_logo', 'theme_layout', 'default_language', 'allowed_for_registration', 'is_demo', 'working_hours', 'ot_rate'
+                'login_background', 'company_logo', 'theme_layout', 'default_language', 'allowed_for_registration', 'is_demo', 'working_hours', 'ot_rate', 'holiday_rate', 'sunday_rate'
                 ]
             )->first();
             foreach ($checkTimeSheet as $key => $value) {
                 $timesheet = Timesheet::find($value->id);
+
+                $contract = DB::table('gv_users_contract')
+                ->where('user_id', $input['users_id'])
+                ->where('start_date', '<=', date('y-m-d', strtotime($timesheet->start_time)))
+                ->where('end_date', '>=', date('y-m-d', strtotime($timesheet->start_time)))
+                ->orderBy('id', 'desc')->first();
+
+                if($contract){
+                } else {
+                    Timesheet::where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
+                    ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['end']. ' 23:59:59')))
+                    ->where('created_user_id', $input['users_id'])->update(['status'=>0]);
+                    return false;
+                }
                 $dayInMonth = $this->getWeekdaysInMonthFromDate($timesheet->start_time);
                 $cost = round($contract->salary/$dayInMonth*$timesheet->decimal_time/$setting->working_hours);
                 $timesheet->cost = $cost*$timesheet->ot_rate;
@@ -723,9 +763,9 @@ class TimesheetRepository
                 }
             }
             return true;
-        } else {
-            return false;
-        }
+        // } else {
+        //     return false;
+        // }
         return true;
     }
     public function getWeekdaysInMonthFromDate($date) {
@@ -752,17 +792,35 @@ class TimesheetRepository
         $user = Auth::user();
         $contract = DB::table('gv_users_contract')
             ->where('user_id', $user->id)
-            ->where('start_date', '<', $timesheet->start_time)
-            ->where('end_date', '>=', $timesheet->start_time)
+            ->where('start_date', '<=', date('y-m-d', strtotime($timesheet->start_time)))
+            ->where('end_date', '>=', date('y-m-d', strtotime($timesheet->start_time)))
             ->orderBy('id', 'desc')->first();
         if($contract){
             $dayInMonth = $this->getWeekdaysInMonthFromDate($timesheet->start_time);
             $cost = round($contract->salary/$dayInMonth*$timesheet->decimal_time/$setting->working_hours);
             $timesheet = Timesheet::findOrFail($timesheet->id);
+            $rate = 1;
+            if(date("l", strtotime($timesheet->start_time)) == 'Sunday'){
+                $rate = $setting->sunday_rate;
+            }
+            $checkHoliday = Holiday::where('date', date("Y-m-d", strtotime($timesheet->start_time)))->count();
+            // $checkHoliday = DB::table('gv_holidays')->where('date', date("Y-m-d", strtotime($timesheet->start_time)))->whereNull('deleted_at')->count();
+            if($checkHoliday > 0){
+                $rate = $setting->holiday_rate;
+            }
+
             if($type_ot == 1){
-                $dataUpdate = [ 'ot'=>$type_ot, 'ot_rate' => $setting->ot_rate, 'cost' => round($cost *$setting->ot_rate) ];
+                if($rate==1){
+                    $cost_rate = round($cost *$setting->ot_rate);
+                    $ot_rate = $setting->ot_rate;
+                } else {
+                    $cost_rate = round($cost *$rate);
+                    $ot_rate = $rate;
+                }
+                $dataUpdate = [ 'ot'=>$type_ot, 'ot_rate' => $ot_rate, 'cost' => $cost_rate ];
             } else {
-                $dataUpdate = ['cost'=>$cost];
+                $cost_rate = round($cost *$rate);
+                $dataUpdate = ['cost'=>$cost_rate, 'ot_rate'=>$rate];
             }
             $timesheet->fill($dataUpdate);
             $timesheet->save();
@@ -770,8 +828,26 @@ class TimesheetRepository
         } else {
             $dayInMonth = $this->getWeekdaysInMonthFromDate($timesheet->start_time);
             $timesheet = Timesheet::findOrFail($timesheet->id);
+            $rate = 1;
+            if(date("l", strtotime($timesheet->start_time)) == 'Sunday'){
+                $rate = $setting->sunday_rate;
+            }
+            $checkHoliday = Holiday::where('date', date("Y-m-d", strtotime($timesheet->start_time)))->count();
+            // $checkHoliday = DB::table('gv_holidays')->where('date', date("Y-m-d", strtotime($timesheet->start_time)))->whereNull('deleted_at')->count();
+            if($checkHoliday > 0){
+                $rate = $setting->holiday_rate;
+            }
             if($type_ot == 1){
-                $dataUpdate = [ 'ot'=>$type_ot, 'ot_rate' => $setting->ot_rate];
+                if($rate==1){
+                    $ot_rate = $setting->ot_rate;
+                } else {
+                    $ot_rate = $rate;
+                }
+                $dataUpdate = [ 'ot'=>$type_ot, 'ot_rate' => $ot_rate];
+                $timesheet->fill($dataUpdate);
+                $timesheet->save();
+            } else {
+                $dataUpdate = ['ot_rate' => $rate];
                 $timesheet->fill($dataUpdate);
                 $timesheet->save();
             }
@@ -791,7 +867,7 @@ class TimesheetRepository
         ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['rangeDate']['end']. ' 23:59:59')))->where('created_user_id', $user->id)->delete();
         $setting = Setting::select(
             [
-            'login_background', 'company_logo', 'theme_layout', 'default_language', 'allowed_for_registration', 'is_demo', 'working_hours', 'ot_rate'
+            'login_background', 'company_logo', 'theme_layout', 'default_language', 'allowed_for_registration', 'is_demo', 'working_hours', 'ot_rate', 'holiday_rate', 'sunday_rate'
             ]
         )->first();
 
@@ -817,12 +893,6 @@ class TimesheetRepository
                 if ($timesheet->save()) {
                     $this->updateCost($timesheet, $setting, $type_ot);
                     if (!empty($timesheet->module_related_id)) {
-
-                        // Update project actual hours.
-                        if ($timesheet->project_id) {
-                            $this->_updateProject($timesheet->project_id);
-                        }
-
                         // Update task, defect, incident start date, end date and actual hours.
                         if (in_array($timesheet->module_id, [2, 3, 4])) {
                             $date = $this->_getStartEndDate($timesheet->module_id, $timesheet->module_related_id);
@@ -832,6 +902,12 @@ class TimesheetRepository
                                 $this->_updateTask($timesheet->module_related_id, $date, $total_hours);
                             }
                         }
+
+                        // Update project actual hours.
+                        if ($timesheet->project_id) {
+                            $this->_updateProject($timesheet->project_id);
+                        }
+
                     }
                     // --
                     // Add activities.
@@ -850,11 +926,6 @@ class TimesheetRepository
                     $this->updateCost($timesheet, $setting, $type_ot);
                     if (!empty($timesheet->module_related_id)) {
 
-                        // Update project actual hours.
-                        if ($timesheet->project_id) {
-                            $this->_updateProject($timesheet->project_id);
-                        }
-
                         // Update task, defect, incident start date, end date and actual hours.
                         if (in_array($timesheet->module_id, [2, 3, 4])) {
                             $date = $this->_getStartEndDate($timesheet->module_id, $timesheet->module_related_id);
@@ -863,6 +934,11 @@ class TimesheetRepository
                             if ($timesheet->module_id == 2) {
                                 $this->_updateTask($timesheet->module_related_id, $date, $total_hours);
                             }
+                        }
+
+                        // Update project actual hours.
+                        if ($timesheet->project_id) {
+                            $this->_updateProject($timesheet->project_id);
                         }
                     }
                     // --

@@ -199,4 +199,9 @@ class TimesheetController extends Controller
             return response()->json(['error' => 'Error while deleting.'], 400);
         }
     }
+    public function getHolidaysLeavesForUser(Request $request)
+    {
+        return $this->timesheetRepo->getHolidaysLeavesForUser($request);
+    }
+
 }

@@ -7891,7 +7891,7 @@ var LoginComponent = /** @class */ (function () {
         this.loginForm.patchValue({ password: password });
     };
     LoginComponent.prototype.microsoftLogin = function () {
-        window.location.href = this.apiUrl + "/login/microsoft";
+        window.location.href = this.apiUrl + "/login/google";
     };
     LoginComponent.ctorParameters = function () { return [
         { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateService"] },

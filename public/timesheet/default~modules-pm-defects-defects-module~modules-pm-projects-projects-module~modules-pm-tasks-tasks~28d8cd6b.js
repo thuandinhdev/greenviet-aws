@@ -15259,6 +15259,9 @@ var TimesheetService = /** @class */ (function () {
     TimesheetService.prototype.deleteTimeLog = function (id) {
         return this.http.delete(this.apiUrl + "/api/timer-logs/" + id);
     };
+    TimesheetService.prototype.getHolidaysLeavesForUser = function (params) {
+        return this.http.post(this.apiUrl + "/api/getHolidaysLeavesForUser", params);
+    };
     TimesheetService.ctorParameters = function () { return [
         { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
     ]; };

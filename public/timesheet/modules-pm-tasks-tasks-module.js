@@ -2011,6 +2011,9 @@ var TaskCreateComponent = /** @class */ (function () {
         this.createTaskForm.value.planned_end_date = this.datepipe.transform(this.createTaskForm.value.planned_end_date, 'yyyy-MM-dd');
         this.createTaskForm.value.task_start_date = this.datepipe.transform(this.createTaskForm.value.task_start_date, 'yyyy-MM-dd');
         this.createTaskForm.value.task_end_date = this.datepipe.transform(this.createTaskForm.value.task_end_date, 'yyyy-MM-dd');
+        if (typeof this.createTaskForm.value.price_rate === 'string') {
+            this.createTaskForm.value.price_rate = this.createTaskForm.value.price_rate.replace(/,/g, '');
+        }
         this.taskService.create(this.createTaskForm.value)
             .subscribe(function (data) {
             _this.toastr.success(_this.translate.instant('tasks.messages.create'), _this.translate.instant('tasks.title'));
@@ -2257,7 +2260,7 @@ var TaskEditComponent = /** @class */ (function () {
             planned_end_date: [this.task.planned_end_date],
             task_start_date: [this.task.task_start_date],
             task_end_date: [this.task.task_end_date],
-            price_rate: [this.task.price_rate, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].minLength(0.1), _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern(/^[0-9]+(\.[0-9]{1,2})?$/)]],
+            price_rate: [this.task.price_rate, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].minLength(0.1)]],
             assign_to: [this.task.assign_to],
             status: [this.task.status, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
             priority: [this.task.priority, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required],
@@ -2448,6 +2451,9 @@ var TaskEditComponent = /** @class */ (function () {
         this.editTaskForm.value.planned_end_date = this.datepipe.transform(this.editTaskForm.value.planned_end_date, 'yyyy-MM-dd');
         this.editTaskForm.value.task_start_date = this.datepipe.transform(this.editTaskForm.value.task_start_date, 'yyyy-MM-dd');
         this.editTaskForm.value.task_end_date = this.datepipe.transform(this.editTaskForm.value.task_end_date, 'yyyy-MM-dd');
+        if (typeof this.editTaskForm.value.price_rate === 'string') {
+            this.editTaskForm.value.price_rate = this.editTaskForm.value.price_rate.replace(/,/g, '');
+        }
         this.taskService.update(this.editTaskForm.value).subscribe(function (data) {
             _this.toastr.success(_this.translate.instant('tasks.messages.update'), _this.translate.instant('tasks.title'));
             _this.router.navigate(['tasks']);

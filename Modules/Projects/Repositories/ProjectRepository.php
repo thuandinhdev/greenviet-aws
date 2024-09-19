@@ -153,7 +153,7 @@ class ProjectRepository
                 $team_table . '.team_name'
             )
             ->leftjoin($user_table, $user_table . '.id', '=', $project_table . '.client_id')
-            ->join($user_table . ' as project_created', 'project_created.id', '=', $project_table . '.user_id')
+            ->leftjoin($user_table . ' as project_created', 'project_created.id', '=', $project_table . '.user_id')
             ->leftjoin($team_table, $team_table . '.id', '=', $project_table . '.assign_to');
 
         if (isset($input['statusId']) && $input['statusId']) {

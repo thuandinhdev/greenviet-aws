@@ -100,6 +100,8 @@ class Setting extends Model
         'product_version',
         'working_hours',
         'ot_rate',
+        'holiday_rate',
+        'sunday_rate',
         'allowed_for_all_task',
         'allowed_for_registration',
         'is_demo',

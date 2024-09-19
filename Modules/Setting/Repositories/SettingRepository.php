@@ -59,7 +59,7 @@ class SettingRepository
     {
         return Setting::select(
             [
-            'login_background', 'company_logo', 'theme_layout', 'default_language', 'allowed_for_registration', 'is_demo', 'working_hours', 'ot_rate'
+            'login_background', 'company_logo', 'theme_layout', 'default_language', 'allowed_for_registration', 'is_demo', 'working_hours', 'ot_rate', 'holiday_rate', 'sunday_rate'
             ]
         )->first();
     }
