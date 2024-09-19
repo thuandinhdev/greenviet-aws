@@ -486,6 +486,7 @@ class LeaveRepository
                 $countUsed = Leave::where('user_id', $leave->user_id)->where('status', 2)->where('contract_id', $contract->id)->count();
                 if($contract->on_leave > $countUsed){
                     $input['contract_id'] = $contract->id;
+                    DB::table('gv_users_contract')->where('id', $contract->id)->update(['status'=>1]);
                 } else {
                     return false;
                 }
