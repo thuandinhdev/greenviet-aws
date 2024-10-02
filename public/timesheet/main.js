@@ -10141,7 +10141,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var environment;
 environment = {
-    production: false,
+    production: true,
     apiUrl: 'https://greenviet.cuortech.com'
 };
 
