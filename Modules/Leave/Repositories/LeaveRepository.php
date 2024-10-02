@@ -263,11 +263,8 @@ class LeaveRepository
     public function create($request)
     {
         $input = $request->all();
-
-        if($input['leave_type_id'] == 3){
-            $input['workallowance'] = json_encode($input['workallowance']);
-            $input['project'] = json_encode($input['project']);
-        }
+        $input['workallowance'] = json_encode($input['workallowance']);
+        $input['project'] = json_encode($input['project']);
 
         if ($input['duration'] == 'multiple') {
             foreach ($input['multi_date'] as $key => $value) {
@@ -372,10 +369,8 @@ class LeaveRepository
     public function update($request, $id)
     {
         $input = $request->all();
-        if($input['leave_type_id'] == 3){
-            $input['workallowance'] = json_encode($input['workallowance']);
-            $input['project'] = json_encode($input['project']);
-        }
+        $input['workallowance'] = json_encode($input['workallowance']);
+        $input['project'] = json_encode($input['project']);
         $leave = Leave::findOrFail($id);
         if ($input['duration'] == 'half') {
             $input['leave_day'] = 0.5;
@@ -496,21 +491,23 @@ class LeaveRepository
                         'value'=>ceil($leave->total/count($project))
                     ]);
                 }
-            }
-            $contract = DB::table('gv_users_contract')
-                ->where('user_id', $leave->user_id)
-                ->where('start_date', '<=', date('y-m-d', strtotime($leave->leave_date)))
-                ->where('end_date', '>=', date('y-m-d', strtotime($leave->leave_date)))
-                ->orderBy('id', 'desc')->first();
-            if($contract){
-                $countUsed = Leave::where('user_id', $leave->user_id)->where('status', 2)->where('contract_id', $contract->id)->count();
-                if($contract->on_leave > $countUsed){
-                    $input['contract_id'] = $contract->id;
+            } else {
+                $contract = DB::table('gv_users_contract')
+                    ->where('user_id', $leave->user_id)
+                    ->where('start_date', '<=', date('y-m-d', strtotime($leave->leave_date)))
+                    ->where('end_date', '>=', date('y-m-d', strtotime($leave->leave_date)))
+                    ->orderBy('id', 'desc')->first();
+                if($contract){
+                    $countUsed = Leave::where('user_id', $leave->user_id)->where('status', 2)->where('contract_id', $contract->id)->where('leave_type_id', 1)->count();
+                    // ->where('duration', 'full')
+                    if($contract->on_leave > $countUsed){
+                        $input['contract_id'] = $contract->id;
+                    } else {
+                        return false;
+                    }
                 } else {
                     return false;
                 }
-            } else {
-                return false;
             }
         }
 
