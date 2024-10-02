@@ -94,6 +94,7 @@ CanResetPasswordContract
         'permission',
         'can_view_all_users',
         'primary_manager',
+        'dependents',
         'secondary_manager',
     ];
 

@@ -1390,7 +1390,7 @@ class TaskRepository
             // ->whereNotIn('gv_tasks.status', [5, 6])
             $tasks = $querys->where('gv_tasks.status', 2)
             ->orderBy('gv_tasks.created_at', 'DESC')
-            ->select('gv_tasks.*', 'gv_projects.project_name', DB::raw("CONCAT(gv_tasks.name, ' - ', gv_projects.project_name) as full_name"))
+            ->select('gv_tasks.*', 'gv_projects.project_name', DB::raw("CONCAT(gv_projects.project_name, ' - ', gv_tasks.name) as full_name"))
             ->get();
         return $tasks;
     }

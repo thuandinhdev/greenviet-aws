@@ -3,6 +3,7 @@
 namespace Modules\CustomField\Repositories;
 
 use Auth;
+use DB;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Modules\CustomField\Entities\CustomField;
@@ -48,15 +49,13 @@ class CustomFieldRepository
      */
     public function getAllCustomFields($request)
     {
-        $CustomField = CustomField::with('forms');
+        $CustomField = DB::table('gv_work_allowance')->where('is_delete', 0);
 
         $totalData = $CustomField->count();
 
         $columns = array(
-            0 => 'field_label',
-            1 => 'name',
-            2 => 'field_type',
-            3 => 'status',
+            0 => 'label',
+            1 => 'value'
         );
 
         $totalFiltered = $totalData;
@@ -76,25 +75,31 @@ class CustomFieldRepository
             //     }
             // );
 
-            $CustomField = CustomField::with(
-                ['forms' => function ($query) use ($search) {
-                    $query->orWhere('name', 'LIKE', "%{$search}%");
-                }]
-            )
-                ->where(
-                    function ($query) use ($search) {
-                        $query->where('field_label', 'LIKE', "%{$search}%")
-                            ->orWhere('field_type', 'LIKE', "%{$search}%")
-                            ->orWhere('status', 'LIKE', "%{$search}%");
-                    }
-                )
-                ->orWhereHas(
-                    'forms',
-                    function ($query) use ($search) {
-                        $query->where('name', 'LIKE', "%{$search}%");
-                    }
-                );
+            // $CustomField = CustomField::with(
+            //     ['forms' => function ($query) use ($search) {
+            //         $query->orWhere('name', 'LIKE', "%{$search}%");
+            //     }]
+            // )
+            //     ->where(
+            //         function ($query) use ($search) {
+            //             $query->where('field_label', 'LIKE', "%{$search}%")
+            //                 ->orWhere('field_type', 'LIKE', "%{$search}%")
+            //                 ->orWhere('status', 'LIKE', "%{$search}%");
+            //         }
+            //     )
+            //     ->orWhereHas(
+            //         'forms',
+            //         function ($query) use ($search) {
+            //             $query->where('name', 'LIKE', "%{$search}%");
+            //         }
+            //     );
 
+            $CustomField = $CustomField->where(
+                        function ($query) use ($search) {
+                            $query->where('label', 'LIKE', "%{$search}%")
+                                ->orWhere('value', 'LIKE', "%{$search}%");
+                        }
+                    );
             $totalFiltered = $CustomField->count();
         }
 
@@ -134,31 +139,32 @@ class CustomFieldRepository
      */
     public function create($request)
     {
-        $CustomField = new CustomField;
+        // $CustomField = new CustomField;
         $input = $request->all();
-
+        DB::table('gv_work_allowance')->insert($input);
+        return true;
         // --
         // Decode default value
-        if ($input['field_type'] == 'dropdown') {
-            $input['default_value'] = json_encode($input['default_value']);
-        }
-        $input['field_column'] = strtolower(
-            preg_replace('/\s+/', '_', $input['field_label'])
-        );
-        $CustomField->fill($input);
-        if ($CustomField->save()) {
-            // --
-            // Add activities
-            createUserActivity(
-                CustomField::MODULE_NAME,
-                $CustomField->id,
-                $request->method(),
-                $CustomField->field_label,
-                $request->ip()
-            );
-            return true;
-        }
-        return false;
+        // if ($input['field_type'] == 'dropdown') {
+        //     $input['default_value'] = json_encode($input['default_value']);
+        // }
+        // $input['field_column'] = strtolower(
+        //     preg_replace('/\s+/', '_', $input['field_label'])
+        // );
+        // $CustomField->fill($input);
+        // if ($CustomField->save()) {
+        //     // --
+        //     // Add activities
+        //     // createUserActivity(
+        //     //     CustomField::MODULE_NAME,
+        //     //     $CustomField->id,
+        //     //     $request->method(),
+        //     //     $CustomField->field_label,
+        //     //     $request->ip()
+        //     // );
+        //     return true;
+        // }
+        // return false;
     }
 
     /**
@@ -171,6 +177,11 @@ class CustomFieldRepository
      */
     public function update($request, $id)
     {
+        $input = $request->all();
+        DB::table('gv_work_allowance')->where('id', $id)->update($input);
+        return true;
+
+
         $CustomField = CustomField::findOrFail($id);
         // --
         // Rename column.
@@ -226,6 +237,9 @@ class CustomFieldRepository
      */
     public function delete($request, $id)
     {
+        $input = $request->all();
+        DB::table('gv_work_allowance')->where('id', $id)->update(['is_delete'=>1]);
+        return true;
         $CustomField = CustomField::findOrFail($id);
         if (!empty($CustomField)) {
             $forms = Form::get();

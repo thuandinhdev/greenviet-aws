@@ -102,6 +102,8 @@ class Setting extends Model
         'ot_rate',
         'holiday_rate',
         'sunday_rate',
+        'dependent',
+        'personal',
         'allowed_for_all_task',
         'allowed_for_registration',
         'is_demo',

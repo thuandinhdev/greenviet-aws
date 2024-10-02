@@ -73,13 +73,13 @@ class CustomFieldController extends Controller
      *
      * @return Response
      */
-    public function store(CreateCustomFieldRequest $request)
+    public function store(Request $request)
     {
         // --
         // Check role/permission
-        if (!AdminHelper::can_action(28, 'created')) {
-            return response()->json("Access denied", 403);
-        }
+        // if (!AdminHelper::can_action(28, 'created')) {
+        //     return response()->json("Access denied", 403);
+        // }
 
         if ($this->customfieldRepo->create($request)) {
             return response()->json('success');
@@ -114,7 +114,7 @@ class CustomFieldController extends Controller
      *
      * @return Response
      */
-    public function update(UpdateCustomFieldRequest $request, $id)
+    public function update(Request $request, $id)
     {
         // --
         // Check role/permission

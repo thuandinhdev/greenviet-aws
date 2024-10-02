@@ -52,6 +52,9 @@ class Leave extends Model
         'reason',
         'reject_reason',
         'contract_id',
+        'project',
+        'workallowance',
+        'total',
         'status',
     ];
 

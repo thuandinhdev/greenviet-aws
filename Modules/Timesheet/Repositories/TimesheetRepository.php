@@ -15,6 +15,7 @@ use Modules\Setting\Entities\Setting;
 use Modules\Holiday\Entities\Holiday;
 use Modules\Leave\Entities\Leave;
 
+use Carbon\Carbon;
 /**
  * Class TimesheetRepository
  *
@@ -77,6 +78,79 @@ class TimesheetRepository
      *
      * @return array
      */
+    public function exportTimeSheet($request){
+        $input = $request->all();
+        $userList = User::get();
+        $setting = Setting::select([ 'dependent', 'personal'])->first();
+        $startOfMonth = Carbon::parse($input['date'])->startOfMonth();
+        $endOfMonth = Carbon::parse($input['date'])->endOfMonth();
+        $query = DB::table('gv_timesheets')
+                ->where('status', 2)
+                ->select(DB::raw('DATE(start_time) as date'), DB::raw('SUM(decimal_time) as total_decimal_time'), 'ot_rate')
+                ->whereBetween('start_time', [$startOfMonth->format('Y-m-d'), $endOfMonth->format('Y-m-d')])
+                ->groupBy(DB::raw('DATE(start_time)'), 'ot_rate');
+        $allDaysData = [];
+        for ($date = $startOfMonth; $date->lte($endOfMonth); $date->addDay()) {
+            $allDaysData[$date->format('Y-m-d')] = null;
+        }
+
+        $working_days = $this->getWorkingDays($startOfMonth->format('m'), $startOfMonth->format('Y'));
+        foreach ($userList as $key => $value) {
+            $allDays = ($allDaysData);
+            $allDaysOt = ($allDaysData);
+            $queryData = clone($query);
+            $queryData_ot = clone($query);
+            $timesheets = $queryData->where('created_user_id', $value->id)->where('ot', 0)->get();
+            $timesheets_ot = $queryData_ot->where('created_user_id', $value->id)->where('ot', 1)->get();
+            $value->count_timesheets = 0;
+            $value->count_timesheets_ot = 0;
+            foreach ($timesheets as $timesheet) {
+                $allDays[$timesheet->date] = $timesheet->total_decimal_time;
+                if($timesheet->total_decimal_time&&$timesheet->total_decimal_time!=null){
+                    $value->count_timesheets++;
+                }
+            }
+            foreach ($timesheets_ot as $timesheet_ot) {
+                $allDaysOt[$timesheet_ot->date] = $timesheet_ot->total_decimal_time;
+                if($timesheet_ot->total_decimal_time&&$timesheet_ot->total_decimal_time!=null){
+                    $value->count_timesheets_ot +=($timesheet_ot->total_decimal_time*$timesheet_ot->ot_rate);
+                }
+            }
+            $value->timesheet = $allDays;
+            $value->timesheet_ot = $allDaysOt;
+            $contract = DB::table('gv_users_contract')
+            ->where('user_id', $value->id)
+            ->where('start_date', '<=', $startOfMonth->format('Y-m-d'))
+            ->where('end_date', '>=', $startOfMonth->format('Y-m-d'))
+            ->orderBy('id', 'desc')->first();
+            $value->working_days = $working_days + 2;
+            if($contract){
+                $value->contract = $contract;
+                $value->day_salary = ($contract->performance + $contract->basic)/$value->working_days;
+                $value->salary_ot = $value->count_timesheets_ot * $value->day_salary;
+            } else {
+                $value->contract = [];
+                $value->day_salary = 0;
+                $value->salary_ot = 0;
+            }
+            $value->dependents_amount = $value->dependents * $setting->dependent;
+            $value->personal_amount = $setting->personal;
+        }
+        return $userList;
+    }
+
+    function getWorkingDays($month, $year) {
+        $totalDays = 0;
+        $totalWorkingDays = 0;
+        $totalDays = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        for ($day = 1; $day <= $totalDays; $day++) {
+            $dayOfWeek = date('N', strtotime("$year-$month-$day"));
+            if ($dayOfWeek >= 1 && $dayOfWeek <= 5) {
+                $totalWorkingDays++;
+            }
+        }
+        return $totalWorkingDays;
+    }
 
     public function getUserSelect(){
         $user = Auth::user();
@@ -96,6 +170,7 @@ class TimesheetRepository
             ->get();
         }
         foreach ($data as $key => $value) {
+            $value->timesheets_status = DB::table('gv_timesheets')->where('created_user_id', $value->id)->where('status', 0)->count();
             $value->department_role = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $value->id)->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
         }
         return ['data'=>$data, 'role'=>$department];

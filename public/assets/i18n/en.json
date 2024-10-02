@@ -2697,7 +2697,7 @@
 		"custom_fields": {
 			"columns": {
 				"actions": "Actions",
-				"custom_field_for": "Custom Field For",
+				"custom_field_for": "Work allowance For",
 				"label": "Label",
 				"status": "Status",
 				"type": "Type",
@@ -2705,7 +2705,7 @@
 			},
 			"create": {
 				"error_messages": {
-					"message1": "Please select a valid custom field form.",
+					"message1": "Please select a valid Work allowance form.",
 					"message2": "Please enter a valid field label.",
 					"message3": "Please enter a valid help text.",
 					"message4": "Please select a valid field type.",
@@ -2713,7 +2713,10 @@
 					"message6": "Please enter a valid value."
 				},
 				"fields": {
-					"custom_field_for": "Custom Field For",
+                    "label": "Label",
+                    "total": "Total Work allowance",
+                    "value": "Value",
+					"custom_field_for": "Work allowance For",
 					"field_label": "Field Label",
 					"field_type": "Field Type",
 					"help_text": "Help Text",
@@ -2721,22 +2724,23 @@
 					"show_on_detail": "To Show On Detail Page"
 				},
 				"placeholders": {
-					"placeholder1": "-- Select Custom Field Form --",
-					"placeholder2": "Enter Field Label",
+					"placeholder1": "Enter Label",
+					"placeholder2": "Enter Value",
 					"placeholder3": "Enter Help Text",
-					"placeholder4": "-- Select Field Type --"
+					"placeholder4": "-- Select Field Type --",
+					"placeholder5": "-- Select Work allowance --"
 				}
 			},
 			"headings": {
 				"head1": "Enter lable and value for dropdown box."
 			},
 			"messages": {
-				"create": "Custom field created successfully.",
-				"delete": "Custom field deleted successfully.",
+				"create": "Work allowance created successfully.",
+				"delete": "Work allowance deleted successfully.",
 				"status": "Status changed successfully.",
-				"update": "Custom field updated successfully."
+				"update": "Work allowance updated successfully."
 			},
-			"title": "Custom Fields",
+			"title": "Work allowance",
 			"title1": "custom field"
 		},
 		"dashboard_settings": {

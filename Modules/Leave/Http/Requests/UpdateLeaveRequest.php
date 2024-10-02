@@ -50,7 +50,7 @@ class UpdateLeaveRequest extends FormRequest
                     }
                 ),
             ],
-            'reason' => 'required',
+            // 'reason' => 'required',
         ];
     }
 

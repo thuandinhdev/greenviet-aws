@@ -7891,7 +7891,7 @@ var LoginComponent = /** @class */ (function () {
         this.loginForm.patchValue({ password: password });
     };
     LoginComponent.prototype.microsoftLogin = function () {
-        window.location.href = this.apiUrl + "/login/google";
+        window.location.href = this.apiUrl + "/login/microsoft";
     };
     LoginComponent.ctorParameters = function () { return [
         { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateService"] },
@@ -9394,15 +9394,11 @@ var NumberFormatDirective = /** @class */ (function () {
     NumberFormatDirective.prototype.onInput = function (event) {
         var inputElement = this.el.nativeElement;
         var value = inputElement.value;
-        // Định dạng số với dấu phẩy khi người dùng nhập dữ liệu
         inputElement.value = this.formatNumber(value);
     };
     NumberFormatDirective.prototype.formatNumber = function (value) {
-        // Loại bỏ các ký tự không phải số trước khi định dạng
         value = value.replace(/[^0-9]/g, '');
-        // Loại bỏ các số 0 ở đầu chuỗi
         value = value.replace(/^0+/, '');
-        // Thêm dấu phẩy vào vị trí hàng nghìn
         return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     };
     NumberFormatDirective.prototype.formatInitialValue = function () {
@@ -10146,10 +10142,7 @@ __webpack_require__.r(__webpack_exports__);
 var environment;
 environment = {
     production: false,
-    // apiUrl: 'http://127.0.0.1'
     apiUrl: 'https://greenviet.cuortech.com'
-    // apiUrl: 'https://greenviet.azurewebsites.net'
-    // apiUrl: 'http://chetsapp.de:8899'
 };
 
 

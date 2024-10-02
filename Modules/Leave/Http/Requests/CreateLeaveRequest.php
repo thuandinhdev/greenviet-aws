@@ -53,7 +53,7 @@ class CreateLeaveRequest extends FormRequest
             'multi_date' => [
                 'required_if:duration,multiple',
             ],
-            'reason' => 'required',
+            // 'reason' => 'required',
         ];
     }
 

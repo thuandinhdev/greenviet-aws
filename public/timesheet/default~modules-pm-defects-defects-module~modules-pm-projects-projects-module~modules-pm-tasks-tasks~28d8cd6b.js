@@ -15256,6 +15256,9 @@ var TimesheetService = /** @class */ (function () {
     TimesheetService.prototype.createTimeLog = function (params) {
         return this.http.post(this.apiUrl + "/api/timer-logs", params);
     };
+    TimesheetService.prototype.exportTimeSheet = function (params) {
+        return this.http.post(this.apiUrl + "/api/export-timeSheet", params);
+    };
     TimesheetService.prototype.deleteTimeLog = function (id) {
         return this.http.delete(this.apiUrl + "/api/timer-logs/" + id);
     };

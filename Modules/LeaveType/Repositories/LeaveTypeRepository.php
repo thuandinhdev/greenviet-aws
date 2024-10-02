@@ -3,6 +3,10 @@
 namespace Modules\LeaveType\Repositories;
 
 use Modules\LeaveType\Entities\LeaveType;
+use DB;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Modules\Projects\Entities\Project;
 
 /**
  * Class LeaveTypeRepository
@@ -31,7 +35,10 @@ class LeaveTypeRepository
      */
     public function findAll()
     {
-        return LeaveType::All();
+        $work_allowance = DB::table('gv_work_allowance')->where('is_delete', 0)->select('id', 'label', 'value')->get();
+        $leaveType = LeaveType::All();
+        $projects = Project::where('status', 2)->get();
+        return ['leaveType'=>$leaveType, 'work_allowance'=>$work_allowance, 'projects'=>$projects];
     }
 
     /**

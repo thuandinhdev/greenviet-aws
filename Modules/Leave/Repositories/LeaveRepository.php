@@ -264,6 +264,11 @@ class LeaveRepository
     {
         $input = $request->all();
 
+        if($input['leave_type_id'] == 3){
+            $input['workallowance'] = json_encode($input['workallowance']);
+            $input['project'] = json_encode($input['project']);
+        }
+
         if ($input['duration'] == 'multiple') {
             foreach ($input['multi_date'] as $key => $value) {
                 $input['leave_date'] = $value;
@@ -367,6 +372,10 @@ class LeaveRepository
     public function update($request, $id)
     {
         $input = $request->all();
+        if($input['leave_type_id'] == 3){
+            $input['workallowance'] = json_encode($input['workallowance']);
+            $input['project'] = json_encode($input['project']);
+        }
         $leave = Leave::findOrFail($id);
         if ($input['duration'] == 'half') {
             $input['leave_day'] = 0.5;
@@ -477,6 +486,17 @@ class LeaveRepository
             $input['reject_reason'] = $request->get('reject_reason');
         }
         if ($input['status'] == 2) {
+            if($leave->leave_type_id == 3){
+                $project = json_decode($leave->project);
+                foreach ($project as $key => $value) {
+                    DB::table('gv_leaves_detail')->insert([
+                        'user_id'=>$leave->user_id,
+                        'leave_id'=> $id,
+                        'project_id'=>$value,
+                        'value'=>ceil($leave->total/count($project))
+                    ]);
+                }
+            }
             $contract = DB::table('gv_users_contract')
                 ->where('user_id', $leave->user_id)
                 ->where('start_date', '<=', date('y-m-d', strtotime($leave->leave_date)))
@@ -486,7 +506,6 @@ class LeaveRepository
                 $countUsed = Leave::where('user_id', $leave->user_id)->where('status', 2)->where('contract_id', $contract->id)->count();
                 if($contract->on_leave > $countUsed){
                     $input['contract_id'] = $contract->id;
-                    DB::table('gv_users_contract')->where('id', $contract->id)->update(['status'=>1]);
                 } else {
                     return false;
                 }

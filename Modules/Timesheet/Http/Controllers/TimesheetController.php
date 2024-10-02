@@ -118,6 +118,11 @@ class TimesheetController extends Controller
         return $this->timesheetRepo->getTimesheetsReport($request);
     }
 
+    public function exportTimeSheet(Request $request)
+    {
+        return $this->timesheetRepo->exportTimeSheet($request);
+    }
+    
     /**
      * Display a listing of the resource.
      *

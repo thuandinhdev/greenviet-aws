@@ -20,6 +20,7 @@ Route::group(
         Route::post('get-timesheets-calendar', 'TimesheetController@getTimesheetsCalendar');
         Route::post('get-timesheets', 'TimesheetController@getTimesheetsByModule');
         Route::post('project-timesheets', 'TimesheetController@getProjectTimesheets');
+        Route::post('export-timeSheet', 'TimesheetController@exportTimeSheet');
         Route::post('save-timesheet', 'TimesheetController@saveTimesheet');
         Route::post('approved-timesheet', 'TimesheetController@approvedTimesheet');
         Route::post('disapproved-timesheet', 'TimesheetController@disapprovedTimesheet');
