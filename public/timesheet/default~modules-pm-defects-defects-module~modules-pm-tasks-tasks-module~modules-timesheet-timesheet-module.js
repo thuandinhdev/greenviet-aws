@@ -1409,12 +1409,21 @@ var MyTimesheetComponent = /** @class */ (function () {
                         timesheetsOTSave.push(data);
                     }
                     if ((_this.timesheet_total[day].hours < _this.working_hours && _this.timesheet_ot_total[day].hours > 0) || (_this.timesheet_total[day].hours + _this.timesheet_ot_total[day].hours) > 24) {
-                        checkSubmit = false;
+                        var isHoliday_1 = false;
+                        _this.holidays.forEach(function (element2) {
+                            if (_this.datePipe.transform(element2.date, 'yyyy-MM-dd') == _this.datePipe.transform(element[day].date, 'yyyy-MM-dd')) {
+                                isHoliday_1 = true;
+                            }
+                        });
+                        if (day != 'sunday' && day != 'saturday' && !isHoliday_1) {
+                            checkSubmit = false;
+                        }
                     }
                 });
                 $('.timesheet_ot_task_' + index).removeClass('error-input');
             }
         });
+        console.log(checkSubmit);
         if (checkSubmit && timesheetsSave.length > 0) {
             this.timesheetService.saveTimeSheet({ data: timesheetsSave, ot: timesheetsOTSave, rangeDate: { start: this.startOfWeek, end: this.endOfWeek } }).subscribe(function (data) {
                 _this.rerender();
