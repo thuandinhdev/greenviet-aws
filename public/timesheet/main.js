@@ -10142,7 +10142,7 @@ __webpack_require__.r(__webpack_exports__);
 var environment;
 environment = {
     production: false,
-    apiUrl: 'https://greenviet.cuortech.com'
+    apiUrl: 'https://timesheet.greenviet.net'
 };
 
 
