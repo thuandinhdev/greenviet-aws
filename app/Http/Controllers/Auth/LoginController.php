@@ -154,7 +154,7 @@ class LoginController extends Controller
         $user['is_super_admin'] = isset($input['is_super_admin']) ? $input['is_super_admin'] : 0;
         $user['can_view_all_users'] = isset($input['can_view_all_users']) ? $input['can_view_all_users'] : 0;
         $user['email_verification_code'] = Str::random(40);
-        $user['permission'] = 'all';
+        $user['permission'] = '"all"';
         $user['avatar'] = '5-man.png';
         return $user;
     }
