@@ -59,7 +59,7 @@ class LoginController extends Controller
             $firstName = $nameParts[0] ?? '';
             $lastName = $nameParts[1] ?? '';
             if($checkEmail > 0){
-                return redirect("https://greenviet.azurewebsites.net/manager/#/login?token=".$microsoftUser->token."&e=".base64_encode($microsoftUser->email));
+                return redirect("https://timesheet.greenviet.net/timesheet/#/login?token=".$microsoftUser->token."&e=".base64_encode($microsoftUser->email));
             } else {
                 $user = [];
                 $user['firstname'] = ucwords($firstName);
@@ -80,12 +80,12 @@ class LoginController extends Controller
                     'department_id'=>2,
                     'role_id'=>2,
                 ]);
-                return redirect("https://greenviet.azurewebsites.net/manager/#/login?token=".$microsoftUser->token."&e=".base64_encode($microsoftUser->email));
-                // return redirect("https://greenviet.azurewebsites.net/manager/#/login?msg=".base64_encode('Email does not exist'));
+                return redirect("https://timesheet.greenviet.net/timesheet/#/login?token=".$microsoftUser->token."&e=".base64_encode($microsoftUser->email));
+                // return redirect("https://timesheet.greenviet.net/timesheet/#/login?msg=".base64_encode('Email does not exist'));
             }
         } catch (\Throwable $th) {
             dd($th);
-            return redirect("https://greenviet.azurewebsites.net/manager/#/login");
+            return redirect("https://timesheet.greenviet.net/timesheet/#/login");
         }
         // Tìm hoặc tạo người dùng trong cơ sở dữ liệu
         // $user = User::firstOrCreate(
