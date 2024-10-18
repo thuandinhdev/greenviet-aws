@@ -373,7 +373,6 @@ class UserController extends Controller
         foreach ($csvData as $key => $value) {
             $csvData[$key] = explode(',', $value);
         }
-
         if (count($csvData) >= 2) {
             $header = array(
                 0 => 'username',
@@ -397,6 +396,7 @@ class UserController extends Controller
             if (is_array($error_file) && count($error_file) > 0) {
                 return response()->json(['error' => $error_file], 422);
             }
+            return $csvData;
 
             $res = $this->userRepo->import($request, $csvData);
             return response()->json(['success' => $res]);
@@ -405,6 +405,8 @@ class UserController extends Controller
             return response()->json(['error' => 'There are no any record in CSV.'], 422);
         }
     }
+
+
 
     /**
      * Change locale.

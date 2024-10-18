@@ -165,10 +165,10 @@ class UserRepository
                     'start_date' => $input['contract']['start_date'],
                     'end_date' => $input['contract']['end_date'],
                     'salary' => $input['contract']['salary'],
-                    'lunck' => isset($input['contract']['lunck']) ? $input['contract']['lunck'] : 0,
+                    'lunch' => isset($input['contract']['lunch']) ? $input['contract']['lunch'] : 0,
                     'performance' => isset($input['contract']['performance']) ? $input['contract']['performance'] : 0,
                     'basic' => isset($input['contract']['basic']) ? $input['contract']['basic'] : 0,
-                    'on_leave' => $input['contract']['on_leave'],
+                    // 'on_leave' => $input['contract']['on_leave'],
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
@@ -333,10 +333,10 @@ class UserRepository
                         'start_date' => $input['contract']['start_date'],
                         'end_date' => $input['contract']['end_date'],
                         'salary' => $input['contract']['salary'],
-                        'lunck' => isset($input['contract']['lunck']) ? $input['contract']['lunck'] : 0,
+                        'lunch' => isset($input['contract']['lunch']) ? $input['contract']['lunch'] : 0,
                         'performance' => isset($input['contract']['performance']) ? $input['contract']['performance'] : 0,
                         'basic' => isset($input['contract']['basic']) ? $input['contract']['basic'] : 0,
-                        'on_leave' => $input['contract']['on_leave']
+                        // 'on_leave' => $input['contract']['on_leave']
                     ]);
                 } else {
                     if($input['contract']['start_date'] != '' && $input['contract']['start_date'] != null
@@ -348,7 +348,7 @@ class UserRepository
                             'start_date' => $input['contract']['start_date'],
                             'end_date' => $input['contract']['end_date'],
                             'salary' => $input['contract']['salary'],
-                            'on_leave' => $input['contract']['on_leave'],
+                            // 'on_leave' => $input['contract']['on_leave'],
                             'created_at' => now(),
                             'updated_at' => now(),
                         ]);

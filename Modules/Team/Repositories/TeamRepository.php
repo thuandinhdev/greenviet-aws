@@ -31,6 +31,7 @@ class TeamRepository
      */
     public function findAll()
     {
+        return User::join('gv_user_role_department', 'gv_user_role_department.user_id', '=', 'gv_users.id')->whereIn('gv_user_role_department.department_id', [1,2])->get();
         return Team::with(
             ['members' => function ($query) {
                 $query->select(

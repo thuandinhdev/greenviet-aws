@@ -393,7 +393,8 @@ class TaskRepository
             }
         }
 
-        $user = Auth::user();
+        // $user = Auth::user();
+        $user = User::where('id', 1)->first();
         $task = new Task;
         $input['created_by'] = $user->id;
         if (isset($input['parent_task_id']) && $input['parent_task_id'] != 0) {
@@ -421,14 +422,14 @@ class TaskRepository
             }
             // --
             // Add activities
-            createUserActivity(
-                Task::MODULE_NAME,
-                $tasks->id,
-                is_array($request) ? '' : $request->method(),
-                $tasks->name,
-                is_array($request) ? '' : $request->ip(),
-                $tasks->id
-            );
+            // createUserActivity(
+            //     Task::MODULE_NAME,
+            //     $tasks->id,
+            //     is_array($request) ? '' : $request->method(),
+            //     $tasks->name,
+            //     is_array($request) ? '' : $request->ip(),
+            //     $tasks->id
+            // );
 
             // --
             // Post message to slack
