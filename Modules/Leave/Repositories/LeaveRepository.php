@@ -244,12 +244,14 @@ class LeaveRepository
             ->orderBy($order, $dir === 'asc' ? 'asc' : 'desc')
             ->get();
 
+        $remainingLeave = $this->commonHelper->getRemainingLeaveDays($user->id);
+
         return array(
             "draw" => intval($request->input('draw')),
             "recordsTotal" => intval($totalData),
             "recordsFiltered" => intval($totalFiltered),
             "data" => $data,
-            'other' => $checkRole->department_id
+            'other' => ['department_id'=>$checkRole->department_id, 'remainingLeave'=>$remainingLeave]
         );
     }
 
