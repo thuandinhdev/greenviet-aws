@@ -161,9 +161,15 @@ class TimesheetRepository
             ->where('is_client', false)
             ->get();
         }
-        if($department->department_name == 'Project' && $department->role_name == 'Manager'){
-            $listTeam = DB::table('gv_teams')->where('team_leader', $user->id)->pluck('id');
-            $list = DB::table('gv_teams_members')->whereIn('team_id', $listTeam)->pluck('user_id');
+        if($department->department_name == 'Project'){
+            // $listTeam = DB::table('gv_teams')->where('team_leader', $user->id)->pluck('id');
+            // $list = DB::table('gv_teams_members')->whereIn('team_id', $listTeam)->pluck('user_id');
+            // $data = User::with(['departments', 'roles'])
+            // ->where('is_client', false)
+            // ->whereIn('id', $list)
+            // ->get();
+
+            $list = DB::table('gv_projects')->join('gv_timesheets', 'gv_timesheets.project_id', '=', 'gv_projects.id')->where('gv_timesheets.status', '<', 2)->where('gv_projects.assign_members', $user->id)->groupBy('gv_timesheets.created_user_id')->pluck('gv_timesheets.created_user_id');
             $data = User::with(['departments', 'roles'])
             ->where('is_client', false)
             ->whereIn('id', $list)
@@ -216,7 +222,8 @@ class TimesheetRepository
                 $timesheet_table . '.*',
                 $modules_table . '.module_name',
                 $task_table . '.name as related_name',
-                $project_table . '.project_name'
+                $project_table . '.project_name',
+                $project_table . '.assign_members'
             )
             ->join($task_table, $task_table . '.id', '=', $timesheet_table . '.module_related_id')
             ->join($project_table, $project_table . '.id', '=', $task_table . '.project_id')
@@ -231,11 +238,15 @@ class TimesheetRepository
                 return [
                     'module_related_id' => $row->first()->module_related_id,
                     'module_name' => $row->first()->module_name,
+                    'assign_members' => $row->first()->assign_members,
                     'project_name' => $row->first()->project_name,
                     'related_name' => $row->first()->related_name,
                     'timesheets' => $row->map(function ($timesheet) {
+                        $approved = User::where('id', $timesheet->approved1)->first();
                         return [
                             'id' => $timesheet->id,
+                            'status' => $timesheet->status,
+                            'approved1' => $approved ? $approved->username : null,
                             'start_time' => $timesheet->start_time,
                             'decimal_time' => $timesheet->decimal_time,
                             'end_time' => $timesheet->end_time,
@@ -248,11 +259,15 @@ class TimesheetRepository
                 return [
                     'module_related_id' => $row->first()->module_related_id,
                     'module_name' => $row->first()->module_name,
+                    'assign_members' => $row->first()->assign_members,
                     'project_name' => $row->first()->project_name,
                     'related_name' => $row->first()->related_name,
                     'timesheets' => $row->map(function ($timesheet) {
+                        $approved = User::where('id', $timesheet->approved1)->first();
                         return [
                             'id' => $timesheet->id,
+                            'status' => $timesheet->status,
+                            'approved1' => $approved ? $approved->username : null,
                             'start_time' => $timesheet->start_time,
                             'decimal_time' => $timesheet->decimal_time,
                             'end_time' => $timesheet->end_time,
@@ -788,9 +803,14 @@ class TimesheetRepository
 
         // if($contract){
             // $dataUpdate = [];
-            $checkTimeSheet = Timesheet::where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
+            $queryTimeSheet = Timesheet::where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
             ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['end']. ' 23:59:59')))
-            ->where('created_user_id', $input['users_id'])->get();
+            ->where('created_user_id', $input['users_id']);
+            if(!is_null($input['task_id']) && $input['task_id'] > 0){
+                $queryTimeSheet->where('module_related_id', $input['task_id']);
+            }
+
+            $checkTimeSheet = $queryTimeSheet->get();
             $setting = Setting::select(
                 [
                 'login_background', 'company_logo', 'theme_layout', 'default_language', 'allowed_for_registration', 'is_demo', 'working_hours', 'ot_rate', 'holiday_rate', 'sunday_rate'
