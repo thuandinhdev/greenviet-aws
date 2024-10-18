@@ -25,6 +25,8 @@ use Modules\User\Http\Requests\ImportUserRequest;
 use Illuminate\Support\Facades\DB;
 use Validator;
 
+use Carbon\Carbon;
+
 /**
  * Class UserRepository
  *
@@ -547,6 +549,9 @@ class UserRepository
             ->limit($limit)
             ->orderBy($order, $dir === 'desc' ? 'desc' : 'asc')
             ->get();
+        foreach ($userLists as $key => $value) {
+            $value->paid_leave = $this->commonHelper->getRemainingLeaveDays($value['id']);
+        }
 
         $json_data = array(
             "draw" => intval($request->input('draw')),
@@ -557,6 +562,7 @@ class UserRepository
 
         return $json_data;
     }
+
 
     /**
      * Set active deactive user.

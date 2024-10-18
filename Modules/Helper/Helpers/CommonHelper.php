@@ -3,6 +3,8 @@
 namespace Modules\Helper\Helpers;
 
 use Carbon\Carbon;
+use Modules\User\Entities\User\User;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class CommonHelper
@@ -22,6 +24,23 @@ use Carbon\Carbon;
  */
 class CommonHelper
 {
+
+    function getRemainingLeaveDays($user_id) {
+        $user = User::where('id', $user_id)->first();
+        $initPaidLeave = $user->init_paid_leave;
+        $initPaidLeaveDate = Carbon::parse($user->init_paid_leave_date);
+        $currentDate = Carbon::now();
+        $monthsPassed = $initPaidLeaveDate->diffInMonths($currentDate);
+        $totalLeaveDays = $initPaidLeave + $monthsPassed;
+
+        $used_leave_days = DB::table('gv_leaves')->where('user_id', $user_id)->whereIn('status', [1,2])->whereIn('leave_type_id', [1])->where('duration', 'full')->count();
+        $used_leave_days_half = DB::table('gv_leaves')->where('user_id', $user_id)->whereIn('status', [1,2])->whereIn('leave_type_id', [1])->where('duration', 'half')->count();
+        $user->used_leave_days = $used_leave_days + $used_leave_days_half/2;
+
+        $remainingLeaveDays = $totalLeaveDays - $user->used_leave_days;
+        return $remainingLeaveDays;
+    }
+
     /**
      * Get decimal time difference.
      *

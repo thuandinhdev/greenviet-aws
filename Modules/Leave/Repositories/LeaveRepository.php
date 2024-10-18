@@ -266,7 +266,15 @@ class LeaveRepository
         $input['workallowance'] = json_encode($input['workallowance']);
         $input['project'] = json_encode($input['project']);
 
+        $check = Timesheet::where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 00:00:00')))->where('created_user_id', $input['user_id'])->count();
+        if($check > 0 && $input['leave_type_id'] < 3){
+            return ['status'=>false, 'msg'=>'This day has been timesheeted'];
+        }
+        $remainingLeave = $this->commonHelper->getRemainingLeaveDays($input['user_id']);
         if ($input['duration'] == 'multiple') {
+            if($remainingLeave < count($input['multi_date']) && $input['leave_type_id'] == 1){
+                return ['status'=>false, 'msg'=>'No more leave to use'];
+            }
             foreach ($input['multi_date'] as $key => $value) {
                 $input['leave_date'] = $value;
                 $input['duration'] = 'full';
@@ -300,6 +308,9 @@ class LeaveRepository
             if ($input['duration'] == 'half') {
                 $input['leave_day'] = 0.5;
             }
+            if($input['leave_type_id'] == 1 && (($remainingLeave < 1 && $input['duration'] == 'full') || ($remainingLeave < 0.5 && $input['duration'] == 'half'))){
+                return ['status'=>false, 'msg'=>'No more leave to use'];
+            }
 
             $leave = Leave::create($input);
 
@@ -330,7 +341,7 @@ class LeaveRepository
 
         $this->emailsHelper->sendLeaveRequestEmail($leave, $input);
 
-        return true;
+        return ['status'=>true];
     }
 
     /**
@@ -375,6 +386,10 @@ class LeaveRepository
         if ($input['duration'] == 'half') {
             $input['leave_day'] = 0.5;
         }
+        $check = Timesheet::where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 00:00:00')))->where('created_user_id', $input['user_id'])->count();
+        if($check > 0 && $input['leave_type_id'] < 3){
+            return ['status'=>false, 'msg'=>'This day has been timesheeted'];
+        }
         if ($leave->fill($input)->save()) {
 
             // Delete attachment
@@ -418,9 +433,9 @@ class LeaveRepository
                 $this->emailsHelper->sendLeaveRequestEmail($leave);
             }
 
-            return true;
+            return ['status'=>true];
         } else {
-            return false;
+            return ['status'=>false];
         }
     }
 
@@ -492,23 +507,23 @@ class LeaveRepository
                     ]);
                 }
             } else {
-                $contract = DB::table('gv_users_contract')
-                    ->where('user_id', $leave->user_id)
-                    ->where('start_date', '<=', date('y-m-d', strtotime($leave->leave_date)))
-                    ->where('end_date', '>=', date('y-m-d', strtotime($leave->leave_date)))
-                    ->orderBy('id', 'desc')->first();
-                if($contract){
-                    $countUsed = Leave::where('user_id', $leave->user_id)->where('status', 2)->where('contract_id', $contract->id)->where('leave_type_id', 1)->count();
-                    // ->where('duration', 'full')
-                    if($contract->on_leave > $countUsed){
-                        $input['contract_id'] = $contract->id;
-                        $contract = DB::table('gv_users_contract')->where('id', $contract->id)->update(['status'=>1]);
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
+                // $contract = DB::table('gv_users_contract')
+                //     ->where('user_id', $leave->user_id)
+                //     ->where('start_date', '<=', date('y-m-d', strtotime($leave->leave_date)))
+                //     ->where('end_date', '>=', date('y-m-d', strtotime($leave->leave_date)))
+                //     ->orderBy('id', 'desc')->first();
+                // if($contract){
+                //     $countUsed = Leave::where('user_id', $leave->user_id)->where('status', 2)->where('contract_id', $contract->id)->where('leave_type_id', 1)->count();
+                //     // ->where('duration', 'full')
+                //     if($contract->on_leave > $countUsed){
+                //         $input['contract_id'] = $contract->id;
+                //         $contract = DB::table('gv_users_contract')->where('id', $contract->id)->update(['status'=>1]);
+                //     } else {
+                //         return false;
+                //     }
+                // } else {
+                //     return false;
+                // }
             }
         }
 

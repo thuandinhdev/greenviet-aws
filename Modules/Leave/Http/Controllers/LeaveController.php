@@ -138,11 +138,12 @@ class LeaveController extends Controller
                 return response()->json(['errors' => ['leave_date' => ['The leave date has already been taken.']]], 422);
             }
         }
-
-        if ($this->leaveRepo->create($request)) {
+        $respon =$this->leaveRepo->create($request);
+        return response()->json($respon);
+        if ($respon['status']) {
             return response()->json('success');
         } else {
-            return response()->json('error', 401);
+            return response()->json($respon);
         }
     }
 
@@ -180,6 +181,8 @@ class LeaveController extends Controller
             return response()->json("Access denied", 403);
         }
 
+        $respon =$this->leaveRepo->update($request, $id);
+        return response()->json($respon);
         if ($this->leaveRepo->update($request, $id)) {
             return response()->json('success');
         } else {
