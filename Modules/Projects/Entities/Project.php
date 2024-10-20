@@ -62,6 +62,7 @@ class Project extends Model
         'project_logo',
         'assign_to',
         'assign_members',
+        'type',
         'notes',
     ];
 
