@@ -10119,8 +10119,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var environment;
 environment = {
-    production: true,
+    production: false,
+    // apiUrl: 'http://127.0.0.1'
     apiUrl: 'https://timesheet.greenviet.net'
+    // apiUrl: 'https://greenviet.azurewebsites.net'
+    // apiUrl: 'http://chetsapp.de:8899'
 };
 
 

@@ -195,8 +195,10 @@ class TimesheetRepository
     public function getTimesheetsCalendar($request){
         $input = $request->all();
         $user = Auth::user();
+        $isMyTimesheet = false;
         if($input['user_id'] == 'my'){
             $input['user_id'] = $user->id;
+            $isMyTimesheet = true;
         }
         $modules_table = config('core.acl.modules_table');
         $timesheet_table = config('core.acl.timesheets_table');
@@ -278,9 +280,13 @@ class TimesheetRepository
         $userAction = [];
         $userAction['status'] = 0;
         if(count($groupedTimesheets) > 0){
-            $timesheetAction = DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
+            $actionQuery = DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
             ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['end']. ' 23:59:59')))->where('created_user_id', $input['user_id'])
-            ->select('approved1', 'approved2', 'dis_approved', 'status')->first();
+            ->select('approved1', 'approved2', 'dis_approved', 'status');
+            if(!$isMyTimesheet){
+                $actionQuery = $actionQuery->orderBy('status');
+            }
+            $timesheetAction = $actionQuery->first();
 
             $userAction['status'] = $timesheetAction->status;
             if($timesheetAction->status > 0){
