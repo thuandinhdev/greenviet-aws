@@ -217,6 +217,7 @@ class TimesheetRepository
         )
             ->join($modules_table, $modules_table . '.module_id', '=', $timesheet_table . '.module_id')
             ->where($timesheet_table.'.created_user_id', '=',  $input['user_id'])
+            ->where($timesheet_table.'.module_id', '=',  2)
             ->where(function($query) use ($input) {
                 $query->whereBetween('start_time', [$input['start'], $input['end']])
                       ->orWhereBetween('end_time', [$input['start'], $input['end']]);
