@@ -1,5 +1,792 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~modules-hrm-leaves-leaves-module~modules-pm-defects-defects-module~modules-pm-projects-proje~27072eef"],{
 
+/***/ "./node_modules/@mattlewis92/dom-autoscroller/dist/bundle.es.js":
+/*!**********************************************************************!*\
+  !*** ./node_modules/@mattlewis92/dom-autoscroller/dist/bundle.es.js ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function getDef(f, d) {
+    if (typeof f === 'undefined') {
+        return typeof d === 'undefined' ? f : d;
+    }
+
+    return f;
+}
+function boolean(func, def) {
+
+    func = getDef(func, def);
+
+    if (typeof func === 'function') {
+        return function f() {
+            var arguments$1 = arguments;
+
+            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+                args[_key] = arguments$1[_key];
+            }
+
+            return !!func.apply(this, args);
+        };
+    }
+
+    return !!func ? function () {
+        return true;
+    } : function () {
+        return false;
+    };
+}
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+/**
+ * Returns `true` if provided input is Element.
+ * @name isElement
+ * @param {*} [input]
+ * @returns {boolean}
+ */
+var isElement$1 = function (input) {
+  return input != null && (typeof input === 'undefined' ? 'undefined' : _typeof(input)) === 'object' && input.nodeType === 1 && _typeof(input.style) === 'object' && _typeof(input.ownerDocument) === 'object';
+};
+
+function indexOfElement(elements, element){
+    element = resolveElement(element, true);
+    if(!isElement$1(element)) { return -1; }
+    for(var i=0; i<elements.length; i++){
+        if(elements[i] === element){
+            return i;
+        }
+    }
+    return -1;
+}
+
+function hasElement(elements, element){
+    return -1 !== indexOfElement(elements, element);
+}
+
+function pushElements(elements, toAdd){
+
+    for(var i=0; i<toAdd.length; i++){
+        if(!hasElement(elements, toAdd[i]))
+            { elements.push(toAdd[i]); }
+    }
+
+    return toAdd;
+}
+
+function addElements(elements){
+    var arguments$1 = arguments;
+
+    var toAdd = [], len = arguments.length - 1;
+    while ( len-- > 0 ) { toAdd[ len ] = arguments$1[ len + 1 ]; }
+
+    toAdd = toAdd.map(resolveElement);
+    return pushElements(elements, toAdd);
+}
+
+function removeElements(elements){
+    var arguments$1 = arguments;
+
+    var toRemove = [], len = arguments.length - 1;
+    while ( len-- > 0 ) { toRemove[ len ] = arguments$1[ len + 1 ]; }
+
+    return toRemove.map(resolveElement).reduce(function (last, e){
+
+        var index = indexOfElement(elements, e);
+
+        if(index !== -1)
+            { return last.concat(elements.splice(index, 1)); }
+        return last;
+    }, []);
+}
+
+function resolveElement(element, noThrow){
+    if(typeof element === 'string'){
+        try{
+            return document.querySelector(element);
+        }catch(e){
+            throw e;
+        }
+
+    }
+
+    if(!isElement$1(element) && !noThrow){
+        throw new TypeError((element + " is not a DOM element."));
+    }
+    return element;
+}
+
+function createPointCB(object, options) {
+
+    // A persistent object (as opposed to returned object) is used to save memory
+    // This is good to prevent layout thrashing, or for games, and such
+
+    // NOTE
+    // This uses IE fixes which should be OK to remove some day. :)
+    // Some speed will be gained by removal of these.
+
+    // pointCB should be saved in a variable on return
+    // This allows the usage of element.removeEventListener
+
+    options = options || {};
+
+    var allowUpdate = boolean(options.allowUpdate, true);
+
+    /*if(typeof options.allowUpdate === 'function'){
+        allowUpdate = options.allowUpdate;
+    }else{
+        allowUpdate = function(){return true;};
+    }*/
+
+    return function pointCB(event) {
+
+        event = event || window.event; // IE-ism
+        object.target = event.target || event.srcElement || event.originalTarget;
+        object.element = this;
+        object.type = event.type;
+
+        if (!allowUpdate(event)) {
+            return;
+        }
+
+        // Support touch
+        // http://www.creativebloq.com/javascript/make-your-site-work-touch-devices-51411644
+
+        if (event.targetTouches) {
+            object.x = event.targetTouches[0].clientX;
+            object.y = event.targetTouches[0].clientY;
+            object.pageX = event.targetTouches[0].pageX;
+            object.pageY = event.targetTouches[0].pageY;
+            object.screenX = event.targetTouches[0].screenX;
+            object.screenY = event.targetTouches[0].screenY;
+        } else {
+
+            // If pageX/Y aren't available and clientX/Y are,
+            // calculate pageX/Y - logic taken from jQuery.
+            // (This is to support old IE)
+            // NOTE Hopefully this can be removed soon.
+
+            if (event.pageX === null && event.clientX !== null) {
+                var eventDoc = event.target && event.target.ownerDocument || document;
+                var doc = eventDoc.documentElement;
+                var body = eventDoc.body;
+
+                object.pageX = event.clientX + (doc && doc.scrollLeft || body && body.scrollLeft || 0) - (doc && doc.clientLeft || body && body.clientLeft || 0);
+                object.pageY = event.clientY + (doc && doc.scrollTop || body && body.scrollTop || 0) - (doc && doc.clientTop || body && body.clientTop || 0);
+            } else {
+                object.pageX = event.pageX;
+                object.pageY = event.pageY;
+            }
+
+            // pageX, and pageY change with page scroll
+            // so we're not going to use those for x, and y.
+            // NOTE Most browsers also alias clientX/Y with x/y
+            // so that's something to consider down the road.
+
+            object.x = event.clientX;
+            object.y = event.clientY;
+
+            object.screenX = event.screenX;
+            object.screenY = event.screenY;
+        }
+
+        object.clientX = object.x;
+        object.clientY = object.y;
+    };
+
+    //NOTE Remember accessibility, Aria roles, and labels.
+}
+
+function createWindowRect() {
+    var props = {
+        top: { value: 0, enumerable: true },
+        left: { value: 0, enumerable: true },
+        right: { value: window.innerWidth, enumerable: true },
+        bottom: { value: window.innerHeight, enumerable: true },
+        width: { value: window.innerWidth, enumerable: true },
+        height: { value: window.innerHeight, enumerable: true },
+        x: { value: 0, enumerable: true },
+        y: { value: 0, enumerable: true }
+    };
+
+    if (Object.create) {
+        return Object.create({}, props);
+    } else {
+        var rect = {};
+        Object.defineProperties(rect, props);
+        return rect;
+    }
+}
+
+function getClientRect(el) {
+    if (el === window) {
+        return createWindowRect();
+    } else {
+        try {
+            var rect = el.getBoundingClientRect();
+            if (rect.x === undefined) {
+                rect.x = rect.left;
+                rect.y = rect.top;
+            }
+            return rect;
+        } catch (e) {
+            throw new TypeError("Can't call getBoundingClientRect on " + el);
+        }
+    }
+}
+
+function pointInside(point, el) {
+    var rect = getClientRect(el);
+    return point.y > rect.top && point.y < rect.bottom && point.x > rect.left && point.x < rect.right;
+}
+
+var objectCreate = void 0;
+if (typeof Object.create != 'function') {
+  objectCreate = function (undefined$1) {
+    var Temp = function Temp() {};
+    return function (prototype, propertiesObject) {
+      if (prototype !== Object(prototype) && prototype !== null) {
+        throw TypeError('Argument must be an object, or null');
+      }
+      Temp.prototype = prototype || {};
+      var result = new Temp();
+      Temp.prototype = null;
+      if (propertiesObject !== undefined$1) {
+        Object.defineProperties(result, propertiesObject);
+      }
+
+      // to imitate the case of Object.create(null)
+      if (prototype === null) {
+        result.__proto__ = null;
+      }
+      return result;
+    };
+  }();
+} else {
+  objectCreate = Object.create;
+}
+
+var objectCreate$1 = objectCreate;
+
+var mouseEventProps = ['altKey', 'button', 'buttons', 'clientX', 'clientY', 'ctrlKey', 'metaKey', 'movementX', 'movementY', 'offsetX', 'offsetY', 'pageX', 'pageY', 'region', 'relatedTarget', 'screenX', 'screenY', 'shiftKey', 'which', 'x', 'y'];
+
+function createDispatcher(element) {
+
+    var defaultSettings = {
+        screenX: 0,
+        screenY: 0,
+        clientX: 0,
+        clientY: 0,
+        ctrlKey: false,
+        shiftKey: false,
+        altKey: false,
+        metaKey: false,
+        button: 0,
+        buttons: 1,
+        relatedTarget: null,
+        region: null
+    };
+
+    if (element !== undefined) {
+        element.addEventListener('mousemove', onMove);
+    }
+
+    function onMove(e) {
+        for (var i = 0; i < mouseEventProps.length; i++) {
+            defaultSettings[mouseEventProps[i]] = e[mouseEventProps[i]];
+        }
+    }
+
+    var dispatch = function () {
+        if (MouseEvent) {
+            return function m1(element, initMove, data) {
+                var evt = new MouseEvent('mousemove', createMoveInit(defaultSettings, initMove));
+
+                //evt.dispatched = 'mousemove';
+                setSpecial(evt, data);
+
+                return element.dispatchEvent(evt);
+            };
+        } else if (typeof document.createEvent === 'function') {
+            return function m2(element, initMove, data) {
+                var settings = createMoveInit(defaultSettings, initMove);
+                var evt = document.createEvent('MouseEvents');
+
+                evt.initMouseEvent("mousemove", true, //can bubble
+                true, //cancelable
+                window, //view
+                0, //detail
+                settings.screenX, //0, //screenX
+                settings.screenY, //0, //screenY
+                settings.clientX, //80, //clientX
+                settings.clientY, //20, //clientY
+                settings.ctrlKey, //false, //ctrlKey
+                settings.altKey, //false, //altKey
+                settings.shiftKey, //false, //shiftKey
+                settings.metaKey, //false, //metaKey
+                settings.button, //0, //button
+                settings.relatedTarget //null //relatedTarget
+                );
+
+                //evt.dispatched = 'mousemove';
+                setSpecial(evt, data);
+
+                return element.dispatchEvent(evt);
+            };
+        } else if (typeof document.createEventObject === 'function') {
+            return function m3(element, initMove, data) {
+                var evt = document.createEventObject();
+                var settings = createMoveInit(defaultSettings, initMove);
+                for (var name in settings) {
+                    evt[name] = settings[name];
+                }
+
+                //evt.dispatched = 'mousemove';
+                setSpecial(evt, data);
+
+                return element.dispatchEvent(evt);
+            };
+        }
+    }();
+
+    function destroy() {
+        if (element) { element.removeEventListener('mousemove', onMove, false); }
+        defaultSettings = null;
+    }
+
+    return {
+        destroy: destroy,
+        dispatch: dispatch
+    };
+}
+
+function createMoveInit(defaultSettings, initMove) {
+    initMove = initMove || {};
+    var settings = objectCreate$1(defaultSettings);
+    for (var i = 0; i < mouseEventProps.length; i++) {
+        if (initMove[mouseEventProps[i]] !== undefined) { settings[mouseEventProps[i]] = initMove[mouseEventProps[i]]; }
+    }
+
+    return settings;
+}
+
+function setSpecial(e, data) {
+    console.log('data ', data);
+    e.data = data || {};
+    e.dispatched = 'mousemove';
+}
+
+var prefix = [ 'webkit', 'moz', 'ms', 'o' ];
+
+var requestFrame = (function () {
+
+    if (typeof window === "undefined") {
+        return function () {};
+    }
+
+    for ( var i = 0, limit = prefix.length ; i < limit && ! window.requestAnimationFrame ; ++i ) {
+        window.requestAnimationFrame = window[ prefix[ i ] + 'RequestAnimationFrame' ];
+    }
+
+    if ( ! window.requestAnimationFrame ) {
+        var lastTime = 0;
+
+        window.requestAnimationFrame = function (callback) {
+            var now   = new Date().getTime();
+            var ttc   = Math.max( 0, 16 - now - lastTime );
+            var timer = window.setTimeout( function () { return callback( now + ttc ); }, ttc );
+
+            lastTime = now + ttc;
+
+            return timer;
+        };
+    }
+
+    return window.requestAnimationFrame.bind( window );
+})();
+
+var cancelFrame = (function () {
+
+    if (typeof window === "undefined") {
+        return function () {};
+    }
+
+    for ( var i = 0, limit = prefix.length ; i < limit && ! window.cancelAnimationFrame ; ++i ) {
+        window.cancelAnimationFrame = window[ prefix[ i ] + 'CancelAnimationFrame' ] || window[ prefix[ i ] + 'CancelRequestAnimationFrame' ];
+    }
+
+    if ( ! window.cancelAnimationFrame ) {
+        window.cancelAnimationFrame = function (timer) {
+            window.clearTimeout( timer );
+        };
+    }
+
+    return window.cancelAnimationFrame.bind( window );
+})();
+
+function AutoScroller(elements, options){
+    if ( options === void 0 ) options = {};
+
+    var self = this;
+    var maxSpeed = 4, scrolling = false;
+
+    if (typeof options.margin !== 'object') {
+        var margin = options.margin || -1;
+
+        this.margin = {
+            left: margin,
+            right: margin,
+            top: margin,
+            bottom: margin
+        };
+    } else {
+        this.margin = options.margin;
+    }
+
+    //this.scrolling = false;
+    this.scrollWhenOutside = options.scrollWhenOutside || false;
+
+    var point = {},
+        pointCB = createPointCB(point),
+        dispatcher = createDispatcher(),
+        down = false;
+
+    window.addEventListener('mousemove', pointCB, false);
+    window.addEventListener('touchmove', pointCB, false);
+
+    if(!isNaN(options.maxSpeed)){
+        maxSpeed = options.maxSpeed;
+    }
+
+    if (typeof maxSpeed !== 'object') {
+        maxSpeed = {
+            left: maxSpeed,
+            right: maxSpeed,
+            top: maxSpeed,
+            bottom: maxSpeed
+        };
+    }
+
+    this.autoScroll = boolean(options.autoScroll);
+    this.syncMove = boolean(options.syncMove, false);
+
+    this.destroy = function(forceCleanAnimation) {
+        window.removeEventListener('mousemove', pointCB, false);
+        window.removeEventListener('touchmove', pointCB, false);
+        window.removeEventListener('mousedown', onDown, false);
+        window.removeEventListener('touchstart', onDown, false);
+        window.removeEventListener('mouseup', onUp, false);
+        window.removeEventListener('touchend', onUp, false);
+        window.removeEventListener('pointerup', onUp, false);
+        window.removeEventListener('mouseleave', onMouseOut, false);
+
+        window.removeEventListener('mousemove', onMove, false);
+        window.removeEventListener('touchmove', onMove, false);
+
+        window.removeEventListener('scroll', setScroll, true);
+        elements = [];
+        if(forceCleanAnimation){
+          cleanAnimation();
+        }
+    };
+
+    this.add = function(){
+        var element = [], len = arguments.length;
+        while ( len-- ) element[ len ] = arguments[ len ];
+
+        addElements.apply(void 0, [ elements ].concat( element ));
+        return this;
+    };
+
+    this.remove = function(){
+        var element = [], len = arguments.length;
+        while ( len-- ) element[ len ] = arguments[ len ];
+
+        return removeElements.apply(void 0, [ elements ].concat( element ));
+    };
+
+    var hasWindow = null, windowAnimationFrame;
+
+    if(Object.prototype.toString.call(elements) !== '[object Array]'){
+        elements = [elements];
+    }
+
+    (function(temp){
+        elements = [];
+        temp.forEach(function(element){
+            if(element === window){
+                hasWindow = window;
+            }else {
+                self.add(element);
+            }
+        });
+    }(elements));
+
+    Object.defineProperties(this, {
+        down: {
+            get: function(){ return down; }
+        },
+        maxSpeed: {
+            get: function(){ return maxSpeed; }
+        },
+        point: {
+            get: function(){ return point; }
+        },
+        scrolling: {
+            get: function(){ return scrolling; }
+        }
+    });
+
+    var current = null, animationFrame;
+
+    window.addEventListener('mousedown', onDown, false);
+    window.addEventListener('touchstart', onDown, false);
+    window.addEventListener('mouseup', onUp, false);
+    window.addEventListener('touchend', onUp, false);
+
+    /*
+    IE does not trigger mouseup event when scrolling.
+    It is a known issue that Microsoft won't fix.
+    https://connect.microsoft.com/IE/feedback/details/783058/scrollbar-trigger-mousedown-but-not-mouseup
+    IE supports pointer events instead
+    */
+    window.addEventListener('pointerup', onUp, false);
+
+    window.addEventListener('mousemove', onMove, false);
+    window.addEventListener('touchmove', onMove, false);
+
+    window.addEventListener('mouseleave', onMouseOut, false);
+
+    window.addEventListener('scroll', setScroll, true);
+
+    function setScroll(e){
+
+        for(var i=0; i<elements.length; i++){
+            if(elements[i] === e.target){
+                scrolling = true;
+                break;
+            }
+        }
+
+        if(scrolling){
+            requestFrame(function (){ return scrolling = false; });
+        }
+    }
+
+    function onDown(){
+        down = true;
+    }
+
+    function onUp(){
+        down = false;
+        cleanAnimation();
+    }
+    function cleanAnimation(){
+      cancelFrame(animationFrame);
+      cancelFrame(windowAnimationFrame);
+    }
+    function onMouseOut(){
+        down = false;
+    }
+
+    function getTarget(target){
+        if(!target){
+            return null;
+        }
+
+        if(current === target){
+            return target;
+        }
+
+        if(hasElement(elements, target)){
+            return target;
+        }
+
+        while(target = target.parentNode){
+            if(hasElement(elements, target)){
+                return target;
+            }
+        }
+
+        return null;
+    }
+
+    function getElementUnderPoint(){
+        var underPoint = null;
+
+        for(var i=0; i<elements.length; i++){
+            if(inside(point, elements[i])){
+                underPoint = elements[i];
+            }
+        }
+
+        return underPoint;
+    }
+
+
+    function onMove(event){
+
+        if(!self.autoScroll()) { return; }
+
+        if(event['dispatched']){ return; }
+
+        var target = event.target, body = document.body;
+
+        if(current && !inside(point, current)){
+            if(!self.scrollWhenOutside){
+                current = null;
+            }
+        }
+
+        if(target && target.parentNode === body){
+            //The special condition to improve speed.
+            target = getElementUnderPoint();
+        }else {
+            target = getTarget(target);
+
+            if(!target){
+                target = getElementUnderPoint();
+            }
+        }
+
+
+        if(target && target !== current){
+            current = target;
+        }
+
+        if(hasWindow){
+            cancelFrame(windowAnimationFrame);
+            windowAnimationFrame = requestFrame(scrollWindow);
+        }
+
+
+        if(!current){
+            return;
+        }
+
+        cancelFrame(animationFrame);
+        animationFrame = requestFrame(scrollTick);
+    }
+
+    function scrollWindow(){
+        autoScroll(hasWindow);
+
+        cancelFrame(windowAnimationFrame);
+        windowAnimationFrame = requestFrame(scrollWindow);
+    }
+
+    function scrollTick(){
+
+        if(!current){
+            return;
+        }
+
+        autoScroll(current);
+
+        cancelFrame(animationFrame);
+        animationFrame = requestFrame(scrollTick);
+
+    }
+
+
+    function autoScroll(el){
+        var rect = getClientRect(el), scrollx, scrolly;
+
+        if(point.x < rect.left + self.margin.left){
+            scrollx = Math.floor(
+                Math.max(-1, (point.x - rect.left) / self.margin.left - 1) * self.maxSpeed.left
+            );
+        }else if(point.x > rect.right - self.margin.right){
+            scrollx = Math.ceil(
+                Math.min(1, (point.x - rect.right) / self.margin.right + 1) * self.maxSpeed.right
+            );
+        }else {
+            scrollx = 0;
+        }
+
+        if(point.y < rect.top + self.margin.top){
+            scrolly = Math.floor(
+                Math.max(-1, (point.y - rect.top) / self.margin.top - 1) * self.maxSpeed.top
+            );
+        }else if(point.y > rect.bottom - self.margin.bottom){
+            scrolly = Math.ceil(
+                Math.min(1, (point.y - rect.bottom) / self.margin.bottom + 1) * self.maxSpeed.bottom
+            );
+        }else {
+            scrolly = 0;
+        }
+
+        if(self.syncMove()){
+            /*
+            Notes about mousemove event dispatch.
+            screen(X/Y) should need to be updated.
+            Some other properties might need to be set.
+            Keep the syncMove option default false until all inconsistencies are taken care of.
+            */
+            dispatcher.dispatch(el, {
+                pageX: point.pageX + scrollx,
+                pageY: point.pageY + scrolly,
+                clientX: point.x + scrollx,
+                clientY: point.y + scrolly
+            });
+        }
+
+        setTimeout(function (){
+
+            if(scrolly){
+                scrollY(el, scrolly);
+            }
+
+            if(scrollx){
+                scrollX(el, scrollx);
+            }
+
+        });
+    }
+
+    function scrollY(el, amount){
+        if(el === window){
+            window.scrollTo(el.pageXOffset, el.pageYOffset + amount);
+        }else {
+            el.scrollTop += amount;
+        }
+    }
+
+    function scrollX(el, amount){
+        if(el === window){
+            window.scrollTo(el.pageXOffset + amount, el.pageYOffset);
+        }else {
+            el.scrollLeft += amount;
+        }
+    }
+
+}
+
+function AutoScrollerFactory(element, options){
+    return new AutoScroller(element, options);
+}
+
+function inside(point, el, rect){
+    if(!rect){
+        return pointInside(point, el);
+    }else {
+        return (point.y > rect.top && point.y < rect.bottom &&
+                point.x > rect.left && point.x < rect.right);
+    }
+}
+
+/*
+git remote add origin https://github.com/hollowdoor/dom_autoscroller.git
+git push -u origin master
+*/
+
+/* harmony default export */ __webpack_exports__["default"] = (AutoScrollerFactory);
+
+
+/***/ }),
+
 /***/ "./node_modules/angular-draggable-droppable/fesm5/angular-draggable-droppable.js":
 /*!***************************************************************************************!*\
   !*** ./node_modules/angular-draggable-droppable/fesm5/angular-draggable-droppable.js ***!
@@ -16,8 +803,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵa", function() { return DroppableDirective; });
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var dom_autoscroller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! dom-autoscroller */ "./node_modules/dom-autoscroller/dist/bundle.js");
-/* harmony import */ var dom_autoscroller__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(dom_autoscroller__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _mattlewis92_dom_autoscroller__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @mattlewis92/dom-autoscroller */ "./node_modules/@mattlewis92/dom-autoscroller/dist/bundle.es.js");
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
@@ -38,7 +824,7 @@ var DraggableHelper = /** @class */ (function () {
     }
     DraggableHelper.decorators = [
         { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Injectable"], args: [{
-                    providedIn: 'root'
+                    providedIn: 'root',
                 },] }
     ];
     /** @nocollapse */ DraggableHelper.ngInjectableDef = Object(_angular_core__WEBPACK_IMPORTED_MODULE_4__["defineInjectable"])({ factory: function DraggableHelper_Factory() { return new DraggableHelper(); }, token: DraggableHelper, providedIn: "root" });
@@ -61,107 +847,29 @@ var DraggableScrollContainerDirective = /** @class */ (function () {
     /**
      * @hidden
      */
-    function DraggableScrollContainerDirective(elementRef, renderer, zone) {
+    function DraggableScrollContainerDirective(elementRef) {
         this.elementRef = elementRef;
-        this.renderer = renderer;
-        this.zone = zone;
         /**
          * Trigger the DragStart after a long touch in scrollable container when true
+         * @deprecated will be removed in v5 (use [touchStartLongPress]="{delay: 300, delta: 30}" on the mwlDraggable element instead)
          */
         this.activeLongPressDrag = false;
         /**
          * Configuration of a long touch
          * Duration in ms of a long touch before activating DragStart
          * Delta of the
+         * @deprecated will be removed in v5 (use [touchStartLongPress]="{delay: 300, delta: 30}" on the mwlDraggable element instead)
          */
         this.longPressConfig = { duration: 300, delta: 30 };
-        this.cancelledScroll = false;
     }
-    /**
-     * @return {?}
-     */
-    DraggableScrollContainerDirective.prototype.ngOnInit = /**
-     * @return {?}
-     */
-    function () {
-        var _this = this;
-        this.zone.runOutsideAngular((/**
-         * @return {?}
-         */
-        function () {
-            _this.renderer.listen(_this.elementRef.nativeElement, 'touchmove', (/**
-             * @param {?} event
-             * @return {?}
-             */
-            function (event) {
-                if (_this.cancelledScroll && event.cancelable) {
-                    event.preventDefault();
-                }
-            }));
-        }));
-    };
-    /**
-     * @hidden
-     */
-    /**
-     * @hidden
-     * @return {?}
-     */
-    DraggableScrollContainerDirective.prototype.disableScroll = /**
-     * @hidden
-     * @return {?}
-     */
-    function () {
-        this.cancelledScroll = true;
-        this.renderer.setStyle(this.elementRef.nativeElement, 'overflow', 'hidden');
-    };
-    /**
-     * @hidden
-     */
-    /**
-     * @hidden
-     * @return {?}
-     */
-    DraggableScrollContainerDirective.prototype.enableScroll = /**
-     * @hidden
-     * @return {?}
-     */
-    function () {
-        this.cancelledScroll = false;
-        this.renderer.setStyle(this.elementRef.nativeElement, 'overflow', 'auto');
-    };
-    /**
-     * @hidden
-     */
-    /**
-     * @hidden
-     * @return {?}
-     */
-    DraggableScrollContainerDirective.prototype.hasScrollbar = /**
-     * @hidden
-     * @return {?}
-     */
-    function () {
-        /** @type {?} */
-        var containerHasHorizontalScroll = this.elementRef.nativeElement.scrollWidth -
-            this.elementRef.nativeElement.clientWidth >
-            0;
-        /** @type {?} */
-        var containerHasVerticalScroll = this.elementRef.nativeElement.scrollHeight -
-            this.elementRef.nativeElement.clientHeight >
-            0;
-        return containerHasHorizontalScroll || containerHasVerticalScroll;
-    };
     DraggableScrollContainerDirective.decorators = [
         { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Directive"], args: [{
-                    selector: '[mwlDraggableScrollContainer]'
+                    selector: '[mwlDraggableScrollContainer]',
                 },] }
     ];
     /** @nocollapse */
     DraggableScrollContainerDirective.ctorParameters = function () { return [
-        { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["ElementRef"] },
-        { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Renderer2"] },
-        { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["NgZone"] }
+        { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["ElementRef"] }
     ]; };
     DraggableScrollContainerDirective.propDecorators = {
         activeLongPressDrag: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
@@ -169,6 +877,49 @@ var DraggableScrollContainerDirective = /** @class */ (function () {
     };
     return DraggableScrollContainerDirective;
 }());
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+/**
+ * @param {?} renderer
+ * @param {?} element
+ * @param {?} classToAdd
+ * @return {?}
+ */
+function addClass(renderer, element, classToAdd) {
+    if (classToAdd) {
+        classToAdd
+            .split(' ')
+            .forEach((/**
+         * @param {?} className
+         * @return {?}
+         */
+        function (className) {
+            return renderer.addClass(element.nativeElement, className);
+        }));
+    }
+}
+/**
+ * @param {?} renderer
+ * @param {?} element
+ * @param {?} classToRemove
+ * @return {?}
+ */
+function removeClass(renderer, element, classToRemove) {
+    if (classToRemove) {
+        classToRemove
+            .split(' ')
+            .forEach((/**
+         * @param {?} className
+         * @return {?}
+         */
+        function (className) {
+            return renderer.removeClass(element.nativeElement, className);
+        }));
+    }
+}
 
 /**
  * @fileoverview added by tsickle
@@ -206,6 +957,12 @@ var DraggableDirective = /** @class */ (function () {
          * The cursor to use when hovering over a draggable element
          */
         this.dragCursor = '';
+        /*
+           * Options used to control the behaviour of auto scrolling: https://www.npmjs.com/package/dom-autoscroller
+           */
+        this.autoScroll = {
+            margin: 20,
+        };
         /**
          * Called when the element can be dragged along one axis and has the mouse or pointer device pressed on it
          */
@@ -267,6 +1024,17 @@ var DraggableDirective = /** @class */ (function () {
             if (pointerDownEvent.event.stopPropagation && !_this.scrollContainer) {
                 pointerDownEvent.event.stopPropagation();
             }
+            // hack to prevent text getting selected in safari while dragging
+            /** @type {?} */
+            var globalDragStyle = _this.renderer.createElement('style');
+            _this.renderer.setAttribute(globalDragStyle, 'type', 'text/css');
+            _this.renderer.appendChild(globalDragStyle, _this.renderer.createText("\n          body * {\n           -moz-user-select: none;\n           -ms-user-select: none;\n           -webkit-user-select: none;\n           user-select: none;\n          }\n        "));
+            requestAnimationFrame((/**
+             * @return {?}
+             */
+            function () {
+                _this.document.head.appendChild(globalDragStyle);
+            }));
             /** @type {?} */
             var startScrollPosition = _this.getScrollPosition();
             /** @type {?} */
@@ -305,7 +1073,7 @@ var DraggableDirective = /** @class */ (function () {
             /** @type {?} */
             var pointerMove = Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["combineLatest"])([
                 _this.pointerMove$,
-                scrollContainerScroll$
+                scrollContainerScroll$,
             ]).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])((/**
              * @param {?} __0
              * @return {?}
@@ -319,7 +1087,7 @@ var DraggableDirective = /** @class */ (function () {
                     clientX: pointerMoveEvent.clientX,
                     clientY: pointerMoveEvent.clientY,
                     scrollLeft: scroll.left,
-                    scrollTop: scroll.top
+                    scrollTop: scroll.top,
                 };
             })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])((/**
              * @param {?} moveData
@@ -369,7 +1137,7 @@ var DraggableDirective = /** @class */ (function () {
                     _this.validateDrag({
                         x: x,
                         y: y,
-                        transform: { x: transformX, y: transformY }
+                        transform: { x: transformX, y: transformY },
                     });
             })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["takeUntil"])(dragComplete$), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["share"])());
             /** @type {?} */
@@ -388,20 +1156,17 @@ var DraggableDirective = /** @class */ (function () {
                 function () {
                     _this.dragStart.next({ cancelDrag$: cancelDrag$ });
                 }));
-                _this.scroller = dom_autoscroller__WEBPACK_IMPORTED_MODULE_2___default()([
+                _this.scroller = Object(_mattlewis92_dom_autoscroller__WEBPACK_IMPORTED_MODULE_2__["default"])([
                     _this.scrollContainer
                         ? _this.scrollContainer.elementRef.nativeElement
-                        : _this.document.defaultView
-                ], {
-                    margin: 20,
-                    autoScroll: /**
+                        : _this.document.defaultView,
+                ], Object(tslib__WEBPACK_IMPORTED_MODULE_3__["__assign"])({}, _this.autoScroll, { autoScroll: /**
                      * @return {?}
                      */
                     function () {
                         return true;
-                    }
-                });
-                _this.renderer.addClass(_this.element.nativeElement, _this.dragActiveClass);
+                    } }));
+                addClass(_this.renderer, _this.element, _this.dragActiveClass);
                 if (_this.ghostDragEnabled) {
                     /** @type {?} */
                     var rect = _this.element.nativeElement.getBoundingClientRect();
@@ -417,7 +1182,7 @@ var DraggableDirective = /** @class */ (function () {
                         (/** @type {?} */ (_this.element.nativeElement.parentNode)).insertBefore(clone_1, _this.element.nativeElement.nextSibling);
                     }
                     _this.ghostElement = clone_1;
-                    document.body.style.cursor = _this.dragCursor;
+                    _this.document.body.style.cursor = _this.dragCursor;
                     _this.setElementStyles(clone_1, {
                         position: 'fixed',
                         top: rect.top + "px",
@@ -427,7 +1192,7 @@ var DraggableDirective = /** @class */ (function () {
                         cursor: _this.dragCursor,
                         margin: '0',
                         willChange: 'transform',
-                        pointerEvents: 'none'
+                        pointerEvents: 'none',
                     });
                     if (_this.ghostElementTemplate) {
                         /** @type {?} */
@@ -460,7 +1225,7 @@ var DraggableDirective = /** @class */ (function () {
                         _this.ghostElementCreated.emit({
                             clientX: clientX - x,
                             clientY: clientY - y,
-                            element: clone_1
+                            element: clone_1,
                         });
                     }));
                     dragEnded$.subscribe((/**
@@ -502,32 +1267,21 @@ var DraggableDirective = /** @class */ (function () {
                 function () {
                     _this.dragEnd.next({ x: x, y: y, dragCancelled: dragCancelled });
                 }));
-                _this.renderer.removeClass(_this.element.nativeElement, _this.dragActiveClass);
+                removeClass(_this.renderer, _this.element, _this.dragActiveClass);
                 currentDrag$.complete();
             }));
-            /** @type {?} */
-            var selectionStart$ = new rxjs__WEBPACK_IMPORTED_MODULE_0__["Observable"]((/**
-             * @param {?} observer
+            Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["merge"])(dragComplete$, dragEnded$)
+                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["take"])(1))
+                .subscribe((/**
              * @return {?}
              */
-            function (observer) {
-                return _this.renderer.listen('document', 'selectstart', (/**
-                 * @param {?} e
+            function () {
+                requestAnimationFrame((/**
                  * @return {?}
                  */
-                function (e) {
-                    return observer.next(e);
+                function () {
+                    _this.document.head.removeChild(globalDragStyle);
                 }));
-            }));
-            // hack to prevent text getting selected in safari while dragging
-            selectionStart$
-                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["takeUntil"])(Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["merge"])(dragComplete$, dragEnded$)))
-                .subscribe((/**
-             * @param {?} event
-             * @return {?}
-             */
-            function (event) {
-                event.preventDefault();
             }));
             return pointerMove;
         })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["share"])());
@@ -553,7 +1307,7 @@ var DraggableDirective = /** @class */ (function () {
         function (_a) {
             var _b = Object(tslib__WEBPACK_IMPORTED_MODULE_3__["__read"])(_a, 2), previous = _b[0], next = _b[1];
             return next;
-        })), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["auditTime"])(0, rxjs__WEBPACK_IMPORTED_MODULE_0__["animationFrameScheduler"]))
+        })))
             .subscribe((/**
          * @param {?} __0
          * @return {?}
@@ -566,21 +1320,26 @@ var DraggableDirective = /** @class */ (function () {
             function () {
                 _this.dragging.next({ x: x, y: y });
             }));
-            if (_this.ghostElement) {
-                /** @type {?} */
-                var transform = "translate3d(" + transformX + "px, " + transformY + "px, 0px)";
-                _this.setElementStyles(_this.ghostElement, {
-                    transform: transform,
-                    '-webkit-transform': transform,
-                    '-ms-transform': transform,
-                    '-moz-transform': transform,
-                    '-o-transform': transform
-                });
-            }
+            requestAnimationFrame((/**
+             * @return {?}
+             */
+            function () {
+                if (_this.ghostElement) {
+                    /** @type {?} */
+                    var transform = "translate3d(" + transformX + "px, " + transformY + "px, 0px)";
+                    _this.setElementStyles(_this.ghostElement, {
+                        transform: transform,
+                        '-webkit-transform': transform,
+                        '-ms-transform': transform,
+                        '-moz-transform': transform,
+                        '-o-transform': transform,
+                    });
+                }
+            }));
             currentDrag$.next({
                 clientX: clientX,
                 clientY: clientY,
-                dropData: _this.dropData
+                dropData: _this.dropData,
             });
         }));
     };
@@ -704,14 +1463,14 @@ var DraggableDirective = /** @class */ (function () {
                     _this.pointerMove$.next({
                         event: mouseMoveEvent,
                         clientX: mouseMoveEvent.clientX,
-                        clientY: mouseMoveEvent.clientY
+                        clientY: mouseMoveEvent.clientY,
                     });
                 }));
             }
             this.pointerDown$.next({
                 event: event,
                 clientX: event.clientX,
-                clientY: event.clientY
+                clientY: event.clientY,
             });
         }
     };
@@ -734,7 +1493,7 @@ var DraggableDirective = /** @class */ (function () {
             this.pointerUp$.next({
                 event: event,
                 clientX: event.clientX,
-                clientY: event.clientY
+                clientY: event.clientY,
             });
         }
     };
@@ -750,52 +1509,67 @@ var DraggableDirective = /** @class */ (function () {
      */
     function (event) {
         var _this = this;
-        if (!this.scrollContainer) {
-            try {
-                event.preventDefault();
-            }
-            catch (e) { }
-        }
-        /** @type {?} */
-        var hasContainerScrollbar;
         /** @type {?} */
         var startScrollPosition;
         /** @type {?} */
         var isDragActivated;
-        if (this.scrollContainer && this.scrollContainer.activeLongPressDrag) {
+        /** @type {?} */
+        var hasContainerScrollbar;
+        if ((this.scrollContainer && this.scrollContainer.activeLongPressDrag) ||
+            this.touchStartLongPress) {
             this.timeLongPress.timerBegin = Date.now();
             isDragActivated = false;
-            hasContainerScrollbar = this.scrollContainer.hasScrollbar();
+            hasContainerScrollbar = this.hasScrollbar();
             startScrollPosition = this.getScrollPosition();
         }
         if (!this.eventListenerSubscriptions.touchmove) {
-            this.eventListenerSubscriptions.touchmove = this.renderer.listen('document', 'touchmove', (/**
+            /** @type {?} */
+            var contextMenuListener_1 = Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["fromEvent"])(this.document, 'contextmenu').subscribe((/**
+             * @param {?} e
+             * @return {?}
+             */
+            function (e) {
+                e.preventDefault();
+            }));
+            /** @type {?} */
+            var touchMoveListener_1 = Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["fromEvent"])(this.document, 'touchmove', {
+                passive: false,
+            }).subscribe((/**
              * @param {?} touchMoveEvent
              * @return {?}
              */
             function (touchMoveEvent) {
-                if (_this.scrollContainer &&
-                    _this.scrollContainer.activeLongPressDrag &&
+                if (((_this.scrollContainer && _this.scrollContainer.activeLongPressDrag) ||
+                    _this.touchStartLongPress) &&
                     !isDragActivated &&
                     hasContainerScrollbar) {
                     isDragActivated = _this.shouldBeginDrag(event, touchMoveEvent, startScrollPosition);
                 }
-                if (!_this.scrollContainer ||
-                    !_this.scrollContainer.activeLongPressDrag ||
+                if (((!_this.scrollContainer ||
+                    !_this.scrollContainer.activeLongPressDrag) &&
+                    !_this.touchStartLongPress) ||
                     !hasContainerScrollbar ||
                     isDragActivated) {
+                    touchMoveEvent.preventDefault();
                     _this.pointerMove$.next({
                         event: touchMoveEvent,
                         clientX: touchMoveEvent.targetTouches[0].clientX,
-                        clientY: touchMoveEvent.targetTouches[0].clientY
+                        clientY: touchMoveEvent.targetTouches[0].clientY,
                     });
                 }
             }));
+            this.eventListenerSubscriptions.touchmove = (/**
+             * @return {?}
+             */
+            function () {
+                contextMenuListener_1.unsubscribe();
+                touchMoveListener_1.unsubscribe();
+            });
         }
         this.pointerDown$.next({
             event: event,
             clientX: event.touches[0].clientX,
-            clientY: event.touches[0].clientY
+            clientY: event.touches[0].clientY,
         });
     };
     /**
@@ -812,14 +1586,15 @@ var DraggableDirective = /** @class */ (function () {
         if (this.eventListenerSubscriptions.touchmove) {
             this.eventListenerSubscriptions.touchmove();
             delete this.eventListenerSubscriptions.touchmove;
-            if (this.scrollContainer && this.scrollContainer.activeLongPressDrag) {
-                this.scrollContainer.enableScroll();
+            if ((this.scrollContainer && this.scrollContainer.activeLongPressDrag) ||
+                this.touchStartLongPress) {
+                this.enableScroll();
             }
         }
         this.pointerUp$.next({
             event: event,
             clientX: event.changedTouches[0].clientX,
-            clientY: event.changedTouches[0].clientY
+            clientY: event.changedTouches[0].clientY,
         });
     };
     /**
@@ -915,6 +1690,22 @@ var DraggableDirective = /** @class */ (function () {
      * @private
      * @return {?}
      */
+    DraggableDirective.prototype.getScrollElement = /**
+     * @private
+     * @return {?}
+     */
+    function () {
+        if (this.scrollContainer) {
+            return this.scrollContainer.elementRef.nativeElement;
+        }
+        else {
+            return this.document.body;
+        }
+    };
+    /**
+     * @private
+     * @return {?}
+     */
     DraggableDirective.prototype.getScrollPosition = /**
      * @private
      * @return {?}
@@ -923,13 +1714,13 @@ var DraggableDirective = /** @class */ (function () {
         if (this.scrollContainer) {
             return {
                 top: this.scrollContainer.elementRef.nativeElement.scrollTop,
-                left: this.scrollContainer.elementRef.nativeElement.scrollLeft
+                left: this.scrollContainer.elementRef.nativeElement.scrollLeft,
             };
         }
         else {
             return {
-                top: window.pageYOffset || document.documentElement.scrollTop,
-                left: window.pageXOffset || document.documentElement.scrollLeft
+                top: window.pageYOffset || this.document.documentElement.scrollTop,
+                left: window.pageXOffset || this.document.documentElement.scrollLeft,
             };
         }
     };
@@ -953,7 +1744,7 @@ var DraggableDirective = /** @class */ (function () {
         /** @type {?} */
         var deltaScroll = {
             top: Math.abs(moveScrollPosition.top - startScrollPosition.top),
-            left: Math.abs(moveScrollPosition.left - startScrollPosition.left)
+            left: Math.abs(moveScrollPosition.left - startScrollPosition.left),
         };
         /** @type {?} */
         var deltaX = Math.abs(touchMoveEvent.targetTouches[0].clientX - event.touches[0].clientX) - deltaScroll.left;
@@ -961,7 +1752,15 @@ var DraggableDirective = /** @class */ (function () {
         var deltaY = Math.abs(touchMoveEvent.targetTouches[0].clientY - event.touches[0].clientY) - deltaScroll.top;
         /** @type {?} */
         var deltaTotal = deltaX + deltaY;
-        if (deltaTotal > this.scrollContainer.longPressConfig.delta ||
+        /** @type {?} */
+        var longPressConfig = this.touchStartLongPress
+            ? this.touchStartLongPress
+            : /* istanbul ignore next */
+                {
+                    delta: this.scrollContainer.longPressConfig.delta,
+                    delay: this.scrollContainer.longPressConfig.duration,
+                };
+        if (deltaTotal > longPressConfig.delta ||
             deltaScroll.top > 0 ||
             deltaScroll.left > 0) {
             this.timeLongPress.timerBegin = Date.now();
@@ -969,15 +1768,61 @@ var DraggableDirective = /** @class */ (function () {
         this.timeLongPress.timerEnd = Date.now();
         /** @type {?} */
         var duration = this.timeLongPress.timerEnd - this.timeLongPress.timerBegin;
-        if (duration >= this.scrollContainer.longPressConfig.duration) {
-            this.scrollContainer.disableScroll();
+        if (duration >= longPressConfig.delay) {
+            this.disableScroll();
             return true;
         }
         return false;
     };
+    /**
+     * @private
+     * @return {?}
+     */
+    DraggableDirective.prototype.enableScroll = /**
+     * @private
+     * @return {?}
+     */
+    function () {
+        if (this.scrollContainer) {
+            this.renderer.setStyle(this.scrollContainer.elementRef.nativeElement, 'overflow', '');
+        }
+        this.renderer.setStyle(this.document.body, 'overflow', '');
+    };
+    /**
+     * @private
+     * @return {?}
+     */
+    DraggableDirective.prototype.disableScroll = /**
+     * @private
+     * @return {?}
+     */
+    function () {
+        /* istanbul ignore next */
+        if (this.scrollContainer) {
+            this.renderer.setStyle(this.scrollContainer.elementRef.nativeElement, 'overflow', 'hidden');
+        }
+        this.renderer.setStyle(this.document.body, 'overflow', 'hidden');
+    };
+    /**
+     * @private
+     * @return {?}
+     */
+    DraggableDirective.prototype.hasScrollbar = /**
+     * @private
+     * @return {?}
+     */
+    function () {
+        /** @type {?} */
+        var scrollContainer = this.getScrollElement();
+        /** @type {?} */
+        var containerHasHorizontalScroll = scrollContainer.scrollWidth > scrollContainer.clientWidth;
+        /** @type {?} */
+        var containerHasVerticalScroll = scrollContainer.scrollHeight > scrollContainer.clientHeight;
+        return containerHasHorizontalScroll || containerHasVerticalScroll;
+    };
     DraggableDirective.decorators = [
         { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Directive"], args: [{
-                    selector: '[mwlDraggable]'
+                    selector: '[mwlDraggable]',
                 },] }
     ];
     /** @nocollapse */
@@ -1001,6 +1846,8 @@ var DraggableDirective = /** @class */ (function () {
         dragActiveClass: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
         ghostElementAppendTo: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
         ghostElementTemplate: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        touchStartLongPress: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
+        autoScroll: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Input"] }],
         dragPointerDown: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Output"] }],
         dragStart: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Output"] }],
         ghostElementCreated: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Output"] }],
@@ -1063,10 +1910,10 @@ var DroppableDirective = /** @class */ (function () {
          * @return {?}
          */
         function (drag$) {
-            _this.renderer.addClass(_this.element.nativeElement, _this.dragActiveClass);
+            addClass(_this.renderer, _this.element, _this.dragActiveClass);
             /** @type {?} */
             var droppableElement = {
-                updateCache: true
+                updateCache: true,
             };
             /** @type {?} */
             var deregisterScrollListener = _this.renderer.listen(_this.scrollContainer
@@ -1119,13 +1966,13 @@ var DroppableDirective = /** @class */ (function () {
              */
             function () {
                 dragOverActive = true;
-                _this.renderer.addClass(_this.element.nativeElement, _this.dragOverClass);
+                addClass(_this.renderer, _this.element, _this.dragOverClass);
                 _this.zone.run((/**
                  * @return {?}
                  */
                 function () {
                     _this.dragEnter.next({
-                        dropData: currentDragDropData
+                        dropData: currentDragDropData,
                     });
                 }));
             }));
@@ -1142,7 +1989,7 @@ var DroppableDirective = /** @class */ (function () {
                  */
                 function () {
                     _this.dragOver.next({
-                        dropData: currentDragDropData
+                        dropData: currentDragDropData,
                     });
                 }));
             }));
@@ -1160,13 +2007,13 @@ var DroppableDirective = /** @class */ (function () {
              */
             function () {
                 dragOverActive = false;
-                _this.renderer.removeClass(_this.element.nativeElement, _this.dragOverClass);
+                removeClass(_this.renderer, _this.element, _this.dragOverClass);
                 _this.zone.run((/**
                  * @return {?}
                  */
                 function () {
                     _this.dragLeave.next({
-                        dropData: currentDragDropData
+                        dropData: currentDragDropData,
                     });
                 }));
             }));
@@ -1176,19 +2023,19 @@ var DroppableDirective = /** @class */ (function () {
                  */
                 function () {
                     deregisterScrollListener();
-                    _this.renderer.removeClass(_this.element.nativeElement, _this.dragActiveClass);
+                    removeClass(_this.renderer, _this.element, _this.dragActiveClass);
                     if (dragOverActive) {
-                        _this.renderer.removeClass(_this.element.nativeElement, _this.dragOverClass);
+                        removeClass(_this.renderer, _this.element, _this.dragOverClass);
                         _this.zone.run((/**
                          * @return {?}
                          */
                         function () {
                             _this.drop.next({
-                                dropData: currentDragDropData
+                                dropData: currentDragDropData,
                             });
                         }));
                     }
-                })
+                }),
             });
         }));
     };
@@ -1205,7 +2052,7 @@ var DroppableDirective = /** @class */ (function () {
     };
     DroppableDirective.decorators = [
         { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__["Directive"], args: [{
-                    selector: '[mwlDroppable]'
+                    selector: '[mwlDroppable]',
                 },] }
     ];
     /** @nocollapse */
@@ -1239,13 +2086,13 @@ var DragAndDropModule = /** @class */ (function () {
                     declarations: [
                         DraggableDirective,
                         DroppableDirective,
-                        DraggableScrollContainerDirective
+                        DraggableScrollContainerDirective,
                     ],
                     exports: [
                         DraggableDirective,
                         DroppableDirective,
-                        DraggableScrollContainerDirective
-                    ]
+                        DraggableScrollContainerDirective,
+                    ],
                 },] }
     ];
     return DragAndDropModule;
@@ -1361,8 +2208,8 @@ function getElementRect(element, ghostElementPositioning) {
         .map(function (property) { return style[property]; })
         .find(function (value) { return !!value; });
     if (transform && transform.includes('translate')) {
-        translateX = transform.replace(/.*translate\((.*)px, (.*)px\).*/, '$1');
-        translateY = transform.replace(/.*translate\((.*)px, (.*)px\).*/, '$2');
+        translateX = transform.replace(/.*translate3?d?\((-?[0-9]*)px, (-?[0-9]*)px.*/, '$1');
+        translateY = transform.replace(/.*translate3?d?\((-?[0-9]*)px, (-?[0-9]*)px.*/, '$2');
     }
     if (ghostElementPositioning === 'absolute') {
         return {
@@ -1765,16 +2612,18 @@ var ResizableDirective = /** @class */ (function () {
                 _this.renderer.setStyle(currentResize.clonedNode, 'top', newBoundingRect.top + "px");
                 _this.renderer.setStyle(currentResize.clonedNode, 'left', newBoundingRect.left + "px");
             }
-            _this.zone.run(function () {
-                _this.resizing.emit({
-                    edges: getEdgesDiff({
-                        edges: (/** @type {?} */ (currentResize)).edges,
-                        initialRectangle: (/** @type {?} */ (currentResize)).startingRect,
-                        newRectangle: newBoundingRect
-                    }),
-                    rectangle: newBoundingRect
+            if (_this.resizing.observers.length > 0) {
+                _this.zone.run(function () {
+                    _this.resizing.emit({
+                        edges: getEdgesDiff({
+                            edges: (/** @type {?} */ (currentResize)).edges,
+                            initialRectangle: (/** @type {?} */ (currentResize)).startingRect,
+                            newRectangle: newBoundingRect
+                        }),
+                        rectangle: newBoundingRect
+                    });
                 });
-            });
+            }
             (/** @type {?} */ (currentResize)).currentRect = newBoundingRect;
         });
         mousedown$
@@ -1825,32 +2674,36 @@ var ResizableDirective = /** @class */ (function () {
                 (/** @type {?} */ (currentResize.clonedNode)).scrollLeft = (/** @type {?} */ (currentResize.startingRect
                     .scrollLeft));
             }
-            _this.zone.run(function () {
-                _this.resizeStart.emit({
-                    edges: getEdgesDiff({
-                        edges: edges,
-                        initialRectangle: startingRect,
-                        newRectangle: startingRect
-                    }),
-                    rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
+            if (_this.resizeStart.observers.length > 0) {
+                _this.zone.run(function () {
+                    _this.resizeStart.emit({
+                        edges: getEdgesDiff({
+                            edges: edges,
+                            initialRectangle: startingRect,
+                            newRectangle: startingRect
+                        }),
+                        rectangle: getNewBoundingRectangle(startingRect, {}, 0, 0)
+                    });
                 });
-            });
+            }
         });
         mouseup$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["takeUntil"])(this.destroy$)).subscribe(function () {
             if (currentResize) {
                 _this.renderer.removeClass(_this.elm.nativeElement, RESIZE_ACTIVE_CLASS);
                 _this.renderer.setStyle(document.body, 'cursor', '');
                 _this.renderer.setStyle(_this.elm.nativeElement, 'cursor', '');
-                _this.zone.run(function () {
-                    _this.resizeEnd.emit({
-                        edges: getEdgesDiff({
-                            edges: (/** @type {?} */ (currentResize)).edges,
-                            initialRectangle: (/** @type {?} */ (currentResize)).startingRect,
-                            newRectangle: (/** @type {?} */ (currentResize)).currentRect
-                        }),
-                        rectangle: (/** @type {?} */ (currentResize)).currentRect
+                if (_this.resizeEnd.observers.length > 0) {
+                    _this.zone.run(function () {
+                        _this.resizeEnd.emit({
+                            edges: getEdgesDiff({
+                                edges: (/** @type {?} */ (currentResize)).edges,
+                                initialRectangle: (/** @type {?} */ (currentResize)).startingRect,
+                                newRectangle: (/** @type {?} */ (currentResize)).currentRect
+                            }),
+                            rectangle: (/** @type {?} */ (currentResize)).currentRect
+                        });
                     });
-                });
+                }
                 removeGhostElement();
                 currentResize = null;
             }
@@ -2255,1313 +3108,6 @@ var ResizableModule = /** @class */ (function () {
 
 
 //# sourceMappingURL=angular-resizable-element.js.map
-
-/***/ }),
-
-/***/ "./node_modules/animation-frame-polyfill/lib/animation-frame-polyfill.cjs.js":
-/*!***********************************************************************************!*\
-  !*** ./node_modules/animation-frame-polyfill/lib/animation-frame-polyfill.cjs.js ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var prefix = ['webkit', 'moz', 'ms', 'o'];
-
-var requestAnimationFrame = exports.requestAnimationFrame = function () {
-
-  for (var i = 0, limit = prefix.length; i < limit && !window.requestAnimationFrame; ++i) {
-    window.requestAnimationFrame = window[prefix[i] + 'RequestAnimationFrame'];
-  }
-
-  if (!window.requestAnimationFrame) {
-    (function () {
-      var lastTime = 0;
-
-      window.requestAnimationFrame = function (callback) {
-        var now = new Date().getTime();
-        var ttc = Math.max(0, 16 - now - lastTime);
-        var timer = window.setTimeout(function () {
-          return callback(now + ttc);
-        }, ttc);
-
-        lastTime = now + ttc;
-
-        return timer;
-      };
-    })();
-  }
-
-  return window.requestAnimationFrame.bind(window);
-}();
-
-var cancelAnimationFrame = exports.cancelAnimationFrame = function () {
-
-  for (var i = 0, limit = prefix.length; i < limit && !window.cancelAnimationFrame; ++i) {
-    window.cancelAnimationFrame = window[prefix[i] + 'CancelAnimationFrame'] || window[prefix[i] + 'CancelRequestAnimationFrame'];
-  }
-
-  if (!window.cancelAnimationFrame) {
-    window.cancelAnimationFrame = function (timer) {
-      window.clearTimeout(timer);
-    };
-  }
-
-  return window.cancelAnimationFrame.bind(window);
-}();
-
-
-/***/ }),
-
-/***/ "./node_modules/array-from/index.js":
-/*!******************************************!*\
-  !*** ./node_modules/array-from/index.js ***!
-  \******************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = (typeof Array.from === 'function' ?
-  Array.from :
-  __webpack_require__(/*! ./polyfill */ "./node_modules/array-from/polyfill.js")
-);
-
-
-/***/ }),
-
-/***/ "./node_modules/array-from/polyfill.js":
-/*!*********************************************!*\
-  !*** ./node_modules/array-from/polyfill.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// Production steps of ECMA-262, Edition 6, 22.1.2.1
-// Reference: http://www.ecma-international.org/ecma-262/6.0/#sec-array.from
-module.exports = (function() {
-  var isCallable = function(fn) {
-    return typeof fn === 'function';
-  };
-  var toInteger = function (value) {
-    var number = Number(value);
-    if (isNaN(number)) { return 0; }
-    if (number === 0 || !isFinite(number)) { return number; }
-    return (number > 0 ? 1 : -1) * Math.floor(Math.abs(number));
-  };
-  var maxSafeInteger = Math.pow(2, 53) - 1;
-  var toLength = function (value) {
-    var len = toInteger(value);
-    return Math.min(Math.max(len, 0), maxSafeInteger);
-  };
-  var iteratorProp = function(value) {
-    if(value != null) {
-      if(['string','number','boolean','symbol'].indexOf(typeof value) > -1){
-        return Symbol.iterator;
-      } else if (
-        (typeof Symbol !== 'undefined') &&
-        ('iterator' in Symbol) &&
-        (Symbol.iterator in value)
-      ) {
-        return Symbol.iterator;
-      }
-      // Support "@@iterator" placeholder, Gecko 27 to Gecko 35
-      else if ('@@iterator' in value) {
-        return '@@iterator';
-      }
-    }
-  };
-  var getMethod = function(O, P) {
-    // Assert: IsPropertyKey(P) is true.
-    if (O != null && P != null) {
-      // Let func be GetV(O, P).
-      var func = O[P];
-      // ReturnIfAbrupt(func).
-      // If func is either undefined or null, return undefined.
-      if(func == null) {
-        return void 0;
-      }
-      // If IsCallable(func) is false, throw a TypeError exception.
-      if (!isCallable(func)) {
-        throw new TypeError(func + ' is not a function');
-      }
-      return func;
-    }
-  };
-  var iteratorStep = function(iterator) {
-    // Let result be IteratorNext(iterator).
-    // ReturnIfAbrupt(result).
-    var result = iterator.next();
-    // Let done be IteratorComplete(result).
-    // ReturnIfAbrupt(done).
-    var done = Boolean(result.done);
-    // If done is true, return false.
-    if(done) {
-      return false;
-    }
-    // Return result.
-    return result;
-  };
-
-  // The length property of the from method is 1.
-  return function from(items /*, mapFn, thisArg */ ) {
-    'use strict';
-
-    // 1. Let C be the this value.
-    var C = this;
-
-    // 2. If mapfn is undefined, let mapping be false.
-    var mapFn = arguments.length > 1 ? arguments[1] : void 0;
-
-    var T;
-    if (typeof mapFn !== 'undefined') {
-      // 3. else
-      //   a. If IsCallable(mapfn) is false, throw a TypeError exception.
-      if (!isCallable(mapFn)) {
-        throw new TypeError(
-          'Array.from: when provided, the second argument must be a function'
-        );
-      }
-
-      //   b. If thisArg was supplied, let T be thisArg; else let T
-      //      be undefined.
-      if (arguments.length > 2) {
-        T = arguments[2];
-      }
-      //   c. Let mapping be true (implied by mapFn)
-    }
-
-    var A, k;
-
-    // 4. Let usingIterator be GetMethod(items, @@iterator).
-    // 5. ReturnIfAbrupt(usingIterator).
-    var usingIterator = getMethod(items, iteratorProp(items));
-
-    // 6. If usingIterator is not undefined, then
-    if (usingIterator !== void 0) {
-      // a. If IsConstructor(C) is true, then
-      //   i. Let A be the result of calling the [[Construct]]
-      //      internal method of C with an empty argument list.
-      // b. Else,
-      //   i. Let A be the result of the abstract operation ArrayCreate
-      //      with argument 0.
-      // c. ReturnIfAbrupt(A).
-      A = isCallable(C) ? Object(new C()) : [];
-
-      // d. Let iterator be GetIterator(items, usingIterator).
-      var iterator = usingIterator.call(items);
-
-      // e. ReturnIfAbrupt(iterator).
-      if (iterator == null) {
-        throw new TypeError(
-          'Array.from requires an array-like or iterable object'
-        );
-      }
-
-      // f. Let k be 0.
-      k = 0;
-
-      // g. Repeat
-      var next, nextValue;
-      while (true) {
-        // i. Let Pk be ToString(k).
-        // ii. Let next be IteratorStep(iterator).
-        // iii. ReturnIfAbrupt(next).
-        next = iteratorStep(iterator);
-
-        // iv. If next is false, then
-        if (!next) {
-
-          // 1. Let setStatus be Set(A, "length", k, true).
-          // 2. ReturnIfAbrupt(setStatus).
-          A.length = k;
-
-          // 3. Return A.
-          return A;
-        }
-        // v. Let nextValue be IteratorValue(next).
-        // vi. ReturnIfAbrupt(nextValue)
-        nextValue = next.value;
-
-        // vii. If mapping is true, then
-        //   1. Let mappedValue be Call(mapfn, T, «nextValue, k»).
-        //   2. If mappedValue is an abrupt completion, return
-        //      IteratorClose(iterator, mappedValue).
-        //   3. Let mappedValue be mappedValue.[[value]].
-        // viii. Else, let mappedValue be nextValue.
-        // ix.  Let defineStatus be the result of
-        //      CreateDataPropertyOrThrow(A, Pk, mappedValue).
-        // x. [TODO] If defineStatus is an abrupt completion, return
-        //    IteratorClose(iterator, defineStatus).
-        if (mapFn) {
-          A[k] = mapFn.call(T, nextValue, k);
-        }
-        else {
-          A[k] = nextValue;
-        }
-        // xi. Increase k by 1.
-        k++;
-      }
-      // 7. Assert: items is not an Iterable so assume it is
-      //    an array-like object.
-    } else {
-
-      // 8. Let arrayLike be ToObject(items).
-      var arrayLike = Object(items);
-
-      // 9. ReturnIfAbrupt(items).
-      if (items == null) {
-        throw new TypeError(
-          'Array.from requires an array-like object - not null or undefined'
-        );
-      }
-
-      // 10. Let len be ToLength(Get(arrayLike, "length")).
-      // 11. ReturnIfAbrupt(len).
-      var len = toLength(arrayLike.length);
-
-      // 12. If IsConstructor(C) is true, then
-      //     a. Let A be Construct(C, «len»).
-      // 13. Else
-      //     a. Let A be ArrayCreate(len).
-      // 14. ReturnIfAbrupt(A).
-      A = isCallable(C) ? Object(new C(len)) : new Array(len);
-
-      // 15. Let k be 0.
-      k = 0;
-      // 16. Repeat, while k < len… (also steps a - h)
-      var kValue;
-      while (k < len) {
-        kValue = arrayLike[k];
-        if (mapFn) {
-          A[k] = mapFn.call(T, kValue, k);
-        }
-        else {
-          A[k] = kValue;
-        }
-        k++;
-      }
-      // 17. Let setStatus be Set(A, "length", len, true).
-      // 18. ReturnIfAbrupt(setStatus).
-      A.length = len;
-      // 19. Return A.
-    }
-    return A;
-  };
-})();
-
-
-/***/ }),
-
-/***/ "./node_modules/create-point-cb/dist/bundle.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/create-point-cb/dist/bundle.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var typeFunc = __webpack_require__(/*! type-func */ "./node_modules/type-func/dist/bundle.js");
-
-function createPointCB(object, options) {
-
-    // A persistent object (as opposed to returned object) is used to save memory
-    // This is good to prevent layout thrashing, or for games, and such
-
-    // NOTE
-    // This uses IE fixes which should be OK to remove some day. :)
-    // Some speed will be gained by removal of these.
-
-    // pointCB should be saved in a variable on return
-    // This allows the usage of element.removeEventListener
-
-    options = options || {};
-
-    var allowUpdate = typeFunc.boolean(options.allowUpdate, true);
-
-    /*if(typeof options.allowUpdate === 'function'){
-        allowUpdate = options.allowUpdate;
-    }else{
-        allowUpdate = function(){return true;};
-    }*/
-
-    return function pointCB(event) {
-
-        event = event || window.event; // IE-ism
-        object.target = event.target || event.srcElement || event.originalTarget;
-        object.element = this;
-        object.type = event.type;
-
-        if (!allowUpdate(event)) {
-            return;
-        }
-
-        // Support touch
-        // http://www.creativebloq.com/javascript/make-your-site-work-touch-devices-51411644
-
-        if (event.targetTouches) {
-            object.x = event.targetTouches[0].clientX;
-            object.y = event.targetTouches[0].clientY;
-            object.pageX = event.targetTouches[0].pageX;
-            object.pageY = event.targetTouches[0].pageY;
-            object.screenX = event.targetTouches[0].screenX;
-            object.screenY = event.targetTouches[0].screenY;
-        } else {
-
-            // If pageX/Y aren't available and clientX/Y are,
-            // calculate pageX/Y - logic taken from jQuery.
-            // (This is to support old IE)
-            // NOTE Hopefully this can be removed soon.
-
-            if (event.pageX === null && event.clientX !== null) {
-                var eventDoc = event.target && event.target.ownerDocument || document;
-                var doc = eventDoc.documentElement;
-                var body = eventDoc.body;
-
-                object.pageX = event.clientX + (doc && doc.scrollLeft || body && body.scrollLeft || 0) - (doc && doc.clientLeft || body && body.clientLeft || 0);
-                object.pageY = event.clientY + (doc && doc.scrollTop || body && body.scrollTop || 0) - (doc && doc.clientTop || body && body.clientTop || 0);
-            } else {
-                object.pageX = event.pageX;
-                object.pageY = event.pageY;
-            }
-
-            // pageX, and pageY change with page scroll
-            // so we're not going to use those for x, and y.
-            // NOTE Most browsers also alias clientX/Y with x/y
-            // so that's something to consider down the road.
-
-            object.x = event.clientX;
-            object.y = event.clientY;
-
-            object.screenX = event.screenX;
-            object.screenY = event.screenY;
-        }
-
-        object.clientX = object.x;
-        object.clientY = object.y;
-    };
-
-    //NOTE Remember accessibility, Aria roles, and labels.
-}
-
-/*
-git remote add origin https://github.com/hollowdoor/create_point_cb.git
-git push -u origin master
-*/
-
-module.exports = createPointCB;
-//# sourceMappingURL=bundle.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/dom-autoscroller/dist/bundle.js":
-/*!******************************************************!*\
-  !*** ./node_modules/dom-autoscroller/dist/bundle.js ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var typeFunc = __webpack_require__(/*! type-func */ "./node_modules/type-func/dist/bundle.js");
-var animationFramePolyfill = __webpack_require__(/*! animation-frame-polyfill */ "./node_modules/animation-frame-polyfill/lib/animation-frame-polyfill.cjs.js");
-var domSet = __webpack_require__(/*! dom-set */ "./node_modules/dom-set/dist/bundle.js");
-var domPlane = __webpack_require__(/*! dom-plane */ "./node_modules/dom-plane/dist/bundle.js");
-var mousemoveDispatcher = _interopDefault(__webpack_require__(/*! dom-mousemove-dispatcher */ "./node_modules/dom-mousemove-dispatcher/dist/bundle.js"));
-
-function AutoScroller(elements, options){
-    if ( options === void 0 ) options = {};
-
-    var self = this;
-    var maxSpeed = 4, scrolling = false;
-
-    this.margin = options.margin || -1;
-    //this.scrolling = false;
-    this.scrollWhenOutside = options.scrollWhenOutside || false;
-
-    var point = {},
-        pointCB = domPlane.createPointCB(point),
-        dispatcher = mousemoveDispatcher(),
-        down = false;
-
-    window.addEventListener('mousemove', pointCB, false);
-    window.addEventListener('touchmove', pointCB, false);
-
-    if(!isNaN(options.maxSpeed)){
-        maxSpeed = options.maxSpeed;
-    }
-
-    this.autoScroll = typeFunc.boolean(options.autoScroll);
-    this.syncMove = typeFunc.boolean(options.syncMove, false);
-
-    this.destroy = function(forceCleanAnimation) {
-        window.removeEventListener('mousemove', pointCB, false);
-        window.removeEventListener('touchmove', pointCB, false);
-        window.removeEventListener('mousedown', onDown, false);
-        window.removeEventListener('touchstart', onDown, false);
-        window.removeEventListener('mouseup', onUp, false);
-        window.removeEventListener('touchend', onUp, false);
-        window.removeEventListener('pointerup', onUp, false);
-        window.removeEventListener('mouseleave', onMouseOut, false);
-
-        window.removeEventListener('mousemove', onMove, false);
-        window.removeEventListener('touchmove', onMove, false);
-
-        window.removeEventListener('scroll', setScroll, true);
-        elements = [];
-        if(forceCleanAnimation){
-          cleanAnimation();
-        }
-    };
-
-    this.add = function(){
-        var element = [], len = arguments.length;
-        while ( len-- ) element[ len ] = arguments[ len ];
-
-        domSet.addElements.apply(void 0, [ elements ].concat( element ));
-        return this;
-    };
-
-    this.remove = function(){
-        var element = [], len = arguments.length;
-        while ( len-- ) element[ len ] = arguments[ len ];
-
-        return domSet.removeElements.apply(void 0, [ elements ].concat( element ));
-    };
-
-    var hasWindow = null, windowAnimationFrame;
-
-    if(Object.prototype.toString.call(elements) !== '[object Array]'){
-        elements = [elements];
-    }
-
-    (function(temp){
-        elements = [];
-        temp.forEach(function(element){
-            if(element === window){
-                hasWindow = window;
-            }else{
-                self.add(element);
-            }
-        });
-    }(elements));
-
-    Object.defineProperties(this, {
-        down: {
-            get: function(){ return down; }
-        },
-        maxSpeed: {
-            get: function(){ return maxSpeed; }
-        },
-        point: {
-            get: function(){ return point; }
-        },
-        scrolling: {
-            get: function(){ return scrolling; }
-        }
-    });
-
-    var n = 0, current = null, animationFrame;
-
-    window.addEventListener('mousedown', onDown, false);
-    window.addEventListener('touchstart', onDown, false);
-    window.addEventListener('mouseup', onUp, false);
-    window.addEventListener('touchend', onUp, false);
-
-    /*
-    IE does not trigger mouseup event when scrolling.
-    It is a known issue that Microsoft won't fix.
-    https://connect.microsoft.com/IE/feedback/details/783058/scrollbar-trigger-mousedown-but-not-mouseup
-    IE supports pointer events instead
-    */
-    window.addEventListener('pointerup', onUp, false);
-
-    window.addEventListener('mousemove', onMove, false);
-    window.addEventListener('touchmove', onMove, false);
-
-    window.addEventListener('mouseleave', onMouseOut, false);
-
-    window.addEventListener('scroll', setScroll, true);
-
-    function setScroll(e){
-
-        for(var i=0; i<elements.length; i++){
-            if(elements[i] === e.target){
-                scrolling = true;
-                break;
-            }
-        }
-
-        if(scrolling){
-            animationFramePolyfill.requestAnimationFrame(function (){ return scrolling = false; });
-        }
-    }
-
-    function onDown(){
-        down = true;
-    }
-
-    function onUp(){
-        down = false;
-        cleanAnimation();
-    }
-    function cleanAnimation(){
-      animationFramePolyfill.cancelAnimationFrame(animationFrame);
-      animationFramePolyfill.cancelAnimationFrame(windowAnimationFrame);
-    }
-    function onMouseOut(){
-        down = false;
-    }
-
-    function getTarget(target){
-        if(!target){
-            return null;
-        }
-
-        if(current === target){
-            return target;
-        }
-
-        if(domSet.hasElement(elements, target)){
-            return target;
-        }
-
-        while(target = target.parentNode){
-            if(domSet.hasElement(elements, target)){
-                return target;
-            }
-        }
-
-        return null;
-    }
-
-    function getElementUnderPoint(){
-        var underPoint = null;
-
-        for(var i=0; i<elements.length; i++){
-            if(inside(point, elements[i])){
-                underPoint = elements[i];
-            }
-        }
-
-        return underPoint;
-    }
-
-
-    function onMove(event){
-
-        if(!self.autoScroll()) { return; }
-
-        if(event['dispatched']){ return; }
-
-        var target = event.target, body = document.body;
-
-        if(current && !inside(point, current)){
-            if(!self.scrollWhenOutside){
-                current = null;
-            }
-        }
-
-        if(target && target.parentNode === body){
-            //The special condition to improve speed.
-            target = getElementUnderPoint();
-        }else{
-            target = getTarget(target);
-
-            if(!target){
-                target = getElementUnderPoint();
-            }
-        }
-
-
-        if(target && target !== current){
-            current = target;
-        }
-
-        if(hasWindow){
-            animationFramePolyfill.cancelAnimationFrame(windowAnimationFrame);
-            windowAnimationFrame = animationFramePolyfill.requestAnimationFrame(scrollWindow);
-        }
-
-
-        if(!current){
-            return;
-        }
-
-        animationFramePolyfill.cancelAnimationFrame(animationFrame);
-        animationFrame = animationFramePolyfill.requestAnimationFrame(scrollTick);
-    }
-
-    function scrollWindow(){
-        autoScroll(hasWindow);
-
-        animationFramePolyfill.cancelAnimationFrame(windowAnimationFrame);
-        windowAnimationFrame = animationFramePolyfill.requestAnimationFrame(scrollWindow);
-    }
-
-    function scrollTick(){
-
-        if(!current){
-            return;
-        }
-
-        autoScroll(current);
-
-        animationFramePolyfill.cancelAnimationFrame(animationFrame);
-        animationFrame = animationFramePolyfill.requestAnimationFrame(scrollTick);
-
-    }
-
-
-    function autoScroll(el){
-        var rect = domPlane.getClientRect(el), scrollx, scrolly;
-
-        if(point.x < rect.left + self.margin){
-            scrollx = Math.floor(
-                Math.max(-1, (point.x - rect.left) / self.margin - 1) * self.maxSpeed
-            );
-        }else if(point.x > rect.right - self.margin){
-            scrollx = Math.ceil(
-                Math.min(1, (point.x - rect.right) / self.margin + 1) * self.maxSpeed
-            );
-        }else{
-            scrollx = 0;
-        }
-
-        if(point.y < rect.top + self.margin){
-            scrolly = Math.floor(
-                Math.max(-1, (point.y - rect.top) / self.margin - 1) * self.maxSpeed
-            );
-        }else if(point.y > rect.bottom - self.margin){
-            scrolly = Math.ceil(
-                Math.min(1, (point.y - rect.bottom) / self.margin + 1) * self.maxSpeed
-            );
-        }else{
-            scrolly = 0;
-        }
-
-        if(self.syncMove()){
-            /*
-            Notes about mousemove event dispatch.
-            screen(X/Y) should need to be updated.
-            Some other properties might need to be set.
-            Keep the syncMove option default false until all inconsistencies are taken care of.
-            */
-            dispatcher.dispatch(el, {
-                pageX: point.pageX + scrollx,
-                pageY: point.pageY + scrolly,
-                clientX: point.x + scrollx,
-                clientY: point.y + scrolly
-            });
-        }
-
-        setTimeout(function (){
-
-            if(scrolly){
-                scrollY(el, scrolly);
-            }
-
-            if(scrollx){
-                scrollX(el, scrollx);
-            }
-
-        });
-    }
-
-    function scrollY(el, amount){
-        if(el === window){
-            window.scrollTo(el.pageXOffset, el.pageYOffset + amount);
-        }else{
-            el.scrollTop += amount;
-        }
-    }
-
-    function scrollX(el, amount){
-        if(el === window){
-            window.scrollTo(el.pageXOffset + amount, el.pageYOffset);
-        }else{
-            el.scrollLeft += amount;
-        }
-    }
-
-}
-
-function AutoScrollerFactory(element, options){
-    return new AutoScroller(element, options);
-}
-
-function inside(point, el, rect){
-    if(!rect){
-        return domPlane.pointInside(point, el);
-    }else{
-        return (point.y > rect.top && point.y < rect.bottom &&
-                point.x > rect.left && point.x < rect.right);
-    }
-}
-
-/*
-git remote add origin https://github.com/hollowdoor/dom_autoscroller.git
-git push -u origin master
-*/
-
-module.exports = AutoScrollerFactory;
-//# sourceMappingURL=bundle.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/dom-mousemove-dispatcher/dist/bundle.js":
-/*!**************************************************************!*\
-  !*** ./node_modules/dom-mousemove-dispatcher/dist/bundle.js ***!
-  \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var objectCreate = void 0;
-if (typeof Object.create != 'function') {
-  objectCreate = function (undefined) {
-    var Temp = function Temp() {};
-    return function (prototype, propertiesObject) {
-      if (prototype !== Object(prototype) && prototype !== null) {
-        throw TypeError('Argument must be an object, or null');
-      }
-      Temp.prototype = prototype || {};
-      var result = new Temp();
-      Temp.prototype = null;
-      if (propertiesObject !== undefined) {
-        Object.defineProperties(result, propertiesObject);
-      }
-
-      // to imitate the case of Object.create(null)
-      if (prototype === null) {
-        result.__proto__ = null;
-      }
-      return result;
-    };
-  }();
-} else {
-  objectCreate = Object.create;
-}
-
-var objectCreate$1 = objectCreate;
-
-var mouseEventProps = ['altKey', 'button', 'buttons', 'clientX', 'clientY', 'ctrlKey', 'metaKey', 'movementX', 'movementY', 'offsetX', 'offsetY', 'pageX', 'pageY', 'region', 'relatedTarget', 'screenX', 'screenY', 'shiftKey', 'which', 'x', 'y'];
-
-function createDispatcher(element) {
-
-    var defaultSettings = {
-        screenX: 0,
-        screenY: 0,
-        clientX: 0,
-        clientY: 0,
-        ctrlKey: false,
-        shiftKey: false,
-        altKey: false,
-        metaKey: false,
-        button: 0,
-        buttons: 1,
-        relatedTarget: null,
-        region: null
-    };
-
-    if (element !== undefined) {
-        element.addEventListener('mousemove', onMove);
-    }
-
-    function onMove(e) {
-        for (var i = 0; i < mouseEventProps.length; i++) {
-            defaultSettings[mouseEventProps[i]] = e[mouseEventProps[i]];
-        }
-    }
-
-    var dispatch = function () {
-        if (MouseEvent) {
-            return function m1(element, initMove, data) {
-                var evt = new MouseEvent('mousemove', createMoveInit(defaultSettings, initMove));
-
-                //evt.dispatched = 'mousemove';
-                setSpecial(evt, data);
-
-                return element.dispatchEvent(evt);
-            };
-        } else if (typeof document.createEvent === 'function') {
-            return function m2(element, initMove, data) {
-                var settings = createMoveInit(defaultSettings, initMove);
-                var evt = document.createEvent('MouseEvents');
-
-                evt.initMouseEvent("mousemove", true, //can bubble
-                true, //cancelable
-                window, //view
-                0, //detail
-                settings.screenX, //0, //screenX
-                settings.screenY, //0, //screenY
-                settings.clientX, //80, //clientX
-                settings.clientY, //20, //clientY
-                settings.ctrlKey, //false, //ctrlKey
-                settings.altKey, //false, //altKey
-                settings.shiftKey, //false, //shiftKey
-                settings.metaKey, //false, //metaKey
-                settings.button, //0, //button
-                settings.relatedTarget //null //relatedTarget
-                );
-
-                //evt.dispatched = 'mousemove';
-                setSpecial(evt, data);
-
-                return element.dispatchEvent(evt);
-            };
-        } else if (typeof document.createEventObject === 'function') {
-            return function m3(element, initMove, data) {
-                var evt = document.createEventObject();
-                var settings = createMoveInit(defaultSettings, initMove);
-                for (var name in settings) {
-                    evt[name] = settings[name];
-                }
-
-                //evt.dispatched = 'mousemove';
-                setSpecial(evt, data);
-
-                return element.dispatchEvent(evt);
-            };
-        }
-    }();
-
-    function destroy() {
-        if (element) element.removeEventListener('mousemove', onMove, false);
-        defaultSettings = null;
-    }
-
-    return {
-        destroy: destroy,
-        dispatch: dispatch
-    };
-}
-
-function createMoveInit(defaultSettings, initMove) {
-    initMove = initMove || {};
-    var settings = objectCreate$1(defaultSettings);
-    for (var i = 0; i < mouseEventProps.length; i++) {
-        if (initMove[mouseEventProps[i]] !== undefined) settings[mouseEventProps[i]] = initMove[mouseEventProps[i]];
-    }
-
-    return settings;
-}
-
-function setSpecial(e, data) {
-    console.log('data ', data);
-    e.data = data || {};
-    e.dispatched = 'mousemove';
-}
-
-/*
-http://marcgrabanski.com/simulating-mouse-click-events-in-javascript/
-*/
-
-module.exports = createDispatcher;
-//# sourceMappingURL=bundle.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/dom-plane/dist/bundle.js":
-/*!***********************************************!*\
-  !*** ./node_modules/dom-plane/dist/bundle.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var createPointCb = _interopDefault(__webpack_require__(/*! create-point-cb */ "./node_modules/create-point-cb/dist/bundle.js"));
-
-function createWindowRect() {
-    var props = {
-        top: { value: 0, enumerable: true },
-        left: { value: 0, enumerable: true },
-        right: { value: window.innerWidth, enumerable: true },
-        bottom: { value: window.innerHeight, enumerable: true },
-        width: { value: window.innerWidth, enumerable: true },
-        height: { value: window.innerHeight, enumerable: true },
-        x: { value: 0, enumerable: true },
-        y: { value: 0, enumerable: true }
-    };
-
-    if (Object.create) {
-        return Object.create({}, props);
-    } else {
-        var rect = {};
-        Object.defineProperties(rect, props);
-        return rect;
-    }
-}
-
-function getClientRect(el) {
-    if (el === window) {
-        return createWindowRect();
-    } else {
-        try {
-            var rect = el.getBoundingClientRect();
-            if (rect.x === undefined) {
-                rect.x = rect.left;
-                rect.y = rect.top;
-            }
-            return rect;
-        } catch (e) {
-            throw new TypeError("Can't call getBoundingClientRect on " + el);
-        }
-    }
-}
-
-function pointInside(point, el) {
-    var rect = getClientRect(el);
-    return point.y > rect.top && point.y < rect.bottom && point.x > rect.left && point.x < rect.right;
-}
-
-exports.createPointCB = createPointCb;
-exports.getClientRect = getClientRect;
-exports.pointInside = pointInside;
-//# sourceMappingURL=bundle.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/dom-set/dist/bundle.js":
-/*!*********************************************!*\
-  !*** ./node_modules/dom-set/dist/bundle.js ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var arrayFrom = _interopDefault(__webpack_require__(/*! array-from */ "./node_modules/array-from/index.js"));
-var isArray = _interopDefault(__webpack_require__(/*! is-array */ "./node_modules/is-array/index.js"));
-var isElement = _interopDefault(__webpack_require__(/*! iselement */ "./node_modules/iselement/module/index.js"));
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-/**
- * Returns `true` if provided input is Element.
- * @name isElement
- * @param {*} [input]
- * @returns {boolean}
- */
-var isElement$1 = function (input) {
-  return input != null && (typeof input === 'undefined' ? 'undefined' : _typeof(input)) === 'object' && input.nodeType === 1 && _typeof(input.style) === 'object' && _typeof(input.ownerDocument) === 'object';
-};
-
-function select(selector){
-    if(typeof selector === 'string'){
-        try{
-            return document.querySelector(selector);
-        }catch(e){
-            throw e;
-        }
-    }else if(isElement(selector)){
-        return selector;
-    }
-}
-
-function selectAll(selector){
-    if(typeof selector === 'string'){
-        return Array.prototype.slice.apply(
-            document.querySelectorAll(selector)
-        );
-    }else if(isArray(selector)){
-        return selector.map(select);
-    }else if('length' in selector){
-        return arrayFrom(selector).map(select);
-    }
-}
-
-function indexOfElement(elements, element){
-    element = resolveElement(element, true);
-    if(!isElement$1(element)) { return -1; }
-    for(var i=0; i<elements.length; i++){
-        if(elements[i] === element){
-            return i;
-        }
-    }
-    return -1;
-}
-
-function hasElement(elements, element){
-    return -1 !== indexOfElement(elements, element);
-}
-
-function domListOf(arr){
-
-    if(!arr) { return []; }
-
-    try{
-        if(typeof arr === 'string'){
-            return arrayFrom(document.querySelectorAll(arr));
-        }else if(isArray(arr)){
-            return arr.map(resolveElement);
-        }else{
-            if(typeof arr.length === 'undefined'){
-                return [resolveElement(arr)];
-            }
-
-            return arrayFrom(arr, resolveElement);
-
-        }
-    }catch(e){
-        throw new Error(e);
-    }
-
-}
-
-function concatElementLists(){
-    var lists = [], len = arguments.length;
-    while ( len-- ) lists[ len ] = arguments[ len ];
-
-    return lists.reduce(function (last, list){
-        return list.length ? last : last.concat(domListOf(list));
-    }, []);
-}
-
-function pushElements(elements, toAdd){
-
-    for(var i=0; i<toAdd.length; i++){
-        if(!hasElement(elements, toAdd[i]))
-            { elements.push(toAdd[i]); }
-    }
-
-    return toAdd;
-}
-
-function addElements(elements){
-    var toAdd = [], len = arguments.length - 1;
-    while ( len-- > 0 ) toAdd[ len ] = arguments[ len + 1 ];
-
-    toAdd = toAdd.map(resolveElement);
-    return pushElements(elements, toAdd);
-}
-
-function removeElements(elements){
-    var toRemove = [], len = arguments.length - 1;
-    while ( len-- > 0 ) toRemove[ len ] = arguments[ len + 1 ];
-
-    return toRemove.map(resolveElement).reduce(function (last, e){
-
-        var index = indexOfElement(elements, e);
-
-        if(index !== -1)
-            { return last.concat(elements.splice(index, 1)); }
-        return last;
-    }, []);
-}
-
-function resolveElement(element, noThrow){
-    if(typeof element === 'string'){
-        try{
-            return document.querySelector(element);
-        }catch(e){
-            throw e;
-        }
-
-    }
-
-    if(!isElement$1(element) && !noThrow){
-        throw new TypeError((element + " is not a DOM element."));
-    }
-    return element;
-}
-
-exports.indexOfElement = indexOfElement;
-exports.hasElement = hasElement;
-exports.domListOf = domListOf;
-exports.concatElementLists = concatElementLists;
-exports.addElements = addElements;
-exports.removeElements = removeElements;
-exports.resolveElement = resolveElement;
-exports.select = select;
-exports.selectAll = selectAll;
-//# sourceMappingURL=bundle.js.map
-
-
-/***/ }),
-
-/***/ "./node_modules/is-array/index.js":
-/*!****************************************!*\
-  !*** ./node_modules/is-array/index.js ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-
-/**
- * isArray
- */
-
-var isArray = Array.isArray;
-
-/**
- * toString
- */
-
-var str = Object.prototype.toString;
-
-/**
- * Whether or not the given `val`
- * is an array.
- *
- * example:
- *
- *        isArray([]);
- *        // > true
- *        isArray(arguments);
- *        // > false
- *        isArray('');
- *        // > false
- *
- * @param {mixed} val
- * @return {bool}
- */
-
-module.exports = isArray || function (val) {
-  return !! val && '[object Array]' == str.call(val);
-};
-
-
-/***/ }),
-
-/***/ "./node_modules/iselement/module/index.js":
-/*!************************************************!*\
-  !*** ./node_modules/iselement/module/index.js ***!
-  \************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
-/**
- * Returns `true` if provided input is Element.
- * @name isElement
- * @param {*} [input]
- * @returns {boolean}
- */
-/* harmony default export */ __webpack_exports__["default"] = (function (input) {
-  return input != null && (typeof input === 'undefined' ? 'undefined' : _typeof(input)) === 'object' && input.nodeType === 1 && _typeof(input.style) === 'object' && _typeof(input.ownerDocument) === 'object';
-});
-
-/***/ }),
-
-/***/ "./node_modules/type-func/dist/bundle.js":
-/*!***********************************************!*\
-  !*** ./node_modules/type-func/dist/bundle.js ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-function getDef(f, d) {
-    if (typeof f === 'undefined') {
-        return typeof d === 'undefined' ? f : d;
-    }
-
-    return f;
-}
-function boolean(func, def) {
-
-    func = getDef(func, def);
-
-    if (typeof func === 'function') {
-        return function f() {
-            for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-                args[_key] = arguments[_key];
-            }
-
-            return !!func.apply(this, args);
-        };
-    }
-
-    return !!func ? function () {
-        return true;
-    } : function () {
-        return false;
-    };
-}
-
-function integer(func, def) {
-
-    func = getDef(func, def);
-
-    if (typeof func === 'function') {
-        return function f() {
-            for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-                args[_key2] = arguments[_key2];
-            }
-
-            var n = parseInt(func.apply(this, args), 10);
-            return n != n ? 0 : n;
-        };
-    }
-
-    func = parseInt(func, 10);
-
-    return func != func ? function () {
-        return 0;
-    } : function () {
-        return func;
-    };
-}
-
-function string(func, def) {
-
-    func = getDef(func, def);
-
-    if (typeof func === 'function') {
-        return function f() {
-            for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-                args[_key3] = arguments[_key3];
-            }
-
-            return '' + func.apply(this, args);
-        };
-    }
-
-    func = '' + func;
-
-    return function () {
-        return func;
-    };
-}
-
-exports.boolean = boolean;
-exports.integer = integer;
-exports.string = string;
-//# sourceMappingURL=bundle.js.map
-
 
 /***/ })
 

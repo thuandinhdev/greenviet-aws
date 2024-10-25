@@ -184,7 +184,7 @@ class TimesheetRepository
                 $value->timesheets_status = DB::table('gv_timesheets')->where('created_user_id', $value->id)->where('module_id', 2)->where('status', '<', 2)->count();
                 $value->department_role = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $value->id)->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
             }
-            if($department->department_name == 'Project' && $department->role_name == 'Manager'){
+            if($department->department_name == 'Project'){
                 $value->timesheets_status = DB::table('gv_timesheets')->where('created_user_id', $value->id)->where('module_id', 2)->where('status', 0)->count();
                 $value->department_role = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $value->id)->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
             }

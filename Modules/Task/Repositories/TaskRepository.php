@@ -72,14 +72,13 @@ class TaskRepository
         $user = Auth::user();
 
         $columns = array(
-            0 => $task_table . '.id',
-            1 => $task_table . '.name',
+            0 => $task_table . '.name',
+            1 => $project_table . '.project_name',
             2 => $task_table . '.task_start_date',
             3 => $task_table . '.task_end_date',
-            4 => $task_table . '.actual_hours',
-            5 => $user_table . '.firstname',
-            6 => $task_table . '.priority',
-            7 => $task_table . '.status',
+            4 => $task_table . '.progress',
+            5 => $task_table . '.priority',
+            6 => $task_table . '.status',
         );
 
         if ($request->get('isUserProfile') && $request->has('user_id')) {
@@ -87,8 +86,8 @@ class TaskRepository
             $statusCount = [];
 
             $columns = array(
-                0 => $task_table . '.id',
-                1 => $task_table . '.name',
+                0 => $task_table . '.name',
+                1 => $project_table . '.project_name',
                 2 => $task_table . '.task_start_date',
                 3 => $task_table . '.task_end_date',
                 4 => $task_table . '.progress',

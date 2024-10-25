@@ -313,10 +313,10 @@ class ProjectRepository
         if ($project) {
             $result = $project;
             $result['current_user_id'] = $user->id;
-            $assign_members = explode(",", $project['assign_members']);
-            $result['assign_members'] = User::select('id', 'firstname', 'lastname', 'avatar')
-                ->whereIn('id', $assign_members)
-                ->get();
+            // $assign_members = explode(",", $project['assign_members']);
+            // $result['assign_members'] = User::select('id', 'firstname', 'lastname', 'avatar')
+            //     ->whereIn('id', $assign_members)
+            //     ->get();
 
             $result['custom_fields'] = CustomField::getViewFields(1)->get();
             $result['activities'] = UserActivity::getActivities(['Project', 'ProjectComment', 'ProjectAttachment'], $id)->get();

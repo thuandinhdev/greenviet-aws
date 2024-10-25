@@ -105,7 +105,7 @@ var HolidayService = /** @class */ (function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("bs-datepicker-container,\nbs-daterangepicker-container {\n  z-index: 5000 !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9BcHBsaWNhdGlvbnMvTUFNUC9odGRvY3MvZ3YtZGV2ZWxvcGVyL2FuZ3VsYXIvc3JjL2FwcC9tb2R1bGVzL2FkbWluL2hvbGlkYXkvY29tcG9uZW50cy9jcmVhdGUtaG9saWRheS1tb2RhbC9jcmVhdGUtaG9saWRheS1tb2RhbC5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvbW9kdWxlcy9hZG1pbi9ob2xpZGF5L2NvbXBvbmVudHMvY3JlYXRlLWhvbGlkYXktbW9kYWwvY3JlYXRlLWhvbGlkYXktbW9kYWwuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0VBRUUsd0JBQUE7QUNDRiIsImZpbGUiOiJzcmMvYXBwL21vZHVsZXMvYWRtaW4vaG9saWRheS9jb21wb25lbnRzL2NyZWF0ZS1ob2xpZGF5LW1vZGFsL2NyZWF0ZS1ob2xpZGF5LW1vZGFsLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiYnMtZGF0ZXBpY2tlci1jb250YWluZXIsXG5icy1kYXRlcmFuZ2VwaWNrZXItY29udGFpbmVyIHtcbiAgei1pbmRleDogNTAwMCAhaW1wb3J0YW50O1xufSIsImJzLWRhdGVwaWNrZXItY29udGFpbmVyLFxuYnMtZGF0ZXJhbmdlcGlja2VyLWNvbnRhaW5lciB7XG4gIHotaW5kZXg6IDUwMDAgIWltcG9ydGFudDtcbn0iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = ("bs-datepicker-container,\nbs-daterangepicker-container {\n  z-index: 5000 !important;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW9kdWxlcy9hZG1pbi9ob2xpZGF5L2NvbXBvbmVudHMvY3JlYXRlLWhvbGlkYXktbW9kYWwvQzpcXHhhbXBwXFxodGRvY3NcXGd2LWRldmVsb3BlclxcYW5ndWxhci9zcmNcXGFwcFxcbW9kdWxlc1xcYWRtaW5cXGhvbGlkYXlcXGNvbXBvbmVudHNcXGNyZWF0ZS1ob2xpZGF5LW1vZGFsXFxjcmVhdGUtaG9saWRheS1tb2RhbC5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvbW9kdWxlcy9hZG1pbi9ob2xpZGF5L2NvbXBvbmVudHMvY3JlYXRlLWhvbGlkYXktbW9kYWwvY3JlYXRlLWhvbGlkYXktbW9kYWwuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7O0VBRUUsd0JBQUE7QUNDRiIsImZpbGUiOiJzcmMvYXBwL21vZHVsZXMvYWRtaW4vaG9saWRheS9jb21wb25lbnRzL2NyZWF0ZS1ob2xpZGF5LW1vZGFsL2NyZWF0ZS1ob2xpZGF5LW1vZGFsLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiYnMtZGF0ZXBpY2tlci1jb250YWluZXIsXG5icy1kYXRlcmFuZ2VwaWNrZXItY29udGFpbmVyIHtcbiAgei1pbmRleDogNTAwMCAhaW1wb3J0YW50O1xufSIsImJzLWRhdGVwaWNrZXItY29udGFpbmVyLFxuYnMtZGF0ZXJhbmdlcGlja2VyLWNvbnRhaW5lciB7XG4gIHotaW5kZXg6IDUwMDAgIWltcG9ydGFudDtcbn0iXX0= */");
 
 /***/ }),
 
@@ -495,7 +495,7 @@ function HttpLoaderFactory(http) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".hide_empty_message ::ng-deep .odd {\n  display: none;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9BcHBsaWNhdGlvbnMvTUFNUC9odGRvY3MvZ3YtZGV2ZWxvcGVyL2FuZ3VsYXIvc3JjL2FwcC9tb2R1bGVzL2FkbWluL2hvbGlkYXkvcGFnZXMvaG9saWRheS9ob2xpZGF5LmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9tb2R1bGVzL2FkbWluL2hvbGlkYXkvcGFnZXMvaG9saWRheS9ob2xpZGF5LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksYUFBQTtBQ0NKIiwiZmlsZSI6InNyYy9hcHAvbW9kdWxlcy9hZG1pbi9ob2xpZGF5L3BhZ2VzL2hvbGlkYXkvaG9saWRheS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5oaWRlX2VtcHR5X21lc3NhZ2UgOjpuZy1kZWVwIC5vZGQge1xuICAgIGRpc3BsYXk6IG5vbmVcbn0iLCIuaGlkZV9lbXB0eV9tZXNzYWdlIDo6bmctZGVlcCAub2RkIHtcbiAgZGlzcGxheTogbm9uZTtcbn0iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = (".hide_empty_message ::ng-deep .odd {\n  display: none;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW9kdWxlcy9hZG1pbi9ob2xpZGF5L3BhZ2VzL2hvbGlkYXkvQzpcXHhhbXBwXFxodGRvY3NcXGd2LWRldmVsb3BlclxcYW5ndWxhci9zcmNcXGFwcFxcbW9kdWxlc1xcYWRtaW5cXGhvbGlkYXlcXHBhZ2VzXFxob2xpZGF5XFxob2xpZGF5LmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9tb2R1bGVzL2FkbWluL2hvbGlkYXkvcGFnZXMvaG9saWRheS9ob2xpZGF5LmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksYUFBQTtBQ0NKIiwiZmlsZSI6InNyYy9hcHAvbW9kdWxlcy9hZG1pbi9ob2xpZGF5L3BhZ2VzL2hvbGlkYXkvaG9saWRheS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIi5oaWRlX2VtcHR5X21lc3NhZ2UgOjpuZy1kZWVwIC5vZGQge1xuICAgIGRpc3BsYXk6IG5vbmVcbn0iLCIuaGlkZV9lbXB0eV9tZXNzYWdlIDo6bmctZGVlcCAub2RkIHtcbiAgZGlzcGxheTogbm9uZTtcbn0iXX0= */");
 
 /***/ }),
 
@@ -647,28 +647,28 @@ var HolidayComponent = /** @class */ (function () {
                 }
             ],
             buttons: [
-                {
-                    extend: 'csv',
-                    title: this.translate.instant('holidays.title'),
-                    className: "btn btn-datatable-gredient",
-                    action: function (e, dt, node, config) {
-                        that.exportFiles('csv');
-                    }
-                }, {
-                    extend: 'excel',
-                    title: this.translate.instant('holidays.title'),
-                    className: "btn btn-datatable-gredient",
-                    action: function (e, dt, node, config) {
-                        that.exportFiles('xlsx');
-                    }
-                }, {
-                    extend: 'pdf',
-                    title: this.translate.instant('holidays.title'),
-                    className: "btn btn-datatable-gredient",
-                    action: function (e, dt, node, config) {
-                        that.exportFiles('pdf');
-                    }
-                }
+            // {
+            // 	extend: 'csv',
+            // 	title: this.translate.instant('holidays.title'),
+            // 	className: "btn btn-datatable-gredient",
+            // 	action: function (e, dt, node, config) {
+            // 		that.exportFiles('csv')
+            // 	}
+            // }, {
+            // 	extend: 'excel',
+            // 	title: this.translate.instant('holidays.title'),
+            // 	className: "btn btn-datatable-gredient",
+            // 	action: function (e, dt, node, config) {
+            // 		that.exportFiles('xlsx')
+            // 	}
+            // }, {
+            // 	extend: 'pdf',
+            // 	title: this.translate.instant('holidays.title'),
+            // 	className: "btn btn-datatable-gredient",
+            // 	action: function (e, dt, node, config) {
+            // 		that.exportFiles('pdf')
+            // 	}
+            // }
             ],
             language: {
                 "sEmptyTable": this.translate.instant('common.datatable.sEmptyTable'),
