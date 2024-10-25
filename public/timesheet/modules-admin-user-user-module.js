@@ -3543,17 +3543,18 @@ var UserComponent = /** @class */ (function () {
                 }
             ],
             buttons: [
+                // {
+                // 	extend: 'csv',
+                // 	title: this.translate.instant('users.title'),
+                // 	className: "btn btn-datatable-gredient",
+                // 	action: function (e, dt, node, config) {
+                // 		that.exportFiles('csv')
+                // 	},
+                //     init: function(api, node, config) {
+                //         $(node).attr('title', 'Export CSV');
+                //     }
+                // },
                 {
-                    extend: 'csv',
-                    title: this.translate.instant('users.title'),
-                    className: "btn btn-datatable-gredient",
-                    action: function (e, dt, node, config) {
-                        that.exportFiles('csv');
-                    },
-                    init: function (api, node, config) {
-                        $(node).attr('title', 'Export CSV');
-                    }
-                }, {
                     extend: 'excel',
                     title: this.translate.instant('users.title'),
                     className: "btn btn-datatable-gredient",
@@ -3636,9 +3637,34 @@ var UserComponent = /** @class */ (function () {
             });
         });
     };
+    UserComponent.prototype.exportTableWithoutLastRow = function (type) {
+        var originalTable = document.getElementById('users_table');
+        if (originalTable) {
+            // Tạo bản sao của bảng mà không có hàng cuối
+            var clonedTable_1 = originalTable.cloneNode(true);
+            var rows = clonedTable_1.getElementsByTagName('tr');
+            if (rows.length > 1) {
+                rows[rows.length - 1].remove(); // Xóa hàng cuối của bản sao
+            }
+            // Thêm bản sao vào DOM tạm thời
+            document.body.appendChild(clonedTable_1);
+            clonedTable_1.id = 'clonedTableForExport';
+            // Cấu hình export cho bản sao
+            var exportAsConfig = {
+                type: type,
+                elementIdOrContent: 'clonedTableForExport',
+            };
+            // Thực hiện export
+            this.exportAsService.save(exportAsConfig, this.translate.instant('users.title')).subscribe(function () {
+                // Xóa bản sao khỏi DOM sau khi export
+                document.body.removeChild(clonedTable_1);
+            });
+        }
+    };
     UserComponent.prototype.exportFiles = function (type) {
-        this.exportAsConfig.type = type;
-        this.exportAsService.save(this.exportAsConfig, this.translate.instant('users.title')).subscribe(function () { });
+        this.exportTableWithoutLastRow(type);
+        // this.exportAsConfig.type = type;
+        // this.exportAsService.save(this.exportAsConfig, this.translate.instant('users.title')).subscribe(() => {});
     };
     UserComponent.prototype.loadUserDepartments = function () {
         for (var iRow in this.users) {
