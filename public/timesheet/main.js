@@ -10143,9 +10143,6 @@ var environment;
 environment = {
     production: false,
     apiUrl: 'https://timesheet.greenviet.net'
-    // apiUrl: 'https://greenviet.cuortech.com'
-    // apiUrl: 'https://greenviet.azurewebsites.net'
-    // apiUrl: 'http://chetsapp.de:8899'
 };
 
 
