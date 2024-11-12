@@ -37,7 +37,7 @@ class CustomFieldRepository
      */
     public function findAll()
     {
-        return CustomField::with('forms')->get();
+        return DB::table('gv_project_type')->where('is_delete', 0)->get();
     }
 
     /**
@@ -49,63 +49,64 @@ class CustomFieldRepository
      */
     public function getAllCustomFields($request)
     {
-        $CustomField = DB::table('gv_work_allowance')->where('is_delete', 0);
+        if($request->input('tabData') == 'project_type'){
+            $CustomField = DB::table('gv_project_type')->where('is_delete', 0);
 
-        $totalData = $CustomField->count();
+            $totalData = $CustomField->count();
 
-        $columns = array(
-            0 => 'label',
-            1 => 'value'
-        );
+            $columns = array(
+                0 => 'name',
+                1 => 'code'
+            );
 
-        $totalFiltered = $totalData;
-        $limit = $request->input('length');
-        $start = $request->input('start');
-        $order = $columns[$request->input('order.0.column')];
-        $dir = $request->input('order.0.dir');
+            $totalFiltered = $totalData;
+            $limit = $request->input('length');
+            $start = $request->input('start');
+            // $order = $columns[$request->input('order.0.column')];
+            $dir = $request->input('order.0.dir');
 
-        if (!empty($request->input('search.value'))) {
-            $search = $request->input('search.value');
+            if (!empty($request->input('search.value'))) {
+                $search = $request->input('search.value');
+                $CustomField = $CustomField->where(
+                            function ($query) use ($search) {
+                                $query->where('name', 'LIKE', "%{$search}%")
+                                    ->orWhere('code', 'LIKE', "%{$search}%");
+                            }
+                        );
+                $totalFiltered = $CustomField->count();
+            }
+        } else {
+            $CustomField = DB::table('gv_work_allowance')->where('is_delete', 0);
 
-            // $CustomField = $CustomField->where(
-            //     function ($query) use ($search) {
-            //         $query->where('field_label', 'LIKE', "%{$search}%")
-            //             ->orWhere('field_type', 'LIKE', "%{$search}%")
-            //             ->orWhere('status', 'LIKE', "%{$search}%");
-            //     }
-            // );
+            $totalData = $CustomField->count();
 
-            // $CustomField = CustomField::with(
-            //     ['forms' => function ($query) use ($search) {
-            //         $query->orWhere('name', 'LIKE', "%{$search}%");
-            //     }]
-            // )
-            //     ->where(
-            //         function ($query) use ($search) {
-            //             $query->where('field_label', 'LIKE', "%{$search}%")
-            //                 ->orWhere('field_type', 'LIKE', "%{$search}%")
-            //                 ->orWhere('status', 'LIKE', "%{$search}%");
-            //         }
-            //     )
-            //     ->orWhereHas(
-            //         'forms',
-            //         function ($query) use ($search) {
-            //             $query->where('name', 'LIKE', "%{$search}%");
-            //         }
-            //     );
+            $columns = array(
+                0 => 'label',
+                1 => 'value'
+            );
 
-            $CustomField = $CustomField->where(
-                        function ($query) use ($search) {
-                            $query->where('label', 'LIKE', "%{$search}%")
-                                ->orWhere('value', 'LIKE', "%{$search}%");
-                        }
-                    );
-            $totalFiltered = $CustomField->count();
+            $totalFiltered = $totalData;
+            $limit = $request->input('length');
+            $start = $request->input('start');
+            // $order = $columns[$request->input('order.0.column')];
+            $dir = $request->input('order.0.dir');
+
+            if (!empty($request->input('search.value'))) {
+                $search = $request->input('search.value');
+                $CustomField = $CustomField->where(
+                            function ($query) use ($search) {
+                                $query->where('label', 'LIKE', "%{$search}%")
+                                    ->orWhere('value', 'LIKE', "%{$search}%");
+                            }
+                        );
+                $totalFiltered = $CustomField->count();
+            }
         }
+
 
         $CustomField = $CustomField->offset($start)
             ->limit($limit)
-            ->orderBy($order, $dir === 'asc' ? 'asc' : 'desc')
+            // ->orderBy($order, $dir === 'asc' ? 'asc' : 'desc')
             ->get();
 
         $json_data = array(
@@ -139,32 +140,15 @@ class CustomFieldRepository
      */
     public function create($request)
     {
-        // $CustomField = new CustomField;
         $input = $request->all();
-        DB::table('gv_work_allowance')->insert($input);
+        if($input['tabData'] == 'project_type'){
+            unset($input['tabData']);
+            DB::table('gv_project_type')->insert($input);
+        } else {
+            unset($input['tabData']);
+            DB::table('gv_work_allowance')->insert($input);
+        }
         return true;
-        // --
-        // Decode default value
-        // if ($input['field_type'] == 'dropdown') {
-        //     $input['default_value'] = json_encode($input['default_value']);
-        // }
-        // $input['field_column'] = strtolower(
-        //     preg_replace('/\s+/', '_', $input['field_label'])
-        // );
-        // $CustomField->fill($input);
-        // if ($CustomField->save()) {
-        //     // --
-        //     // Add activities
-        //     // createUserActivity(
-        //     //     CustomField::MODULE_NAME,
-        //     //     $CustomField->id,
-        //     //     $request->method(),
-        //     //     $CustomField->field_label,
-        //     //     $request->ip()
-        //     // );
-        //     return true;
-        // }
-        // return false;
     }
 
     /**
@@ -178,53 +162,14 @@ class CustomFieldRepository
     public function update($request, $id)
     {
         $input = $request->all();
-        DB::table('gv_work_allowance')->where('id', $id)->update($input);
-        return true;
-
-
-        $CustomField = CustomField::findOrFail($id);
-        // --
-        // Rename column.
-        $input = $request->all();
-        if ($input['field_label'] != $CustomField->field_label) {
-            $form = Form::where('id', $CustomField->form_id)
-                ->where('status', 1)
-                ->first();
-
-            if (Schema::hasColumn($form->table_name, $CustomField->field_column)) {
-                $input['field_column'] = strtolower(
-                    preg_replace('/\s+/', '_', $input['field_label'])
-                );
-                Schema::table(
-                    $form->table_name,
-                    function (Blueprint $table) use ($CustomField, $input) {
-                        $table->renameColumn(
-                            $CustomField->field_column,
-                            $input['field_column']
-                        );
-                    }
-                );
-            }
-        }
-        // --
-        // Decode default value
-        if ($input['field_type'] == 'dropdown') {
-            $input['default_value'] = json_encode($input['default_value']);
-        }
-        if ($CustomField->fill($input)->save()) {
-            // --
-            // Add activities
-            createUserActivity(
-                CustomField::MODULE_NAME,
-                $CustomField->id,
-                $request->method(),
-                $CustomField->field_label,
-                $request->ip()
-            );
-            return true;
+        if($input['tabData'] == 'project_type'){
+            unset($input['tabData']);
+            DB::table('gv_project_type')->where('id', $id)->update($input);
         } else {
-            return false;
+            unset($input['tabData']);
+            DB::table('gv_work_allowance')->where('id', $id)->update($input);
         }
+        return true;
     }
 
     /**

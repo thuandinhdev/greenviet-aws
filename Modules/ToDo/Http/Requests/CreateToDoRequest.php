@@ -37,7 +37,7 @@ class CreateToDoRequest extends FormRequest
         $rules = [
             'module_id' => 'required',
             'description' => 'required|min:3|max:255',
-            'due_date' => 'nullable|date|after:' . $today,
+            'due_date' => 'required',
         ];
 
         if (in_array($request->get('module_id'), [1, 2, 3, 4])) {

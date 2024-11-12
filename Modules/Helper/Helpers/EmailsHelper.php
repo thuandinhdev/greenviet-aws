@@ -98,7 +98,7 @@ class EmailsHelper
                     }
                 }
             );
-        } catch (\Exception $e) { 
+        } catch (\Exception $e) {
         }
     }
 
@@ -144,7 +144,7 @@ class EmailsHelper
             $details['name'] = $name;
             $details['subject'] = $subject;
             $details['body'] = $body;
-            // SendEmailJob::dispatch($details)->onConnection('sync');
+            SendEmailJob::dispatch($details)->onConnection('sync');
             $job = (new SendEmailJob($details))->delay(Carbon::now()->addSeconds(5));
             dispatch($job);
         } catch (\Exception $e) {
@@ -243,7 +243,7 @@ class EmailsHelper
     {
         $email_template = EmailTemplate::where('type', 'new_client_added')->first();
         if (!empty($email_template)) {
-            
+
             foreach ($adminUsers as $adminUser) {
 
                 $search = [
@@ -378,7 +378,7 @@ class EmailsHelper
 
                 $subject = str_replace($search, $replace, $email_template->template_subject);
                 $message = str_replace($search, $replace, $email_template->template_body);
-                
+
                 $this->_sendEmailsInQueue($value->email, $name, $subject, $message);
             }
         }
@@ -476,7 +476,7 @@ class EmailsHelper
 
                 $subject = str_replace($search, $replace, $email_template->template_subject);
                 $message = str_replace($search, $replace, $email_template->template_body);
-                
+
                 $this->_sendEmailsInQueue($value->email, $name, $subject, $message);
             }
         }
@@ -979,7 +979,7 @@ class EmailsHelper
             [
             'users' => function ($query) {
                     $query->select('id', 'email', DB::raw("CONCAT(firstname,' ',lastname) as name"))
-                        ->where('is_active', true)    
+                        ->where('is_active', true)
                         ->where('edit', 1);
             }
             ]
@@ -1220,7 +1220,7 @@ class EmailsHelper
                 $site_url = str_replace("{COMMENT_URL}", $url, $task_name);
                 $comment = str_replace("{COMMENT_MESSAGE}", $taskComment->comment, $site_url);
                 $message = str_replace("{SITE_NAME}", config('core.COMPANY_NAME'), $comment);
-                
+
                 $this->_sendEmailsInQueue(
                     $value->email,
                     $value->name,
@@ -1244,7 +1244,7 @@ class EmailsHelper
         $url = config('app.front_url').'/#/tasks/detail/'. $taskAttachment->task_id;
         $tasks = $this->_getAssignTaskUsers($taskAttachment->task_id);
         $email_template = EmailTemplate::where('type', 'task_attachment')->first();
-        
+
         if (!empty($email_template)) {
             foreach ($tasks->users as $key => $value) {
                 $message = $email_template->template_body;
@@ -1254,7 +1254,7 @@ class EmailsHelper
                 $task_name = str_replace("{TASK_NAME}", $tasks->name, $posted_by);
                 $site_url = str_replace("{TASK_URL}", $url, $task_name);
                 $message = str_replace("{SITE_NAME}", config('core.COMPANY_NAME'), $site_url);
-                
+
                 $this->_sendEmailsInQueue(
                     $value->email,
                     $value->name,
@@ -1321,7 +1321,7 @@ class EmailsHelper
                     $defect->generated_id,
                     $defect->defect_name,
                     $assignUser->firstname.' '.$assignUser->lastname,
-                    auth()->user()->fullname, 
+                    auth()->user()->fullname,
                     ($defect->start_date) ? $defect->start_date->format($setting->php_date_format) : null,
                     ($defect->end_date) ? $defect->end_date->format($setting->php_date_format) : null,
                     $defect->description,
@@ -1375,7 +1375,7 @@ class EmailsHelper
                 $replace = [
                     $defect->generated_id,
                     $defect->defect_name,
-                    auth()->user()->fullname, 
+                    auth()->user()->fullname,
                     ($defect->start_date) ? $defect->start_date->format($setting->php_date_format) : null,
                     ($defect->end_date) ? $defect->end_date->format($setting->php_date_format) : null,
                     $defect->description,
@@ -1438,7 +1438,7 @@ class EmailsHelper
                     $defect->generated_id,
                     $defect->defect_name,
                     $status_list[$defect->status],
-                    auth()->user()->fullname, 
+                    auth()->user()->fullname,
                     ($defect->start_date) ? $defect->start_date->format($setting->php_date_format) : null,
                     ($defect->end_date) ? $defect->end_date->format($setting->php_date_format) : null,
                     $defect->description,
@@ -1680,7 +1680,7 @@ class EmailsHelper
                 $replace = [
                     $incident->generated_id,
                     $incident->incident_name,
-                    auth()->user()->fullname, 
+                    auth()->user()->fullname,
                     ($incident->start_date) ? $incident->start_date->format($setting->php_date_format) : null,
                     ($incident->end_date) ? $incident->end_date->format($setting->php_date_format) : null,
                     $incident->description,
@@ -1953,7 +1953,7 @@ class EmailsHelper
 
                 $subject = str_replace($search, $replace, $email_template->template_subject);
                 $message = str_replace($search, $replace, $email_template->template_body);
-                
+
                 $this->_sendEmailsInQueue($value->email, $name, $subject, $message);
             }
         }
@@ -2039,8 +2039,8 @@ class EmailsHelper
 
                     $this->_sendEmailsInQueue(
                         $u->email,
-                        $u->firstname." ".$u->lastname, 
-                        $email_template->template_subject, 
+                        $u->firstname." ".$u->lastname,
+                        $email_template->template_subject,
                         $message
                     );
                 }
@@ -2074,8 +2074,8 @@ class EmailsHelper
 
             $this->_sendEmailsInQueue(
                 $req_user->email,
-                $req_user_name, 
-                $email_template->template_subject, 
+                $req_user_name,
+                $email_template->template_subject,
                 $message
             );
         }
@@ -2108,8 +2108,8 @@ class EmailsHelper
 
             $this->_sendEmailsInQueue(
                 $req_user->email,
-                $req_user_name, 
-                $email_template->template_subject, 
+                $req_user_name,
+                $email_template->template_subject,
                 $message
             );
         }
@@ -2146,8 +2146,8 @@ class EmailsHelper
 
                     $this->_sendEmailsInQueue(
                         $user->email,
-                        $user->fullname, 
-                        $email_template->template_subject, 
+                        $user->fullname,
+                        $email_template->template_subject,
                         $message
                     );
                 }
@@ -2171,7 +2171,7 @@ class EmailsHelper
             $setting = Setting::select('company_name', 'company_address', 'company_phone')->first();
             $estimateSetting = \Modules\Estimate\Entities\EstimateSetting::first();
             $url = config('app.front_url').'/#/estimates/detail/'.$estimate->id;
-            $body = $email_template->template_body; 
+            $body = $email_template->template_body;
             $customer_name = str_replace("{CUSTOMER_NAME}", $estimate->client->full_name, $body);
             $amount = str_replace("{AMOUNT}", $currency->symbol.' '.number_format($estimate->total_amount, 2), $customer_name);
             $estimate_number = str_replace("{ESTIMATE_NUMBER}", $estimate->estimate_number, $amount);
@@ -2183,7 +2183,7 @@ class EmailsHelper
             \View::addLocation(base_path().'/Modules/Estimate/Resources/views');
             $pdf = \PDF::loadView('estimate-1', compact('estimate', 'currency', 'setting', 'estimateSetting'));
             $pdfStream = $pdf->output();
-        
+
             try {
 
                 Mail::send(
@@ -2223,8 +2223,8 @@ class EmailsHelper
 
             $this->_sendEmailsInQueue(
                 $estimate->user->email,
-                $estimate->user->firstname.' '.$estimate->user->lastname, 
-                $subject, 
+                $estimate->user->firstname.' '.$estimate->user->lastname,
+                $subject,
                 $message
             );
         }
@@ -2252,8 +2252,8 @@ class EmailsHelper
 
             $this->_sendEmailsInQueue(
                 $estimate->user->email,
-                $estimate->user->firstname.' '.$estimate->user->lastname, 
-                $subject, 
+                $estimate->user->firstname.' '.$estimate->user->lastname,
+                $subject,
                 $message
             );
         }
@@ -2269,7 +2269,7 @@ class EmailsHelper
     public function sendEstimateThankYouEmail($estimate)
     {
         $email_template = EmailTemplate::where('type', 'thank_you_for_accepting_estimate')->first();
-        
+
         if (!empty($email_template)) {
             $client_name = $estimate->client->firstname.' '.$estimate->client->lastname;
             $subject = str_replace("{ESTIMATE_NUMBER}", $estimate->estimate_number, $email_template->template_subject);
@@ -2280,8 +2280,8 @@ class EmailsHelper
 
             $this->_sendEmailsInQueue(
                 $estimate->client->email,
-                $client_name, 
-                $subject, 
+                $client_name,
+                $subject,
                 $message
             );
         }
@@ -2297,7 +2297,7 @@ class EmailsHelper
     public function sendEstimateExpirationReminderEmail($estimate)
     {
         $email_template = EmailTemplate::where('type', 'estimate_expiration_reminder')->first();
-        
+
         if (!empty($email_template)) {
             $url = config('app.front_url').'/#/estimates/detail/'.$estimate->id;
             $client_name = $estimate->client->firstname.' '.$estimate->client->lastname;
@@ -2311,8 +2311,8 @@ class EmailsHelper
 
             $this->_sendEmailsInQueue(
                 $estimate->client->email,
-                $client_name, 
-                $subject, 
+                $client_name,
+                $subject,
                 $message
             );
         }
@@ -2375,7 +2375,7 @@ class EmailsHelper
     public function sendInvoiceExpirationReminderEmail($invoice)
     {
         $email_template = EmailTemplate::where('type', 'invoice_overdue_notice')->first();
-        
+
         if (!empty($email_template)) {
             $url = config('app.front_url').'/#/invoices/detail/'.$invoice->id;
             $subject = str_replace("{INVOICE_NUMBER}", $invoice->invoice_number, $email_template->template_subject);
@@ -2388,8 +2388,8 @@ class EmailsHelper
 
             $this->_sendEmailsInQueue(
                 $invoice->client->email,
-                $invoice->client->full_name, 
-                $subject, 
+                $invoice->client->full_name,
+                $subject,
                 $message
             );
         }
@@ -2462,8 +2462,8 @@ class EmailsHelper
 
             $this->_sendEmailsInQueue(
                 $payment->invoice->user->email,
-                $payment->invoice->user->full_name, 
-                $subject, 
+                $payment->invoice->user->full_name,
+                $subject,
                 $message
             );
         }
@@ -2566,7 +2566,7 @@ class EmailsHelper
     {
         $email_template = EmailTemplate::where('type', 'defect_overdue')->first();
         $setting = Setting::select('php_date_format')->first();
-        
+
         if (!empty($email_template) && $defect->assign_member) {
             $url = config('app.front_url').'/#/defects/detail/'.$defect->id;
             $search = [
@@ -2608,7 +2608,7 @@ class EmailsHelper
     {
         $email_template = EmailTemplate::where('type', 'incident_overdue')->first();
         $setting = Setting::select('php_date_format')->first();
-        
+
         if (!empty($email_template) && $incident->assign_to) {
             $setting = Setting::select('php_date_format')->first();
             $url = config('app.front_url').'/#/incidents/detail/'.$incident->id;
@@ -2637,6 +2637,91 @@ class EmailsHelper
             $message = str_replace($search, $replace, $email_template->template_body);
 
             $this->_sendEmailsInQueue($incident->assignUser->email, $incident->assignUser->firstname .' '. $incident->assignUser->lastname, $subject, $message);
+        }
+    }
+
+
+    public function sendSaveTimesheetEmails($listProject, $user)
+    {
+        $email_template = EmailTemplate::where('type', 'save_timesheet')->first();
+        if (!empty($email_template)) {
+            $userData = DB::table('gv_projects')->leftJoin('gv_users', 'gv_projects.assign_to', '=',  'gv_users.id')
+            ->whereIn('gv_projects.id', $listProject)->select('gv_users.id', 'gv_users.email', 'gv_users.username', 'gv_projects.assign_to')->get();
+            $search = [
+                '{USER_NAME}',
+                '{LINK_VIEW}'
+            ];
+            $replace = [
+                $user->user_name,
+                config('app.front_url').'/#/timesheet'
+            ];
+
+            $subject = str_replace($search, $replace, $email_template->template_subject);
+            $message = str_replace($search, $replace, $email_template->template_body);
+            foreach ($userData as $adminSend) {
+                if($adminSend->email && !is_null($adminSend->email)){
+                    $this->_sendEmailsInQueue(
+                        $adminSend->email,
+                        $adminSend->username,
+                        $subject,
+                        $message
+                    );
+                }
+            }
+        }
+    }
+
+    public function sendApprovedTimesheetEmails($users_id)
+    {
+        // $email_template = EmailTemplate::where('type', 'save_timesheet')->first();
+        // if (!empty($email_template)) {
+        //     $userData = DB::table('gv_projects')->leftJoin('gv_users', 'gv_projects.assign_to', '=',  'gv_users.id')
+        //     ->whereIn('gv_projects.id', $listProject)->select('gv_users.id', 'gv_users.email', 'gv_users.username', 'gv_projects.assign_to')->get();
+        //     $search = [
+        //         '{USER_NAME}',
+        //         '{LINK_VIEW}'
+        //     ];
+        //     $replace = [
+        //         $user->username,
+        //         config('app.front_url').'/#/timesheet'
+        //     ];
+
+        //     $subject = str_replace($search, $replace, $email_template->template_subject);
+        //     $message = str_replace($search, $replace, $email_template->template_body);
+        //     foreach ($userData as $adminSend) {
+        //         if($adminSend->email && !is_null($adminSend->email)){
+        //             $this->_sendEmailsInQueue(
+        //                 $adminSend->email,
+        //                 $adminSend->username,
+        //                 $subject,
+        //                 $message
+        //             );
+        //         }
+        //     }
+        // }
+    }
+
+    public function sendRejectTimesheetEmails($user)
+    {
+        $email_template = EmailTemplate::where('type', 'save_timesheet')->first();
+        if (!empty($email_template)) {
+            $search = [
+                '{USER_NAME}',
+                '{LINK_VIEW}'
+            ];
+            $replace = [
+                auth()->user()->username,
+                config('app.front_url').'/#/timesheet'
+            ];
+
+            $subject = str_replace($search, $replace, $email_template->template_subject);
+            $message = str_replace($search, $replace, $email_template->template_body);
+            $this->_sendEmailsInQueue(
+                $user->email,
+                $user->username,
+                $subject,
+                $message
+            );
         }
     }
 }

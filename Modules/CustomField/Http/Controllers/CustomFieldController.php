@@ -9,6 +9,7 @@ use Modules\CustomField\Http\Requests\CreateCustomFieldRequest;
 use Modules\CustomField\Http\Requests\UpdateCustomFieldRequest;
 use Modules\CustomField\Repositories\CustomFieldRepository;
 use Modules\Helper\Helpers\AdminHelper;
+use DB;
 
 /**
  * Class CustomFieldController
@@ -152,6 +153,22 @@ class CustomFieldController extends Controller
         }
     }
 
+    public function projectTypeDelete(Request $request, $id){
+        $input = $request->all();
+        if (DB::table('gv_project_type')->where('id', $id)->update(['is_delete'=>1])) {
+            return response()->json('success');
+        } else {
+            return response()->json('error');
+        }
+    }
+    public function workAllowancedelete(Request $request, $id){
+        $input = $request->all();
+        if (DB::table('gv_work_allowance')->where('id', $id)->update(['is_delete'=>1])) {
+            return response()->json('success');
+        } else {
+            return response()->json('error');
+        }
+    }
     /**
      * Change custom field status.
      *

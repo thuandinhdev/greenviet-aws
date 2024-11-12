@@ -107,6 +107,8 @@ class Setting extends Model
         'allowed_for_all_task',
         'allowed_for_registration',
         'is_demo',
+        'time_days',
+        'time_hours',
     ];
 
     /**

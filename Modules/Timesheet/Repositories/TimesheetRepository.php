@@ -13,6 +13,7 @@ use Modules\User\Entities\User\User;
 use Modules\Timesheet\Entities\Timesheet;
 use Modules\Setting\Entities\Setting;
 use Modules\Holiday\Entities\Holiday;
+use Modules\Helper\Helpers\EmailsHelper;
 use Modules\Leave\Entities\Leave;
 
 use Carbon\Carbon;
@@ -35,7 +36,7 @@ use Carbon\Carbon;
 class TimesheetRepository
 {
     protected $commonHelper;
-
+    protected $emailRepo;
     /**
      * Instantiate a new repository instance.
      *
@@ -43,9 +44,10 @@ class TimesheetRepository
      *
      * @return void
      */
-    public function __construct(CommonHelper $commonHelper)
+    public function __construct(CommonHelper $commonHelper, EmailsHelper $emailRepo)
     {
         $this->commonHelper = $commonHelper;
+        $this->emailRepo = $emailRepo;
     }
 
     /**
@@ -796,6 +798,7 @@ class TimesheetRepository
         DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
         ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['end']. ' 23:59:59')))
         ->where('created_user_id', $input['users_id'])->update($dataUpdate);
+        $this->emailRepo->sendRejectTimesheetEmails($user);
         return true;
     }
 
@@ -875,6 +878,8 @@ class TimesheetRepository
                     $task->save();
                 }
             }
+
+            $this->emailRepo->sendApprovedTimesheetEmails($input['users_id']);
             return true;
         // } else {
         //     return false;
@@ -986,6 +991,12 @@ class TimesheetRepository
 
         $this->saveTimesheetExecute($request, $input['data'], 0, $user, $setting);
         $this->saveTimesheetExecute($request, $input['ot'], 1, $user, $setting);
+        $listProject = DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['rangeDate']['start']. ' 00:00:00')))
+        ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['rangeDate']['end']. ' 23:59:59')))
+        ->where('created_user_id', $user->id)->groupBy('project_id')->pluck('project_id');
+        if(count($listProject) > 0){
+            $this->emailRepo->sendSaveTimesheetEmails($listProject, $user);
+        }
         return true;
     }
 

@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"modal-header\">\n\t<h2 class=\"modal-title font-weight-normal\"><i class=\"fa fa-list-ul\" aria-hidden=\"true\"></i>&nbsp;{{'todos.title' | translate}}</h2>\n\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"bsModalRef.hide()\"><span aria-hidden=\"true\">&times;</span></button>\n</div>\n<form class=\"form\" [formGroup]=\"createTodoForm\" (ngSubmit)=\"onSubmit()\">\n\t<div class=\"modal-body\">\n\t\t<div class=\"form-body\">\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-12\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label for=\"price\">{{'todos.create.fields.price' | translate}}<span class=\"text-danger\">&nbsp;*</span></label>\n\t\t\t\t\t\t<input type=\"text\" placeholder=\"{{'todos.create.placeholders.placeholder4' | translate}}\" class=\"form-control\" id=\"price\" formControlName=\"price\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.price.errors }\"/>\n\t\t\t\t\t\t<div *ngIf=\"isFormSubmitted && todoControl.price.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.price.errors.required\">{{'todos.create.error_messages.message6' | translate}}</div>\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.price.errors.pattern\">{{'todos.create.error_messages.message7' | translate}}</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-12\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label for=\"description\">{{'todos.create.fields.description' | translate}}<span class=\"text-danger\">&nbsp;*</span></label>\n\t\t\t\t\t\t<textarea type=\"text\" placeholder=\"{{'todos.create.placeholders.placeholder1' | translate}}\" class=\"form-control\" id=\"description\" formControlName=\"description\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.description.errors }\"></textarea>\n\t\t\t\t\t\t<div *ngIf=\"isFormSubmitted && todoControl.description.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.description.errors.required\">{{'todos.create.error_messages.message1' | translate}}</div>\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.description.errors.minlength\">{{'todos.create.error_messages.message2' | translate}}</div>\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.description.errors.maxlength\">{{'todos.create.error_messages.message3' | translate}}</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-12\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label for=\"due_date\">{{'todos.create.fields.due_date' | translate}}</label>\n\t\t\t\t\t\t<div class=\"position-relative has-icon-left\">\n\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" #dp=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" [minDate]=\"minDate\" formControlName=\"due_date\" id=\"due_date\" placeholder=\"{{'todos.create.placeholders.placeholder3' | translate}}\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.due_date.errors }\" />\n\t\t\t\t\t\t\t<div class=\"form-control-position\"><i class=\"ft-calendar\"></i></div>\n\t\t\t\t\t\t\t<div *ngIf=\"isFormSubmitted && todoControl.due_date.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t<div>{{'todos.create.error_messages.message5' | translate}}</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n\t<div class=\"modal-footer\">\n\t\t<button type=\"button\" class=\"btn btn-cancel mb-0\" (click)=\"onCancel()\">{{'common.close' | translate}}</button>\n\t\t<button type=\"submit\" class=\"btn btn-submit mb-0\">{{'common.create' | translate}}</button>\n\t</div>\n</form>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"modal-header\">\n\t<h2 class=\"modal-title font-weight-normal\"><i class=\"fa fa-list-ul\" aria-hidden=\"true\"></i>&nbsp;Add Payment</h2>\n\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"bsModalRef.hide()\"><span aria-hidden=\"true\">&times;</span></button>\n</div>\n<form class=\"form\" [formGroup]=\"createTodoForm\" (ngSubmit)=\"onSubmit()\">\n\t<div class=\"modal-body\">\n\t\t<div class=\"form-body\">\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-12\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label for=\"price\">{{'todos.create.fields.price' | translate}}<span class=\"text-danger\">&nbsp;*</span></label>\n\t\t\t\t\t\t<input type=\"text\" appNumberFormat placeholder=\"{{'todos.create.placeholders.placeholder4' | translate}}\" class=\"form-control\" id=\"price\" formControlName=\"price\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.price.errors }\"/>\n\t\t\t\t\t\t<div *ngIf=\"isFormSubmitted && todoControl.price.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.price.errors.required\">{{'todos.create.error_messages.message6' | translate}}</div>\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.price.errors.pattern\">{{'todos.create.error_messages.message7' | translate}}</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-12\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label for=\"due_date\">Estimated date<span class=\"text-danger\">&nbsp;*</span></label>\n\t\t\t\t\t\t<div class=\"position-relative has-icon-left\">\n\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" #dp=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" formControlName=\"due_date\" id=\"due_date\" placeholder=\"{{'todos.create.placeholders.placeholder3' | translate}}\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.due_date.errors }\" />\n\t\t\t\t\t\t\t<div class=\"form-control-position\"><i class=\"ft-calendar\"></i></div>\n\t\t\t\t\t\t\t<div *ngIf=\"isFormSubmitted && todoControl.due_date.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t<div>Please select a valid estimated date.</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-12\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label for=\"description\">{{'todos.create.fields.description' | translate}}<span class=\"text-danger\">&nbsp;*</span></label>\n\t\t\t\t\t\t<textarea type=\"text\" placeholder=\"{{'todos.create.placeholders.placeholder1' | translate}}\" class=\"form-control\" id=\"description\" formControlName=\"description\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.description.errors }\"></textarea>\n\t\t\t\t\t\t<div *ngIf=\"isFormSubmitted && todoControl.description.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.description.errors.required\">{{'todos.create.error_messages.message1' | translate}}</div>\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.description.errors.minlength\">{{'todos.create.error_messages.message2' | translate}}</div>\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.description.errors.maxlength\">{{'todos.create.error_messages.message3' | translate}}</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n\t<div class=\"modal-footer\">\n\t\t<button type=\"button\" class=\"btn btn-cancel mb-0\" (click)=\"onCancel()\">{{'common.close' | translate}}</button>\n\t\t<button type=\"submit\" class=\"btn btn-submit mb-0\">{{'common.create' | translate}}</button>\n\t</div>\n</form>\n");
 
 /***/ }),
 
@@ -22,7 +22,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"modal-header\">\n\t<h2 class=\"modal-title font-weight-normal\"><i class=\"fa fa-list-ul\" aria-hidden=\"true\"></i>&nbsp;{{'todos.title' | translate}}</h2>\n\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"bsModalRef.hide()\"><span aria-hidden=\"true\">&times;</span></button>\n</div>\n<form class=\"form\" [formGroup]=\"editTodoForm\" (ngSubmit)=\"onSubmit()\">\n\t<div class=\"modal-body\">\n\t\t<div class=\"form-body\">\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-12\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label for=\"price\">{{'todos.create.fields.price' | translate}}<span class=\"text-danger\">&nbsp;*</span></label>\n\t\t\t\t\t\t<input type=\"text\" placeholder=\"{{'todos.create.placeholders.placeholder4' | translate}}\" class=\"form-control\" id=\"price\" formControlName=\"price\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.price.errors }\"/>\n\t\t\t\t\t\t<div *ngIf=\"isFormSubmitted && todoControl.price.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.price.errors.required\">{{'todos.create.error_messages.message6' | translate}}</div>\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.price.errors.pattern\">{{'todos.create.error_messages.message7' | translate}}</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-12\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label for=\"description\">{{'todos.create.fields.description' | translate}}<span class=\"text-danger\">&nbsp;*</span></label>\n\t\t\t\t\t\t<textarea type=\"text\" placeholder=\"{{'todos.create.placeholders.placeholder1' | translate}}\" class=\"form-control\" id=\"description\" formControlName=\"description\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.description.errors }\"></textarea>\n\t\t\t\t\t\t<div *ngIf=\"isFormSubmitted && todoControl.description.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.description.errors.required\">{{'todos.create.error_messages.message1' | translate}}</div>\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.description.errors.minlength\">{{'todos.create.error_messages.message2' | translate}}</div>\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.description.errors.maxlength\">{{'todos.create.error_messages.message3' | translate}}</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-12\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label for=\"due_date\">{{'todos.create.fields.due_date' | translate}}</label>\n\t\t\t\t\t\t<div class=\"position-relative has-icon-left\">\n\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" #dp=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" formControlName=\"due_date\" id=\"due_date\" placeholder=\"{{'todos.create.placeholders.placeholder3' | translate}}\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.due_date.errors }\" />\n\t\t\t\t\t\t\t<div class=\"form-control-position\"><i class=\"ft-calendar\"></i></div>\n\t\t\t\t\t\t\t<div *ngIf=\"isFormSubmitted && todoControl.due_date.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t<div *ngIf=\"todoControl.due_date.errors.required\">{{'todos.create.error_messages.message5' | translate}}</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<!-- <div class=\"col-md-6\">\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.status.errors }\">\n\t\t\t\t\t\t<label for=\"status\">{{'todos.create.fields.status' | translate}}<span class=\"text-danger\">&nbsp;*</span></label>\n\t\t\t\t\t\t<ng-select [items]=\"('todos.status' | translate)\"\n\t\t\t\t\t\t\tbindLabel=\"label\"\n\t\t\t\t\t\t\tbindValue=\"id\"\n\t\t\t\t\t\t\t[multiple]=\"false\"\n\t\t\t\t\t\t\tformControlName=\"status\"\n\t\t\t\t\t\t\tplaceholder=\"{{'todos.create.placeholders.placeholder2' | translate}}\"\n\t\t\t\t\t\t\t[searchable]=\"true\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.status.errors }\">\n\t\t\t\t\t\t\t<ng-template ng-option-tmp let-item=\"item\">{{item.label}}</ng-template>\n\t\t\t\t\t\t</ng-select>\n\t\t\t\t\t\t<div *ngIf=\"isFormSubmitted && todoControl.status.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.status.errors.required\">{{'todos.create.error_messages.message4' | translate}}</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div> -->\n\t\t\t</div>\n\t\t</div>\n\t</div>\n\t<div class=\"modal-footer\">\n\t\t<button type=\"button\" class=\"btn btn-cancel mb-0\" (click)=\"onCancel()\">{{'common.close' | translate}}</button>\n\t\t<button type=\"submit\" class=\"btn btn-submit mb-0\">{{'common.update' | translate}}</button>\n\t</div>\n</form>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"modal-header\">\n\t<h2 class=\"modal-title font-weight-normal\"><i class=\"fa fa-list-ul\" aria-hidden=\"true\"></i>&nbsp;{{'todos.title' | translate}}</h2>\n\t<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\" (click)=\"bsModalRef.hide()\"><span aria-hidden=\"true\">&times;</span></button>\n</div>\n<form class=\"form\" [formGroup]=\"editTodoForm\" (ngSubmit)=\"onSubmit()\">\n\t<div class=\"modal-body\">\n\t\t<div class=\"form-body\">\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-md-12\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label for=\"price\">{{'todos.create.fields.price' | translate}}<span class=\"text-danger\">&nbsp;*</span></label>\n\t\t\t\t\t\t<input type=\"text\" appNumberFormat placeholder=\"{{'todos.create.placeholders.placeholder4' | translate}}\" class=\"form-control\" id=\"price\" formControlName=\"price\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.price.errors }\"/>\n\t\t\t\t\t\t<div *ngIf=\"isFormSubmitted && todoControl.price.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.price.errors.required\">{{'todos.create.error_messages.message6' | translate}}</div>\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.price.errors.pattern\">{{'todos.create.error_messages.message7' | translate}}</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-md-12\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label for=\"due_date\">{{'todos.create.fields.due_date' | translate}}<span class=\"text-danger\">&nbsp;*</span></label>\n\t\t\t\t\t\t<div class=\"position-relative has-icon-left\">\n\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" #dp=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" formControlName=\"due_date\" id=\"due_date\" placeholder=\"{{'todos.create.placeholders.placeholder3' | translate}}\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.due_date.errors }\" />\n\t\t\t\t\t\t\t<div class=\"form-control-position\"><i class=\"ft-calendar\"></i></div>\n\t\t\t\t\t\t\t<div *ngIf=\"isFormSubmitted && todoControl.due_date.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t<div *ngIf=\"todoControl.due_date.errors.required\">{{'todos.create.error_messages.message5' | translate}}</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n                <div class=\"col-md-12\" *ngIf=\"editTodoForm.value.status == 2\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label for=\"payment_date\">Payment Date<span class=\"text-danger\">&nbsp;*</span></label>\n\t\t\t\t\t\t<div class=\"position-relative has-icon-left\">\n\t\t\t\t\t\t\t<input type=\"text\" class=\"form-control\" #dp=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" formControlName=\"payment_date\" id=\"payment_date\" placeholder=\"{{'todos.create.placeholders.placeholder3' | translate}}\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.payment_date.errors }\" />\n\t\t\t\t\t\t\t<div class=\"form-control-position\"><i class=\"ft-calendar\"></i></div>\n\t\t\t\t\t\t\t<div *ngIf=\"isFormSubmitted && todoControl.payment_date.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t\t<div *ngIf=\"todoControl.payment_date.errors.required\">Please select a valid payment date.</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n                <div class=\"col-md-12\">\n                    <div class=\"form-group\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.status.errors }\">\n                        <label for=\"status\">{{'tasks.create.fields.status' | translate }}&nbsp;<span class=\"text-danger\">*</span> </label>\n                        <ng-select [searchable]=\"true\"\n                            [items]=\"status\"\n                            [selectOnTab]=\"true\"\n                            bindLabel=\"label\"\n                            bindValue=\"id\"\n                            labelForId=\"status\"\n                            formControlName=\"status\"\n                            [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.status.errors }\"\n                            placeholder=\"{{'tasks.create.placeholders.placeholder9' | translate }}\">\n                        </ng-select>\n                        <div *ngIf=\"isFormSubmitted && todoControl.status.errors\" class=\"invalid-feedback\">\n                            <div *ngIf=\"todoControl.status.errors.required\">Please select a valid payment status.</div>\n                        </div>\n                    </div>\n                </div>\n\t\t\t\t<div class=\"col-md-12\">\n\t\t\t\t\t<div class=\"form-group\">\n\t\t\t\t\t\t<label for=\"description\">{{'todos.create.fields.description' | translate}}<span class=\"text-danger\">&nbsp;*</span></label>\n\t\t\t\t\t\t<textarea type=\"text\" placeholder=\"{{'todos.create.placeholders.placeholder1' | translate}}\" class=\"form-control\" id=\"description\" formControlName=\"description\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.description.errors }\"></textarea>\n\t\t\t\t\t\t<div *ngIf=\"isFormSubmitted && todoControl.description.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.description.errors.required\">{{'todos.create.error_messages.message1' | translate}}</div>\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.description.errors.minlength\">{{'todos.create.error_messages.message2' | translate}}</div>\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.description.errors.maxlength\">{{'todos.create.error_messages.message3' | translate}}</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t\t<!-- <div class=\"col-md-6\">\n\t\t\t\t\t<div class=\"form-group\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.status.errors }\">\n\t\t\t\t\t\t<label for=\"status\">{{'todos.create.fields.status' | translate}}<span class=\"text-danger\">&nbsp;*</span></label>\n\t\t\t\t\t\t<ng-select [items]=\"('todos.status' | translate)\"\n\t\t\t\t\t\t\tbindLabel=\"label\"\n\t\t\t\t\t\t\tbindValue=\"id\"\n\t\t\t\t\t\t\t[multiple]=\"false\"\n\t\t\t\t\t\t\tformControlName=\"status\"\n\t\t\t\t\t\t\tplaceholder=\"{{'todos.create.placeholders.placeholder2' | translate}}\"\n\t\t\t\t\t\t\t[searchable]=\"true\" [ngClass]=\"{ 'is-invalid': isFormSubmitted && todoControl.status.errors }\">\n\t\t\t\t\t\t\t<ng-template ng-option-tmp let-item=\"item\">{{item.label}}</ng-template>\n\t\t\t\t\t\t</ng-select>\n\t\t\t\t\t\t<div *ngIf=\"isFormSubmitted && todoControl.status.errors\" class=\"invalid-feedback\">\n\t\t\t\t\t\t\t<div *ngIf=\"todoControl.status.errors.required\">{{'todos.create.error_messages.message4' | translate}}</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div> -->\n\t\t\t</div>\n\t\t</div>\n\t</div>\n\t<div class=\"modal-footer\">\n\t\t<button type=\"button\" class=\"btn btn-cancel mb-0\" (click)=\"onCancel()\">{{'common.close' | translate}}</button>\n\t\t<button type=\"submit\" class=\"btn btn-submit mb-0\">{{'common.update' | translate}}</button>\n\t</div>\n</form>\n");
 
 /***/ }),
 
@@ -35,7 +35,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"row\" *ngIf=\"isPageloaded\">\n\t<div class=\"col-sm-12\">\n\t\t<div class=\"card bg-transparent\">\n\t\t\t<div class=\"card-header p-0\">\n\t\t\t\t<h4 class=\"sub-title mt-2\"><span>{{'todos.title' | translate}}</span></h4>\n\t\t\t\t<button class=\"btn btn-create mr-2 mb-0\" tooltip=\"{{'common.create' | translate}}\" (click)=\"openTodoCreateModal()\" *ngxPermissionsOnly=\"['admin', 'super_admin', 'todos_create']\">\n\t\t\t\t\t<i class=\"fa fa-plus\"></i>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t<div class=\"card-content pt-1\" *ngIf=\"todos.open.length > 0\">\n\t\t\t\t<div class=\"card-body\">\n\n\n\t\t\t\t\t<div class=\"drag-container\">\n\t\t\t\t\t\t<div class=\"item-list\" >\n\t\t\t\t\t\t\t<div class=\"item-box\" *ngFor=\"let item of todos.open\" >\n\t\t\t\t\t\t\t\t<div class=\"col-md-12\">\n\t\t\t\t\t\t\t\t\t<div class=\"row\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"col-md-4\">\n\t\t\t\t\t\t\t\t\t\t\t{{item.description}}\n\t\t\t\t\t\t\t\t\t\t\t<!-- <inline-edit-textarea [name]=\"'description'\" [fieldValue]=\"item.description\" [elementFor]=\"'todos.inline_edit.description' | translate\" [isRequired]=\"'true'\" (updateValue)=\"saveTodosDetail(item, 'description', $event);\"></inline-edit-textarea> -->\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"col-md-3\">\n\t\t\t\t\t\t\t\t\t\t\t{{item.price | number:'1.0-0'}}\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"col-md-3\">\n\t\t\t\t\t\t\t\t\t\t\t{{item.due_date}}\n\t\t\t\t\t\t\t\t\t\t\t<!-- <inline-edit-date [name]=\"'due_date'\" [fieldValue]=\"item.due_date\" [elementFor]=\"'todos.inline_edit.due_date' | translate\" [isRequired]=\"'true'\" [datepickerConfigs]=\"datepickerConfigs\" [format]=\"loginUser.settings.date_format\" (updateValue)=\"saveTodosDetail(item, 'due_date', $event);\"></inline-edit-date> -->\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class=\"col-md-2 actions-dropdown text-right\">\n\t\t\t\t\t\t\t\t\t\t\t<div class=\"btn-group\" dropdown>\n\t\t\t\t\t\t\t\t\t\t\t\t<button dropdownToggle class=\"dropdown-toggle btn-action\" type=\"button\" id=\"button-basic-2\" aria-controls=\"dropdown-basic-2\"><i class=\"fa fa-ellipsis-v\"></i></button>\n\t\t\t\t\t\t\t\t\t\t\t\t<ul id=\"dropdown-basic-2\" *dropdownMenu class=\"dropdown-menu animated fadeIn\" role=\"menu\" aria-labelledby=\"button-basic-2\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<li role=\"menuitem\" *ngxPermissionsOnly=\"['admin', 'super_admin', 'todos_edit']\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<a (click)=\"openTodoEditModal(item)\" class=\"dropdown-item btn btn-edit btn-raised\" tooltip=\"{{'common.edit' | translate}}\"><i class=\"fa fa-pencil-square-o\"></i></a>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<li role=\"menuitem\" *ngxPermissionsOnly=\"['admin', 'super_admin', 'todos_delete']\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<a  (click)=\"deleteTodo(item.id)\" class=\"dropdown-item btn btn-delete btn-raised\" tooltip=\"{{'common.delete' | translate}}\"><i class=\"fa fa-trash-o\"></i></a>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"row\" *ngIf=\"isPageloaded\">\n\t<div class=\"col-sm-12\">\n\t\t<div class=\"card bg-transparent\">\n\t\t\t<div class=\"card-header p-0\">\n\t\t\t\t<h4 class=\"sub-title mt-2\"><span>Payment process ({{totalcompleted| number:'1.0-0'}}/{{total| number:'1.0-0'}})</span></h4>\n\t\t\t\t<button class=\"btn btn-create mr-2 mb-0\" tooltip=\"{{'common.create' | translate}}\" (click)=\"openTodoCreateModal()\" *ngxPermissionsOnly=\"['admin', 'super_admin', 'todos_create']\">\n\t\t\t\t\t<i class=\"fa fa-plus\"></i>\n\t\t\t\t</button>\n\t\t\t</div>\n\t\t\t<div class=\"card-content pt-1\" *ngIf=\"todos.open?.length > 0 || todos.completed?.length > 0\">\n\t\t\t\t<div class=\"card-body\">\n\t\t\t\t\t<div class=\"table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl\">\n\t\t\t\t\t\t<table datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\" class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" >\n\t\t\t\t\t\t\t<thead>\n\t\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t\t<th>#</th>\n\t\t\t\t\t\t\t\t\t<th>Amount</th>\n\t\t\t\t\t\t\t\t\t<th>Description</th>\n\t\t\t\t\t\t\t\t\t<th>Estimated date</th>\n\t\t\t\t\t\t\t\t\t<th>Payment date</th>\n\t\t\t\t\t\t\t\t\t<th>Status</th>p\n\t\t\t\t\t\t\t\t\t<th>{{'common.actions' | translate}}</th>\n\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t</thead>\n\t\t\t\t\t\t\t<tbody *ngIf=\"todos.open?.length > 0 || todos.completed?.length > 0\">\n\t\t\t\t\t\t\t\t<tr *ngFor=\"let item of todos.open; index as i\">\n\t\t\t\t\t\t\t\t\t<td class=\"text-center\">{{ i + 1 }}</td>\n\t\t\t\t\t\t\t\t\t<td>{{item.price| number:'1.0-0'}}</td>\n\t\t\t\t\t\t\t\t\t<td>{{item.description}}</td>\n\t\t\t\t\t\t\t\t\t<td>{{item.due_date}}</td>\n\t\t\t\t\t\t\t\t\t<td>{{item.payment_date}}</td>\n\t\t\t\t\t\t\t\t\t<td class=\"status-dropdown\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"overdue-td\">\n\t\t\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t\t\t<div class=\"btn-group\" dropdown>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<button dropdownToggle id=\"button-basic\" type=\"button\" class=\"btn dropdown-toggle select-btn-lg\" aria-controls=\"dropdown-basic\">Pending&nbsp;<span class=\"caret\"></span></button>\n\t\t\t\t\t\t\t\t\t\t\t\t\t<ul id=\"dropdown-basic\" *dropdownMenu class=\"dropdown-menu animated fadeIn\" role=\"menu\" aria-labelledby=\"button-basic\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<li ><a class=\"dropdown-item btn btn-sm open active\">Pending</a></li>\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t<li ><a class=\"dropdown-item btn btn-sm completed\" (click)=\"changeStatus(item, 2)\">completed</a></li>\n\t\t\t\t\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t\t\t<ng-container *ngIf=\"item.is_overdue\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<i class=\"fa fa-clock-o overdue-icon\" aria-hidden=\"true\" tooltip=\"{{'common.overdue' | translate}}\"></i>\n\t\t\t\t\t\t\t\t\t\t\t\t</ng-container>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t<td class=\"actions-dropdown\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"btn-group\" dropdown>\n\t\t\t\t\t\t\t\t\t\t\t<button dropdownToggle class=\"dropdown-toggle btn-action\" type=\"button\" id=\"button-basic-2\" aria-controls=\"dropdown-basic-2\"><i class=\"fa fa-ellipsis-v\"></i></button>\n\t\t\t\t\t\t\t\t\t\t\t<ul id=\"dropdown-basic-2\" *dropdownMenu class=\"dropdown-menu animated fadeIn\" role=\"menu\" aria-labelledby=\"button-basic-2\">\n\t\t\t\t\t\t\t\t\t\t\t\t<li role=\"menuitem\" *ngxPermissionsOnly=\"['admin', 'super_admin', 'todos_edit']\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<a (click)=\"openTodoEditModal(item)\" class=\"dropdown-item btn btn-edit btn-raised\" tooltip=\"{{'common.edit' | translate}}\"><i class=\"fa fa-pencil-square-o\"></i></a>\n\t\t\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t\t\t<li role=\"menuitem\" *ngxPermissionsOnly=\"['admin', 'super_admin', 'todos_delete']\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<a (click)=\"deleteTodo(item.id)\" class=\"dropdown-item btn btn-delete btn-raised\" tooltip=\"{{'common.delete' | translate}}\"><i class=\"fa fa-trash-o\"></i></a>\n\t\t\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t\t<tr *ngFor=\"let item of todos.completed; index as i\" style=\"background:#c1ebd3;\">\n\t\t\t\t\t\t\t\t\t<td class=\"text-center\">{{ todos.open.length + (i + 1) }}</td>\n\t\t\t\t\t\t\t\t\t<td>{{item.price| number:'1.0-0'}}</td>\n\t\t\t\t\t\t\t\t\t<td>{{item.description}}</td>\n\t\t\t\t\t\t\t\t\t<td>{{item.due_date}}</td>\n\t\t\t\t\t\t\t\t\t<td>{{item.payment_date}}</td>\n\t\t\t\t\t\t\t\t\t<td class=\"status-dropdown\">\n                                        <div class=\"budges-status\">\n                                            <span class=\"completed\">Completed</span>\n                                        </div>\n\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t\t<td class=\"actions-dropdown\">\n\t\t\t\t\t\t\t\t\t\t<div class=\"btn-group\" dropdown>\n\t\t\t\t\t\t\t\t\t\t\t<button dropdownToggle class=\"dropdown-toggle btn-action\" type=\"button\" id=\"button-basic-2\" aria-controls=\"dropdown-basic-2\"><i class=\"fa fa-ellipsis-v\"></i></button>\n\t\t\t\t\t\t\t\t\t\t\t<ul id=\"dropdown-basic-2\" *dropdownMenu class=\"dropdown-menu animated fadeIn\" role=\"menu\" aria-labelledby=\"button-basic-2\">\n\t\t\t\t\t\t\t\t\t\t\t\t<li role=\"menuitem\" *ngxPermissionsOnly=\"['admin', 'super_admin', 'todos_edit']\">\n\t\t\t\t\t\t\t\t\t\t\t\t\t<a (click)=\"openTodoEditModal(item)\" class=\"dropdown-item btn btn-edit btn-raised\" tooltip=\"{{'common.edit' | translate}}\"><i class=\"fa fa-pencil-square-o\"></i></a>\n\t\t\t\t\t\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t\t\t\t\t\t</ul>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</td>\n\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t</tbody>\n\t\t\t\t\t\t\t<tfoot *ngIf=\"todos.open?.length == 0 && todos.completed?.length == 0\" class=\"tfoot_dt\">\n\t\t\t\t\t\t\t\t<tr>\n\t\t\t\t\t\t\t\t\t<td colspan=\"7\" class=\"no-data-available text-center\">{{'common.datatable.sEmptyTable' | translate}}</td>\n\t\t\t\t\t\t\t\t</tr>\n\t\t\t\t\t\t\t</tfoot>\n\t\t\t\t\t\t</table>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</div>\n</div>\n");
 
 /***/ }),
 
@@ -87,8 +87,8 @@ var CustomFieldsService = /** @class */ (function () {
     CustomFieldsService.prototype.update = function (customField) {
         return this.http.put(this.apiUrl + "/api/customfields/" + customField.id, customField);
     };
-    CustomFieldsService.prototype.delete = function (id) {
-        return this.http.delete(this.apiUrl + "/api/customfields/" + id);
+    CustomFieldsService.prototype.delete = function (id, tabData) {
+        return this.http.delete(this.apiUrl + "/api/customfields/" + tabData + "/" + id);
     };
     CustomFieldsService.prototype.changeStatus = function (customField) {
         return this.http.post(this.apiUrl + "/api/customfields/" + customField.id + "/change-status", { status: customField.status });
@@ -308,7 +308,7 @@ var CreateTodoModalComponent = /** @class */ (function () {
         this.createTodoForm = this.formBuilder.group({
             description: [null, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].minLength(5), _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].maxLength(255)]],
             due_date: [null, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
-            price: [null, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern(/^[0-9]+(\.[0-9]{1,2})?$/)]],
+            price: [null, [_angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required]],
             module_id: [this.todoParams.module_id],
             module_related_id: [this.todoParams.module_related_id]
         });
@@ -324,10 +324,14 @@ var CreateTodoModalComponent = /** @class */ (function () {
         if (this.createTodoForm.invalid) {
             return;
         }
+        if (typeof this.createTodoForm.value.price === 'string') {
+            this.createTodoForm.value.price = this.createTodoForm.value.price.replace(/,/g, '');
+        }
         this.createTodoForm.value.due_date = this.datepipe.transform(this.createTodoForm.value.due_date, 'yyyy-MM-dd');
         this.todoService.create(this.createTodoForm.value)
             .subscribe(function (data) {
-            _this.toastr.success(_this.translate.instant('todos.messages.create'), _this.translate.instant('todos.title'));
+            // this.toastr.success(this.translate.instant('todos.messages.create'), this.translate.instant('todos.title'));
+            _this.toastr.success("Create payment successfully!", "Payment process");
             _this.event.emit({ data: true });
             _this.onCancel();
         }, function (error) {
@@ -398,14 +402,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-bootstrap/modal */ "./node_modules/ngx-bootstrap/modal/fesm5/ngx-bootstrap-modal.js");
-/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _core_helpers_admin_helper__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../../core/helpers/admin.helper */ "./src/app/core/helpers/admin.helper.ts");
-/* harmony import */ var _core_services_user_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../../core/services/user.service */ "./src/app/core/services/user.service.ts");
-/* harmony import */ var _core_services_todo_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../../core/services/todo.service */ "./src/app/core/services/todo.service.ts");
-/* harmony import */ var _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../../../core/services/authentication.service */ "./src/app/core/services/authentication.service.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-bootstrap/modal */ "./node_modules/ngx-bootstrap/modal/fesm5/ngx-bootstrap-modal.js");
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _core_helpers_admin_helper__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../../core/helpers/admin.helper */ "./src/app/core/helpers/admin.helper.ts");
+/* harmony import */ var _core_services_user_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../../core/services/user.service */ "./src/app/core/services/user.service.ts");
+/* harmony import */ var _core_services_todo_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../../../core/services/todo.service */ "./src/app/core/services/todo.service.ts");
+/* harmony import */ var _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../../../core/services/authentication.service */ "./src/app/core/services/authentication.service.ts");
+
 
 
 
@@ -418,11 +424,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var EditTodoModalComponent = /** @class */ (function () {
-    function EditTodoModalComponent(translate, bsModalRef, formBuilder, toastr, userService, todoService, authenticationService) {
+    function EditTodoModalComponent(translate, bsModalRef, formBuilder, datepipe, toastr, userService, todoService, authenticationService) {
         var _this = this;
         this.translate = translate;
         this.bsModalRef = bsModalRef;
         this.formBuilder = formBuilder;
+        this.datepipe = datepipe;
         this.toastr = toastr;
         this.userService = userService;
         this.todoService = todoService;
@@ -431,24 +438,26 @@ var EditTodoModalComponent = /** @class */ (function () {
         this.isFormSubmitted = false;
         this.users = [];
         this.assignMembers = [];
-        this.datepickerConfig = _core_helpers_admin_helper__WEBPACK_IMPORTED_MODULE_7__["datepickerConfig"];
+        this.status = [{ 'id': 1, "label": "Pending" }, { 'id': 2, "label": "Completed" }];
+        this.datepickerConfig = _core_helpers_admin_helper__WEBPACK_IMPORTED_MODULE_8__["datepickerConfig"];
         this.authenticationService.loginUser.subscribe(function (x) { return _this.loginUser = x; });
         this.datepickerConfig.dateInputFormat = this.loginUser.settings.date_format;
     }
     EditTodoModalComponent.prototype.ngOnInit = function () {
-        this.onClose = new rxjs__WEBPACK_IMPORTED_MODULE_6__["Subject"]();
+        this.onClose = new rxjs__WEBPACK_IMPORTED_MODULE_7__["Subject"]();
         this.loadForms();
     };
     EditTodoModalComponent.prototype.loadForms = function () {
-        if (this.todo.due_date) {
-            this.todo.due_date = new Date(this.todo.due_date);
-        }
+        // if(this.todo.due_date){
+        // 	this.todo.due_date = new Date(this.todo.due_date);
+        // }
         this.editTodoForm = this.formBuilder.group({
             id: [this.todo.id],
-            price: [this.todo.price, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern(/^[0-9]+(\.[0-9]{1,2})?$/)]],
+            price: [this.todo.price, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             description: [this.todo.description, [_angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(5), _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(255)]],
             status: [this.todo.status, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
-            due_date: [this.todo.due_date],
+            due_date: [this.todo.due_date, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
+            payment_date: [this.todo.payment_date, _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required],
             module_id: [this.todo.module_id],
             module_related_id: [this.todo.module_related_id]
         });
@@ -461,9 +470,19 @@ var EditTodoModalComponent = /** @class */ (function () {
     EditTodoModalComponent.prototype.onSubmit = function () {
         var _this = this;
         this.isFormSubmitted = true;
+        if (this.editTodoForm.value.status == 1) {
+            this.editTodoForm.value.payment_date = null;
+            this.editTodoForm.get('payment_date').clearValidators();
+            this.editTodoForm.get('payment_date').updateValueAndValidity();
+        }
         if (this.editTodoForm.invalid) {
             return;
         }
+        if (typeof this.editTodoForm.value.price === 'string') {
+            this.editTodoForm.value.price = this.editTodoForm.value.price.replace(/,/g, '');
+        }
+        this.editTodoForm.value.due_date = this.datepipe.transform(this.editTodoForm.value.due_date, 'yyyy-MM-dd');
+        this.editTodoForm.value.payment_date = this.datepipe.transform(this.editTodoForm.value.payment_date, 'yyyy-MM-dd');
         this.todoService.update(this.editTodoForm.value)
             .subscribe(function (data) {
             _this.toastr.success(_this.translate.instant('todos.messages.update'), _this.translate.instant('todos.title'));
@@ -478,13 +497,14 @@ var EditTodoModalComponent = /** @class */ (function () {
         this.bsModalRef.hide();
     };
     EditTodoModalComponent.ctorParameters = function () { return [
-        { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"] },
-        { type: ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_3__["BsModalRef"] },
+        { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateService"] },
+        { type: ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_4__["BsModalRef"] },
         { type: _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"] },
-        { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_4__["ToastrService"] },
-        { type: _core_services_user_service__WEBPACK_IMPORTED_MODULE_8__["UserService"] },
-        { type: _core_services_todo_service__WEBPACK_IMPORTED_MODULE_9__["TodoService"] },
-        { type: _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_10__["AuthenticationService"] }
+        { type: _angular_common__WEBPACK_IMPORTED_MODULE_3__["DatePipe"] },
+        { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_5__["ToastrService"] },
+        { type: _core_services_user_service__WEBPACK_IMPORTED_MODULE_9__["UserService"] },
+        { type: _core_services_todo_service__WEBPACK_IMPORTED_MODULE_10__["TodoService"] },
+        { type: _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_11__["AuthenticationService"] }
     ]; };
     EditTodoModalComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -492,13 +512,14 @@ var EditTodoModalComponent = /** @class */ (function () {
             template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./edit-todo-modal.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/modules/admin/todo/components/edit-todo-modal/edit-todo-modal.component.html")).default,
             styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./edit-todo-modal.component.scss */ "./src/app/modules/admin/todo/components/edit-todo-modal/edit-todo-modal.component.scss")).default]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"],
-            ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_3__["BsModalRef"],
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateService"],
+            ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_4__["BsModalRef"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormBuilder"],
-            ngx_toastr__WEBPACK_IMPORTED_MODULE_4__["ToastrService"],
-            _core_services_user_service__WEBPACK_IMPORTED_MODULE_8__["UserService"],
-            _core_services_todo_service__WEBPACK_IMPORTED_MODULE_9__["TodoService"],
-            _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_10__["AuthenticationService"]])
+            _angular_common__WEBPACK_IMPORTED_MODULE_3__["DatePipe"],
+            ngx_toastr__WEBPACK_IMPORTED_MODULE_5__["ToastrService"],
+            _core_services_user_service__WEBPACK_IMPORTED_MODULE_9__["UserService"],
+            _core_services_todo_service__WEBPACK_IMPORTED_MODULE_10__["TodoService"],
+            _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_11__["AuthenticationService"]])
     ], EditTodoModalComponent);
     return EditTodoModalComponent;
 }());
@@ -532,19 +553,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TodoDetailComponent", function() { return TodoDetailComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-bootstrap/modal */ "./node_modules/ngx-bootstrap/modal/fesm5/ngx-bootstrap-modal.js");
-/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
-/* harmony import */ var ngx_permissions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-permissions */ "./node_modules/ngx-permissions/ngx-permissions.umd.js");
-/* harmony import */ var ngx_permissions__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(ngx_permissions__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
-/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/cdk/drag-drop */ "./node_modules/@angular/cdk/esm5/drag-drop.es5.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_8__);
-/* harmony import */ var _core_services_todo_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../../core/services/todo.service */ "./src/app/core/services/todo.service.ts");
-/* harmony import */ var _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../../../core/services/authentication.service */ "./src/app/core/services/authentication.service.ts");
-/* harmony import */ var _components_create_todo_modal_create_todo_modal_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../components/create-todo-modal/create-todo-modal.component */ "./src/app/modules/admin/todo/components/create-todo-modal/create-todo-modal.component.ts");
-/* harmony import */ var _components_edit_todo_modal_edit_todo_modal_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../components/edit-todo-modal/edit-todo-modal.component */ "./src/app/modules/admin/todo/components/edit-todo-modal/edit-todo-modal.component.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-bootstrap/modal */ "./node_modules/ngx-bootstrap/modal/fesm5/ngx-bootstrap-modal.js");
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
+/* harmony import */ var ngx_permissions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ngx-permissions */ "./node_modules/ngx-permissions/ngx-permissions.umd.js");
+/* harmony import */ var ngx_permissions__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(ngx_permissions__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var _angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/cdk/drag-drop */ "./node_modules/@angular/cdk/esm5/drag-drop.es5.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _core_services_todo_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../../../core/services/todo.service */ "./src/app/core/services/todo.service.ts");
+/* harmony import */ var _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../../../core/services/authentication.service */ "./src/app/core/services/authentication.service.ts");
+/* harmony import */ var _components_create_todo_modal_create_todo_modal_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../components/create-todo-modal/create-todo-modal.component */ "./src/app/modules/admin/todo/components/create-todo-modal/create-todo-modal.component.ts");
+/* harmony import */ var _components_edit_todo_modal_edit_todo_modal_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../components/edit-todo-modal/edit-todo-modal.component */ "./src/app/modules/admin/todo/components/edit-todo-modal/edit-todo-modal.component.ts");
+
 
 
 
@@ -559,16 +582,19 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var TodoDetailComponent = /** @class */ (function () {
-    function TodoDetailComponent(translate, ngxRolesService, modalService, http, toastr, todoService, authenticationService) {
+    function TodoDetailComponent(translate, ngxRolesService, modalService, http, datePipe, toastr, todoService, authenticationService) {
         var _this = this;
         this.translate = translate;
         this.ngxRolesService = ngxRolesService;
         this.modalService = modalService;
         this.http = http;
+        this.datePipe = datePipe;
         this.toastr = toastr;
         this.todoService = todoService;
         this.authenticationService = authenticationService;
         this.isPageloaded = false;
+        this.total = 0;
+        this.totalcompleted = 0;
         this.datepickerConfigs = { dateInputFormat: 'YYYY-MM-DD' };
         this.modalConfigs = {
             animated: true,
@@ -589,10 +615,10 @@ var TodoDetailComponent = /** @class */ (function () {
     };
     TodoDetailComponent.prototype.drop = function (event) {
         if (event.previousContainer === event.container) {
-            Object(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_7__["moveItemInArray"])(event.container.data, event.previousIndex, event.currentIndex);
+            Object(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_8__["moveItemInArray"])(event.container.data, event.previousIndex, event.currentIndex);
         }
         else {
-            Object(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_7__["transferArrayItem"])(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+            Object(_angular_cdk_drag_drop__WEBPACK_IMPORTED_MODULE_8__["transferArrayItem"])(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
         }
         this.changeTodosStatus();
     };
@@ -601,6 +627,18 @@ var TodoDetailComponent = /** @class */ (function () {
         this.todoService.getAllTodos(this.todoParams)
             .subscribe(function (data) {
             _this.todos = data;
+            _this.totalcompleted = 0;
+            _this.total = 0;
+            _this.todos.open.forEach(function (element) {
+                _this.total += element.price;
+                if (element.due_date < _this.datePipe.transform(new Date(), 'yyyy-MM-dd')) {
+                    element.is_overdue = true;
+                }
+            });
+            _this.todos.completed.forEach(function (element2) {
+                _this.total += element2.price;
+                _this.totalcompleted += element2.price;
+            });
             _this.isPageloaded = true;
         }, function (error) { });
     };
@@ -608,17 +646,18 @@ var TodoDetailComponent = /** @class */ (function () {
         var _this = this;
         this.todoService.changeTodosStatus(this.todos)
             .subscribe(function (data) {
-            _this.toastr.success(_this.translate.instant('todos.messages.status'), _this.translate.instant('todos.title'));
+            _this.toastr.success("Update payment status successfully!", "Payment process");
         }, function (error) { });
     };
     TodoDetailComponent.prototype.changeStatus = function (todo, status) {
-        var _this = this;
         todo.status = status;
-        this.todoService.update(todo)
-            .subscribe(function (data) {
-            _this.toastr.success(_this.translate.instant('todos.messages.update'), _this.translate.instant('todos.title'));
-            _this.getTodos();
-        });
+        this.openTodoEditModal(todo);
+        // this.todoService.update(todo)
+        // .subscribe(
+        //     data => {
+        //         this.toastr.success("Update payment status successfully!", "Payment process");
+        //         this.getTodos();
+        // });
     };
     TodoDetailComponent.prototype.openTodoCreateModal = function () {
         var _this = this;
@@ -632,7 +671,7 @@ var TodoDetailComponent = /** @class */ (function () {
                 todoParams: this.todoParams
             }
         };
-        this.modalRef = this.modalService.show(_components_create_todo_modal_create_todo_modal_component__WEBPACK_IMPORTED_MODULE_11__["CreateTodoModalComponent"], modalConfigs);
+        this.modalRef = this.modalService.show(_components_create_todo_modal_create_todo_modal_component__WEBPACK_IMPORTED_MODULE_12__["CreateTodoModalComponent"], modalConfigs);
         this.modalRef.content.event.subscribe(function (data) {
             _this.getTodos();
         });
@@ -649,14 +688,14 @@ var TodoDetailComponent = /** @class */ (function () {
                 todo: todo
             }
         };
-        this.modalRef = this.modalService.show(_components_edit_todo_modal_edit_todo_modal_component__WEBPACK_IMPORTED_MODULE_12__["EditTodoModalComponent"], modalConfigs);
+        this.modalRef = this.modalService.show(_components_edit_todo_modal_edit_todo_modal_component__WEBPACK_IMPORTED_MODULE_13__["EditTodoModalComponent"], modalConfigs);
         this.modalRef.content.event.subscribe(function (data) {
             _this.getTodos();
         });
     };
     TodoDetailComponent.prototype.deleteTodo = function (id) {
         var _this = this;
-        sweetalert2__WEBPACK_IMPORTED_MODULE_8___default.a.fire({
+        sweetalert2__WEBPACK_IMPORTED_MODULE_9___default.a.fire({
             title: this.translate.instant('common.swal.title'),
             text: this.translate.instant('common.swal.text'),
             type: 'warning',
@@ -683,13 +722,14 @@ var TodoDetailComponent = /** @class */ (function () {
         });
     };
     TodoDetailComponent.ctorParameters = function () { return [
-        { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateService"] },
-        { type: ngx_permissions__WEBPACK_IMPORTED_MODULE_5__["NgxRolesService"] },
-        { type: ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_3__["BsModalService"] },
-        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
-        { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_4__["ToastrService"] },
-        { type: _core_services_todo_service__WEBPACK_IMPORTED_MODULE_9__["TodoService"] },
-        { type: _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_10__["AuthenticationService"] }
+        { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_7__["TranslateService"] },
+        { type: ngx_permissions__WEBPACK_IMPORTED_MODULE_6__["NgxRolesService"] },
+        { type: ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_4__["BsModalService"] },
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] },
+        { type: _angular_common__WEBPACK_IMPORTED_MODULE_2__["DatePipe"] },
+        { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_5__["ToastrService"] },
+        { type: _core_services_todo_service__WEBPACK_IMPORTED_MODULE_10__["TodoService"] },
+        { type: _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_11__["AuthenticationService"] }
     ]; };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])(),
@@ -705,13 +745,14 @@ var TodoDetailComponent = /** @class */ (function () {
             template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./todo-detail.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/modules/admin/todo/pages/todo-detail/todo-detail.component.html")).default,
             styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./todo-detail.component.scss */ "./src/app/modules/admin/todo/pages/todo-detail/todo-detail.component.scss")).default]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateService"],
-            ngx_permissions__WEBPACK_IMPORTED_MODULE_5__["NgxRolesService"],
-            ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_3__["BsModalService"],
-            _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
-            ngx_toastr__WEBPACK_IMPORTED_MODULE_4__["ToastrService"],
-            _core_services_todo_service__WEBPACK_IMPORTED_MODULE_9__["TodoService"],
-            _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_10__["AuthenticationService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_7__["TranslateService"],
+            ngx_permissions__WEBPACK_IMPORTED_MODULE_6__["NgxRolesService"],
+            ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_4__["BsModalService"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_2__["DatePipe"],
+            ngx_toastr__WEBPACK_IMPORTED_MODULE_5__["ToastrService"],
+            _core_services_todo_service__WEBPACK_IMPORTED_MODULE_10__["TodoService"],
+            _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_11__["AuthenticationService"]])
     ], TodoDetailComponent);
     return TodoDetailComponent;
 }());

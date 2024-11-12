@@ -29,6 +29,9 @@ Route::group(
             'all-customfields',
             'CustomFieldController@getAllCustomFields'
         );
+        Route::delete('customfields/project_type/{id}', 'CustomFieldController@projectTypeDelete');
+        Route::delete('customfields/work_allowance/{id}', 'CustomFieldController@workAllowancedelete');
+
         Route::resource('customfields', 'CustomFieldController');
     }
 );

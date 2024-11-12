@@ -40,7 +40,7 @@ class ToDo extends Model
      *
      * @var array
      */
-    protected $fillable = ['module_id', 'price', 'module_related_id', 'description', 'due_date', 'order', 'status'];
+    protected $fillable = ['module_id', 'price', 'module_related_id', 'description', 'due_date', 'payment_date', 'order', 'status'];
 
     /**
      * The attributes that are not mass assignable.
