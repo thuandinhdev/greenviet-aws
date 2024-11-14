@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<!-- Card header -->\n<div class=\"pl-0 pr-0 border-bottom\">\n    <h4 class=\"main-title mt-2\"><span>{{'reports.headings.defect_report' | translate}}</span></h4>\n</div>\n<!-- Card body -->\n<div class=\"card-body pt-3 overflow-x-scroll overflow-y-hidden\">\n    <div class=\"row\">\n        <div class=\"col-lg-12 mb-3\">\n            <div class=\"table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl\">\n                <table datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\" class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"defects_table\">\n                    <thead>\n                        <tr class=\"display_all\">\n                            <!-- <th>{{'defects.columns.id' | translate}}</th> -->\n                            <th>{{'users.columns.last_name' | translate}}</th>\n                            <th>{{'users.columns.username' | translate}}</th>\n                            <th>{{'defects.columns.actual_hours' | translate}}</th>\n                            <th>{{'defects.columns.creator' | translate}}</th>\n                            <th>{{'defects.columns.assigned' | translate}}</th>\n                            <th>{{'defects.columns.type' | translate}}</th>\n                            <th>{{'defects.columns.severity' | translate}}</th>\n                            <th>{{'defects.columns.status' | translate}}</th>\n                            <!-- <th>{{'defects.columns.project' | translate}}</th>\n                            <th>{{'defects.columns.project_version' | translate}}</th> -->\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"defects?.length != 0\">\n                        <tr *ngFor=\"let defect of defects\">\n                            <!-- <td>{{defect.generated_id}}</td> -->\n                            <!-- <td>{{defect.defect_name}}</td> -->\n                            <!-- <td>{{defect.start_date | dateTimeFormatFilter: loginUser.settings.date_format }}</td> -->\n                            <!-- <td>{{defect.end_date | dateTimeFormatFilter: loginUser.settings.date_format }}</td> -->\n                            <td>\n                                <ng-container *ngIf=\"defect.actual_hours else elseBlock2;\">{{defect.actual_hours}}</ng-container>\n                                <ng-template #elseBlock2>-</ng-template>\n                            </td>\n                            <td class=\"people-lists\">\n                                <a [routerLink]=\"['/users/profile', defect.create_user_id]\" class=\"btn btn-profile-info rounded-circle text-dark\" tooltip=\"{{defect.created_firstname}} {{defect.created_lastname}}\">\n                                    <img *ngIf=\"defect.created_avatar\" src=\"{{apiUrl}}/uploads/profile/{{defect.created_avatar}}\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                    <img *ngIf=\"!defect.created_avatar\" src=\"../assets/img/profile_small.jpg\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                </a>\n                            </td>\n                            <td class=\"people-lists\">\n                                <ng-container *ngIf=\"defect.assign_member == 'Unassign' || defect.assign_member == '' || defect.assign_member == null; else elseBlock1;\">\n                                    <a href=\"javascript:void(0);\" class=\"btn btn-profile-danger rounded-circle text-dark\" placement=\"top\" tooltip=\"{{'common.unassigned' | translate}}\">\n                                        <img src=\"../assets/img/unassign.jpg\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                    </a>\n                                </ng-container>\n                                <ng-template #elseBlock1>\n                                    <a [routerLink]=\"['/users/profile', defect.assign_member]\" class=\"btn btn-profile-danger rounded-circle text-dark\" placement=\"top\" tooltip=\"{{defect.assigned_firstname}} {{defect.assigned_lastname}}\">\n                                        <img *ngIf=\"defect.assigned_avatar\" src=\"{{apiUrl}}/uploads/profile/{{defect.assigned_avatar}}\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                        <img *ngIf=\"!defect.assigned_avatar\" src=\"../assets/img/profile_small.jpg\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                    </a>\n                                </ng-template>\n                            </td>\n                            <td class=\"budges-status\">\n                                <ng-container *ngFor=\"let type of ('defects.defect_types' | translate)\">\n                                    <span class=\"badge badge-secondary\" *ngIf=\"type.id == defect.defect_type\">{{type.label}}</span>\n                                </ng-container>\n                            </td>\n                            <td class=\"budges-status\">\n                                <ng-container *ngFor=\"let severity of ('defects.severities' | translate)\">\n                                    <span class=\"badge {{severity.class}}\" *ngIf=\"severity.id == defect.severity\">{{severity.label}}</span>\n                                </ng-container>\n                            </td>\n                            <td class=\"budges-status\">\n                                <ng-container *ngFor=\"let status of ('defects.status' | translate)\">\n                                    <span class=\"badge {{status.class}}\" *ngIf=\"status.id == defect.status\">{{status.label}}</span>\n                                </ng-container>\n                            </td>\n                            <td>{{defect.project_name}}</td>\n                            <td><span class=\"badge badge-secondary\">{{defect.project_version}}</span></td>\n                        </tr>\n                    </tbody>\n                    <!-- <tfoot>\n                        <tr>\n                            <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'defects.columns.id' | translate}}\" name=\"defect_ID\" />\n                            </th>\n                            <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'defects.columns.defect_name' | translate}}\" name=\"defect_Id\" />\n                            </th>\n                            <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'defects.columns.start_date' | translate}}\" name=\"start_date\" />\n                            </th>\n                            <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'defects.columns.end_date' | translate}}\" name=\"end_date\" />\n                            </th>\n                            <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'defects.columns.actual_hours' | translate}}\" name=\"actual_hours\" />\n                            </th>\n                            <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'defects.columns.creator' | translate}}\" name=\"created\" />\n                            </th>\n                            <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'defects.columns.assigned' | translate}}\" name=\"assigned\" />\n                            </th>\n                            <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'defects.columns.type' | translate}}\" name=\"type\" />\n                            </th>\n                            <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'defects.columns.severity' | translate}}\" name=\"Severity\" />\n                            </th>\n                            <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'defects.columns.status' | translate}}\" name=\"status\" />\n                            </th>\n                            <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'defects.columns.project' | translate}}\" name=\"project\" />\n                            </th>\n                            <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'defects.columns.project_version' | translate}}\" name=\"project_version\" />\n                            </th>\n                        </tr>\n                    </tfoot> -->\n                    <tfoot *ngIf=\"defects?.length == 0\" class=\"tfoot_dt\">\n                        <tr>\n                            <td colspan=\"8\" class=\"text-center\">\n                                <img src=\"assets/img/norecord-img.png\" width=\"50\">\n                                <p class=\"mt-1\">{{'common.empty_message.defects' | translate}}</p>\n                            </td>\n                        </tr>\n                    </tfoot>\n                </table>\n            </div>\n        </div>\n    </div>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<!-- Card header -->\n<div class=\"pl-0 pr-0 border-bottom\">\n    <div class=\"card-header pl-0 pr-0 border-bottom\">\n        <h4 class=\"main-title mt-2\"><span>{{'timesheet.title' | translate}}</span></h4>\n        <div class=\"card-buttons d-flex\" *ngIf=\"isPageLoaded\">\n            <div class=\"btn calender-day\" (click)=\"preMonth()\">\n                <i class=\"calendar-icon fa fa-chevron-left\"></i>\n            </div>\n            <div class=\"ml-2\">\n                <a class=\"btn btn-create mb-0\" id=\"calendar-filter\" (bsValueChange)=\"changeMonth($event)\" #dp1=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" ><i class=\"fa fa-calendar-plus-o\"></i></a>\n            </div>\n            <div class=\"mr-2\">\n               <input type=\"text\" class=\"form-control\" [(ngModel)]=\"month\" readonly />\n            </div>\n            <div class=\"btn calender-day\" (click)=\"nextMonth()\"  *ngIf=\"month <= currentMonth\">\n                <i class=\"calendar-icon fa fa-chevron-right\"></i>\n            </div>\n        </div>\n    </div>\n</div>\n<!-- Card body -->\n<div class=\"card-body pt-3 overflow-x-scroll overflow-y-hidden\">\n    <div class=\"row\">\n        <div class=\"col-lg-12 mb-3\">\n            <div class=\"table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl\">\n                <table class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"defects_table\">\n\n                    <thead>\n                        <tr class=\"display_all\">\n                            <th>Họ và tên</th>\n                            <th *ngFor=\"let day of daysInMonth; let i = index\">\n                                <div *ngIf=\"day.stt==0\">CN<br>{{day.day}}</div>\n                                <div *ngIf=\"day.stt>0\">T{{day.stt + 1}}<br>{{day.day}}</div>\n                            </th>\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"exportTableData?.length != 0\">\n                        <tr *ngFor=\"let user of exportTableData; let i = index\" >\n                            <td>{{user.firstname}} {{user.lastname}}</td>\n                            <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                <div *ngIf=\"user.timesheet[j] && user.timesheet[j].check\">x</div>\n                            </td>\n                        </tr>\n                    </tbody>\n                    <!-- <tfoot *ngIf=\"exportTableData?.length == 0\" class=\"tfoot_dt\">\n                    </tfoot> -->\n                </table>\n            </div>\n        </div>\n    </div>\n</div>\n");
 
 /***/ }),
 
@@ -61,7 +61,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<section class=\"detail-page\">\n\t<div class=\"card\">\n\t\t<tabset class=\"nav nav-tabs d-flex justify-content-center mb-2\">\n\t\t\t<tab customClass=\"text-left active\" id=\"1\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-product-hunt\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.project_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-project-reports *ngIf=\"getActiveReportTab('1')\"></app-project-reports>\n\t\t\t</tab>\n\t\t\t<tab customClass=\"text-left\" id=\"2\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-tasks\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.task_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-task-reports *ngIf=\"getActiveReportTab('2')\"></app-task-reports>\n\t\t\t</tab>\n\t\t\t<!-- <tab customClass=\"text-left\" id=\"3\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-user-circle\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.user_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-defect-reports *ngIf=\"getActiveReportTab('3')\"></app-defect-reports>\n\t\t\t</tab> -->\n\t\t\t<!-- <tab customClass=\"text-left\" id=\"4\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-ticket\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.incident_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-incident-reports *ngIf=\"getActiveReportTab('4')\"></app-incident-reports>\n\t\t\t</tab> -->\n\t\t</tabset>\n\t</div>\n</section>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<section class=\"detail-page\">\n\t<div class=\"card\">\n\t\t<tabset class=\"nav nav-tabs d-flex justify-content-center mb-2\">\n\t\t\t<tab customClass=\"text-left active\" id=\"1\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-product-hunt\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.project_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-project-reports *ngIf=\"getActiveReportTab('1')\"></app-project-reports>\n\t\t\t</tab>\n\t\t\t<tab customClass=\"text-left\" id=\"2\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-tasks\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.task_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-task-reports *ngIf=\"getActiveReportTab('2')\"></app-task-reports>\n\t\t\t</tab>\n\t\t\t<tab customClass=\"text-left\" id=\"3\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-user-circle\"></i><span class=\"mt-1 ml-1\">TimeSheet</span></div></ng-template>\n\t\t\t\t<app-defect-reports *ngIf=\"getActiveReportTab('3')\"></app-defect-reports>\n\t\t\t</tab>\n\t\t\t<!-- <tab customClass=\"text-left\" id=\"4\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-ticket\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.incident_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-incident-reports *ngIf=\"getActiveReportTab('4')\"></app-incident-reports>\n\t\t\t</tab> -->\n\t\t</tabset>\n\t</div>\n</section>\n");
 
 /***/ }),
 
@@ -95,12 +95,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
 /* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../../core/services/authentication.service */ "./src/app/core/services/authentication.service.ts");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../../../environments/environment */ "./src/environments/environment.ts");
-/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
-/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(datatables_net__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
-/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(datatables_net_bs4__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../../core/services/authentication.service */ "./src/app/core/services/authentication.service.ts");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(date_fns__WEBPACK_IMPORTED_MODULE_9__);
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../../../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-bootstrap/chronos */ "./node_modules/ngx-bootstrap/chronos/fesm5/ngx-bootstrap-chronos.js");
+/* harmony import */ var ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-bootstrap/locale */ "./node_modules/ngx-bootstrap/locale/fesm5/ngx-bootstrap-locale.js");
+/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
+/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(datatables_net__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(datatables_net_bs4__WEBPACK_IMPORTED_MODULE_14__);
 
 
 
@@ -110,98 +115,118 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+Object(ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_11__["defineLocale"])('vi', ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_12__["viLocale"]);
 
 
 var DefectReportsComponent = /** @class */ (function () {
-    function DefectReportsComponent(translate, http, authenticationService, exportAsService) {
+    function DefectReportsComponent(translate, http, datePipe, authenticationService, exportAsService) {
         var _this = this;
         this.translate = translate;
         this.http = http;
+        this.datePipe = datePipe;
         this.authenticationService = authenticationService;
         this.exportAsService = exportAsService;
-        this.apiUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_8__["environment"].apiUrl;
+        this.apiUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].apiUrl;
         this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_6__["Subject"]();
         this.dtOptions = {};
+        this.currentMonth = this.datePipe.transform(new Date(), 'yyyy/MM');
+        this.month = this.datePipe.transform(new Date(), 'yyyy/MM');
         this.defects = [];
+        this.exportTableData = [];
+        this.daysInMonth = [{}];
         this.isPageLoaded = false;
         this.exportAsConfig = {
             type: 'pdf',
             elementIdOrContent: 'defects_table',
         };
+        this.datepickerConfig = {
+            dateInputFormat: 'YYYY-MM',
+            containerClass: 'theme-red',
+            minMode: 'month',
+            maxDate: new Date(),
+            locale: 'vi',
+        };
         this.authenticationService.loginUser.subscribe(function (x) { return _this.loginUser = x; });
     }
     DefectReportsComponent.prototype.ngOnInit = function () {
+        this.daysInMonth = this.getTotalDaysInMonth(this.month);
         this.loadDatatable();
     };
     DefectReportsComponent.prototype.loadDatatable = function () {
         var _this = this;
+        this.http.post(this.apiUrl + '/api/defect/defect-report', { month: this.month }, {})
+            .subscribe(function (resp) {
+            _this.exportTableData = resp.data;
+            _this.exportTableData.forEach(function (element, index) {
+                element.timesheet = _this.exportTableDataArray(element.timesheet);
+                element.timesheet_ot = _this.exportTableDataArray(element.timesheet_ot);
+                element.actual_working_day = 0;
+                element.timesheet.forEach(function (element2, index2) {
+                    element2.check = _this.compareValues(element2, 8.5);
+                    if (element2.check) {
+                        element.actual_working_day++;
+                    }
+                });
+            });
+            // this.defects = resp.data;
+            _this.isPageLoaded = true;
+            // callback({
+            // 	recordsTotal: 0,
+            // 	recordsFiltered: 0,
+            // 	data: [],
+            // });
+        });
+        return;
         var that = this;
+        var column = [
+            {
+                'sortable': true,
+                'target': [0]
+            }
+        ];
+        this.daysInMonth.forEach(function (element) {
+            column.push({
+                'sortable': false,
+                'target': [column.length]
+            });
+        });
         this.dtOptions = {
             pagingType: 'full_numbers',
             pageLength: that.loginUser.settings.tables_pagination_limit,
             serverSide: true,
             responsive: true,
-            searching: true,
-            processing: true,
+            // searching: true,
+            // processing: true,
             dom: '<"html5buttons"B>ltfrtip',
-            order: [0],
-            columns: [
-                {
-                    'sortable': true,
-                    'target': [0]
-                },
-                {
-                    'sortable': true,
-                    'target': [1]
-                },
-                {
-                    'sortable': true,
-                    'target': [2]
-                },
-                {
-                    'sortable': true,
-                    'target': [3]
-                },
-                {
-                    'sortable': true,
-                    'target': [4]
-                },
-                {
-                    'sortable': true,
-                    'target': [5]
-                },
-                {
-                    'sortable': true,
-                    'target': [6]
-                },
-                {
-                    'sortable': true,
-                    'target': [7]
-                }
-            ],
+            // order: [0],
+            columns: column,
             buttons: [
-                {
-                    extend: 'csv',
-                    title: this.translate.instant('reports.headings.defect_report'),
-                    className: "btn btn-datatable-gredient",
-                    action: function (e, dt, node, config) {
-                        that.exportFiles('csv');
-                    }
-                }, {
-                    extend: 'excel',
-                    title: this.translate.instant('reports.headings.defect_report'),
-                    className: "btn btn-datatable-gredient",
-                    action: function (e, dt, node, config) {
-                        that.exportFiles('xlsx');
-                    }
-                }, {
-                    extend: 'pdf',
-                    title: this.translate.instant('reports.headings.defect_report'),
-                    className: "btn btn-datatable-gredient",
-                    action: function (e, dt, node, config) {
-                        that.exportFiles('pdf');
-                    }
-                }
+            // {
+            // 	extend: 'csv',
+            // 	title: this.translate.instant('reports.headings.defect_report'),
+            // 	className: "btn btn-datatable-gredient",
+            // 	action: function (e, dt, node, config) {
+            // 		that.exportFiles('csv')
+            // 	}
+            // }, {
+            // 	extend: 'excel',
+            // 	title: this.translate.instant('reports.headings.defect_report'),
+            // 	className: "btn btn-datatable-gredient",
+            // 	action: function (e, dt, node, config) {
+            // 		that.exportFiles('xlsx')
+            // 	}
+            // }, {
+            // 	extend: 'pdf',
+            // 	title: this.translate.instant('reports.headings.defect_report'),
+            // 	className: "btn btn-datatable-gredient",
+            // 	action: function (e, dt, node, config) {
+            // 		that.exportFiles('pdf')
+            // 	}
+            // }
             ],
             language: {
                 "sEmptyTable": this.translate.instant('common.datatable.sEmptyTable'),
@@ -227,19 +252,78 @@ var DefectReportsComponent = /** @class */ (function () {
                 }
             },
             ajax: function (dataTablesParameters, callback) {
+                dataTablesParameters.month = _this.month;
                 _this.http
                     .post(_this.apiUrl + '/api/defect/defect-report', dataTablesParameters, {})
                     .subscribe(function (resp) {
-                    _this.defects = resp.data;
-                    _this.isPageLoaded = true;
-                    callback({
-                        recordsTotal: resp.recordsTotal,
-                        recordsFiltered: resp.recordsFiltered,
-                        data: [],
+                    _this.exportTableData = resp.data;
+                    _this.exportTableData.forEach(function (element, index) {
+                        element.timesheet = _this.exportTableDataArray(element.timesheet);
+                        element.timesheet_ot = _this.exportTableDataArray(element.timesheet_ot);
+                        element.actual_working_day = 0;
+                        element.timesheet.forEach(function (element2, index2) {
+                            element2.check = _this.compareValues(element2, 8.5);
+                            if (element2.check) {
+                                element.actual_working_day++;
+                            }
+                        });
                     });
+                    // this.defects = resp.data;
+                    _this.isPageLoaded = true;
+                    // callback({
+                    // 	recordsTotal: 0,
+                    // 	recordsFiltered: 0,
+                    // 	data: [],
+                    // });
                 });
             }
         };
+    };
+    DefectReportsComponent.prototype.exportTableDataArray = function (data) {
+        return Object.keys(data).map(function (key) { return ({
+            key: key,
+            value: data[key]
+        }); });
+    };
+    DefectReportsComponent.prototype.compareValues = function (timesheet, working_hours) {
+        var isEqual = Number(timesheet.value) === Number(working_hours);
+        var todayCheck = new Date(timesheet.key);
+        var isSaturday = todayCheck.getDay() === 6;
+        var weekOfMonth = this.getWeekOfMonth(todayCheck);
+        // const isSecondOrFourthWeek = (weekOfMonth === 2 || weekOfMonth === 4);
+        var newDate = new Date();
+        var today = Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["startOfDay"])(new Date(newDate.getFullYear(), newDate.getMonth(), 25));
+        var currentWeekMonday = Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["startOfWeek"])(today, { weekStartsOn: 1 });
+        var isWeekdayAndFuture = todayCheck > currentWeekMonday && Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["getDay"])(todayCheck) >= 1 && Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["getDay"])(todayCheck) <= 5;
+        return isEqual;
+        // (isSaturday && isSecondOrFourthWeek) ||
+        //  isWeekdayAndFuture;
+    };
+    DefectReportsComponent.prototype.getWeekOfMonth = function (date) {
+        var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+        var firstDayOfWeek = firstDay.getDay();
+        var dayOfMonth = date.getDate();
+        return Math.ceil((dayOfMonth + firstDayOfWeek) / 7);
+    };
+    DefectReportsComponent.prototype.nextMonth = function () {
+        this.changeMonth(Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["addMonths"])(this.month, 1));
+    };
+    DefectReportsComponent.prototype.preMonth = function () {
+        this.changeMonth(Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["subMonths"])(this.month, 1));
+    };
+    DefectReportsComponent.prototype.changeMonth = function (selectedDate) {
+        this.month = this.datePipe.transform(selectedDate, 'yyyy/MM');
+        this.daysInMonth = this.getTotalDaysInMonth(this.month);
+        this.loadDatatable();
+    };
+    DefectReportsComponent.prototype.getTotalDaysInMonth = function (date) {
+        var start = Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["startOfMonth"])(date);
+        var end = Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["endOfMonth"])(date);
+        var daysInMonth = [];
+        for (var d = start; d <= end; d.setDate(d.getDate() + 1)) {
+            daysInMonth.push({ date: Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["format"])(new Date(d), 'YYYY-MM-DD'), stt: Number(Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["format"])(new Date(d), 'd')), day: Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["getDate"])(new Date(d)) });
+        }
+        return daysInMonth;
     };
     DefectReportsComponent.prototype.exportFiles = function (type) {
         this.exportAsConfig.type = type;
@@ -254,7 +338,7 @@ var DefectReportsComponent = /** @class */ (function () {
             dtInstance.destroy();
             setTimeout(function () {
                 _this.dtTrigger.next();
-                if (_this.defects.length > 0) {
+                if (_this.exportTableData.length > 0) {
                     $('.tfoot_dt').addClass('d-none');
                 }
                 else {
@@ -263,23 +347,11 @@ var DefectReportsComponent = /** @class */ (function () {
             });
         });
     };
-    DefectReportsComponent.prototype.ngAfterViewInit = function () {
-        this.dtTrigger.next();
-        this.dtElement.dtInstance.then(function (dtInstance) {
-            dtInstance.columns().every(function () {
-                var that = this;
-                $('input', this.footer()).on('keyup change', function () {
-                    if (that.search() !== this['value']) {
-                        that.search(this['value']).draw();
-                    }
-                });
-            });
-        });
-    };
     DefectReportsComponent.ctorParameters = function () { return [
         { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"] },
         { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
-        { type: _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"] },
+        { type: _angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"] },
+        { type: _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_8__["AuthenticationService"] },
         { type: ngx_export_as__WEBPACK_IMPORTED_MODULE_3__["ExportAsService"] }
     ]; };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -294,7 +366,8 @@ var DefectReportsComponent = /** @class */ (function () {
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"],
             _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
-            _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_7__["AuthenticationService"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"],
+            _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_8__["AuthenticationService"],
             ngx_export_as__WEBPACK_IMPORTED_MODULE_3__["ExportAsService"]])
     ], DefectReportsComponent);
     return DefectReportsComponent;

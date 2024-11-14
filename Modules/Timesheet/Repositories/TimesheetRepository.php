@@ -252,6 +252,7 @@ class TimesheetRepository
                             'id' => $timesheet->id,
                             'status' => $timesheet->status,
                             'approved1' => $approved ? $approved->username : null,
+                            'note' => $timesheet->note,
                             'start_time' => $timesheet->start_time,
                             'decimal_time' => $timesheet->decimal_time,
                             'end_time' => $timesheet->end_time,
@@ -273,6 +274,7 @@ class TimesheetRepository
                             'id' => $timesheet->id,
                             'status' => $timesheet->status,
                             'approved1' => $approved ? $approved->username : null,
+                            'note' => $timesheet->note,
                             'start_time' => $timesheet->start_time,
                             'decimal_time' => $timesheet->decimal_time,
                             'end_time' => $timesheet->end_time,
@@ -1007,6 +1009,7 @@ class TimesheetRepository
             $data['created_user_id'] = $user->id;
             $data['start_time'] = $value['start_time'];
             $data['end_time'] = $value['end_time'];
+            $data['note'] = isset($value['note']) ? $value['note'] : '';
             $data['decimal_time'] = $this->commonHelper->getDecimalTimeDiff($value['start_time'], $value['end_time']);
             $data['hour_time'] = $this->commonHelper->getHourTimeDiff($value['start_time'], $value['end_time']);
             $data['module_id'] = 2;

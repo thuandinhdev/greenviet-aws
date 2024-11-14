@@ -1236,7 +1236,7 @@ class ProjectRepository
                 $user_table . '.lastname as client_lastname',
                 $user_table . '.avatar as client_avatar'
             )
-            ->join($user_table . ' as project_created', 'project_created.id', '=', $project_table . '.user_id')
+            ->leftjoin($user_table . ' as project_created', 'project_created.id', '=', $project_table . '.user_id')
             ->leftjoin($user_table, $user_table . '.id', '=', $project_table . '.client_id');
 
         $matchThese = [];
