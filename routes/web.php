@@ -14,19 +14,19 @@ use Modules\User\Entities\User\User;
 | contains the "web" middleware group. Now create something great!
 |
  */
-Route::get('/', function () {
-    if (file_exists(storage_path('installed'))) {
-        if (!is_null(config('app.front_url'))) {
-            return redirect(config('app.front_url'));
-        }
-        return response()->json('Success');
-    } else {
-        Artisan::call('config:clear', []);
-        \View::addLocation(base_path() . '/Modules/Installer/Resources/views');
-        \View::addNamespace('theme', base_path() . '/Modules/Installer/Resources/views');
-        return View::make('theme::welcome');
-    }
-})->name('index');
+// Route::get('/', function () {
+//     if (file_exists(storage_path('installed'))) {
+//         if (!is_null(config('app.front_url'))) {
+//             return redirect(config('app.front_url'));
+//         }
+//         return response()->json('Success');
+//     } else {
+//         Artisan::call('config:clear', []);
+//         \View::addLocation(base_path() . '/Modules/Installer/Resources/views');
+//         \View::addNamespace('theme', base_path() . '/Modules/Installer/Resources/views');
+//         return View::make('theme::welcome');
+//     }
+// })->name('index');
 
 // Application cache cleared.
 Route::get('/cache-clear', function () {
@@ -69,7 +69,9 @@ Route::get('/queue/work', function () {
 
 Route::get('/login/microsoft', [LoginController::class, 'redirectToMicrosoft'])->name('login.microsoft');
 Route::get('/login/microsoft/callback', [LoginController::class, 'handleMicrosoftCallback']);
-
+Route::get('/test', function () {
+    // return 'ok';
+});
 Route::get('/updatedb', function () {
     // Menu::where('id', 102)->update([
     //         'status'=> 1
@@ -77,7 +79,7 @@ Route::get('/updatedb', function () {
     // Menu::where('id', 46)->update([
     //     'label'=> 'project bidding',
     //     'text'=> 'Project Bidding',
-    //     'link'=> '/project_bidding',
+    //     'link'=> '/project_bidding',s
     //     'icon'=>'fa fa-product-hunt',
     //     'status'=> 1
     // ]);

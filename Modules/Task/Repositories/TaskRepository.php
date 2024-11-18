@@ -1240,12 +1240,12 @@ class TaskRepository
         $user = Auth::user();
 
         $columns = array(
-            0 => $task_table . '.generated_id',
-            1 => $task_table . '.name',
-            2 => $task_table . '.planned_start_date',
-            3 => $task_table . '.planned_end_date',
-            4 => $task_table . '.task_start_date',
-            5 => $task_table . '.task_end_date',
+            0 => $task_table . '.name',
+            1 => $project_table . '.project_name',
+            2 => $task_table . '.task_start_date',
+            3 => $task_table . '.task_end_date',
+            4 => $task_table . '.planned_start_date',
+            5 => $task_table . '.planned_end_date',
             6 => $task_table . '.actual_hours',
             7 => $task_table . '.progress',
             8 => DB::raw('concat(project_created.firstname," ",project_created.lastname)'),
