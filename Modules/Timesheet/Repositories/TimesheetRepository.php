@@ -880,8 +880,16 @@ class TimesheetRepository
                     $task->save();
                 }
             }
+            $timesheetWaiting = DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
+            ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['end']. ' 23:59:59')))
+            ->where('created_user_id', $input['users_id'])->where('status', 1)->count();
+            $timesheetTotal= DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
+            ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['end']. ' 23:59:59')))
+            ->where('created_user_id', $input['users_id'])->count();
+            if($timesheetWaiting == $timesheetTotal){
+                $this->emailRepo->sendApprovedTimesheetEmails($input['users_id']);
+            }
 
-            $this->emailRepo->sendApprovedTimesheetEmails($input['users_id']);
             return true;
         // } else {
         //     return false;
@@ -995,7 +1003,7 @@ class TimesheetRepository
         $this->saveTimesheetExecute($request, $input['ot'], 1, $user, $setting);
         $listProject = DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['rangeDate']['start']. ' 00:00:00')))
         ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['rangeDate']['end']. ' 23:59:59')))
-        ->where('created_user_id', $user->id)->groupBy('project_id')->pluck('project_id');
+        ->where('created_user_id', $user->id)->where('status', 0)->groupBy('project_id')->pluck('project_id');
         if(count($listProject) > 0){
             $this->emailRepo->sendSaveTimesheetEmails($listProject, $user);
         }

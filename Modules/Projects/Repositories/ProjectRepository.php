@@ -375,7 +375,11 @@ class ProjectRepository
         $input['user_id'] = $user->id;
         $input['generated_id'] = $this->getGeneratedId();
         $assignMembers = [];
-
+        if ($input['type'] && is_array($input['type'])) {
+            $input['type'] = json_encode($input['type']);
+        } else {
+            $input['type'] = [];
+        }
         if (isset($input['assign_members'])
             && is_array($input['assign_members'])
             && count($input['assign_members']) > 0
@@ -519,6 +523,11 @@ class ProjectRepository
         if ($input['status'] == 5) {
             $this->_updateProjectTaskStatus($id);
             $input['progress'] = 100;
+        }
+        if ($input['type'] && is_array($input['type'])) {
+            $input['type'] = json_encode($input['type']);
+        } else {
+            $input['type'] = [];
         }
 
         if (!empty($input['project_logo']) && $project->project_logo != $input['project_logo']) {
@@ -1252,7 +1261,13 @@ class ProjectRepository
             ->limit($limit)
             ->orderBy($order, $dir === 'desc' ? 'desc' : 'asc')
             ->get();
-
+        foreach ($data as $key => $value) {
+            $value->workallowance = 0;
+            $leaves = DB::table('gv_leaves')->where('leave_type_id', 3)->whereJsonContains('project', $value->id)->get();
+            foreach ($leaves as $leavesValue) {
+                $value->workallowance += floor($leavesValue->total/count(json_decode($leavesValue->project)));
+            }
+        }
         return array(
             "draw" => intval($request->input('draw')),
             "recordsTotal" => intval($totalData),

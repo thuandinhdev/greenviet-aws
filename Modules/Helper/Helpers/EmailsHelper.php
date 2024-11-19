@@ -2645,20 +2645,31 @@ class EmailsHelper
     {
         $email_template = EmailTemplate::where('type', 'save_timesheet')->first();
         if (!empty($email_template)) {
-            $userData = DB::table('gv_projects')->leftJoin('gv_users', 'gv_projects.assign_to', '=',  'gv_users.id')
+            $userData = DB::table('gv_projects')->join('gv_users', 'gv_projects.assign_to', '=',  'gv_users.id')
             ->whereIn('gv_projects.id', $listProject)->select('gv_users.id', 'gv_users.email', 'gv_users.username', 'gv_projects.assign_to')->get();
             $search = [
                 '{USER_NAME}',
                 '{LINK_VIEW}'
             ];
             $replace = [
-                $user->user_name,
+                $user->username,
                 config('app.front_url').'/#/timesheet'
             ];
-
             $subject = str_replace($search, $replace, $email_template->template_subject);
             $message = str_replace($search, $replace, $email_template->template_body);
-            foreach ($userData as $adminSend) {
+            if(count($userData) > 0){
+                foreach ($userData as $adminSend) {
+                    if($adminSend->email && !is_null($adminSend->email)){
+                        $this->_sendEmailsInQueue(
+                            $adminSend->email,
+                            $adminSend->username,
+                            $subject,
+                            $message
+                        );
+                    }
+                }
+            } else {
+                $adminSend =  User::where('id', 1)->first();
                 if($adminSend->email && !is_null($adminSend->email)){
                     $this->_sendEmailsInQueue(
                         $adminSend->email,
@@ -2673,45 +2684,47 @@ class EmailsHelper
 
     public function sendApprovedTimesheetEmails($users_id)
     {
-        // $email_template = EmailTemplate::where('type', 'save_timesheet')->first();
-        // if (!empty($email_template)) {
-        //     $userData = DB::table('gv_projects')->leftJoin('gv_users', 'gv_projects.assign_to', '=',  'gv_users.id')
-        //     ->whereIn('gv_projects.id', $listProject)->select('gv_users.id', 'gv_users.email', 'gv_users.username', 'gv_projects.assign_to')->get();
-        //     $search = [
-        //         '{USER_NAME}',
-        //         '{LINK_VIEW}'
-        //     ];
-        //     $replace = [
-        //         $user->username,
-        //         config('app.front_url').'/#/timesheet'
-        //     ];
+        $email_template = EmailTemplate::where('type', 'approved_timesheet')->first();
+        if (!empty($email_template)) {
+            $user =  User::where('id', $users_id)->first();
+            $search = [
+                '{USER_NAME}',
+                '{LINK_VIEW}'
+            ];
+            $replace = [
+                $user->username,
+                config('app.front_url').'/#/timesheet'
+            ];
 
-        //     $subject = str_replace($search, $replace, $email_template->template_subject);
-        //     $message = str_replace($search, $replace, $email_template->template_body);
-        //     foreach ($userData as $adminSend) {
-        //         if($adminSend->email && !is_null($adminSend->email)){
-        //             $this->_sendEmailsInQueue(
-        //                 $adminSend->email,
-        //                 $adminSend->username,
-        //                 $subject,
-        //                 $message
-        //             );
-        //         }
-        //     }
-        // }
+            $subject = str_replace($search, $replace, $email_template->template_subject);
+            $message = str_replace($search, $replace, $email_template->template_body);
+
+            $userData = User::join('gv_user_role_department', 'gv_user_role_department.user_id', '=', 'gv_users.id')->where('gv_user_role_department.department_id', 3)->get();
+
+            foreach ($userData as $adminSend) {
+                if($adminSend->email && !is_null($adminSend->email)){
+                    $this->_sendEmailsInQueue(
+                        $adminSend->email,
+                        $adminSend->username,
+                        $subject,
+                        $message
+                    );
+                }
+            }
+        }
     }
 
     public function sendRejectTimesheetEmails($user)
     {
-        $email_template = EmailTemplate::where('type', 'save_timesheet')->first();
+        $email_template = EmailTemplate::where('type', 'reject_timesheet')->first();
         if (!empty($email_template)) {
             $search = [
                 '{USER_NAME}',
                 '{LINK_VIEW}'
             ];
             $replace = [
-                auth()->user()->username,
-                config('app.front_url').'/#/timesheet'
+                $user->username,
+                config(key: 'app.front_url').'/#/timesheet'
             ];
 
             $subject = str_replace($search, $replace, $email_template->template_subject);
