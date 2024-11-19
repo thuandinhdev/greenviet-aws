@@ -378,8 +378,9 @@ class ProjectRepository
         if ($input['type'] && is_array($input['type'])) {
             $input['type'] = json_encode($input['type']);
         } else {
-            $input['type'] = [];
+            $input['type'] = '[]';
         }
+        // dd($input);
         if (isset($input['assign_members'])
             && is_array($input['assign_members'])
             && count($input['assign_members']) > 0

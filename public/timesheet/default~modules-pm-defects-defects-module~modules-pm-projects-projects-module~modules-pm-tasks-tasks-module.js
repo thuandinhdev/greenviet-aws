@@ -626,19 +626,19 @@ var TodoDetailComponent = /** @class */ (function () {
         var _this = this;
         this.todoService.getAllTodos(this.todoParams)
             .subscribe(function (data) {
-            _this.todos = data;
             _this.totalcompleted = 0;
             _this.total = 0;
-            _this.todos.open.forEach(function (element) {
+            data['open'].forEach(function (element) {
                 _this.total += element.price;
                 if (element.due_date < _this.datePipe.transform(new Date(), 'yyyy-MM-dd')) {
                     element.is_overdue = true;
                 }
             });
-            _this.todos.completed.forEach(function (element2) {
+            data['completed'].forEach(function (element2) {
                 _this.total += element2.price;
                 _this.totalcompleted += element2.price;
             });
+            _this.todos = data;
             _this.isPageloaded = true;
         }, function (error) { });
     };
