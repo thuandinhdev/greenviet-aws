@@ -1267,6 +1267,8 @@ class ProjectRepository
             foreach ($leaves as $leavesValue) {
                 $value->workallowance += floor($leavesValue->total/count(json_decode($leavesValue->project)));
             }
+            $value->payment = DB::table('gv_todos')->where('module_id', 1)->where('module_related_id', $value->id)->where('status', 2)->sum('price');
+            $value->paymentTotal = DB::table('gv_todos')->where('module_id', 1)->where('module_related_id', $value->id)->sum('price');
         }
         return array(
             "draw" => intval($request->input('draw')),
