@@ -97,8 +97,8 @@ class TaskRepository
         } elseif ($request->has('filter') && $request->get('filter') === "selected") {
             $task = Task::where(
                 function ($query) use ($task_table, $user) {
-                    $query->where($task_table . '.assign_to', $user->id)
-                        ->orWhere($task_table . '.created_by', $user->id);
+                    // $query->where($task_table . '.assign_to', $user->id)
+                    //     ->orWhere($task_table . '.created_by', $user->id);
                 }
             );
             $statusCount = $this->_getTaskCount(true);
@@ -217,8 +217,8 @@ class TaskRepository
         if ($isMy) {
             return Task::where(
                 function ($query) use ($user) {
-                    $query->where('assign_to', $user->id)
-                        ->orWhere('created_by', $user->id);
+                    // $query->where('assign_to', $user->id)
+                    //     ->orWhere('created_by', $user->id);
                 }
             )
                 ->whereIn('status', $status)
@@ -243,8 +243,8 @@ class TaskRepository
         if ($isMy) {
             $overdueTask = Task::where(
                 function ($query) use ($user) {
-                    $query->where('assign_to', $user->id)
-                        ->orWhere('created_by', $user->id);
+                    // $query->where('assign_to', $user->id)
+                    //     ->orWhere('created_by', $user->id);
                 }
             );
         } else {
