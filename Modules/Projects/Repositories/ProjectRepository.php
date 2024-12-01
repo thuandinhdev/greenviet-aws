@@ -135,14 +135,14 @@ class ProjectRepository
         $order = $columns[$request->input('order.0.column')];
         $dir = $request->input('order.0.dir');
 
-        $projects = $projects->with(
-            [
-            'users' => function ($query) {
-                $query->select('id', 'firstname', 'lastname', 'avatar');
-            },
-            ]
-        )
-            ->select(
+        // $projects = $projects->with(
+        //     [
+        //     'users' => function ($query) {
+        //         $query->select('id', 'firstname', 'lastname', 'avatar');
+        //     },
+        //     ]
+        // )
+        $projects = $projects->select(
                 $project_table . '.*',
                 $user_table . '.firstname as client_firstname',
                 $user_table . '.lastname as client_lastname',
