@@ -139,17 +139,17 @@ class EmailsHelper
      */
     private function _sendEmailsInQueue($to, $name, $subject, $body)
     {
-        try {
-            $details['to'] = $to;
-            $details['name'] = $name;
-            $details['subject'] = $subject;
-            $details['body'] = $body;
-            SendEmailJob::dispatch($details)->onConnection('sync');
-            $job = (new SendEmailJob($details))->delay(Carbon::now()->addSeconds(5));
-            dispatch($job);
-        } catch (\Exception $e) {
-            pr($e->getMessage(), 1);
-        }
+        // try {
+        //     $details['to'] = $to;
+        //     $details['name'] = $name;
+        //     $details['subject'] = $subject;
+        //     $details['body'] = $body;
+        //     SendEmailJob::dispatch($details)->onConnection('sync');
+        //     $job = (new SendEmailJob($details))->delay(Carbon::now()->addSeconds(5));
+        //     dispatch($job);
+        // } catch (\Exception $e) {
+        //     pr($e->getMessage(), 1);
+        // }
     }
 
     /**
