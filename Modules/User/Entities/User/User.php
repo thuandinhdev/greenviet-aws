@@ -96,6 +96,9 @@ CanResetPasswordContract
         'primary_manager',
         'dependents',
         'secondary_manager',
+        'init_paid_leave',
+        'init_paid_leave_date',
+        'employment_id'
     ];
 
     /**

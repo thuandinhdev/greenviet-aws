@@ -404,6 +404,10 @@ class UserRepository
         $user->is_super_admin = isset($input['is_super_admin']) ? $input['is_super_admin'] : 0;
         $user->can_view_all_users = isset($input['can_view_all_users']) ? $input['can_view_all_users'] : 0;
         $user->primary_manager = $input['primary_manager'];
+        $user->employment_id = isset($input['employment_id']) ? $input['employment_id'] : null;
+        $user->init_paid_leave = isset($input['init_paid_leave']) ? $input['init_paid_leave'] : null;
+        $user->init_paid_leave_date = isset($input['init_paid_leave_date']) ? $input['init_paid_leave_date'] : null;
+        $user->dependents = isset($input['dependents']) ? $input['dependents'] : null;
         $user->secondary_manager = $input['secondary_manager'];
         $user->email_verification_code = Str::random(40);
         if (isset($input['avatar'])) {

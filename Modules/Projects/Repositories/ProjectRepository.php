@@ -117,7 +117,6 @@ class ProjectRepository
         } else {
             $user = Auth::user();
             $projects = $user->projects();
-
             $columns = array(
                 0 => $project_table . '.id',
                 1 => $project_table . '.id',

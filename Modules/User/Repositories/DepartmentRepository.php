@@ -62,7 +62,7 @@ class DepartmentRepository
         if ($user->hasRole('admin')) {
             return Department::with(['roles'])->get();
         } else {
-            return Department::with(['roles'])->whereIn('id', $user->departments->pluck('id'))->get();
+            return Department::with(['roles'])->where('id','!=', 1)->get();
         }
     }
 

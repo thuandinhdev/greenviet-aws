@@ -1,37 +1,33 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["common"],{
 
-/***/ "./node_modules/angular-checklist/fesm5/angular-checklist.js":
-/*!*******************************************************************!*\
-  !*** ./node_modules/angular-checklist/fesm5/angular-checklist.js ***!
-  \*******************************************************************/
-/*! exports provided: ChecklistDirective, ChecklistModule */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./node_modules/angular-checklist/dist/directives/checklist.directive.js":
+/*!*******************************************************************************!*\
+  !*** ./node_modules/angular-checklist/dist/directives/checklist.directive.js ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChecklistDirective", function() { return ChecklistDirective; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChecklistModule", function() { return ChecklistModule; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 var ChecklistDirective = /** @class */ (function () {
     function ChecklistDirective() {
         this.maxSelectedItems = -1;
-        this.checklistChange = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        this.checklistChange = new core_1.EventEmitter();
     }
     ////////////
     ChecklistDirective.prototype.ngOnChanges = function () {
         var checklist = this.checklist || [];
         this.isChecked = checklist.indexOf(this.checklistValue) >= 0;
     };
-    ChecklistDirective.prototype.triggerOnChange = function (target) {
+    ChecklistDirective.prototype.triggerOnChange = function ($event) {
+        var target = $event.target;
         var updatedList;
         var checklist = this.checklist || [];
         if (target && target.checked) {
             if (this.maxSelectedItems === -1 || checklist.length < this.maxSelectedItems) {
-                updatedList = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spread"])(checklist, [this.checklistValue]);
+                updatedList = checklist.concat([this.checklistValue]);
                 this.checklistChange.emit(updatedList);
             }
             else {
@@ -40,64 +36,69 @@ var ChecklistDirective = /** @class */ (function () {
         }
         else {
             var i = checklist.indexOf(this.checklistValue);
-            updatedList = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spread"])(checklist.slice(0, i), checklist.slice(i + 1));
+            updatedList = checklist.slice(0, i).concat(checklist.slice(i + 1));
             this.checklistChange.emit(updatedList);
         }
     };
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
-    ], ChecklistDirective.prototype, "checklist", void 0);
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
-    ], ChecklistDirective.prototype, "checklistValue", void 0);
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
-    ], ChecklistDirective.prototype, "maxSelectedItems", void 0);
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Output"])()
-    ], ChecklistDirective.prototype, "checklistChange", void 0);
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostBinding"])('checked')
-    ], ChecklistDirective.prototype, "isChecked", void 0);
-    Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["HostListener"])('change', ['$event.target'])
-    ], ChecklistDirective.prototype, "triggerOnChange", null);
-    ChecklistDirective = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Directive"])({
-            selector: '[checklist]'
-        })
-    ], ChecklistDirective);
+    ChecklistDirective.decorators = [
+        { type: core_1.Directive, args: [{
+                    host: {
+                        '(change)': 'triggerOnChange($event)',
+                        '[checked]': 'isChecked',
+                    },
+                    selector: '[checklist]',
+                },] },
+    ];
+    /** @nocollapse */
+    ChecklistDirective.ctorParameters = function () { return []; };
+    ChecklistDirective.propDecorators = {
+        'checklist': [{ type: core_1.Input },],
+        'checklistValue': [{ type: core_1.Input },],
+        'maxSelectedItems': [{ type: core_1.Input },],
+        'checklistChange': [{ type: core_1.Output },],
+    };
     return ChecklistDirective;
 }());
+exports.ChecklistDirective = ChecklistDirective;
+//# sourceMappingURL=checklist.directive.js.map
 
+/***/ }),
+
+/***/ "./node_modules/angular-checklist/dist/index.js":
+/*!******************************************************!*\
+  !*** ./node_modules/angular-checklist/dist/index.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var common_1 = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+var core_1 = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var checklist_directive_1 = __webpack_require__(/*! ./directives/checklist.directive */ "./node_modules/angular-checklist/dist/directives/checklist.directive.js");
 var ChecklistModule = /** @class */ (function () {
     function ChecklistModule() {
     }
-    ChecklistModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            declarations: [
-                ChecklistDirective,
-            ],
-            imports: [],
-            exports: [
-                ChecklistDirective,
-            ]
-        })
-    ], ChecklistModule);
+    ChecklistModule.decorators = [
+        { type: core_1.NgModule, args: [{
+                    declarations: [
+                        checklist_directive_1.ChecklistDirective,
+                    ],
+                    exports: [
+                        checklist_directive_1.ChecklistDirective,
+                    ],
+                    imports: [
+                        common_1.CommonModule,
+                    ],
+                },] },
+    ];
+    /** @nocollapse */
+    ChecklistModule.ctorParameters = function () { return []; };
     return ChecklistModule;
 }());
-
-/*
- * Public API Surface of angular-checklist
- */
-
-/**
- * Generated bundle index. Do not edit.
- */
-
-
-//# sourceMappingURL=angular-checklist.js.map
-
+exports.ChecklistModule = ChecklistModule;
+//# sourceMappingURL=index.js.map
 
 /***/ }),
 

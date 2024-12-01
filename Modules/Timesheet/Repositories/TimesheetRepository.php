@@ -171,7 +171,7 @@ class TimesheetRepository
             // ->whereIn('id', $list)
             // ->get();
 
-            $list = DB::table('gv_projects')->join('gv_timesheets', 'gv_timesheets.project_id', '=', 'gv_projects.id')->where('gv_timesheets.status', '<', 2)->where('gv_projects.assign_members', $user->id)->groupBy('gv_timesheets.created_user_id')->pluck('gv_timesheets.created_user_id');
+            $list = DB::table('gv_projects')->join('gv_timesheets', 'gv_timesheets.project_id', '=', 'gv_projects.id')->where('gv_timesheets.status', '<', 2)->where('gv_projects.assign_to', $user->id)->groupBy('gv_timesheets.created_user_id')->pluck('gv_timesheets.created_user_id');
             $data = User::with(['departments', 'roles'])
             ->where('is_client', false)
             ->whereIn('id', $list)
@@ -228,7 +228,8 @@ class TimesheetRepository
                 $modules_table . '.module_name',
                 $task_table . '.name as related_name',
                 $project_table . '.project_name',
-                $project_table . '.assign_members'
+                $project_table . '.assign_members',
+                $project_table . '.assign_to'
             )
             ->join($task_table, $task_table . '.id', '=', $timesheet_table . '.module_related_id')
             ->join($project_table, $project_table . '.id', '=', $task_table . '.project_id')
@@ -244,8 +245,10 @@ class TimesheetRepository
                     'module_related_id' => $row->first()->module_related_id,
                     'module_name' => $row->first()->module_name,
                     'assign_members' => $row->first()->assign_members,
+                    'assign_to' => $row->first()->assign_to,
                     'project_name' => $row->first()->project_name,
                     'related_name' => $row->first()->related_name,
+                    'status' => $row->first()->status,
                     'timesheets' => $row->map(function ($timesheet) {
                         $approved = User::where('id', $timesheet->approved1)->first();
                         return [
@@ -266,8 +269,10 @@ class TimesheetRepository
                     'module_related_id' => $row->first()->module_related_id,
                     'module_name' => $row->first()->module_name,
                     'assign_members' => $row->first()->assign_members,
+                    'assign_to' => $row->first()->assign_to,
                     'project_name' => $row->first()->project_name,
                     'related_name' => $row->first()->related_name,
+                    'status' => $row->first()->status,
                     'timesheets' => $row->map(function ($timesheet) {
                         $approved = User::where('id', $timesheet->approved1)->first();
                         return [
@@ -853,10 +858,10 @@ class TimesheetRepository
                     $department_role = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')
                     ->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $input['users_id'])
                     ->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
-                    if($department_role->department_name == 'HR' || ($department_role->department_name == 'Project' && $department_role->role_name == 'Manager')){
-                        $timesheet->approved2 = $user->id;
-                        $timesheet->status = 2;
-                    }
+                    // if($department_role->department_name == 'HR' || ($department_role->department_name == 'Project' && $department_role->role_name == 'Manager')){
+                    //     $timesheet->approved2 = $user->id;
+                    //     $timesheet->status = 2;
+                    // }
                 }
                 if($checkTimeSheet[0]->status == 1){
                     $timesheet->approved2 = $user->id;

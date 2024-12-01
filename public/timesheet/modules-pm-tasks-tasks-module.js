@@ -312,7 +312,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-toastr */ "./node_modules/ngx-toastr/fesm5/ngx-toastr.js");
 /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _core_services_task_attachment_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./../../../../../core/services/task-attachment.service */ "./src/app/core/services/task-attachment.service.ts");
+/* harmony import */ var _core_services_task_attachment_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../../core/services/task-attachment.service */ "./src/app/core/services/task-attachment.service.ts");
 /* harmony import */ var dropzone__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! dropzone */ "./node_modules/dropzone/dist/dropzone.js");
 /* harmony import */ var dropzone__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(dropzone__WEBPACK_IMPORTED_MODULE_9__);
 
@@ -552,7 +552,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var _core_services_task_attachment_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../../core/services/task-attachment.service */ "./src/app/core/services/task-attachment.service.ts");
-/* harmony import */ var _components_create_attachment_modal_create_attachment_modal_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../components/create-attachment-modal/create-attachment-modal.component */ "./src/app/modules/pm/tasks/components/create-attachment-modal/create-attachment-modal.component.ts");
+/* harmony import */ var _create_attachment_modal_create_attachment_modal_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../create-attachment-modal/create-attachment-modal.component */ "./src/app/modules/pm/tasks/components/create-attachment-modal/create-attachment-modal.component.ts");
 
 
 
@@ -634,7 +634,7 @@ var TaskAttachmentsComponent = /** @class */ (function () {
     };
     TaskAttachmentsComponent.prototype.openAttachmentCreateModal = function () {
         var _this = this;
-        this.modalRef = this.modalService.show(_components_create_attachment_modal_create_attachment_modal_component__WEBPACK_IMPORTED_MODULE_9__["CreateAttachmentModalComponent"], this.modalConfigs);
+        this.modalRef = this.modalService.show(_create_attachment_modal_create_attachment_modal_component__WEBPACK_IMPORTED_MODULE_9__["CreateAttachmentModalComponent"], this.modalConfigs);
         this.modalRef.content.event.subscribe(function (data) {
             _this.getAllAttachment(_this.task.id);
         });
@@ -1019,7 +1019,7 @@ var TaskCommentsComponent = /** @class */ (function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".countdown li {\n  display: inline-block;\n  font-size: 1rem;\n  list-style-type: none;\n  text-transform: uppercase;\n  text-align: center;\n}\n.countdown li span {\n  display: block;\n  font-size: 1rem;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW9kdWxlcy9wbS90YXNrcy9jb21wb25lbnRzL3Rhc2stZGV0YWlscy9DOlxceGFtcHBcXGh0ZG9jc1xcZ3YtZGV2ZWxvcGVyXFxhbmd1bGFyL3NyY1xcYXBwXFxtb2R1bGVzXFxwbVxcdGFza3NcXGNvbXBvbmVudHNcXHRhc2stZGV0YWlsc1xcdGFzay1kZXRhaWxzLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9tb2R1bGVzL3BtL3Rhc2tzL2NvbXBvbmVudHMvdGFzay1kZXRhaWxzL3Rhc2stZGV0YWlscy5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDSTtFQUNJLHFCQUFBO0VBQ0EsZUFBQTtFQUNBLHFCQUFBO0VBQ0EseUJBQUE7RUFDQSxrQkFBQTtBQ0FSO0FEQ1E7RUFDSSxjQUFBO0VBQ0EsZUFBQTtBQ0NaIiwiZmlsZSI6InNyYy9hcHAvbW9kdWxlcy9wbS90YXNrcy9jb21wb25lbnRzL3Rhc2stZGV0YWlscy90YXNrLWRldGFpbHMuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyIuY291bnRkb3duIHtcbiAgICBsaSB7XG4gICAgICAgIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgICAgICAgZm9udC1zaXplOiAxcmVtO1xuICAgICAgICBsaXN0LXN0eWxlLXR5cGU6IG5vbmU7XG4gICAgICAgIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gICAgICAgIHRleHQtYWxpZ246IGNlbnRlcjtcbiAgICAgICAgc3BhbiB7XG4gICAgICAgICAgICBkaXNwbGF5OiBibG9jaztcbiAgICAgICAgICAgIGZvbnQtc2l6ZTogMXJlbTtcbiAgICAgICAgfVxuICAgIH1cbn0iLCIuY291bnRkb3duIGxpIHtcbiAgZGlzcGxheTogaW5saW5lLWJsb2NrO1xuICBmb250LXNpemU6IDFyZW07XG4gIGxpc3Qtc3R5bGUtdHlwZTogbm9uZTtcbiAgdGV4dC10cmFuc2Zvcm06IHVwcGVyY2FzZTtcbiAgdGV4dC1hbGlnbjogY2VudGVyO1xufVxuLmNvdW50ZG93biBsaSBzcGFuIHtcbiAgZGlzcGxheTogYmxvY2s7XG4gIGZvbnQtc2l6ZTogMXJlbTtcbn0iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = (".countdown li {\n  display: inline-block;\n  font-size: 1rem;\n  list-style-type: none;\n  text-transform: uppercase;\n  text-align: center;\n}\n.countdown li span {\n  display: block;\n  font-size: 1rem;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9BcHBsaWNhdGlvbnMvTUFNUC9odGRvY3MvZ3YtZGV2ZWxvcGVyL2FuZ3VsYXIvc3JjL2FwcC9tb2R1bGVzL3BtL3Rhc2tzL2NvbXBvbmVudHMvdGFzay1kZXRhaWxzL3Rhc2stZGV0YWlscy5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvbW9kdWxlcy9wbS90YXNrcy9jb21wb25lbnRzL3Rhc2stZGV0YWlscy90YXNrLWRldGFpbHMuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQ0k7RUFDSSxxQkFBQTtFQUNBLGVBQUE7RUFDQSxxQkFBQTtFQUNBLHlCQUFBO0VBQ0Esa0JBQUE7QUNBUjtBRENRO0VBQ0ksY0FBQTtFQUNBLGVBQUE7QUNDWiIsImZpbGUiOiJzcmMvYXBwL21vZHVsZXMvcG0vdGFza3MvY29tcG9uZW50cy90YXNrLWRldGFpbHMvdGFzay1kZXRhaWxzLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNvdW50ZG93biB7XG4gICAgbGkge1xuICAgICAgICBkaXNwbGF5OiBpbmxpbmUtYmxvY2s7XG4gICAgICAgIGZvbnQtc2l6ZTogMXJlbTtcbiAgICAgICAgbGlzdC1zdHlsZS10eXBlOiBub25lO1xuICAgICAgICB0ZXh0LXRyYW5zZm9ybTogdXBwZXJjYXNlO1xuICAgICAgICB0ZXh0LWFsaWduOiBjZW50ZXI7XG4gICAgICAgIHNwYW4ge1xuICAgICAgICAgICAgZGlzcGxheTogYmxvY2s7XG4gICAgICAgICAgICBmb250LXNpemU6IDFyZW07XG4gICAgICAgIH1cbiAgICB9XG59IiwiLmNvdW50ZG93biBsaSB7XG4gIGRpc3BsYXk6IGlubGluZS1ibG9jaztcbiAgZm9udC1zaXplOiAxcmVtO1xuICBsaXN0LXN0eWxlLXR5cGU6IG5vbmU7XG4gIHRleHQtdHJhbnNmb3JtOiB1cHBlcmNhc2U7XG4gIHRleHQtYWxpZ246IGNlbnRlcjtcbn1cbi5jb3VudGRvd24gbGkgc3BhbiB7XG4gIGRpc3BsYXk6IGJsb2NrO1xuICBmb250LXNpemU6IDFyZW07XG59Il19 */");
 
 /***/ }),
 
@@ -1043,7 +1043,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _core_services_task_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../../core/services/task.service */ "./src/app/core/services/task.service.ts");
 /* harmony import */ var _core_services_timesheet_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../../core/services/timesheet.service */ "./src/app/core/services/timesheet.service.ts");
-/* harmony import */ var _core_helpers_pm_helper__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./../../../../../core/helpers/pm-helper */ "./src/app/core/helpers/pm-helper.ts");
+/* harmony import */ var _core_helpers_pm_helper__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../../core/helpers/pm-helper */ "./src/app/core/helpers/pm-helper.ts");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_9__);
 
@@ -1748,7 +1748,7 @@ var TaskCopyComponent = /** @class */ (function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("::ng-deep .odd {\n  display: none;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW9kdWxlcy9wbS90YXNrcy9wYWdlcy90YXNrLWNyZWF0ZS9DOlxceGFtcHBcXGh0ZG9jc1xcZ3YtZGV2ZWxvcGVyXFxhbmd1bGFyL3NyY1xcYXBwXFxtb2R1bGVzXFxwbVxcdGFza3NcXHBhZ2VzXFx0YXNrLWNyZWF0ZVxcdGFzay1jcmVhdGUuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL21vZHVsZXMvcG0vdGFza3MvcGFnZXMvdGFzay1jcmVhdGUvdGFzay1jcmVhdGUuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxhQUFBO0FDQ0oiLCJmaWxlIjoic3JjL2FwcC9tb2R1bGVzL3BtL3Rhc2tzL3BhZ2VzL3Rhc2stY3JlYXRlL3Rhc2stY3JlYXRlLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiOjpuZy1kZWVwIC5vZGQge1xuICAgIGRpc3BsYXk6IG5vbmVcbn0iLCI6Om5nLWRlZXAgLm9kZCB7XG4gIGRpc3BsYXk6IG5vbmU7XG59Il19 */");
+/* harmony default export */ __webpack_exports__["default"] = ("::ng-deep .odd {\n  display: none;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9BcHBsaWNhdGlvbnMvTUFNUC9odGRvY3MvZ3YtZGV2ZWxvcGVyL2FuZ3VsYXIvc3JjL2FwcC9tb2R1bGVzL3BtL3Rhc2tzL3BhZ2VzL3Rhc2stY3JlYXRlL3Rhc2stY3JlYXRlLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9tb2R1bGVzL3BtL3Rhc2tzL3BhZ2VzL3Rhc2stY3JlYXRlL3Rhc2stY3JlYXRlLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksYUFBQTtBQ0NKIiwiZmlsZSI6InNyYy9hcHAvbW9kdWxlcy9wbS90YXNrcy9wYWdlcy90YXNrLWNyZWF0ZS90YXNrLWNyZWF0ZS5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIjo6bmctZGVlcCAub2RkIHtcbiAgICBkaXNwbGF5OiBub25lXG59IiwiOjpuZy1kZWVwIC5vZGQge1xuICBkaXNwbGF5OiBub25lO1xufSJdfQ== */");
 
 /***/ }),
 
@@ -2537,7 +2537,7 @@ var TaskEditComponent = /** @class */ (function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".hide_empty_message ::ng-deep .odd {\n  display: none;\n}\n\n.btn-filters .status-dropdown .btn.assigned,\n.btn-filters .status-dropdown .btn.open {\n  background: none;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW9kdWxlcy9wbS90YXNrcy9wYWdlcy90YXNrLWxpc3QvQzpcXHhhbXBwXFxodGRvY3NcXGd2LWRldmVsb3BlclxcYW5ndWxhci9zcmNcXGFwcFxcbW9kdWxlc1xccG1cXHRhc2tzXFxwYWdlc1xcdGFzay1saXN0XFx0YXNrLWxpc3QuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL21vZHVsZXMvcG0vdGFza3MvcGFnZXMvdGFzay1saXN0L3Rhc2stbGlzdC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGFBQUE7QUNDSjs7QURDQTs7RUFFQyxnQkFBQTtBQ0VEIiwiZmlsZSI6InNyYy9hcHAvbW9kdWxlcy9wbS90YXNrcy9wYWdlcy90YXNrLWxpc3QvdGFzay1saXN0LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmhpZGVfZW1wdHlfbWVzc2FnZSA6Om5nLWRlZXAgLm9kZCB7XG4gICAgZGlzcGxheTogbm9uZVxufVxuLmJ0bi1maWx0ZXJzIC5zdGF0dXMtZHJvcGRvd24gLmJ0bi5hc3NpZ25lZCxcbi5idG4tZmlsdGVycyAuc3RhdHVzLWRyb3Bkb3duIC5idG4ub3BlbiB7XG5cdGJhY2tncm91bmQ6IG5vbmU7XG59IiwiLmhpZGVfZW1wdHlfbWVzc2FnZSA6Om5nLWRlZXAgLm9kZCB7XG4gIGRpc3BsYXk6IG5vbmU7XG59XG5cbi5idG4tZmlsdGVycyAuc3RhdHVzLWRyb3Bkb3duIC5idG4uYXNzaWduZWQsXG4uYnRuLWZpbHRlcnMgLnN0YXR1cy1kcm9wZG93biAuYnRuLm9wZW4ge1xuICBiYWNrZ3JvdW5kOiBub25lO1xufSJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = (".hide_empty_message ::ng-deep .odd {\n  display: none;\n}\n\n.btn-filters .status-dropdown .btn.assigned,\n.btn-filters .status-dropdown .btn.open {\n  background: none;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9BcHBsaWNhdGlvbnMvTUFNUC9odGRvY3MvZ3YtZGV2ZWxvcGVyL2FuZ3VsYXIvc3JjL2FwcC9tb2R1bGVzL3BtL3Rhc2tzL3BhZ2VzL3Rhc2stbGlzdC90YXNrLWxpc3QuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL21vZHVsZXMvcG0vdGFza3MvcGFnZXMvdGFzay1saXN0L3Rhc2stbGlzdC5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGFBQUE7QUNDSjs7QURDQTs7RUFFQyxnQkFBQTtBQ0VEIiwiZmlsZSI6InNyYy9hcHAvbW9kdWxlcy9wbS90YXNrcy9wYWdlcy90YXNrLWxpc3QvdGFzay1saXN0LmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmhpZGVfZW1wdHlfbWVzc2FnZSA6Om5nLWRlZXAgLm9kZCB7XG4gICAgZGlzcGxheTogbm9uZVxufVxuLmJ0bi1maWx0ZXJzIC5zdGF0dXMtZHJvcGRvd24gLmJ0bi5hc3NpZ25lZCxcbi5idG4tZmlsdGVycyAuc3RhdHVzLWRyb3Bkb3duIC5idG4ub3BlbiB7XG5cdGJhY2tncm91bmQ6IG5vbmU7XG59IiwiLmhpZGVfZW1wdHlfbWVzc2FnZSA6Om5nLWRlZXAgLm9kZCB7XG4gIGRpc3BsYXk6IG5vbmU7XG59XG5cbi5idG4tZmlsdGVycyAuc3RhdHVzLWRyb3Bkb3duIC5idG4uYXNzaWduZWQsXG4uYnRuLWZpbHRlcnMgLnN0YXR1cy1kcm9wZG93biAuYnRuLm9wZW4ge1xuICBiYWNrZ3JvdW5kOiBub25lO1xufSJdfQ== */");
 
 /***/ }),
 
@@ -2567,8 +2567,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var _core_services_task_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../../../../core/services/task.service */ "./src/app/core/services/task.service.ts");
 /* harmony import */ var _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../../../core/services/authentication.service */ "./src/app/core/services/authentication.service.ts");
-/* harmony import */ var _components_task_import_modal_task_import_modal_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./../../components/task-import-modal/task-import-modal.component */ "./src/app/modules/pm/tasks/components/task-import-modal/task-import-modal.component.ts");
-/* harmony import */ var _core_helpers_pm_helper__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./../../../../../core/helpers/pm-helper */ "./src/app/core/helpers/pm-helper.ts");
+/* harmony import */ var _components_task_import_modal_task_import_modal_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../components/task-import-modal/task-import-modal.component */ "./src/app/modules/pm/tasks/components/task-import-modal/task-import-modal.component.ts");
+/* harmony import */ var _core_helpers_pm_helper__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../../../../core/helpers/pm-helper */ "./src/app/core/helpers/pm-helper.ts");
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../../../../../environments/environment */ "./src/environments/environment.ts");
 /* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
 /* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(datatables_net__WEBPACK_IMPORTED_MODULE_17__);
