@@ -137,9 +137,9 @@ trait UserRelationship
         )
             ->withPivot('view', 'edit', 'delete');
 
-        // if ($assign) {
-        //     $projects->wherePivot('edit', 1);
-        // }
+        if ($assign) {
+            $projects->wherePivot('edit', 1);
+        }
 
         return $projects;
     }

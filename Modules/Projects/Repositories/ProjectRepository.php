@@ -142,7 +142,7 @@ class ProjectRepository
         //     },
         //     ]
         // )
-        $projects = $projects->select(
+        $projects = Project::select(
                 $project_table . '.*',
                 $user_table . '.firstname as client_firstname',
                 $user_table . '.lastname as client_lastname',
@@ -211,14 +211,14 @@ class ProjectRepository
     private function _getAllProjectCount()
     {
         $user = Auth::user();
-        $result['all'] = $user->projects()->whereIn('status', [1, 2, 3, 4, 5])->count();
+        $result['all'] = Project::whereIn('status', [1, 2, 3, 4, 5])->count();
         $result['open'] = $this->_getStatusWiseCount(1, $user);
         $result['inProgress'] = $this->_getStatusWiseCount(2, $user);
         $result['onHold'] = $this->_getStatusWiseCount(3, $user);
         $result['cancel'] = $this->_getStatusWiseCount(4, $user);
         $result['completed'] = $this->_getStatusWiseCount(5, $user);
-        $result['overdue'] = $user->projects()
-            ->whereIn('status', [1, 2, 3])
+        $result['overdue'] = Project::
+            whereIn('status', [1, 2, 3])
             ->whereDate('end_date', '<', Carbon::now())
             ->count();
         return $result;
@@ -234,7 +234,7 @@ class ProjectRepository
      */
     private function _getStatusWiseCount($status, $user)
     {
-        return $user->projects()->where('status', $status)->count();
+        return Project::where('status', $status)->count();
     }
 
     /**
