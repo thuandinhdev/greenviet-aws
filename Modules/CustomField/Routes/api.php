@@ -31,6 +31,7 @@ Route::group(
         );
         Route::delete('customfields/project_type/{id}', 'CustomFieldController@projectTypeDelete');
         Route::delete('customfields/work_allowance/{id}', 'CustomFieldController@workAllowancedelete');
+        Route::delete('customfields/task/{id}', 'CustomFieldController@defaultTaskdelete');
 
         Route::resource('customfields', 'CustomFieldController');
     }

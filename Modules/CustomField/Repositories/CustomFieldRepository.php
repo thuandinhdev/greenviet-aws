@@ -76,31 +76,60 @@ class CustomFieldRepository
                 $totalFiltered = $CustomField->count();
             }
         } else {
-            $CustomField = DB::table('gv_work_allowance')->where('is_delete', 0);
+            if($request->input('tabData') == 'task'){
+                $CustomField = DB::table('gv_default_task');
 
-            $totalData = $CustomField->count();
+                $totalData = $CustomField->count();
 
-            $columns = array(
-                0 => 'label',
-                1 => 'value'
-            );
+                $columns = array(
+                    0 => 'name',
+                    1 => 'description'
+                );
 
-            $totalFiltered = $totalData;
-            $limit = $request->input('length');
-            $start = $request->input('start');
-            // $order = $columns[$request->input('order.0.column')];
-            $dir = $request->input('order.0.dir');
+                $totalFiltered = $totalData;
+                $limit = $request->input('length');
+                $start = $request->input('start');
+                // $order = $columns[$request->input('order.0.column')];
+                $dir = $request->input('order.0.dir');
 
-            if (!empty($request->input('search.value'))) {
-                $search = $request->input('search.value');
-                $CustomField = $CustomField->where(
-                            function ($query) use ($search) {
-                                $query->where('label', 'LIKE', "%{$search}%")
-                                    ->orWhere('value', 'LIKE', "%{$search}%");
-                            }
-                        );
-                $totalFiltered = $CustomField->count();
+                if (!empty($request->input('search.value'))) {
+                    $search = $request->input('search.value');
+                    $CustomField = $CustomField->where(
+                                function ($query) use ($search) {
+                                    $query->where('name', 'LIKE', "%{$search}%")
+                                        ->orWhere('description', 'LIKE', "%{$search}%");
+                                }
+                            );
+                    $totalFiltered = $CustomField->count();
+                }
+            } else {
+                $CustomField = DB::table('gv_work_allowance')->where('is_delete', 0);
+
+                $totalData = $CustomField->count();
+
+                $columns = array(
+                    0 => 'label',
+                    1 => 'value'
+                );
+
+                $totalFiltered = $totalData;
+                $limit = $request->input('length');
+                $start = $request->input('start');
+                // $order = $columns[$request->input('order.0.column')];
+                $dir = $request->input('order.0.dir');
+
+                if (!empty($request->input('search.value'))) {
+                    $search = $request->input('search.value');
+                    $CustomField = $CustomField->where(
+                                function ($query) use ($search) {
+                                    $query->where('label', 'LIKE', "%{$search}%")
+                                        ->orWhere('value', 'LIKE', "%{$search}%");
+                                }
+                            );
+                    $totalFiltered = $CustomField->count();
+                }
             }
+            
         }
 
 
@@ -145,8 +174,13 @@ class CustomFieldRepository
             unset($input['tabData']);
             DB::table('gv_project_type')->insert($input);
         } else {
-            unset($input['tabData']);
-            DB::table('gv_work_allowance')->insert($input);
+            if($input['tabData'] == 'task'){
+                unset($input['tabData']);
+                DB::table('gv_default_task')->insert($input);
+            } else {
+                unset($input['tabData']);
+                DB::table('gv_work_allowance')->insert($input);
+            }
         }
         return true;
     }
@@ -166,8 +200,13 @@ class CustomFieldRepository
             unset($input['tabData']);
             DB::table('gv_project_type')->where('id', $id)->update($input);
         } else {
-            unset($input['tabData']);
-            DB::table('gv_work_allowance')->where('id', $id)->update($input);
+            if($input['tabData'] == 'task'){
+                unset($input['tabData']);
+                DB::table('gv_default_task')->where('id', $id)->update($input);
+            } else {
+                unset($input['tabData']);
+                DB::table('gv_work_allowance')->where('id', $id)->update($input);
+            }
         }
         return true;
     }

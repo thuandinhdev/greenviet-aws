@@ -148,9 +148,10 @@ class TaskRepository
         if (!empty($request->input('search.value'))) {
             $search = $request->input('search.value');
             $task = $task->where(
-                function ($query) use ($search, $task_table, $user_table) {
+                function ($query) use ($search, $task_table, $user_table, $project_table) {
                     $query->where($task_table . '.name', 'LIKE', "%{$search}%")
                         ->orWhere($task_table . '.generated_id', 'LIKE', "%{$search}%")
+                        ->orWhere($project_table . '.project_name', 'LIKE', "%{$search}%")
                         ->orWhere($task_table . '.task_start_date', 'LIKE', "%{$search}%")
                         ->orWhere($task_table . '.task_end_date', 'LIKE', "%{$search}%")
                         ->orWhere($task_table . '.actual_hours', 'LIKE', "%{$search}%")

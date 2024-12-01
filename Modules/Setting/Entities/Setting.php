@@ -109,6 +109,9 @@ class Setting extends Model
         'is_demo',
         'time_days',
         'time_hours',
+        'contract',
+        'project',
+        'task',
     ];
 
     /**

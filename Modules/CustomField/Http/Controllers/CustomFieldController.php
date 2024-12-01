@@ -169,6 +169,14 @@ class CustomFieldController extends Controller
             return response()->json('error');
         }
     }
+    public function defaultTaskdelete(Request $request, $id){
+        $input = $request->all();
+        if (DB::table('gv_default_task')->where('id', $id)->delete()) {
+            return response()->json('success');
+        } else {
+            return response()->json('error');
+        }
+    }
     /**
      * Change custom field status.
      *

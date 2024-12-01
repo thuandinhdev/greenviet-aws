@@ -491,11 +491,11 @@ class ProjectRepository
                     "custom_field"=> [],
                     "custom_fields"=> null,
                 ];
-                // create tasks Design
-                $this->task->create($tasks);
-                // create tasks Construct
-                $tasks['name'] = 'Construct';
-                $this->task->create($tasks);
+                $default_task = DB::table('gv_default_task')->get();
+                foreach ($default_task as $key => $value) {
+                    $tasks['name'] = $value->name;
+                    $this->task->create($tasks);
+                }
                 return true;
             }
         } else {
