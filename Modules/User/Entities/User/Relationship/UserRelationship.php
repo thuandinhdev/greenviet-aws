@@ -128,7 +128,7 @@ trait UserRelationship
      */
     public function projects($assign = false)
     {
-        // return $this->hasMany(config('core.acl.project_model'), 'user_id');
+        return $this->hasMany(config('core.acl.project_model'), 'user_id');
         $projects = $this->belongsToMany(
             config('core.acl.project_model'),
             config('core.acl.project_user_table'),
