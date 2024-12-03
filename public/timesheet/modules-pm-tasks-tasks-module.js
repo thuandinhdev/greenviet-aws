@@ -2010,13 +2010,14 @@ var TaskCreateComponent = /** @class */ (function () {
         }
         // --
         // Hours validation
-        if (this.createTaskForm.value.estimated_hours && this.project.estimated_hours) {
-            var projectHours = this.project.estimated_hours.replace(/:/g, '.'), taskHours = this.createTaskForm.value.estimated_hours.replace(/:/g, '.');
-            if (parseInt(projectHours) < parseInt(taskHours)) {
-                this.isHoursValid = true;
-                return;
-            }
-        }
+        // if(this.createTaskForm.value.estimated_hours && this.project.estimated_hours) {
+        // 	let projectHours = this.project.estimated_hours.replace(/:/g, '.'),
+        // 		taskHours = this.createTaskForm.value.estimated_hours.replace(/:/g, '.')
+        // 		if(parseInt(projectHours) < parseInt(taskHours)) {
+        // 			this.isHoursValid = true;
+        // 			return;
+        // 		}
+        // }
         if (this.customFields.length > 0) {
             this.setCustomFields();
         }
@@ -2465,13 +2466,14 @@ var TaskEditComponent = /** @class */ (function () {
         }
         // --
         // Hours validation
-        if (this.editTaskForm.value.estimated_hours && this.task.project1.estimated_hours) {
-            var projectHours = this.task.project1.estimated_hours.replace(/:/g, '.'), taskHours = this.editTaskForm.value.estimated_hours.replace(/:/g, '.');
-            if (parseInt(projectHours) < parseInt(taskHours)) {
-                this.isHoursValid = true;
-                return;
-            }
-        }
+        // if(this.editTaskForm.value.estimated_hours && this.task.project1.estimated_hours) {
+        // 	let projectHours = this.task.project1.estimated_hours.replace(/:/g, '.'),
+        // 		taskHours = this.editTaskForm.value.estimated_hours.replace(/:/g, '.')
+        // 		if(parseInt(projectHours) < parseInt(taskHours)) {
+        // 			this.isHoursValid = true;
+        // 			return;
+        // 		}
+        // }
         if (this.customFields.length > 0) {
             this.setCustomFields();
         }

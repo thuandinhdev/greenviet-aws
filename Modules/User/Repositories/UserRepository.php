@@ -526,7 +526,7 @@ class UserRepository
             1 => 'firstname',
             2 => 'lastname',
             3 => 'username',
-            4 => 'is_active',
+            4 => 'email',
         );
         $totalFiltered = $totalData;
 
@@ -534,7 +534,7 @@ class UserRepository
         $start = $request->input('start');
         $order = $columns[$request->input('order.0.column')];
         $dir = $request->input('order.0.dir');
-
+        
         if (!empty($request->input('search.value'))) {
             $search = $request->input('search.value');
 

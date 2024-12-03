@@ -1241,20 +1241,13 @@ class TaskRepository
         $user = Auth::user();
 
         $columns = array(
-            0 => $task_table . '.name',
-            1 => $project_table . '.project_name',
-            2 => $task_table . '.task_start_date',
-            3 => $task_table . '.task_end_date',
-            4 => $task_table . '.planned_start_date',
-            5 => $task_table . '.planned_end_date',
-            6 => $task_table . '.actual_hours',
-            7 => $task_table . '.progress',
-            8 => DB::raw('concat(project_created.firstname," ",project_created.lastname)'),
-            9 => DB::raw("CONCAT($user_table.firstname,' ',$user_table.lastname)"),
-            10 => $task_table . '.priority',
-            11 => $task_table . '.status',
-            12 => $project_table . '.project_name',
-            13 => $task_table . '.project_version',
+            0 => $task_table . '.id',
+            1 => $task_table . '.name',
+            2 => $project_table . '.project_name',
+            3 => $task_table . '.task_start_date',
+            4 => $task_table . '.task_end_date',
+            5 => $task_table . '.planned_start_date',
+            6 => $task_table . '.planned_end_date'
         );
 
         $input = $request->input();
@@ -1264,7 +1257,8 @@ class TaskRepository
         $dir = $request->input('order.0.dir');
         $columns_search = $request->input('columns');
 
-        $task = $user->tasks()->select(
+        // $task = $user->tasks()->select(
+        $task = Task::select(
             $task_table . '.*',
             $project_table . '.project_name',
             'project_created.firstname as created_firstname',
@@ -1274,8 +1268,8 @@ class TaskRepository
             $user_table . '.lastname as assign_lastname',
             $user_table . '.avatar as assign_avatar'
         )
-            ->join($project_table, $project_table . '.id', '=', $task_table . '.project_id')
-            ->join($user_table . ' as project_created', 'project_created.id', '=', $task_table . '.created_by')
+            ->leftjoin($project_table, $project_table . '.id', '=', $task_table . '.project_id')
+            ->leftjoin($user_table . ' as project_created', 'project_created.id', '=', $task_table . '.created_by')
             ->leftjoin($user_table, $user_table . '.id', '=', $task_table . '.assign_to');
 
         $matchThese = [];

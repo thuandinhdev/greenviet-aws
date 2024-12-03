@@ -246,15 +246,15 @@ class ProjectRepository
     {
         $user = Auth::user();
         $project_table = config('core.acl.projects_table');
-        $projects = $user->projects(true)
-            ->with(
-                [
-                'users' => function ($query) {
-                    $query->select('id', 'firstname', 'lastname')->where('edit', true);
-                },
-                ]
-            )
-            ->select('id', 'project_name', 'project_version', 'assign_members', 'estimated_hours', 'start_date', 'end_date')
+        // $projects = $user->projects(true)
+        //     ->with(
+        //         [
+        //         'users' => function ($query) {
+        //             $query->select('id', 'firstname', 'lastname')->where('edit', true);
+        //         },
+        //         ]
+        //     )
+            $projects = Project::select('id', 'project_name', 'project_version', 'assign_members', 'estimated_hours', 'start_date', 'end_date')
             ->orderBy('id', 'desc')
             ->get();
         return $projects;
@@ -1206,7 +1206,7 @@ class ProjectRepository
         $user = Auth::user();
 
         $columns = array(
-            0 => $project_table . '.generated_id',
+            0 => $project_table . '.id',
             1 => $project_table . '.project_name',
             2 => $project_table . '.start_date',
             3 => $project_table . '.end_date',
@@ -1219,14 +1219,14 @@ class ProjectRepository
         $dir = $request->input('order.0.dir');
         $columns_search = $request->input('columns');
 
-        $projects = $user->projects()->with(
-            [
-                'users' => function ($query) {
-                    $query->select('id', 'firstname', 'lastname', 'avatar');
-                },
-            ]
-        )
-            ->select(
+        // $projects = $user->projects()->with(
+        //     [
+        //         'users' => function ($query) {
+        //             $query->select('id', 'firstname', 'lastname', 'avatar');
+        //         },
+        //     ]
+        // )
+        $projects = Project::select(
                 $project_table . '.*',
                 'project_created.id as created_id',
                 'project_created.firstname as created_firstname',
