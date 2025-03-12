@@ -379,6 +379,11 @@ class ProjectRepository
         } else {
             $input['type'] = '[]';
         }
+        if ($input['hashtag'] && is_array($input['hashtag'])) {
+            $input['hashtag'] = json_encode($input['hashtag']);
+        } else {
+            $input['hashtag'] = '[]';
+        }
         // dd($input);
         if (isset($input['assign_members'])
             && is_array($input['assign_members'])
@@ -391,7 +396,8 @@ class ProjectRepository
         } else {
             $input['assign_members'] = 'Unassign';
         }
-
+        $taskList = $input['tasks'];
+        unset($input['tasks']);
         $userIds = [];
         if (!empty($input['users'])) {
             foreach ($input['users'] as $value) {
@@ -491,10 +497,14 @@ class ProjectRepository
                     "custom_field"=> [],
                     "custom_fields"=> null,
                 ];
-                $default_task = DB::table('gv_default_task')->get();
-                foreach ($default_task as $key => $value) {
-                    $tasks['name'] = $value->name;
-                    $this->task->create($tasks);
+                
+                foreach ($taskList as $taskvalue) {
+                    $default_task = DB::table('gv_default_task')->where('id', $taskvalue)->first();
+                    if($default_task){
+                        $tasks['name'] = $default_task->name;
+                        $tasks['price_rate'] =  intdiv($input['price_rate'], count($taskList));
+                        $this->task->create($tasks);
+                    }
                 }
                 return true;
             }
@@ -527,7 +537,12 @@ class ProjectRepository
         if ($input['type'] && is_array($input['type'])) {
             $input['type'] = json_encode($input['type']);
         } else {
-            $input['type'] = [];
+            $input['type'] = '[]';
+        }
+        if ($input['hashtag'] && is_array($input['hashtag'])) {
+            $input['hashtag'] = json_encode($input['hashtag']);
+        } else {
+            $input['hashtag'] = '[]';
         }
 
         if (!empty($input['project_logo']) && $project->project_logo != $input['project_logo']) {

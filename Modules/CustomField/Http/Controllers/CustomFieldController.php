@@ -177,6 +177,14 @@ class CustomFieldController extends Controller
             return response()->json('error');
         }
     }
+    public function hashtagdelete(Request $request, $id){
+        $input = $request->all();
+        if (DB::table('gv_hashtag')->where('id', $id)->delete()) {
+            return response()->json('success');
+        } else {
+            return response()->json('error');
+        }
+    }
     /**
      * Change custom field status.
      *
