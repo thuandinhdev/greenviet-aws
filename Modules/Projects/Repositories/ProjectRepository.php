@@ -132,8 +132,13 @@ class ProjectRepository
         $input = $request->input();
         $limit = $request->input('length');
         $start = $request->input('start');
-        $order = $columns[$request->input('order.0.column')];
-        $dir = $request->input('order.0.dir');
+        if($request->input('order.0.column') == $project_table . '.id'){
+            $order = $project_table . '.project_name';
+            $dir = "desc";
+        } else {
+            $order = $columns[$request->input('order.0.column')];
+            $dir = $request->input('order.0.dir');
+        }
 
         // $projects = $projects->with(
         //     [
@@ -488,8 +493,9 @@ class ProjectRepository
                     "planned_end_date"=> null,
                     "task_start_date"=> null,
                     "task_end_date"=> null,
-                    "assign_to"=> null,
+                    "assign_to"=> $projects['assign_to'],
                     "status"=> 1,
+                    "estimated_hours"=>100,
                     "priority"=> 4,
                     "progress"=> 0,
                     "description"=> "auto",

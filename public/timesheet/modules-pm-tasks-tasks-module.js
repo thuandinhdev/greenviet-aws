@@ -2692,7 +2692,7 @@ var TaskListComponent = /** @class */ (function () {
                     'target': [7]
                 },
                 {
-                    'sortable': false,
+                    'sortable': true,
                     'width': "5%",
                     'target': [8]
                 },

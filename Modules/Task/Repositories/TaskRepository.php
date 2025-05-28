@@ -79,6 +79,8 @@ class TaskRepository
             4 => $task_table . '.progress',
             5 => $task_table . '.priority',
             6 => $task_table . '.status',
+            7 => $task_table . '.status',
+            8 => $task_table . '.status',
         );
 
         if ($request->get('isUserProfile') && $request->has('user_id')) {
@@ -93,6 +95,8 @@ class TaskRepository
                 4 => $task_table . '.progress',
                 5 => $task_table . '.priority',
                 6 => $task_table . '.status',
+                7 => $task_table . '.status',
+                8 => $task_table . '.status',
             );
         } elseif ($request->has('filter') && $request->get('filter') === "selected") {
             $task = Task::where(
@@ -110,8 +114,14 @@ class TaskRepository
         $statusId = $request->get('status');
         $limit = $request->input('length');
         $start = $request->input('start');
-        $order = $columns[$request->input('order.0.column')];
-        $dir = $request->input('order.0.dir');
+        $order_get = $request->input('order');
+        if($order_get[0]['column'] == 0 && !isset($order_get[0]['dir'])){
+            $order = $project_table . '.project_name';
+            $dir = "desc";
+        } else {
+            $order = $columns[$request->input('order.0.column')];
+            $dir = $request->input('order.0.dir');
+        }
 
         $task = $task->leftjoin($user_table, $user_table . '.id', '=', $task_table . '.assign_to')
             ->leftjoin($project_table, $project_table.'.id', '=', $task_table . '.project_id')
@@ -393,8 +403,8 @@ class TaskRepository
             }
         }
 
-        // $user = Auth::user();
-        $user = User::where('id', 1)->first();
+        $user = Auth::user();
+        // $user = User::where('id', 1)->first();
         $task = new Task;
         $input['created_by'] = $user->id;
         if (isset($input['parent_task_id']) && $input['parent_task_id'] != 0) {

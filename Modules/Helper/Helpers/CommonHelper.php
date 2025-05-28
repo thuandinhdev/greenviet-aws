@@ -33,8 +33,8 @@ class CommonHelper
         $monthsPassed = $initPaidLeaveDate->diffInMonths($currentDate);
         $totalLeaveDays = $initPaidLeave + $monthsPassed;
 
-        $used_leave_days = DB::table('gv_leaves')->where('user_id', $user_id)->whereIn('status', [1,2])->whereIn('leave_type_id', [1])->where('duration', 'full')->count();
-        $used_leave_days_half = DB::table('gv_leaves')->where('user_id', $user_id)->whereIn('status', [1,2])->whereIn('leave_type_id', [1])->where('duration', 'half')->count();
+        $used_leave_days = DB::table('gv_leaves')->whereNull('deleted_at')->where('user_id', $user_id)->whereIn('status', [1,2])->whereIn('leave_type_id', [1])->where('duration', 'full')->count();
+        $used_leave_days_half = DB::table('gv_leaves')->whereNull('deleted_at')->where('user_id', $user_id)->whereIn('status', [1,2])->whereIn('leave_type_id', [1])->where('duration', 'half')->count();
         $user->used_leave_days = $used_leave_days + $used_leave_days_half/2;
 
         $remainingLeaveDays = $totalLeaveDays - $user->used_leave_days;
