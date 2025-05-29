@@ -110,22 +110,26 @@ class ProjectRepository
                 0 => $project_table . '.id',
                 1 => $project_table . '.project_name',
                 2 => $project_table . '.start_date',
-                3 => $project_table . '.end_date',
-                4 => $project_table . '.progress',
+                3 => $project_table . '.start_date',
+                4 => $project_table . '.start_date',
                 5 => $project_table . '.status',
+                6 => $project_table . '.status',
+                7 => $project_table . '.status',
+                8 => $project_table . '.status',
             );
         } else {
             $user = Auth::user();
             $projects = $user->projects();
             $columns = array(
                 0 => $project_table . '.id',
-                1 => $project_table . '.id',
+                1 => $project_table . '.project_name',
                 2 => $project_table . '.project_name',
                 3 => $project_table . '.start_date',
-                4 => $project_table . '.progress',
-                5 => 'project_created.firstname',
-                6 => $project_table . '.id',
+                4 => $project_table . '.start_date',
+                5 => $project_table . '.status',
+                6 => $project_table . '.status',
                 7 => $project_table . '.status',
+                8 => $project_table . '.status',
             );
         }
 
@@ -1259,16 +1263,19 @@ class ProjectRepository
             )
             ->leftjoin($user_table . ' as project_created', 'project_created.id', '=', $project_table . '.user_id')
             ->leftjoin($user_table, $user_table . '.id', '=', $project_table . '.client_id');
-
-        $matchThese = [];
-        foreach ((array) $columns_search as $key => $value) {
-            if (!empty($value['search']['value'])) {
-                array_push(
-                    $matchThese,
-                    [$columns[$key], 'LIKE', "%{$value['search']['value']}%"]
-                );
+            if (!empty($request->input('search.value'))) {
+                $search = $request->input('search.value');
+                $projects->where($project_table . '.project_name', 'LIKE', "%{$search}%");
             }
-        }
+        $matchThese = [];
+        // foreach ((array) $columns_search as $key => $value) {
+        //     if (!empty($value['search']['value'])) {
+        //         array_push(
+        //             $matchThese,
+        //             [$columns[$key], 'LIKE', "%{$value['search']['value']}%"]
+        //         );
+        //     }
+        // }
 
         $totalData = $projects->count();
         $totalFiltered = $totalData;

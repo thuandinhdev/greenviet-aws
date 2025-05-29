@@ -1281,16 +1281,24 @@ class TaskRepository
             ->leftjoin($project_table, $project_table . '.id', '=', $task_table . '.project_id')
             ->leftjoin($user_table . ' as project_created', 'project_created.id', '=', $task_table . '.created_by')
             ->leftjoin($user_table, $user_table . '.id', '=', $task_table . '.assign_to');
-
-        $matchThese = [];
-        foreach ((array) $columns_search as $key => $value) {
-            if (!empty($value['search']['value'])) {
-                array_push(
-                    $matchThese,
-                    [$columns[$key], 'LIKE', "%{$value['search']['value']}%"]
-                );
-            }
+        if (!empty($request->input('search.value'))) {
+            $search = $request->input('search.value');
+            $task = $task->where(
+                function ($query) use ($search, $project_table, $task_table) {
+                    $query->where($project_table . '.project_name', 'LIKE', "%{$search}%")
+                        ->orWhere($task_table . '.name', 'LIKE', "%{$search}%");
+                }
+            );
         }
+        $matchThese = [];
+        // foreach ((array) $columns_search as $key => $value) {
+        //     if (!empty($value['search']['value'])) {
+        //         array_push(
+        //             $matchThese,
+        //             [$columns[$key], 'LIKE', "%{$value['search']['value']}%"]
+        //         );
+        //     }
+        // }
 
         $totalData = $task->count();
         $totalFiltered = $totalData;

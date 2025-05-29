@@ -3409,12 +3409,12 @@ var ProjectListComponent = /** @class */ (function () {
                     'target': [1]
                 },
                 {
-                    'sortable': true,
+                    'sortable': false,
                     'width': "5%",
                     'target': [2]
                 },
                 {
-                    'sortable': true,
+                    'sortable': false,
                     'width': "10%",
                     'target': [3]
                 },
@@ -3424,7 +3424,7 @@ var ProjectListComponent = /** @class */ (function () {
                     'target': [4]
                 },
                 {
-                    'sortable': true,
+                    'sortable': false,
                     'width': "5%",
                     'target': [5]
                 },
@@ -3444,7 +3444,7 @@ var ProjectListComponent = /** @class */ (function () {
                     'target': [8]
                 },
                 {
-                    'sortable': true,
+                    'sortable': false,
                     'width': "5%",
                     'target': [9]
                 }

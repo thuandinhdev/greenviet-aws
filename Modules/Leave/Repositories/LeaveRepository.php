@@ -196,7 +196,6 @@ class LeaveRepository
             $childUser->push($user->id);
             $leaves->whereIn('user_id', $childUser);
         }
-
         $columns = array(
             0 => $leaves_table . '.id',
             1 => $user_table . '.firstname',
@@ -391,6 +390,9 @@ class LeaveRepository
         $check = Timesheet::where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 00:00:00')))->where('created_user_id', $input['user_id'])->count();
         if($check > 0 && $input['leave_type_id'] < 3){
             return ['status'=>false, 'msg'=>'This day has been timesheeted'];
+        }
+        if($input['status'] == 4){
+            $input['status'] = 1;
         }
         if ($leave->fill($input)->save()) {
 
