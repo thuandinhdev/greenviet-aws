@@ -74,6 +74,12 @@ class MenuController extends Controller
         return response()->json('success');
     }
 
+    public function getHRMstatus(Request $request)
+    {
+        return $this->menuRepo->getHRMstatus();
+    }
+    
+
     /**
      * Get side bar menu.
      *

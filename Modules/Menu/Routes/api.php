@@ -20,5 +20,6 @@ Route::group(
     function () {
         Route::get('sidebar-menu', 'MenuController@getSidebarMenu');
         Route::resource('menu', 'MenuController');
+        Route::get('get-hrm-status', 'MenuController@getHRMstatus');
     }
 );

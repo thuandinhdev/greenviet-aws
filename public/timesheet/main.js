@@ -360,7 +360,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<!-- Sidebar Header starts -->\n<div class=\"sidebar-header\">\n\t<div class=\"logo clearfix\">\n\t\t<a [routerLink]=\"['/']\" class=\"logo-text\">\n\t\t\t<!-- <div class=\"logo-img mr-1\">\n\t\t\t\t<img src=\"{{apiUrl}}/uploads/company_sidebar_logo/{{settings.company_sidebar_logo}}\" width=\"30\" height=\"30\" alt=\"Logo 30x30\" *ngIf=\"settings.company_sidebar_logo\" />\n\t\t\t\t<img src=\"assets/img/logos/favicon-72x72.png\" width=\"30\" height=\"30\" alt=\"Profile Logo\" *ngIf=\"!settings.company_sidebar_logo\" />\n\t\t\t</div> -->\n\t\t\t<span class=\"text align-middle\">{{settings.company_short_name}}</span>\n\t\t</a>\n\t\t<a class=\"nav-close d-block d-md-block d-lg-none d-xl-none\" id=\"sidebarClose\" href=\"javascript:;\">\n\t\t\t<i class=\"ft-x\"></i>\n\t\t</a>\n\t</div>\n</div>\n<div class=\"sidebar-content\" [perfectScrollbar]=\"scrollConfig\">\n\t<div class=\"nav-container\">\n\t\t<ul class=\"navigation\">\n\t\t\t<!-- First level menu -->\n\t\t\t <li *ngFor=\"let menuItem of menuItems\" [ngClass]=\"[menuItem.class]\" [routerLinkActive]=\"menuItem.submenu.length != 0 ? '' : 'active'\" [routerLinkActiveOptions]=\"{exact: false}\">\n\t\t\t\t<a [routerLink]=\"menuItem.class === '' ? [menuItem.link] : null\" *ngIf=\"!menuItem.isExternalLink; else externalLinkBlock\">\n\t\t\t\t\t<i [ngClass]=\"[menuItem.icon]\"></i>\n\t\t\t\t\t<span class=\"menu-title\">{{menuItem.text | translate}}</span>\n\t\t\t\t\t<span *ngIf=\"menuItem.badge != '' \" [ngClass]=\"[menuItem.badgeClass]\">{{menuItem.badge}}</span>\n\t\t\t\t</a>\n\t\t\t\t<ng-template #externalLinkBlock>\n\t\t\t\t\t<a [href]=\"[menuItem.link]\" target=\"_blank\">\n\t\t\t\t\t\t<i [ngClass]=\"[menuItem.icon]\"></i>\n\t\t\t\t\t\t<span class=\"menu-title\">{{menuItem.text | translate}}</span>\n\t\t\t\t\t\t<span *ngIf=\"menuItem.badge != '' \" [ngClass]=\"[menuItem.badgeClass]\">{{menuItem.badge}}</span>\n\t\t\t\t\t</a>\n\t\t\t\t</ng-template>\n\t\t\t\t<!-- Second level menu -->\n\t\t\t\t<ul class=\"menu-content\" *ngIf=\"menuItem.submenu.length > 0\">\n\t\t\t\t\t<li *ngFor=\"let menuSubItem of menuItem.submenu\" [routerLinkActive]=\"menuSubItem.submenu.length > 0 ? '' : 'active'\" [ngClass]=\"[menuSubItem.class]\">\n\t\t\t\t\t\t<a [routerLink]=\"menuSubItem.submenu.length > 0 ? null : [menuSubItem.link]\" *ngIf=\"!menuSubItem.isExternalLink; else externalSubLinkBlock\">\n\t\t\t\t\t\t\t<span class=\"menu-title\">{{menuSubItem.text | translate}}</span>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<ng-template #externalSubLinkBlock>\n\t\t\t\t\t\t\t<a [href]=\"[menuSubItem.link]\">\n\t\t\t\t\t\t\t\t<span class=\"menu-title\">{{menuSubItem.text | translate}}</span>\n\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t</ng-template>\n\t\t\t\t\t\t<!-- Third level menu -->\n\t\t\t\t\t\t<!-- <ul class=\"menu-content\" *ngIf=\"menuSubItem.submenu.length > 0\">\n\t\t\t\t\t\t\t<li *ngFor=\"let menuSubsubItem of menuSubItem.submenu\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{exact: true}\"\n\t\t\t\t\t\t\t\t[ngClass]=\"[menuSubsubItem.class]\">\n\t\t\t\t\t\t\t\t<a [routerLink]=\"[menuSubsubItem.link]\" *ngIf=\"!menuSubsubItem.isExternalLink; else externalSubSubLinkBlock\">\n\t\t\t\t\t\t\t\t\t<span class=\"menu-title\">{{menuSubsubItem.text | translate}}</span>\n\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t<ng-template #externalSubSubLinkBlock>\n\t\t\t\t\t\t\t\t\t<a [href]=\"[menuSubsubItem.link]\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"menu-title\">{{menuSubsubItem.text | translate}}</span>\n\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t</ng-template>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t</ul> -->\n\t\t\t\t\t</li>\n\t\t\t\t</ul>\n\t\t\t</li>\n\t\t</ul>\n\t</div>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<!-- Sidebar Header starts -->\n<div class=\"sidebar-header\">\n\t<div class=\"logo clearfix\">\n\t\t<a [routerLink]=\"['/']\" class=\"logo-text\">\n\t\t\t<!-- <div class=\"logo-img mr-1\">\n\t\t\t\t<img src=\"{{apiUrl}}/uploads/company_sidebar_logo/{{settings.company_sidebar_logo}}\" width=\"30\" height=\"30\" alt=\"Logo 30x30\" *ngIf=\"settings.company_sidebar_logo\" />\n\t\t\t\t<img src=\"assets/img/logos/favicon-72x72.png\" width=\"30\" height=\"30\" alt=\"Profile Logo\" *ngIf=\"!settings.company_sidebar_logo\" />\n\t\t\t</div> -->\n\t\t\t<span class=\"text align-middle\">{{settings.company_short_name}}</span>\n\t\t</a>\n\t\t<a class=\"nav-close d-block d-md-block d-lg-none d-xl-none\" id=\"sidebarClose\" href=\"javascript:;\">\n\t\t\t<i class=\"ft-x\"></i>\n\t\t</a>\n\t</div>\n</div>\n<div class=\"sidebar-content\" [perfectScrollbar]=\"scrollConfig\">\n\t<div class=\"nav-container\">\n\t\t<ul class=\"navigation\">\n\t\t\t<!-- First level menu -->\n\t\t\t <li *ngFor=\"let menuItem of menuItems\" [ngClass]=\"[menuItem.class]\" [routerLinkActive]=\"menuItem.submenu.length != 0 ? '' : 'active'\" [routerLinkActiveOptions]=\"{exact: false}\">\n\t\t\t\t<a [routerLink]=\"menuItem.class === '' ? [menuItem.link] : null\" *ngIf=\"!menuItem.isExternalLink; else externalLinkBlock\">\n\t\t\t\t\t<i [ngClass]=\"[menuItem.icon]\"></i>\n\t\t\t\t\t<span class=\"menu-title\">{{menuItem.text | translate}} </span>\n\t\t\t\t\t<span *ngIf=\"menuItem.badge != '' \" [ngClass]=\"[menuItem.badgeClass]\">{{menuItem.badge}}</span>\n\t\t\t\t\t<i *ngIf=\"menuItem.text == 'HRM' && statusHRM && (statusHRM.timesheet || statusHRM.leaves)\" class=\"fa fa-clock-o overdue-icon ng-star-inserted\" style=\"color: #e1981e;float: right;\"></i>\n\t\t\t\t</a>\n\t\t\t\t<ng-template #externalLinkBlock>\n\t\t\t\t\t<a [href]=\"[menuItem.link]\" target=\"_blank\">\n\t\t\t\t\t\t<i [ngClass]=\"[menuItem.icon]\"></i>\n\t\t\t\t\t\t<span class=\"menu-title\">{{menuItem.text | translate}}</span>\n\t\t\t\t\t\t<span *ngIf=\"menuItem.badge != '' \" [ngClass]=\"[menuItem.badgeClass]\">{{menuItem.badge}}</span>\n\t\t\t\t\t</a>\n\t\t\t\t</ng-template>\n\t\t\t\t<!-- Second level menu -->\n\t\t\t\t<ul class=\"menu-content\" *ngIf=\"menuItem.submenu.length > 0\">\n\t\t\t\t\t<li *ngFor=\"let menuSubItem of menuItem.submenu\" [routerLinkActive]=\"menuSubItem.submenu.length > 0 ? '' : 'active'\" [ngClass]=\"[menuSubItem.class]\">\n\t\t\t\t\t\t<a [routerLink]=\"menuSubItem.submenu.length > 0 ? null : [menuSubItem.link]\" *ngIf=\"!menuSubItem.isExternalLink; else externalSubLinkBlock\">\n\t\t\t\t\t\t\t<i *ngIf=\"menuSubItem.text == 'Timesheet' && statusHRM && statusHRM.timesheet\" class=\"fa fa-clock-o overdue-icon ng-star-inserted\" style=\"color: #e1981e;float: right;\"></i>\n\t\t\t\t\t\t\t<i *ngIf=\"menuSubItem.text == 'Leaves' && statusHRM && statusHRM.leaves\" class=\"fa fa-clock-o overdue-icon ng-star-inserted\" style=\"color: #e1981e;float: right;\"></i>\n\t\t\t\t\t\t\t<span class=\"menu-title\">{{menuSubItem.text | translate}}</span>\n\t\t\t\t\t\t</a>\n\t\t\t\t\t\t<ng-template #externalSubLinkBlock>\n\t\t\t\t\t\t\t<a [href]=\"[menuSubItem.link]\">\n\t\t\t\t\t\t\t\t<span class=\"menu-title\">{{menuSubItem.text | translate}}</span>\n\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t</ng-template>\n\t\t\t\t\t\t<!-- Third level menu -->\n\t\t\t\t\t\t<!-- <ul class=\"menu-content\" *ngIf=\"menuSubItem.submenu.length > 0\">\n\t\t\t\t\t\t\t<li *ngFor=\"let menuSubsubItem of menuSubItem.submenu\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{exact: true}\"\n\t\t\t\t\t\t\t\t[ngClass]=\"[menuSubsubItem.class]\">\n\t\t\t\t\t\t\t\t<a [routerLink]=\"[menuSubsubItem.link]\" *ngIf=\"!menuSubsubItem.isExternalLink; else externalSubSubLinkBlock\">\n\t\t\t\t\t\t\t\t\t<span class=\"menu-title\">{{menuSubsubItem.text | translate}}</span>\n\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t<ng-template #externalSubSubLinkBlock>\n\t\t\t\t\t\t\t\t\t<a [href]=\"[menuSubsubItem.link]\">\n\t\t\t\t\t\t\t\t\t\t<span class=\"menu-title\">{{menuSubsubItem.text | translate}}</span>\n\t\t\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t\t\t</ng-template>\n\t\t\t\t\t\t\t</li>\n\t\t\t\t\t\t</ul> -->\n\t\t\t\t\t</li>\n\t\t\t\t</ul>\n\t\t\t</li>\n\t\t</ul>\n\t</div>\n</div>\n");
 
 /***/ }),
 
@@ -5779,6 +5779,7 @@ var colors = {
 var stop_loading_url = [
     _src_environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiUrl + '/api/timer-logs',
     _src_environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiUrl + '/api/get-notifications',
+    _src_environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiUrl + '/api/get-hrm-status',
     _src_environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].apiUrl + '/api/notifications/delete'
 ];
 // --
@@ -6520,6 +6521,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/authentication.service */ "./src/app/core/services/authentication.service.ts");
 /* harmony import */ var _helpers_app_helper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/app.helper */ "./src/app/core/helpers/app.helper.ts");
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+
+
 
 
 
@@ -6527,8 +6532,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var SidebarComponent = /** @class */ (function () {
-    function SidebarComponent(route, authenticationService) {
+    function SidebarComponent(route, http, authenticationService) {
         this.route = route;
+        this.http = http;
         this.authenticationService = authenticationService;
         this.scrollConfig = {};
         this.apiUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].apiUrl;
@@ -6536,7 +6542,15 @@ var SidebarComponent = /** @class */ (function () {
         this.authenticationService.setLoginUser(this.route.snapshot.data.sidebarMenu.loginUser);
         this.loginUser = this.route.snapshot.data.sidebarMenu.loginUser;
     }
-    SidebarComponent.prototype.ngOnInit = function () { };
+    SidebarComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.interval = Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["timer"])(0, 10000).pipe().subscribe(function (x) {
+            _this.http.get(_this.apiUrl + "/api/get-hrm-status").subscribe(function (res) {
+                _this.statusHRM = res;
+                console.log(_this.statusHRM);
+            });
+        });
+    };
     SidebarComponent.prototype.ngAfterViewInit = function () {
         setTimeout(function () {
             Object(_helpers_app_helper__WEBPACK_IMPORTED_MODULE_4__["sidebarCollpasedMenu"])();
@@ -6547,6 +6561,7 @@ var SidebarComponent = /** @class */ (function () {
     };
     SidebarComponent.ctorParameters = function () { return [
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] },
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"] },
         { type: _services_authentication_service__WEBPACK_IMPORTED_MODULE_3__["AuthenticationService"] }
     ]; };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -6560,6 +6575,7 @@ var SidebarComponent = /** @class */ (function () {
             styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./sidebar.component.scss */ "./src/app/core/layouts/sidebar/sidebar.component.scss")).default]
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"],
             _services_authentication_service__WEBPACK_IMPORTED_MODULE_3__["AuthenticationService"]])
     ], SidebarComponent);
     return SidebarComponent;
