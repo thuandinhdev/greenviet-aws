@@ -6522,10 +6522,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_app_helper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/app.helper */ "./src/app/core/helpers/app.helper.ts");
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../environments/environment */ "./src/environments/environment.ts");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-
-
 
 
 
@@ -6547,16 +6543,20 @@ var SidebarComponent = /** @class */ (function () {
     SidebarComponent.prototype.ngOnInit = function () {
         var _this = this;
         // this.interval = timer(0, 10000).pipe().subscribe(x => {
-        // 	this.http.get(this.apiUrl+`/api/get-hrm-status`).subscribe((res) => {
-        // 		this.statusHRM = res;
-        // 	});
+        this.http.get(this.apiUrl + "/api/get-hrm-status").subscribe(function (res) {
+            _this.statusHRM = res;
+        });
         // });
-        this.interval = Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["expand"])(function () {
-            return _this.http.get(_this.apiUrl + "/api/get-hrm-status").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["switchMap"])(function (res) {
-                _this.statusHRM = res;
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["delay"])(60000));
-            }));
-        })).subscribe();
+        // this.interval = of(null).pipe(
+        // 	expand(() => 
+        // 	this.http.get(this.apiUrl + `/api/get-hrm-status`).pipe(
+        // 		switchMap(res => {
+        // 			this.statusHRM = res;
+        // 			return of(null).pipe(delay(60000));
+        // 		})
+        // 	)
+        // 	)
+        // ).subscribe();
     };
     SidebarComponent.prototype.ngAfterViewInit = function () {
         setTimeout(function () {
