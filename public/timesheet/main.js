@@ -6554,7 +6554,7 @@ var SidebarComponent = /** @class */ (function () {
         this.interval = Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["expand"])(function () {
             return _this.http.get(_this.apiUrl + "/api/get-hrm-status").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["switchMap"])(function (res) {
                 _this.statusHRM = res;
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["delay"])(20000));
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["delay"])(60000));
             }));
         })).subscribe();
     };
@@ -10144,9 +10144,6 @@ var environment;
 environment = {
     production: false,
     apiUrl: 'https://timesheet.greenviet.net'
-    // apiUrl: 'https://greenviet.cuortech.com'
-    // apiUrl: 'https://greenviet.azurewebsites.net'
-    // apiUrl: 'http://chetsapp.de:8899'
 };
 
 
