@@ -33,7 +33,7 @@ class TeamRepository
     {
         return User::join('gv_user_role_department', 'gv_user_role_department.user_id', '=', 'gv_users.id')
         // ->whereIn('gv_user_role_department.department_id', [1,2])
-        ->select('gv_users.*')->get();
+        ->select('gv_users.*')->orderBy('username')->get();
         return Team::with(
             ['members' => function ($query) {
                 $query->select(
@@ -43,7 +43,7 @@ class TeamRepository
                     config('core.acl.users_table') . '.avatar'
                 );
             }]
-        )->orderBy('created_at', 'desc')->get();
+        )->get();
     }
 
     /**
