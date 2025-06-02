@@ -6521,8 +6521,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_authentication_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/authentication.service */ "./src/app/core/services/authentication.service.ts");
 /* harmony import */ var _helpers_app_helper__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../helpers/app.helper */ "./src/app/core/helpers/app.helper.ts");
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../environments/environment */ "./src/environments/environment.ts");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+
 
 
 
@@ -6544,12 +6546,17 @@ var SidebarComponent = /** @class */ (function () {
     }
     SidebarComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.interval = Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["timer"])(0, 10000).pipe().subscribe(function (x) {
-            _this.http.get(_this.apiUrl + "/api/get-hrm-status").subscribe(function (res) {
+        // this.interval = timer(0, 10000).pipe().subscribe(x => {
+        // 	this.http.get(this.apiUrl+`/api/get-hrm-status`).subscribe((res) => {
+        // 		this.statusHRM = res;
+        // 	});
+        // });
+        this.interval = Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["expand"])(function () {
+            return _this.http.get(_this.apiUrl + "/api/get-hrm-status").pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["switchMap"])(function (res) {
                 _this.statusHRM = res;
-                console.log(_this.statusHRM);
-            });
-        });
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["delay"])(20000));
+            }));
+        })).subscribe();
     };
     SidebarComponent.prototype.ngAfterViewInit = function () {
         setTimeout(function () {
@@ -6561,7 +6568,7 @@ var SidebarComponent = /** @class */ (function () {
     };
     SidebarComponent.ctorParameters = function () { return [
         { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] },
-        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"] },
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HttpClient"] },
         { type: _services_authentication_service__WEBPACK_IMPORTED_MODULE_3__["AuthenticationService"] }
     ]; };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -6575,7 +6582,7 @@ var SidebarComponent = /** @class */ (function () {
             styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./sidebar.component.scss */ "./src/app/core/layouts/sidebar/sidebar.component.scss")).default]
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"],
-            _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_6__["HttpClient"],
             _services_authentication_service__WEBPACK_IMPORTED_MODULE_3__["AuthenticationService"]])
     ], SidebarComponent);
     return SidebarComponent;
