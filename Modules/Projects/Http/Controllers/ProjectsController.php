@@ -74,9 +74,9 @@ class ProjectsController extends Controller
     {
         // --
         // Check role/permission
-        if (!AdminHelper::can_action(43, 'view')) {
-            return response()->json("Access denied", 403);
-        }
+        // if (!AdminHelper::can_action(43, 'view')) {
+        //     return response()->json("Access denied", 403);
+        // }
 
         return $this->projectRepo->getAllProjects($request);
     }

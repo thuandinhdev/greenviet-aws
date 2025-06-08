@@ -22,6 +22,8 @@ use Modules\User\Entities\Department\DepartmentRoleUser;
 use Modules\User\Entities\Role\Role;
 use Modules\User\Entities\User\User;
 use Modules\User\Http\Requests\ImportUserRequest;
+use Modules\Projects\Entities\Project;
+use Modules\Task\Entities\Task;
 use Illuminate\Support\Facades\DB;
 use Validator;
 
@@ -76,6 +78,7 @@ class UserRepository
     {
         return User::with(['departments', 'roles'])
             ->where('is_client', false)
+            ->orderBy('username')
             ->get();
     }
 
@@ -221,9 +224,13 @@ class UserRepository
             }
 
             if ($user->is_client) {
-                $user->projects_count = $user->projects()->whereNotIn('status', [4, 5])->count();
+                // $user->projects_count = $user->projects()->whereNotIn('status', [4, 5])->count();
+                $user->projects_count = Project::where('assign_to', $id)->count();
+                $user->tasks_count = Task::where('assign_to', $id)->count();
             } else {
-                $user->projects_count = $user->projects(true)->whereNotIn('status', [4, 5])->count();
+                // $user->projects_count = $user->projects(true)->whereNotIn('status', [4, 5])->count();
+                $user->projects_count = Project::where('assign_to', $id)->count();
+                $user->tasks_count = Task::where('assign_to', $id)->count();
             }
 
             $project_comment = ProjectComment::select(\DB::raw('count(*) as projectComment'))

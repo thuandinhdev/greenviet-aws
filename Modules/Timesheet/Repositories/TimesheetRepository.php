@@ -161,6 +161,7 @@ class TimesheetRepository
         if($department->department_name == 'Administration' || $department->department_name == 'HR'){
             $data = User::with(['departments', 'roles'])
             ->where('is_client', false)
+            ->orderBy('username')
             ->get();
         }
         if($department->department_name == 'Project'){
@@ -175,6 +176,7 @@ class TimesheetRepository
             $data = User::with(['departments', 'roles'])
             ->where('is_client', false)
             ->whereIn('id', $list)
+            ->orderBy('username')
             ->get();
         }
         foreach ($data as $key => $value) {

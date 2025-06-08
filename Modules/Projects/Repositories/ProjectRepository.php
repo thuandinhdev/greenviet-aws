@@ -18,6 +18,7 @@ use Modules\Task\Repositories\TaskRepository;
 use Modules\Team\Entities\Team;
 use Modules\UserActivity\Entities\UserActivity;
 use Modules\User\Entities\User\User;
+use Modules\Helper\Helpers\AdminHelper;
 use Storage;
 
 /**
@@ -97,7 +98,7 @@ class ProjectRepository
         $project_table = config('core.acl.projects_table');
         $user_table = config('core.acl.users_table');
         $team_table = config('core.acl.teams');
-
+        $user = Auth::user();
         if ($request->get('isUserProfile') && $request->has('user_id')) {
             $user = User::findOrFail($request->get('user_id'));
             if ($user->is_client) {
@@ -118,7 +119,6 @@ class ProjectRepository
                 8 => $project_table . '.status',
             );
         } else {
-            $user = Auth::user();
             $projects = $user->projects();
             $columns = array(
                 0 => $project_table . '.id',
@@ -163,6 +163,10 @@ class ProjectRepository
             ->leftjoin($user_table, $user_table . '.id', '=', $project_table . '.client_id')
             ->leftjoin($user_table . ' as project_created', 'project_created.id', '=', $project_table . '.user_id')
             ->leftjoin($team_table, $team_table . '.id', '=', $project_table . '.assign_to');
+
+        if (!AdminHelper::can_action(43, 'view')) {
+            $projects = $projects->where($project_table . '.assign_to', $user->id);
+        }
 
         if (isset($input['statusId']) && $input['statusId']) {
             if ($input['statusId'] == 6) {

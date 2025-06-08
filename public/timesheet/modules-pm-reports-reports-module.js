@@ -61,7 +61,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<section class=\"detail-page\">\n\t<div class=\"card\">\n\t\t<tabset class=\"nav nav-tabs d-flex justify-content-center mb-2\">\n\t\t\t<tab customClass=\"text-left active\" id=\"1\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-product-hunt\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.project_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-project-reports *ngIf=\"getActiveReportTab('1')\"></app-project-reports>\n\t\t\t</tab>\n\t\t\t<tab customClass=\"text-left\" id=\"2\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-tasks\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.task_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-task-reports *ngIf=\"getActiveReportTab('2')\"></app-task-reports>\n\t\t\t</tab>\n\t\t\t<tab customClass=\"text-left\" id=\"3\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-user-circle\"></i><span class=\"mt-1 ml-1\">TimeSheet</span></div></ng-template>\n\t\t\t\t<app-defect-reports *ngIf=\"getActiveReportTab('3')\"></app-defect-reports>\n\t\t\t</tab>\n\t\t\t<!-- <tab customClass=\"text-left\" id=\"4\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-ticket\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.incident_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-incident-reports *ngIf=\"getActiveReportTab('4')\"></app-incident-reports>\n\t\t\t</tab> -->\n\t\t</tabset>\n\t</div>\n</section>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<section class=\"detail-page\">\n\t<div class=\"card\">\n\t\t<tabset class=\"nav nav-tabs d-flex justify-content-center mb-2\">\n\t\t\t<tab customClass=\"text-left\" id=\"3\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-user-circle\"></i><span class=\"mt-1 ml-1\">TimeSheet</span></div></ng-template>\n\t\t\t\t<app-defect-reports *ngIf=\"getActiveReportTab('3')\"></app-defect-reports>\n\t\t\t</tab>\n\t\t\t<tab customClass=\"text-left active\" id=\"1\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-product-hunt\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.project_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-project-reports *ngIf=\"getActiveReportTab('1')\"></app-project-reports>\n\t\t\t</tab>\n\t\t\t<tab customClass=\"text-left\" id=\"2\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-tasks\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.task_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-task-reports *ngIf=\"getActiveReportTab('2')\"></app-task-reports>\n\t\t\t</tab>\n\t\t\t<!-- <tab customClass=\"text-left\" id=\"4\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-ticket\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.incident_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-incident-reports *ngIf=\"getActiveReportTab('4')\"></app-incident-reports>\n\t\t\t</tab> -->\n\t\t</tabset>\n\t</div>\n</section>\n");
 
 /***/ }),
 
@@ -186,103 +186,6 @@ var DefectReportsComponent = /** @class */ (function () {
             // });
         });
         return;
-        var that = this;
-        var column = [
-            {
-                'sortable': true,
-                'target': [0]
-            }
-        ];
-        this.daysInMonth.forEach(function (element) {
-            column.push({
-                'sortable': false,
-                'target': [column.length]
-            });
-        });
-        this.dtOptions = {
-            pagingType: 'full_numbers',
-            pageLength: that.loginUser.settings.tables_pagination_limit,
-            serverSide: true,
-            responsive: true,
-            // searching: true,
-            // processing: true,
-            dom: '<"html5buttons"B>ltfrtip',
-            // order: [0],
-            columns: column,
-            buttons: [
-            // {
-            // 	extend: 'csv',
-            // 	title: this.translate.instant('reports.headings.defect_report'),
-            // 	className: "btn btn-datatable-gredient",
-            // 	action: function (e, dt, node, config) {
-            // 		that.exportFiles('csv')
-            // 	}
-            // }, {
-            // 	extend: 'excel',
-            // 	title: this.translate.instant('reports.headings.defect_report'),
-            // 	className: "btn btn-datatable-gredient",
-            // 	action: function (e, dt, node, config) {
-            // 		that.exportFiles('xlsx')
-            // 	}
-            // }, {
-            // 	extend: 'pdf',
-            // 	title: this.translate.instant('reports.headings.defect_report'),
-            // 	className: "btn btn-datatable-gredient",
-            // 	action: function (e, dt, node, config) {
-            // 		that.exportFiles('pdf')
-            // 	}
-            // }
-            ],
-            language: {
-                "sEmptyTable": this.translate.instant('common.datatable.sEmptyTable'),
-                "sInfo": this.translate.instant('common.datatable.sInfo'),
-                "sInfoEmpty": this.translate.instant('common.datatable.sInfoEmpty'),
-                "sSearch": "",
-                "sInfoPostFix": this.translate.instant('common.datatable.sInfoPostFix'),
-                "sInfoThousands": this.translate.instant('common.datatable.sInfoThousands'),
-                "sLengthMenu": this.translate.instant('common.datatable.sLengthMenu'),
-                "sLoadingRecords": this.translate.instant('common.datatable.sLoadingRecords'),
-                "sProcessing": this.translate.instant('common.datatable.sProcessing'),
-                "sZeroRecords": this.translate.instant('common.datatable.sZeroRecords'),
-                "sSearchPlaceholder": this.translate.instant('common.datatable.sSearchPlaceholder'),
-                "oPaginate": {
-                    "sFirst": this.translate.instant('common.datatable.oPaginate.sFirst'),
-                    "sLast": this.translate.instant('common.datatable.oPaginate.sLast'),
-                    "sNext": this.translate.instant('common.datatable.oPaginate.sNext'),
-                    "sPrevious": this.translate.instant('common.datatable.oPaginate.sPrevious')
-                },
-                "oAria": {
-                    "sSortAscending": this.translate.instant('common.datatable.oAria.sSortAscending'),
-                    "sSortDescending": this.translate.instant('common.datatable.oAria.sSortDescending')
-                }
-            },
-            ajax: function (dataTablesParameters, callback) {
-                dataTablesParameters.month = _this.month;
-                _this.http
-                    .post(_this.apiUrl + '/api/defect/defect-report', dataTablesParameters, {})
-                    .subscribe(function (resp) {
-                    _this.exportTableData = resp.data;
-                    _this.exportTableData.forEach(function (element, index) {
-                        element.timesheet = _this.exportTableDataArray(element.timesheet);
-                        element.timesheet_ot = _this.exportTableDataArray(element.timesheet_ot);
-                        element.actual_working_day = 0;
-                        element.timesheet.forEach(function (element2, index2) {
-                            element2.check = _this.compareValues(element2, 8.5);
-                            if (element2.check) {
-                                element.actual_working_day++;
-                            }
-                        });
-                    });
-                    // this.defects = resp.data;
-                    _this.isPageLoaded = true;
-                    // callback({
-                    // 	recordsTotal: 0,
-                    // 	recordsFiltered: 0,
-                    // 	data: [],
-                    // });
-                });
-            }
-        };
     };
     DefectReportsComponent.prototype.exportTableDataArray = function (data) {
         var total = 0;
@@ -1203,7 +1106,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ReportsComponent = /** @class */ (function () {
     function ReportsComponent() {
-        this.activeActiveReportTab = '1';
+        this.activeActiveReportTab = '3';
     }
     ReportsComponent.prototype.ngOnInit = function () { };
     ReportsComponent.prototype.setActiveReportTab = function ($event) {

@@ -63,9 +63,9 @@ class TaskController extends Controller
     {
         // --
         // Check role/permission
-        if (!AdminHelper::can_action(44, 'view')) {
-            return response()->json("Access denied", 403);
-        }
+        // if (!AdminHelper::can_action(44, 'view')) {
+        //     return response()->json("Access denied", 403);
+        // }
 
         return $this->taskRepo->getAllTask($request);
     }

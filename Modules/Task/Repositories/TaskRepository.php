@@ -15,6 +15,7 @@ use Modules\Team\Entities\Team;
 use Modules\Timesheet\Entities\Timesheet;
 use Modules\UserActivity\Entities\UserActivity;
 use Modules\User\Entities\User\User;
+use Modules\Helper\Helpers\AdminHelper;
 
 /**
  * Class TaskRepository
@@ -132,7 +133,10 @@ class TaskRepository
                 $user_table . '.lastname as assign_lastname',
                 $user_table . '.avatar as assign_avatar'
             );
-
+        
+        if (!AdminHelper::can_action(44, 'view')) {
+            $task->where($task_table . '.assign_to', $user->id);
+        }
         // --
         // Status
         // 1=Open,2=InProgress,3=OnHold,4=Waiting,5=Cancel,6=Completed

@@ -1009,77 +1009,77 @@ class DefectRepository
         return ['data'=>$userList];
 
 
-        $defects_table = config('core.acl.defects_table');
-        $project_table = config('core.acl.projects_table');
-        $user_table = config('core.acl.users_table');
-        $user = Auth::user();
+        // $defects_table = config('core.acl.defects_table');
+        // $project_table = config('core.acl.projects_table');
+        // $user_table = config('core.acl.users_table');
+        // $user = Auth::user();
 
-        $columns = array(
-            0 => $defects_table . '.id',
-            1 => $defects_table . '.defect_name',
-            2 => $defects_table . '.start_date',
-            3 => $defects_table . '.end_date',
-            4 => $defects_table . '.actual_hours',
-            5 => DB::raw("CONCAT($user_table.firstname,' ',$user_table.lastname)"),
-            6 => DB::raw("CONCAT(defect_assigned.firstname,' ',defect_assigned.lastname)"),
-            7 => $defects_table . '.defect_type',
-            8 => $defects_table . '.severity',
-            9 => $defects_table . '.status',
-            10 => $project_table . '.project_name',
-            11 => $defects_table . '.project_version',
-        );
+        // $columns = array(
+        //     0 => $defects_table . '.id',
+        //     1 => $defects_table . '.defect_name',
+        //     2 => $defects_table . '.start_date',
+        //     3 => $defects_table . '.end_date',
+        //     4 => $defects_table . '.actual_hours',
+        //     5 => DB::raw("CONCAT($user_table.firstname,' ',$user_table.lastname)"),
+        //     6 => DB::raw("CONCAT(defect_assigned.firstname,' ',defect_assigned.lastname)"),
+        //     7 => $defects_table . '.defect_type',
+        //     8 => $defects_table . '.severity',
+        //     9 => $defects_table . '.status',
+        //     10 => $project_table . '.project_name',
+        //     11 => $defects_table . '.project_version',
+        // );
 
-        $input = $request->input();
-        $limit = $request->input('length');
-        $start = $request->input('start');
-        $order = $columns[$request->input('order.0.column')];
-        $dir = $request->input('order.0.dir');
-        $columns_search = $request->input('columns');
+        // $input = $request->input();
+        // $limit = $request->input('length');
+        // $start = $request->input('start');
+        // $order = $columns[$request->input('order.0.column')];
+        // $dir = $request->input('order.0.dir');
+        // $columns_search = $request->input('columns');
 
-        $defect = $user->defects()->select(
-            $defects_table . '.*',
-            DB::raw('CASE WHEN defect_type = 1 THEN "Defect" ELSE "Enhancement" END AS defect_types'),
-            $project_table . '.project_name',
-            $user_table . '.firstname as created_firstname',
-            $user_table . '.lastname as created_lastname',
-            $user_table . '.avatar as created_avatar',
-            'defect_assigned.firstname as assigned_firstname',
-            'defect_assigned.lastname as assigned_lastname',
-            'defect_assigned.avatar as assigned_avatar'
-        )
-            ->join($project_table, $project_table . '.id', '=', $defects_table . '.project_id')
-            ->join($user_table, $user_table . '.id', '=', $defects_table . '.create_user_id')
-            ->leftjoin($user_table . ' as defect_assigned', 'defect_assigned.id', '=', $defects_table . '.assign_member');
+        // $defect = $user->defects()->select(
+        //     $defects_table . '.*',
+        //     DB::raw('CASE WHEN defect_type = 1 THEN "Defect" ELSE "Enhancement" END AS defect_types'),
+        //     $project_table . '.project_name',
+        //     $user_table . '.firstname as created_firstname',
+        //     $user_table . '.lastname as created_lastname',
+        //     $user_table . '.avatar as created_avatar',
+        //     'defect_assigned.firstname as assigned_firstname',
+        //     'defect_assigned.lastname as assigned_lastname',
+        //     'defect_assigned.avatar as assigned_avatar'
+        // )
+        //     ->join($project_table, $project_table . '.id', '=', $defects_table . '.project_id')
+        //     ->join($user_table, $user_table . '.id', '=', $defects_table . '.create_user_id')
+        //     ->leftjoin($user_table . ' as defect_assigned', 'defect_assigned.id', '=', $defects_table . '.assign_member');
 
-        $matchThese = [];
-        foreach ((array) $columns_search as $key => $value) {
-            if (!empty($value['search']['value'])) {
-                array_push(
-                    $matchThese,
-                    [$columns[$key], 'LIKE', "%{$value['search']['value']}%"]
-                );
-            }
-        }
+        // $matchThese = [];
+        // foreach ((array) $columns_search as $key => $value) {
+        //     if (!empty($value['search']['value'])) {
+        //         array_push(
+        //             $matchThese,
+        //             [$columns[$key], 'LIKE', "%{$value['search']['value']}%"]
+        //         );
+        //     }
+        // }
 
-        $totalData = $defect->count();
-        $totalFiltered = $totalData;
+        // $totalData = $defect->count();
+        // $totalFiltered = $totalData;
 
-        if (!empty($matchThese)) {
-            $defect = $defect->where($matchThese);
-            $totalFiltered = $defect->count();
-        }
+        // if (!empty($matchThese)) {
+        //     $defect = $defect->where($matchThese);
+        //     $totalFiltered = $defect->count();
+        // }
 
-        $data = $defect->offset($start)
-            ->limit($limit)
-            ->orderBy($order, $dir === 'desc' ? 'desc' : 'asc')
-            ->get();
+        // $data = $defect->offset($start)
+        //     ->limit($limit)
+        //     ->orderBy($order, $dir === 'desc' ? 'desc' : 'asc')
+        //     ->get();
 
-        return array(
-            "draw" => intval($request->input('draw')),
-            "recordsTotal" => intval($totalData),
-            "recordsFiltered" => intval($totalFiltered),
-            "data" => $data,
-        );
+        // return array(
+        //     "draw" => intval($request->input('draw')),
+        //     "recordsTotal" => intval($totalData),
+        //     "recordsFiltered" => intval($totalFiltered),
+        //     "data" => $data,
+        // );
     }
     function getWorkingDays($month, $year) {
         $totalDays = 0;
