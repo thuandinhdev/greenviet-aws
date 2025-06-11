@@ -66,7 +66,7 @@ class CustomFieldRepository
             $totalFiltered = $totalData;
             $limit = $request->input('length');
             $start = $request->input('start');
-            $order = $columns[$request->input('name')];
+            $order = $columns[0];
             $dir = $request->input('order.0.dir');
 
             if (!empty($request->input('search.value'))) {
@@ -93,7 +93,7 @@ class CustomFieldRepository
                 $totalFiltered = $totalData;
                 $limit = $request->input('length');
                 $start = $request->input('start');
-                $order = $columns[$request->input('name')];
+                $order = $columns[0];
                 $dir = $request->input('order.0.dir');
 
                 if (!empty($request->input('search.value'))) {
@@ -120,7 +120,7 @@ class CustomFieldRepository
                     $totalFiltered = $totalData;
                     $limit = $request->input('length');
                     $start = $request->input('start');
-                    $order = $columns[$request->input('name')];
+                    $order = $columns[0];
                     $dir = $request->input('order.0.dir');
     
                     if (!empty($request->input('search.value'))) {
@@ -146,7 +146,7 @@ class CustomFieldRepository
                 $totalFiltered = $totalData;
                 $limit = $request->input('length');
                 $start = $request->input('start');
-                $order = $columns[$request->input('label')];
+                $order = $columns[0];
                 $dir = $request->input('order.0.dir');
 
                 if (!empty($request->input('search.value'))) {
