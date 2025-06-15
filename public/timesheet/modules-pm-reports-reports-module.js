@@ -163,6 +163,7 @@ var DefectReportsComponent = /** @class */ (function () {
             _this.exportTableData = resp.data;
             _this.exportTableData.forEach(function (element, index) {
                 var timesheetconvert = _this.exportTableDataArray(element.timesheet);
+                console.log(timesheetconvert);
                 element.timesheet = timesheetconvert.data;
                 element.timesheet_total = timesheetconvert.total;
                 var timesheetconvertOT = _this.exportTableDataArray(element.timesheet_ot);
@@ -176,7 +177,7 @@ var DefectReportsComponent = /** @class */ (function () {
                     }
                 });
             });
-            console.log(_this.exportTableData);
+            // console.log(this.exportTableData);
             // this.defects = resp.data;
             _this.isPageLoaded = true;
             // callback({

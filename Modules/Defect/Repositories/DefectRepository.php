@@ -955,9 +955,13 @@ class DefectRepository
         $startOfMonth = Carbon::parse($input['month'].'/01')->startOfMonth();
         $endOfMonth = Carbon::parse($input['month'].'/01')->endOfMonth();
         $query = DB::table('gv_timesheets')
-                ->where('status', 2)
-                ->select(DB::raw('DATE(start_time) as date'), DB::raw('SUM(decimal_time) as total_decimal_time'), 'ot_rate')
+                ->where(
+                function ($querys) {
+                    $querys->where('status', 2)
+                        ->orWhere('module_id', 7);
+                })
                 ->whereBetween('start_time', [$startOfMonth->format('Y-m-d'), $endOfMonth->format('Y-m-d')])
+                ->select(DB::raw('DATE(start_time) as date'), DB::raw('SUM(decimal_time) as total_decimal_time'), 'ot_rate')
                 ->groupBy(DB::raw('DATE(start_time)'), 'ot_rate');
         $allDaysData = [];
         for ($date = $startOfMonth; $date->lte($endOfMonth); $date->addDay()) {

@@ -11,10 +11,13 @@ use Modules\Projects\Entities\Project;
 use Modules\Task\Entities\Task;
 use Modules\User\Entities\User\User;
 use Modules\Timesheet\Entities\Timesheet;
+use Modules\Timesheet\Entities\Timesheetdraft;
 use Modules\Setting\Entities\Setting;
 use Modules\Holiday\Entities\Holiday;
 use Modules\Helper\Helpers\EmailsHelper;
 use Modules\Leave\Entities\Leave;
+use Modules\Team\Entities\Team;
+
 
 use Carbon\Carbon;
 /**
@@ -158,24 +161,19 @@ class TimesheetRepository
         $user = Auth::user();
         $department = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $user->id)->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
         $data = [];
-        if($department->department_name == 'Administration' || $department->department_name == 'HR'){
+        if($department->department_name == 'Project'){
+            $list = DB::table('gv_projects')->join('gv_timesheets', 'gv_timesheets.project_id', '=', 'gv_projects.id')->where('gv_timesheets.status', '<', 2)->where('gv_projects.assign_to', $user->id)->groupBy('gv_timesheets.created_user_id')->pluck('gv_timesheets.created_user_id')->toArray();
+            $team = Team::join('gv_teams_members', 'gv_teams_members.team_id', '=', 'gv_teams.id')->where('gv_teams.team_leader', $user->id)->pluck('gv_teams_members.user_id')->toArray();
+            
             $data = User::with(['departments', 'roles'])
             ->where('is_client', false)
+            ->whereIn('id', array_merge($list, $team))
             ->orderBy('username')
             ->get();
         }
-        if($department->department_name == 'Project'){
-            // $listTeam = DB::table('gv_teams')->where('team_leader', $user->id)->pluck('id');
-            // $list = DB::table('gv_teams_members')->whereIn('team_id', $listTeam)->pluck('user_id');
-            // $data = User::with(['departments', 'roles'])
-            // ->where('is_client', false)
-            // ->whereIn('id', $list)
-            // ->get();
-
-            $list = DB::table('gv_projects')->join('gv_timesheets', 'gv_timesheets.project_id', '=', 'gv_projects.id')->where('gv_timesheets.status', '<', 2)->where('gv_projects.assign_to', $user->id)->groupBy('gv_timesheets.created_user_id')->pluck('gv_timesheets.created_user_id');
+        if($department->department_name == 'Administration' || $department->department_name == 'HR'){
             $data = User::with(['departments', 'roles'])
             ->where('is_client', false)
-            ->whereIn('id', $list)
             ->orderBy('username')
             ->get();
         }
@@ -320,8 +318,130 @@ class TimesheetRepository
                 }
             }
         }
-        return  ['data'=>$groupedTimesheets, 'ot'=>$groupedTimesheets_ot, 'other'=>$userAction];
+
+        if(count($groupedTimesheets) == 0 && $isMyTimesheet){
+            return $this->getTimesheetsDraft($input);
+        } else {
+            return  ['data'=>$groupedTimesheets, 'ot'=>$groupedTimesheets_ot, 'other'=>$userAction, 'action'=>'official'];
+        }
     }
+
+    public function getTimesheetsDraft($input){
+        $user = Auth::user();
+        $isMyTimesheet = false;
+        if($input['user_id'] == 'my'){
+            $input['user_id'] = $user->id;
+            $isMyTimesheet = true;
+        }
+        $modules_table = config('core.acl.modules_table');
+        $timesheet_table = 'gv_timesheets_draft';
+        $project_table = config('core.acl.projects_table');
+        $task_table = config('core.acl.task_table');
+
+        $querys = Timesheetdraft::join($modules_table, $modules_table . '.module_id', '=', $timesheet_table . '.module_id')
+            ->where($timesheet_table.'.created_user_id', '=',  $input['user_id'])
+            ->where($timesheet_table.'.module_id', '=',  2)
+            ->where(function($query) use ($input) {
+                $query->whereBetween('start_time', [$input['start'], $input['end']])
+                      ->orWhereBetween('end_time', [$input['start'], $input['end']]);
+            })->select(
+                $timesheet_table . '.*',
+                $modules_table . '.module_name',
+                $task_table . '.name as related_name',
+                $project_table . '.project_name',
+                $project_table . '.assign_members',
+                $project_table . '.assign_to'
+            )
+            ->join($task_table, $task_table . '.id', '=', $timesheet_table . '.module_related_id')
+            ->join($project_table, $project_table . '.id', '=', $task_table . '.project_id')
+            ->orderBy($timesheet_table . '.id');
+
+
+            $querys_ot = clone $querys;
+            $timesheets = $querys->where($timesheet_table . '.ot', 0)->get();
+            $timesheets_ot = $querys_ot->where($timesheet_table . '.ot', 1)->get();
+
+            $groupedTimesheets  = $timesheets->groupBy('module_related_id')->map(function ($row) {
+                return [
+                    'module_related_id' => $row->first()->module_related_id,
+                    'module_name' => $row->first()->module_name,
+                    'assign_members' => $row->first()->assign_members,
+                    'assign_to' => $row->first()->assign_to,
+                    'project_name' => $row->first()->project_name,
+                    'related_name' => $row->first()->related_name,
+                    'status' => $row->first()->status,
+                    'timesheets' => $row->map(function ($timesheet) {
+                        $approved = User::where('id', $timesheet->approved1)->first();
+                        return [
+                            'id' => $timesheet->id,
+                            'status' => $timesheet->status,
+                            'approved1' => $approved ? $approved->username : null,
+                            'note' => $timesheet->note,
+                            'start_time' => $timesheet->start_time,
+                            'decimal_time' => $timesheet->decimal_time,
+                            'end_time' => $timesheet->end_time,
+                        ];
+                    })
+                ];
+            })->values();
+
+            $groupedTimesheets_ot  = $timesheets_ot->groupBy('module_related_id')->map(function ($row) {
+                return [
+                    'module_related_id' => $row->first()->module_related_id,
+                    'module_name' => $row->first()->module_name,
+                    'assign_members' => $row->first()->assign_members,
+                    'assign_to' => $row->first()->assign_to,
+                    'project_name' => $row->first()->project_name,
+                    'related_name' => $row->first()->related_name,
+                    'status' => $row->first()->status,
+                    'timesheets' => $row->map(function ($timesheet) {
+                        $approved = User::where('id', $timesheet->approved1)->first();
+                        return [
+                            'id' => $timesheet->id,
+                            'status' => $timesheet->status,
+                            'approved1' => $approved ? $approved->username : null,
+                            'note' => $timesheet->note,
+                            'start_time' => $timesheet->start_time,
+                            'decimal_time' => $timesheet->decimal_time,
+                            'end_time' => $timesheet->end_time,
+                        ];
+                    })
+                ];
+            })->values();
+        $userAction = [];
+        $userAction['status'] = 0;
+        if(count($groupedTimesheets) > 0){
+            $actionQuery = DB::table('gv_timesheets_draft')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
+            ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['end']. ' 23:59:59')))->where('created_user_id', $input['user_id'])
+            ->select('approved1', 'approved2', 'dis_approved', 'status');
+            if(!$isMyTimesheet){
+                $actionQuery = $actionQuery->orderBy('status');
+            }
+            $timesheetAction = $actionQuery->first();
+
+            $userAction['status'] = $timesheetAction->status;
+            if($timesheetAction->status > 0){
+                $userApproved = DB::table('gv_users')->where('id', $timesheetAction->approved1)->first();
+                if($userApproved && ($userApproved->username)){
+                    $userAction['approved1'] = $userApproved->username;
+                }
+            }
+            if($timesheetAction->status > 1){
+                $userApproved = DB::table('gv_users')->where('id', $timesheetAction->approved2)->first();
+                if($userApproved && ($userApproved->username)){
+                    $userAction['approved2'] = $userApproved->username;
+                }
+            }
+            if($timesheetAction->status > 2){
+                $userApproved = DB::table('gv_users')->where('id', $timesheetAction->dis_approved)->first();
+                if($userApproved && ($userApproved->username)){
+                    $userAction['dis_approved'] = $userApproved->username;
+                }
+            }
+        }
+        return  ['data'=>$groupedTimesheets, 'ot'=>$groupedTimesheets_ot, 'other'=>$userAction, 'action'=>'draft'];
+    }
+    
     public function getTimesheetsByModule($request)
     {
         $input = $request->all();
@@ -993,28 +1113,43 @@ class TimesheetRepository
     public function saveTimesheet($request){
         $user = Auth::user();
         $input = $request->all();
-        $checkApproved = DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['rangeDate']['start']. ' 00:00:00')))
-        ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['rangeDate']['end']. ' 23:59:59')))->where('created_user_id', $user->id)->whereIn('status', [1,2])->first();
-        if($checkApproved){
-            return false;
-        }
-        DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['rangeDate']['start']. ' 00:00:00')))
-        ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['rangeDate']['end']. ' 23:59:59')))->where('created_user_id', $user->id)->delete();
         $setting = Setting::select(
             [
             'login_background', 'company_logo', 'theme_layout', 'default_language', 'allowed_for_registration', 'is_demo', 'working_hours', 'ot_rate', 'holiday_rate', 'sunday_rate'
             ]
         )->first();
+        if($input['action'] == 'draft'){
+            $checkApproved = DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['rangeDate']['start']. ' 00:00:00')))
+            ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['rangeDate']['end']. ' 23:59:59')))->where('created_user_id', $user->id)->first();
+            if($checkApproved){
+                return false;
+            }
+            DB::table('gv_timesheets_draft')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['rangeDate']['start']. ' 00:00:00')))
+            ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['rangeDate']['end']. ' 23:59:59')))->where('created_user_id', $user->id)->delete();
+            $this->saveTimesheetExecuteDraft($request, $input['data'], 0, $user, $setting);
+            $this->saveTimesheetExecuteDraft($request, $input['ot'], 1, $user, $setting);
+            return true;
+        } else {
+            $checkApproved = DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['rangeDate']['start']. ' 00:00:00')))
+            ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['rangeDate']['end']. ' 23:59:59')))->where('created_user_id', $user->id)->whereIn('status', [1,2])->first();
+            if($checkApproved){
+                return false;
+            }
+            DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['rangeDate']['start']. ' 00:00:00')))
+            ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['rangeDate']['end']. ' 23:59:59')))->where('created_user_id', $user->id)->delete();
+            DB::table('gv_timesheets_draft')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['rangeDate']['start']. ' 00:00:00')))
+            ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['rangeDate']['end']. ' 23:59:59')))->where('created_user_id', $user->id)->delete();
 
-        $this->saveTimesheetExecute($request, $input['data'], 0, $user, $setting);
-        $this->saveTimesheetExecute($request, $input['ot'], 1, $user, $setting);
-        $listProject = DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['rangeDate']['start']. ' 00:00:00')))
-        ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['rangeDate']['end']. ' 23:59:59')))
-        ->where('created_user_id', $user->id)->where('status', 0)->groupBy('project_id')->pluck('project_id');
-        if(count($listProject) > 0){
-            $this->emailRepo->sendSaveTimesheetEmails($listProject, $user);
+            $this->saveTimesheetExecute($request, $input['data'], 0, $user, $setting);
+            $this->saveTimesheetExecute($request, $input['ot'], 1, $user, $setting);
+            $listProject = DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['rangeDate']['start']. ' 00:00:00')))
+            ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['rangeDate']['end']. ' 23:59:59')))
+            ->where('created_user_id', $user->id)->where('status', 0)->groupBy('project_id')->pluck('project_id');
+            if(count($listProject) > 0){
+                $this->emailRepo->sendSaveTimesheetEmails($listProject, $user);
+            }
+            return true;
         }
-        return true;
     }
 
     public function saveTimesheetExecute($request, $timesheetData, $type_ot, $user, $setting){
@@ -1093,6 +1228,30 @@ class TimesheetRepository
                         $request->ip()
                     );
                 }
+            }
+        }
+        return;
+    }
+
+    public function saveTimesheetExecuteDraft($request, $timesheetData, $type_ot, $user, $setting){
+        foreach($timesheetData as $value){
+            $data = [];
+            $data['project_id'] = Project::join('gv_tasks', 'gv_projects.id', '=',  'gv_tasks.project_id')->where('gv_tasks.id', $value['task_id'])->pluck('gv_projects.id')[0];
+            $data['created_user_id'] = $user->id;
+            $data['start_time'] = $value['start_time'];
+            $data['end_time'] = $value['end_time'];
+            $data['note'] = isset($value['note']) ? $value['note'] : '';
+            $data['decimal_time'] = $this->commonHelper->getDecimalTimeDiff($value['start_time'], $value['end_time']);
+            $data['hour_time'] = $this->commonHelper->getHourTimeDiff($value['start_time'], $value['end_time']);
+            $data['module_id'] = 2;
+            $data['module_related_id'] = $value['task_id'];
+            $data['ot'] = $type_ot;
+            if (!isset($value['id']) || !$value['id']) {
+                DB::table('gv_timesheets_draft')->insert($data);
+            } else {
+                DB::table('gv_timesheets_draft')
+                    ->where('id', $value['id'])
+                    ->update($data);
             }
         }
         return;

@@ -77,11 +77,14 @@ class TaskRepository
             1 => $project_table . '.project_name',
             2 => $task_table . '.task_start_date',
             3 => $task_table . '.task_end_date',
-            4 => $task_table . '.progress',
-            5 => $task_table . '.priority',
-            6 => $task_table . '.status',
-            7 => $task_table . '.status',
-            8 => $task_table . '.status',
+            4 => $task_table . '.actual_hours',
+            5 => $task_table . '.estimated_hours',
+            6 => $task_table . '.cost',
+            7 => $task_table . '.price_rate',
+            8 => $task_table . '.progress',
+            9 => $task_table . '.priority',
+            10 => $task_table . '.status',
+            11 => $task_table . '.status'
         );
 
         if ($request->get('isUserProfile') && $request->has('user_id')) {

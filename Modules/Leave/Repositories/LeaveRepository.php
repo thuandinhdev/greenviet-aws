@@ -199,11 +199,12 @@ class LeaveRepository
         $columns = array(
             0 => $leaves_table . '.id',
             1 => $user_table . '.firstname',
-            2 => $leaves_table . '.created_at',
-            3 => $leaves_table . '.leave_date',
-            4 => $leave_types_table . '.leave_type',
-            5 => $leave_types_table . '.duration',
-            6 => $leaves_table . '.Status',
+            2 => $leaves_table . '.reason',
+            3 => $leaves_table . '.created_at',
+            4 => $leaves_table . '.leave_date',
+            5 => $leave_types_table . '.leave_type',
+            6 => $leaves_table . '.duration',
+            7 => $leaves_table . '.Status',
         );
 
         $input = $request->input();
@@ -266,7 +267,6 @@ class LeaveRepository
         $input = $request->all();
         $input['workallowance'] = json_encode($input['workallowance']);
         $input['project'] = json_encode($input['project']);
-
         $check = Timesheet::where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 00:00:00')))->where('end_time', '<', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 23:59:59')))->where('created_user_id', $input['user_id'])->count();
         if($check > 0 && $input['leave_type_id'] < 3){
             return ['status'=>false, 'msg'=>'This day has been timesheeted'];
@@ -589,9 +589,9 @@ class LeaveRepository
             $timesheet->hour_time = '04:00';
         } else {
             $timesheet->start_time = $leave_date . '09:00:00';
-            $timesheet->end_time = $leave_date . '17:00:00';
-            $timesheet->decimal_time = '8.00';
-            $timesheet->hour_time = '08:00';
+            $timesheet->end_time = $leave_date . '17:30:00';
+            $timesheet->decimal_time = '8.50';
+            $timesheet->hour_time = '08:30';
         }
         $timesheet->note = $leave->leaveType->leave_type;
         $timesheet->created_user_id = $leave->user_id;
