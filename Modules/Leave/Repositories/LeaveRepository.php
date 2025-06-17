@@ -268,7 +268,8 @@ class LeaveRepository
         $input['workallowance'] = json_encode($input['workallowance']);
         $input['project'] = json_encode($input['project']);
         $check = Timesheet::where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 00:00:00')))->where('end_time', '<', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 23:59:59')))->where('created_user_id', $input['user_id'])->count();
-        if($check > 0 && $input['leave_type_id'] < 3){
+        $checkDraft = DB::table('gv_timesheets_draft')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 00:00:00')))->where('end_time', '<', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 23:59:59')))->where('created_user_id', $input['user_id'])->count();
+        if(($checkDraft > 0 && $check > 0) && $input['leave_type_id'] < 3){
             return ['status'=>false, 'msg'=>'This day has been timesheeted'];
         }
         $remainingLeave = $this->commonHelper->getRemainingLeaveDays($input['user_id']);
@@ -388,7 +389,8 @@ class LeaveRepository
             $input['leave_day'] = 0.5;
         }
         $check = Timesheet::where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 00:00:00')))->where('end_time', '<', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 23:59:59')))->where('created_user_id', $input['user_id'])->count();
-        if($check > 0 && $input['leave_type_id'] < 3){
+        $checkDraft = DB::table('gv_timesheets_draft')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 00:00:00')))->where('end_time', '<', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 23:59:59')))->where('created_user_id', $input['user_id'])->count();
+        if(($checkDraft > 0 && $check > 0) && $input['leave_type_id'] < 3){
             return ['status'=>false, 'msg'=>'This day has been timesheeted'];
         }
         if($input['status'] == 4){
