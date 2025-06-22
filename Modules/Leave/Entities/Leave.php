@@ -55,6 +55,8 @@ class Leave extends Model
         'project',
         'workallowance',
         'total',
+        'approved1',
+        'approved2',
         'status',
     ];
 

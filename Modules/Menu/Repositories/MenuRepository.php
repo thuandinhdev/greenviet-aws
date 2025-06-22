@@ -417,7 +417,7 @@ class MenuRepository
 
         $leavesStatus = $leaves->count();
         
-        return ['timesheet'=>$hasStatusGreaterThanZero, 'leaves'=>$leavesStatus > 0 ? true : false];
+        return ['timesheet'=>$hasStatusGreaterThanZero, 'leaves'=>$leavesStatus > 0 ? true : false, 'departmentName'=>$department->department_name];
 
 
     }

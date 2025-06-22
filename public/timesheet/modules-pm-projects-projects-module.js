@@ -3366,6 +3366,10 @@ var ProjectListComponent = /** @class */ (function () {
         });
     }
     ProjectListComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.http.get(this.apiUrl + "/api/get-hrm-status").subscribe(function (res) {
+            _this.statusHRM = res;
+        });
         this.getUserkeyBy();
         this.getProjectTye();
         this.getTeams();
@@ -3557,7 +3561,7 @@ var ProjectListComponent = /** @class */ (function () {
                             }
                         })();
                     });
-                    console.log(_this.projects);
+                    // console.log(this.projects);
                     _this.countStatus = resp;
                     _this.countStatus = _this.countStatus.statusCount;
                     callback({
@@ -3583,7 +3587,8 @@ var ProjectListComponent = /** @class */ (function () {
             if ((role && role.name == 'admin') || this.loginUser.is_super_admin) {
                 return true;
             }
-            if (project.pivot[action]) {
+            if (this.statusHRM.departmentName == 'BOD' || this.statusHRM.departmentName == 'HRM') {
+                // if(project.pivot[action]) {
                 return true;
             }
         }

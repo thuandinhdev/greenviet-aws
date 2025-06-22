@@ -186,16 +186,37 @@ class LeaveRepository
             $leave_types_table . '.leave_type',
             $user_table . '.firstname',
             $user_table . '.lastname',
-            $user_table . '.avatar'
+            $user_table . '.avatar',
+            'approved1.firstname as approved1_firstname',
+            'approved1.lastname as approved1_lastname',
+            'approved1.avatar as approved1_avatar',
+            'approved2.firstname as approved2_firstname',
+            'approved2.lastname as approved2_lastname',
+            'approved2.avatar as approved2_avatar',
+            'reject.firstname as reject_firstname',
+            'reject.lastname as reject_lastname',
+            'reject.avatar as reject_avatar',
         )
             ->join($leave_types_table, $leave_types_table . '.id', '=', $leaves_table . '.leave_type_id')
-            ->join($user_table, $user_table . '.id', '=', $leaves_table . '.user_id');
+            ->join($user_table, $user_table . '.id', '=', $leaves_table . '.user_id')
+            ->leftJoin($user_table . ' as approved1', 'approved1.id', '=', $leaves_table . '.approved1')
+            ->leftJoin($user_table . ' as approved2', 'approved2.id', '=', $leaves_table . '.approved2')
+            ->leftJoin($user_table . ' as reject', 'reject.id', '=', $leaves_table . '.reject_id');
         $checkRole = DB::table('gv_user_role_department')->where('user_id', $user->id)->first();
-        if (!$user->hasRole('admin') && !$user->is_super_admin && $checkRole->department_id != 3) {
-            $childUser = User::where('primary_manager', $user->id)->orWhere('secondary_manager', $user->id)->pluck('id');
+
+        if (!$user->hasRole('admin') && !$user->is_super_admin && !$user->is_super_admin && $checkRole->department_id != 6) {
+            $childUser = DB::table('gv_teams')->join('gv_teams_members',  'gv_teams.id', '=', 'gv_teams_members.team_id')->where('gv_teams.team_leader', $user->id)->pluck('gv_teams_members.user_id');
             $childUser->push($user->id);
-            $leaves->whereIn('user_id', $childUser);
+            if($checkRole->department_id == 3){
+                $leaves->where($leaves_table . '.status', '!=', 1);
+            } else {
+                $leaves->whereIn('user_id', $childUser);
+            }
+            // $childUser = User::where('primary_manager', $user->id)->orWhere('secondary_manager', $user->id)->pluck('id');
+            // $childUser->push($user->id);
+            // $leaves->whereIn('user_id', $childUser);
         }
+
         $columns = array(
             0 => $leaves_table . '.id',
             1 => $user_table . '.firstname',
@@ -495,13 +516,30 @@ class LeaveRepository
      */
     public function changeLeaveStatus($request, $id)
     {
+        $user = Auth::user();
         $leave = Leave::with('leaveType')->findOrFail($id);
         $oldStatus = $leave->status;
         $input['status'] = $request->get('status');
         if ($input['status'] == 3) {
             $input['reject_reason'] = $request->get('reject_reason');
+            $input['approved1'] = null;
+            $input['approved2'] = null;
+            $input['reject_id'] = $user->id;
+        }
+        if ($input['status'] == 4) {
+            $input['approved1'] = null;
+            $input['approved2'] = null;
+            $input['reject_id'] = null;
         }
         if ($input['status'] == 2) {
+            if($oldStatus == 1){
+                $input['approved1'] = $user->id;
+                $input['status'] = 6;
+            }
+            if($oldStatus == 6){
+                $input['approved2'] = $user->id;
+                $input['status'] = 2;
+            }
             if($leave->leave_type_id == 3){
                 $project = json_decode($leave->project);
                 foreach ($project as $key => $value) {
