@@ -161,17 +161,18 @@ class TimesheetRepository
         $user = Auth::user();
         $department = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $user->id)->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
         $data = [];
-        if($department->department_name == 'Project'){
+        // if($department->department_name == 'Project'){
+        if($department->department_name != 'Administration' && $department->department_name != 'HR' && $department->department_name != 'BOD'){
             $list = DB::table('gv_projects')->join('gv_timesheets', 'gv_timesheets.project_id', '=', 'gv_projects.id')->where('gv_timesheets.status', '<', 2)->where('gv_projects.assign_to', $user->id)->groupBy('gv_timesheets.created_user_id')->pluck('gv_timesheets.created_user_id')->toArray();
             $team = Team::join('gv_teams_members', 'gv_teams_members.team_id', '=', 'gv_teams.id')->where('gv_teams.team_leader', $user->id)->pluck('gv_teams_members.user_id')->toArray();
-            
+
             $data = User::with(['departments', 'roles'])
             ->where('is_client', false)
             ->whereIn('id', array_merge($list, $team))
             ->orderBy('username')
             ->get();
         }
-        if($department->department_name == 'Administration' || $department->department_name == 'HR'){
+        if($department->department_name == 'Administration' || $department->department_name == 'HR' || $department->department_name == 'BOD'){
             $data = User::with(['departments', 'roles'])
             ->where('is_client', false)
             ->orderBy('username')
@@ -182,11 +183,12 @@ class TimesheetRepository
                 $value->timesheets_status = DB::table('gv_timesheets')->where('created_user_id', $value->id)->where('module_id', 2)->where('status', 1)->count();
                 $value->department_role = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $value->id)->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
             }
-            if($department->department_name == 'Administration'){
+            if($department->department_name == 'Administration' || $department->department_name == 'BOD'){
                 $value->timesheets_status = DB::table('gv_timesheets')->where('created_user_id', $value->id)->where('module_id', 2)->where('status', '<', 2)->count();
                 $value->department_role = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $value->id)->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
             }
-            if($department->department_name == 'Project'){
+            // if($department->department_name == 'Project'){
+            if($department->department_name != 'HR' && $department->department_name != 'Administration' && $department->department_name != 'BOD'){
                 $value->timesheets_status = DB::table('gv_timesheets')->where('created_user_id', $value->id)->where('module_id', 2)->where('status', 0)->count();
                 $value->department_role = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $value->id)->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
             }
@@ -441,7 +443,7 @@ class TimesheetRepository
         }
         return  ['data'=>$groupedTimesheets, 'ot'=>$groupedTimesheets_ot, 'other'=>$userAction, 'action'=>'draft'];
     }
-    
+
     public function getTimesheetsByModule($request)
     {
         $input = $request->all();
@@ -947,6 +949,13 @@ class TimesheetRepository
             ->where('created_user_id', $input['users_id']);
             if(!is_null($input['task_id']) && $input['task_id'] > 0){
                 $queryTimeSheet->where('module_related_id', $input['task_id']);
+            } else {
+                $department = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $user->id)->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
+                if($department->department_name != 'Administration' && $department->department_name != 'HR' && $department->department_name != 'BOD'){
+                    $tasksList = Project::join('gv_tasks', 'gv_projects.id', '=',  'gv_tasks.project_id')
+                    ->where('gv_projects.assign_to', $user->id)->pluck('gv_tasks.id');
+                    $queryTimeSheet->whereIn('module_related_id', $tasksList);
+                }
             }
 
             $checkTimeSheet = $queryTimeSheet->get();
