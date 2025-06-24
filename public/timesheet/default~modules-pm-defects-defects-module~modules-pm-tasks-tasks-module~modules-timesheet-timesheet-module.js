@@ -1225,6 +1225,7 @@ var MyTimesheetComponent = /** @class */ (function () {
                 _this.leavesHolidays[_this.weekdays[dayIndex]].status = 2;
             }
         });
+        this.changeTimeSheet();
     };
     MyTimesheetComponent.prototype.ngAfterViewInit = function () {
         this.dtTrigger.next();
