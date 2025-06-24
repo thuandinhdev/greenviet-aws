@@ -859,7 +859,7 @@ var MyTimesheetComponent = /** @class */ (function () {
         this.startEndWeek = this.datePipe.transform(this.startOfWeek, 'dd/MM/yyyy') + ' - ' + this.datePipe.transform(this.endOfWeek, 'dd/MM/yyyy');
         if (this.preload) {
             this.preload = false;
-            this.getHolidaysLeavesForUser();
+            // this.getHolidaysLeavesForUser();
             this.loadTimesheetDatatable();
         }
         else {
@@ -906,6 +906,7 @@ var MyTimesheetComponent = /** @class */ (function () {
     };
     MyTimesheetComponent.prototype.getHolidaysLeavesForUser = function () {
         var _this = this;
+        console.log(this.startOfWeek, this.endOfWeek);
         this.timesheetService.getHolidaysLeavesForUser({ users_id: this.users_id, start: this.startOfWeek, end: this.endOfWeek }).subscribe(function (data) {
             _this.leaves = data['leaves'];
             _this.holidays = data['holidays'];
@@ -1129,7 +1130,7 @@ var MyTimesheetComponent = /** @class */ (function () {
                 },
                     _this.http.post(_this.apiUrl + '/api/get-timesheets-calendar', dataTablesParameters, {}).subscribe(function (resp) {
                         _this.getTasks();
-                        // this.getHolidaysLeavesForUser();
+                        _this.getHolidaysLeavesForUser();
                         _this.isPageLoaded = true;
                         that.timesheets = [];
                         that.timesheets_ot = [];

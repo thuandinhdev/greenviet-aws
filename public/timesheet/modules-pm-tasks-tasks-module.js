@@ -2381,14 +2381,12 @@ var TaskEditComponent = /** @class */ (function () {
         });
     };
     TaskEditComponent.prototype.getCheckPermission = function (task) {
-        var role = this.ngxRolesService.getRole('admin');
-        if ((role && role.name == 'admin') || this.loginUser.is_super_admin) {
-        }
-        else if (task.assign_to == this.loginUser.id || task.created_by == this.loginUser.id) {
-        }
-        else {
-            this.router.navigate(['tasks']);
-        }
+        // let role = this.ngxRolesService.getRole('admin');
+        // if ((role && role.name == 'admin') || this.loginUser.is_super_admin) {
+        // } else if(task.assign_to == this.loginUser.id || task.created_by == this.loginUser.id) {
+        // } else {
+        // 	this.router.navigate(['tasks']);
+        // }
     };
     TaskEditComponent.prototype.getTeam = function () {
         var _this = this;
@@ -2896,6 +2894,7 @@ var TaskListComponent = /** @class */ (function () {
     };
     TaskListComponent.prototype.getCheckPermission = function (task, action) {
         if ((action == 'edit' && this.permissions.tasks_edit) || (action == 'delete' && this.permissions.tasks_delete)) {
+            return true;
             var role = this.ngxRolesService.getRole('admin');
             if ((role && role.name == 'admin') || this.loginUser.is_super_admin) {
                 return true;

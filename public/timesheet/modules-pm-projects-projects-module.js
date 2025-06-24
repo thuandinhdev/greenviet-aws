@@ -3587,7 +3587,7 @@ var ProjectListComponent = /** @class */ (function () {
             if ((role && role.name == 'admin') || this.loginUser.is_super_admin) {
                 return true;
             }
-            if (this.statusHRM.departmentName == 'BOD' || this.statusHRM.departmentName == 'HRM') {
+            if (this.statusHRM.departmentName == 'BOD' || this.statusHRM.departmentName == 'HRM' || this.statusHRM.departmentName == 'Accountant') {
                 // if(project.pivot[action]) {
                 return true;
             }
