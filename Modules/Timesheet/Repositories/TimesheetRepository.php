@@ -294,6 +294,7 @@ class TimesheetRepository
         if(count($groupedTimesheets) > 0){
             $actionQuery = DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
             ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['end']. ' 23:59:59')))->where('created_user_id', $input['user_id'])
+            ->where('module_id', 2)
             ->select('approved1', 'approved2', 'dis_approved', 'status');
             if(!$isMyTimesheet){
                 $actionQuery = $actionQuery->orderBy('status');
