@@ -911,7 +911,7 @@ class TimesheetRepository
         )->where('leave_date', '>=', $input['start'])
         ->where('leave_date', '<=', $input['end'])
         ->where('leave_type_id', '<', 3)
-        ->whereIn('status', [1, 2])->where('user_id', $input['users_id']);
+        ->whereIn('status', [1, 2,6])->where('user_id', $input['users_id']);
 
         $leaves = $leavesQuery->select('*', DB::raw('DATE_FORMAT(leave_date, "%Y-%m-%d") as formatted_date'))->get();
         return ['holidays'=>$holidays, 'leaves'=>$leaves];
