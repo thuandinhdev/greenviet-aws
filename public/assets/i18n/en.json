@@ -728,7 +728,8 @@
 			"total": "Total",
 			"unpaid": "Unpaid",
 			"unpublished": "Unpublished",
-			"waiting": "Waiting"
+			"waiting": "Waiting",
+			"leader": "Pending"
 		},
 		"submit": "Submit",
 		"swal": {
@@ -1854,6 +1855,11 @@
 				"class": "rejected",
 				"id": 3,
 				"label": "Rejected"
+			},
+			{
+				"class": "pending",
+				"id": 6,
+				"label": "Pending"
 			}
 		],
 		"title": "Leaves",

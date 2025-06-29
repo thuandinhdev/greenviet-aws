@@ -168,6 +168,7 @@ class TimesheetRepository
 
             $data = User::with(['departments', 'roles'])
             ->where('is_client', false)
+            ->where('is_active', 1)
             ->whereIn('id', array_merge($list, $team))
             ->orderBy('username')
             ->get();
@@ -175,6 +176,7 @@ class TimesheetRepository
         if($department->department_name == 'Administration' || $department->department_name == 'HR' || $department->department_name == 'BOD'){
             $data = User::with(['departments', 'roles'])
             ->where('is_client', false)
+            ->where('is_active', 1)
             ->orderBy('username')
             ->get();
         }
@@ -911,7 +913,7 @@ class TimesheetRepository
         )->where('leave_date', '>=', $input['start'])
         ->where('leave_date', '<=', $input['end'])
         ->where('leave_type_id', '<', 3)
-        ->whereIn('status', [1, 2,6])->where('user_id', $input['users_id']);
+        ->whereIn('status', [1, 2, 6])->where('user_id', $input['users_id']);
 
         $leaves = $leavesQuery->select('*', DB::raw('DATE_FORMAT(leave_date, "%Y-%m-%d") as formatted_date'))->get();
         return ['holidays'=>$holidays, 'leaves'=>$leaves];

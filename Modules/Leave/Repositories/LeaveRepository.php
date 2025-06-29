@@ -208,7 +208,12 @@ class LeaveRepository
             $childUser = DB::table('gv_teams')->join('gv_teams_members',  'gv_teams.id', '=', 'gv_teams_members.team_id')->where('gv_teams.team_leader', $user->id)->pluck('gv_teams_members.user_id');
             $childUser->push($user->id);
             if($checkRole->department_id == 3){
-                $leaves->where($leaves_table . '.status', '!=', 1);
+                $leaves->where(
+                    function ($query) use ($leaves_table) {
+                        $query->where($leaves_table . '.status', '!=', 1)
+                            ->orWhere($leaves_table . '.leave_type_id', 3);
+                    }
+                );
             } else {
                 $leaves->whereIn('user_id', $childUser);
             }
@@ -288,7 +293,7 @@ class LeaveRepository
         $input = $request->all();
         $input['workallowance'] = json_encode($input['workallowance']);
         $input['project'] = json_encode($input['project']);
-        $check = Timesheet::where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 00:00:00')))->where('end_time', '<', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 23:59:59')))->where('created_user_id', $input['user_id'])->count();
+        $check = Timesheet::where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 00:00:00')))->where('end_time', '<', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 23:59:59')))->where('created_user_id', $input['user_id'])->sum();
         $checkDraft = DB::table('gv_timesheets_draft')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 00:00:00')))->where('end_time', '<', date('y-m-d H:i:s', strtotime($input['leave_date']. ' 23:59:59')))->where('created_user_id', $input['user_id'])->count();
         if(($checkDraft > 0 || $check > 0) && $input['leave_type_id'] < 3){
             return ['status'=>false, 'msg'=>'This day has been timesheeted'];
@@ -533,8 +538,14 @@ class LeaveRepository
         }
         if ($input['status'] == 2) {
             if($oldStatus == 1){
-                $input['approved1'] = $user->id;
-                $input['status'] = 6;
+                if($leave->leave_type_id == 3){
+                    $input['approved1'] = $user->id;
+                    $input['approved2'] = $user->id;
+                    $input['status'] = 2;
+                } else {
+                    $input['approved1'] = $user->id;
+                    $input['status'] = 6;
+                }
             }
             if($oldStatus == 6){
                 $input['approved2'] = $user->id;
