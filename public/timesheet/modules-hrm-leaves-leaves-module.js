@@ -1542,7 +1542,7 @@ var LeavesListComponent = /** @class */ (function () {
     LeavesListComponent.prototype.getCheckStatusChangePermission = function (leave) {
         var role = this.ngxRolesService.getRole('admin');
         if (leave.status == 1) {
-            if ((role && role.name == 'admin') || this.loginUser.is_super_admin || this.statusHRM.departmentName == 'BOD' || (this.statusHRM.departmentName == 'HRM' && leave.leave_type_id == 3)) {
+            if ((role && role.name == 'admin') || this.loginUser.is_super_admin || this.statusHRM.departmentName == 'BOD' || (this.statusHRM.departmentName == 'HR' && leave.leave_type_id == 3)) {
                 return true;
             }
             else if (this.loginUser.id != leave.user_id) {
@@ -1550,7 +1550,7 @@ var LeavesListComponent = /** @class */ (function () {
             }
         }
         if (leave.status == 6) {
-            if ((role && role.name == 'admin') || this.loginUser.is_super_admin || this.statusHRM.departmentName == 'HRM' || this.statusHRM.departmentName == 'BOD') {
+            if ((role && role.name == 'admin') || this.loginUser.is_super_admin || this.statusHRM.departmentName == 'HR' || this.statusHRM.departmentName == 'BOD') {
                 return true;
             }
             else if (this.loginUser.id == leave.user_id) {
