@@ -46,6 +46,7 @@ class CreateLeaveRequest extends FormRequest
                     function ($query) use ($request) {
                         return $query->where('user_id', $request->get('user_id'))
                             ->where('leave_date', $request->get('leave_date'))
+                            ->where('status', '!=', 3)
                             ->where('deleted_at', null);
                     }
                 ),

@@ -132,8 +132,8 @@ class LeaveController extends Controller
             $isExist = Leave::where("user_id", $request->get('user_id'))
                 ->whereIn("leave_date", $request->get('multi_date'))
                 ->where('deleted_at', null)
+                ->where('status','!=', 3)
                 ->exists();
-
             if ($isExist) {
                 return response()->json(['errors' => ['leave_date' => ['The leave date has already been taken.']]], 422);
             }
