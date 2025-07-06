@@ -1583,7 +1583,7 @@ var LeavesListComponent = /** @class */ (function () {
             serverSide: true,
             processing: true,
             dom: '<"html5buttons"B>ltfrtip',
-            order: [0, 'desc'],
+            order: [4, 'desc'],
             columns: [{
                     'sortable': true,
                     'width': "5%",

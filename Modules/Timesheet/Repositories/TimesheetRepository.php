@@ -324,7 +324,8 @@ class TimesheetRepository
             }
         }
 
-        if(count($groupedTimesheets) == 0 && $isMyTimesheet){
+        // if(count($groupedTimesheets) == 0 && $isMyTimesheet){
+        if(count($groupedTimesheets) == 0){
             return $this->getTimesheetsDraft($input);
         } else {
             return  ['data'=>$groupedTimesheets, 'ot'=>$groupedTimesheets_ot, 'other'=>$userAction, 'action'=>'official'];
@@ -989,9 +990,9 @@ class TimesheetRepository
                 if($checkTimeSheet[0]->status == 0){
                     $timesheet->approved1 = $user->id;
                     $timesheet->status = 1;
-                    $department_role = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')
-                    ->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $input['users_id'])
-                    ->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
+                    // $department_role = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')
+                    // ->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $input['users_id'])
+                    // ->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
                     // if($department_role->department_name == 'HR' || ($department_role->department_name == 'Project' && $department_role->role_name == 'Manager')){
                     //     $timesheet->approved2 = $user->id;
                     //     $timesheet->status = 2;
