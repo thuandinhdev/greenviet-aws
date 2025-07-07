@@ -1132,7 +1132,7 @@ class TimesheetRepository
             ]
         )->first();
         if($input['action'] == 'draft'){
-            $checkApproved = DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['rangeDate']['start']. ' 00:00:00')))
+            $checkApproved = DB::table('gv_timesheets')->where('module_id', 2)->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['rangeDate']['start']. ' 00:00:00')))
             ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['rangeDate']['end']. ' 23:59:59')))->where('created_user_id', $user->id)->first();
             if($checkApproved){
                 return false;
@@ -1143,7 +1143,7 @@ class TimesheetRepository
             $this->saveTimesheetExecuteDraft($request, $input['ot'], 1, $user, $setting);
             return true;
         } else {
-            $checkApproved = DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['rangeDate']['start']. ' 00:00:00')))
+            $checkApproved = DB::table('gv_timesheets')->where('module_id', 2)->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['rangeDate']['start']. ' 00:00:00')))
             ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['rangeDate']['end']. ' 23:59:59')))->where('created_user_id', $user->id)->whereIn('status', [1,2])->first();
             if($checkApproved){
                 return false;
