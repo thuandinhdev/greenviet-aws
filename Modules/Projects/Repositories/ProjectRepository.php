@@ -163,8 +163,7 @@ class ProjectRepository
             ->leftjoin($user_table, $user_table . '.id', '=', $project_table . '.client_id')
             ->leftjoin($user_table . ' as project_created', 'project_created.id', '=', $project_table . '.user_id')
             ->leftjoin($team_table, $team_table . '.id', '=', $project_table . '.assign_to');
-
-        if (!AdminHelper::can_action(43, 'view')) {
+        if (!AdminHelper::can_action(43, 'view') || ($request->get('isUserProfile') && $request->has('user_id'))) {
             $projects = $projects->where($project_table . '.assign_to', $user->id);
         }
 

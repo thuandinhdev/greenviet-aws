@@ -889,7 +889,15 @@ var MyTimesheetComponent = /** @class */ (function () {
     MyTimesheetComponent.prototype.getUsers = function () {
         var _this = this;
         this.timesheetService.getUserSelect().subscribe(function (data) {
-            _this.users = data['data'];
+            if (data['role']['department_name'] != 'Administration' && data['role']['department_name'] != 'BOD') {
+                var allUsers = data['data'] || [];
+                _this.users = allUsers.filter(function (user) {
+                    return _this.loginUser && user.id !== _this.loginUser.id;
+                });
+            }
+            else {
+                _this.users = data['data'];
+            }
             _this.department = data['role'];
         });
     };
@@ -906,7 +914,7 @@ var MyTimesheetComponent = /** @class */ (function () {
     };
     MyTimesheetComponent.prototype.getHolidaysLeavesForUser = function () {
         var _this = this;
-        console.log(this.startOfWeek, this.endOfWeek);
+        // console.log(this.startOfWeek, this.endOfWeek);
         this.timesheetService.getHolidaysLeavesForUser({ users_id: this.users_id, start: this.startOfWeek, end: this.endOfWeek }).subscribe(function (data) {
             _this.leaves = data['leaves'];
             _this.holidays = data['holidays'];

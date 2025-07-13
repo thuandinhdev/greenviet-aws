@@ -961,8 +961,8 @@ class TimesheetRepository
                     $queryTimeSheet->whereIn('module_related_id', $tasksList);
                 }
             }
-
-            $checkTimeSheet = $queryTimeSheet->get();
+            $checkTimeSheet = clone($queryTimeSheet);
+            $checkTimeSheet = $checkTimeSheet->orderBy('status')->get();
             $setting = Setting::select(
                 [
                 'login_background', 'company_logo', 'theme_layout', 'default_language', 'allowed_for_registration', 'is_demo', 'working_hours', 'ot_rate', 'holiday_rate', 'sunday_rate'
@@ -984,25 +984,35 @@ class TimesheetRepository
                     ->where('created_user_id', $input['users_id'])->update(['status'=>0]);
                     return false;
                 }
-                $dayInMonth = $this->getWeekdaysInMonthFromDate($timesheet->start_time);
-                $cost = round($contract->salary/$dayInMonth*$timesheet->decimal_time/$setting->working_hours);
-                $timesheet->cost = $cost*$timesheet->ot_rate;
-                if($checkTimeSheet[0]->status == 0){
-                    $timesheet->approved1 = $user->id;
-                    $timesheet->status = 1;
-                    // $department_role = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')
-                    // ->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $input['users_id'])
-                    // ->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
-                    // if($department_role->department_name == 'HR' || ($department_role->department_name == 'Project' && $department_role->role_name == 'Manager')){
-                    //     $timesheet->approved2 = $user->id;
-                    //     $timesheet->status = 2;
-                    // }
+                if($checkTimeSheet[0]->status == 0 && $timesheet->status == 1){
+
+                } else {
+                    $dayInMonth = $this->getWeekdaysInMonthFromDate($timesheet->start_time);
+                    $cost = round($contract->salary/$dayInMonth*$timesheet->decimal_time/$setting->working_hours);
+                    $timesheet->cost = $cost*$timesheet->ot_rate;
+                    if($checkTimeSheet[0]->status == 0){
+                        $timesheet->approved1 = $user->id;
+                        $timesheet->status = 1;
+                        // $department_role = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')
+                        // ->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $input['users_id'])
+                        // ->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
+                        // if($department_role->department_name == 'HR' || ($department_role->department_name == 'Project' && $department_role->role_name == 'Manager')){
+                        //     $timesheet->approved2 = $user->id;
+                        //     $timesheet->status = 2;
+                        // }
+                    }
+                    if($checkTimeSheet[0]->status == 1){
+                        $department_role = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')
+                        ->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $input['users_id'])
+                        ->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
+                        if($department_role->department_name != 'HR' && $department_role->department_name != 'BOD' && $department_role->department_name != 'Administration' ){
+                            return false;
+                        }
+                        $timesheet->approved2 = $user->id;
+                        $timesheet->status = 2;
+                    }
+                    $timesheet->save();
                 }
-                if($checkTimeSheet[0]->status == 1){
-                    $timesheet->approved2 = $user->id;
-                    $timesheet->status = 2;
-                }
-                $timesheet->save();
             }
             // DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
             // ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['end']. ' 23:59:59')))
