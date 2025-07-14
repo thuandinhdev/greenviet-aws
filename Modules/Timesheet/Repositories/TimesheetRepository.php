@@ -1003,7 +1003,7 @@ class TimesheetRepository
                     }
                     if($checkTimeSheet[0]->status == 1){
                         $department_role = DB::table('gv_user_role_department')->join('gv_departments', 'gv_departments.id', '=', 'gv_user_role_department.department_id')
-                        ->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id', $input['users_id'])
+                        ->join('gv_roles', 'gv_roles.id', '=', 'gv_user_role_department.role_id')->where('gv_user_role_department.user_id',  $user->id)
                         ->select('gv_departments.name as department_name', 'gv_roles.name as role_name')->first();
                         if($department_role->department_name != 'HR' && $department_role->department_name != 'BOD' && $department_role->department_name != 'Administration' ){
                             return false;
