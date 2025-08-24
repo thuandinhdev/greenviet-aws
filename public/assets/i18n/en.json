@@ -1855,6 +1855,10 @@
 				"class": "rejected",
 				"id": 3,
 				"label": "Rejected"
+			},{
+				"class": "cancel",
+				"id": 4,
+				"label": "Cancel"
 			},
 			{
 				"class": "pending",
