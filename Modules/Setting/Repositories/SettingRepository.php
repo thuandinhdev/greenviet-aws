@@ -231,7 +231,7 @@ class SettingRepository
                         if (isset($input['smtp_password'])) {
                             setEnv(
                                 'MAIL_PASSWORD',
-                                $input['smtp_password'],
+                                '"'.$input['smtp_password'].'"',
                                 config('mail.password')
                             );
                         }
