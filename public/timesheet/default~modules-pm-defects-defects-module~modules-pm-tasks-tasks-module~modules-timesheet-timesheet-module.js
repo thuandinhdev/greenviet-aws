@@ -1619,6 +1619,7 @@ var MyTimesheetComponent = /** @class */ (function () {
                     _this.timesheetService.approvedTimeSheet({ users_id: _this.users_id, start: _this.startOfWeek, end: _this.endOfWeek, task_id: task_id }).subscribe(function (data) {
                         if (data == 'success') {
                             _this.rerender();
+                            _this.getUsers();
                         }
                         else {
                             _this.toastr.error('No contract during timesheet!');
