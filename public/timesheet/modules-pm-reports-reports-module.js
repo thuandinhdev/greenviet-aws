@@ -9,7 +9,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<!-- Card header -->\n<div class=\"pl-0 pr-0 border-bottom\">\n    <div class=\"card-header pl-0 pr-0 border-bottom\">\n        <h4 class=\"main-title mt-2\"><span>{{'timesheet.title' | translate}}</span></h4>\n        <div class=\"card-buttons d-flex\" *ngIf=\"isPageLoaded\">\n            <a class=\"btn btn-create mb-0\" style=\"background: #34a853 !important; color: #fff !important;\" (click)=\"exportFiles()\">Export</a>\n            <div class=\"btn calender-day\" (click)=\"preMonth()\">\n                <i class=\"calendar-icon fa fa-chevron-left\"></i>\n            </div>\n            <div class=\"ml-2\">\n                <a class=\"btn btn-create mb-0\" id=\"calendar-filter\" (bsValueChange)=\"changeMonth($event)\" #dp1=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" ><i class=\"fa fa-calendar-plus-o\"></i></a>\n            </div>\n            <div class=\"mr-2\">\n               <input type=\"text\" class=\"form-control\" [(ngModel)]=\"month\" readonly />\n            </div>\n            <div class=\"btn calender-day\" (click)=\"nextMonth()\"  *ngIf=\"month <= currentMonth\">\n                <i class=\"calendar-icon fa fa-chevron-right\"></i>\n            </div>\n        </div>\n    </div>\n</div>\n<!-- Card body -->\n<div class=\"card-body pt-3 overflow-x-scroll overflow-y-hidden\">\n    <div class=\"row\">\n        <div class=\"col-lg-12 mb-3\">\n            <div class=\"table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl\">\n                <table class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"defects_table\">\n                    <thead>\n                        <tr class=\"display_all\">\n                            <th colspan=\"2\">Full Name</th>\n                            <th>Total</th>\n                            <th *ngFor=\"let day of daysInMonth; let i = index\">\n                                <div *ngIf=\"day.stt==0\">CN<br>{{day.day}}</div>\n                                <div *ngIf=\"day.stt>0\">T{{day.stt + 1}}<br>{{day.day}}</div>\n                            </th>\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"exportTableData?.length != 0\">\n                        <ng-container *ngFor=\"let user of exportTableData; let i = index\">\n                            <tr>\n                                <td rowspan=\"2\" colspan=\"2\">{{user.firstname}} {{user.lastname}}</td>\n                                <td>{{user.timesheet_total}}</td>\n                                <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <div *ngIf=\"user.timesheet[j] && user.timesheet[j].check\">{{user.timesheet[j].value | number:'1.0-1'}}</div>\n                                </td>\n                            </tr>\n                            <tr style=\"background-color: rgba(160, 136, 0, 0.11);text-align: center;\">\n                                <td>{{user.timesheet_ot_total}}</td>\n                                <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <div *ngIf=\"user.timesheet_ot[j] && user.timesheet_ot[j].value && user.timesheet_ot[j].value > 0\">{{user.timesheet_ot[j].value | number:'1.0-1'}}</div>\n                                </td>\n                            </tr>\n                        </ng-container>\n                        <!-- <tr *ngFor=\"let user of exportTableData; let i = index\" >\n                            <td rowspan=\"2\">{{user.firstname}} {{user.lastname}}</td>\n                            <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                <div *ngIf=\"user.timesheet[j] && user.timesheet[j].check\">{{user.timesheet[j].value | number:'1.0-1'}}</div>\n                            </td>\n                        </tr> -->\n                    </tbody>\n                </table>\n                <table class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"export_table\" style=\"display: none;\">\n                    <thead>\n                        <tr class=\"display_all\">\n                            <th>Full Name</th>\n                            <th>Total</th>\n                            <th *ngFor=\"let day of daysInMonth; let i = index\">\n                                <div *ngIf=\"day.stt==0\">CN-{{day.day}}</div>\n                                <div *ngIf=\"day.stt>0\">T{{day.stt + 1}}-{{day.day}}</div>\n                            </th>\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"exportTableData?.length != 0\">\n                        <ng-container *ngFor=\"let user of exportTableData; let i = index\">\n                            <tr>\n                                <td>{{user.firstname}} {{user.lastname}}</td>\n                                <td>{{user.timesheet_total}}</td>\n                                <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <div *ngIf=\"user.timesheet[j] && user.timesheet[j].check\">{{user.timesheet[j].value | number:'1.0-1'}}</div>\n                                </td>\n                            </tr>\n                            <tr style=\"background-color: rgba(160, 136, 0, 0.11);text-align: center;\">\n                                <td></td>\n                                <td>{{user.timesheet_ot_total}}</td>\n                                <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <div *ngIf=\"user.timesheet_ot[j] && user.timesheet_ot[j].value && user.timesheet_ot[j].value > 0\">{{user.timesheet_ot[j].value | number:'1.0-1'}}</div>\n                                </td>\n                            </tr>\n                        </ng-container>\n                    </tbody>\n                </table>\n            </div>\n        </div>\n    </div>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<!-- Card header -->\n<div class=\"pl-0 pr-0 border-bottom\">\n    <div class=\"card-header pl-0 pr-0 border-bottom\">\n        <h4 class=\"main-title mt-2\"><span>Standard working hours per month: {{(workingInMonth - holidays.length) * 8.5}}h</span></h4>\n        <div class=\"card-buttons d-flex\" *ngIf=\"isPageLoaded\">\n            <a class=\"btn btn-create mb-0\" style=\"background: #34a853 !important; color: #fff !important;\" (click)=\"exportFiles()\">Export</a>\n            <div class=\"btn calender-day\" (click)=\"preMonth()\">\n                <i class=\"calendar-icon fa fa-chevron-left\"></i>\n            </div>\n            <div class=\"ml-2\">\n                <a class=\"btn btn-create mb-0\" id=\"calendar-filter\" (bsValueChange)=\"changeMonth($event)\" #dp1=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" ><i class=\"fa fa-calendar-plus-o\"></i></a>\n            </div>\n            <div class=\"mr-2\">\n               <input type=\"text\" class=\"form-control\" [(ngModel)]=\"month\" readonly />\n            </div>\n            <div class=\"btn calender-day\" (click)=\"nextMonth()\"  *ngIf=\"month <= currentMonth\">\n                <i class=\"calendar-icon fa fa-chevron-right\"></i>\n            </div>\n        </div>\n    </div>\n</div>\n<!-- Card body -->\n<div class=\"card-body pt-3 overflow-x-scroll overflow-y-hidden\">\n    <div class=\"row\">\n        <div class=\"col-lg-12 mb-3\">\n            <div class=\"table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl\">\n                <table class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"defects_table\">\n                    <thead>\n                        <tr class=\"display_all\">\n                            <th>Full Name</th>\n                            <th>Total</th>\n                            <th *ngFor=\"let day of daysInMonth; let i = index\">\n                                <div *ngIf=\"day.stt==0\">CN<br>{{day.day}}</div>\n                                <div *ngIf=\"day.stt>0\">T{{day.stt + 1}}<br>{{day.day}}</div>\n                            </th>\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"exportTableData?.length != 0\">\n                        <ng-container *ngFor=\"let user of exportTableData; let i = index\">\n                            <tr>\n                                <td rowspan=\"2\">{{user.firstname}} {{user.lastname}}</td>\n                                <!-- <td>{{user.timesheet_total}}</td>\n                                <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <div *ngIf=\"user.timesheet[j] && user.timesheet[j].check\">{{user.timesheet[j].value | number:'1.0-1'}}</div>\n                                </td> -->\n\n                                <td>{{ getTimesheetTotal(user) }}</td>\n                                <ng-container *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <td [innerHTML]=\"getTimesheetByDay(user, j)\"></td>\n                                    <!-- <div *ngIf=\"user.timesheet[j] && user.timesheet[j].check\">{{user.timesheet[j].value | number:'1.0-1'}}</div> -->\n                                </ng-container>\n                            </tr>\n                            <tr style=\"background-color: rgba(160, 136, 0, 0.11);text-align: center;\">\n                                <td>{{user.timesheet_ot_total}}</td>\n                                <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <div *ngIf=\"user.timesheet_ot[j] && user.timesheet_ot[j].value && user.timesheet_ot[j].value > 0\">{{user.timesheet_ot[j].value | number:'1.0-1'}}</div>\n                                </td>\n                            </tr>\n                        </ng-container>\n                        <!-- <tr *ngFor=\"let user of exportTableData; let i = index\" >\n                            <td rowspan=\"2\">{{user.firstname}} {{user.lastname}}</td>\n                            <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                <div *ngIf=\"user.timesheet[j] && user.timesheet[j].check\">{{user.timesheet[j].value | number:'1.0-1'}}</div>\n                            </td>\n                        </tr> -->\n                    </tbody>\n                </table>\n                <table class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"export_table\" style=\"display: none;\">\n                    <thead>\n                        <tr class=\"display_all\">\n                            <th>Full Name</th>\n                            <th>Total</th>\n                            <th *ngFor=\"let day of daysInMonth; let i = index\">\n                                <div *ngIf=\"day.stt==0\">CN-{{day.day}}</div>\n                                <div *ngIf=\"day.stt>0\">T{{day.stt + 1}}-{{day.day}}</div>\n                            </th>\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"exportTableData?.length != 0\">\n                        <ng-container *ngFor=\"let user of exportTableData; let i = index\">\n                            <tr>\n                                <td rowspan=\"2\">{{user.firstname}} {{user.lastname}}</td>\n                                <!-- <td>{{user.timesheet_total}}</td>\n                                <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <div *ngIf=\"user.timesheet[j] && user.timesheet[j].check\">{{user.timesheet[j].value | number:'1.0-1'}}</div>\n                                </td> -->\n\n                                <td>{{ getTimesheetTotal(user) }}</td>\n                                <ng-container *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <td [innerHTML]=\"getTimesheetByDay(user, j)\"></td>\n                                    <!-- <div *ngIf=\"user.timesheet[j] && user.timesheet[j].check\">{{user.timesheet[j].value | number:'1.0-1'}}</div> -->\n                                </ng-container>\n                            </tr>\n                            <tr style=\"background-color: rgba(160, 136, 0, 0.11);text-align: center;\">\n                                <td>{{user.timesheet_ot_total}}</td>\n                                <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <div *ngIf=\"user.timesheet_ot[j] && user.timesheet_ot[j].value && user.timesheet_ot[j].value > 0\">{{user.timesheet_ot[j].value | number:'1.0-1'}}</div>\n                                </td>\n                            </tr>\n                        </ng-container>\n                        <!-- <tr *ngFor=\"let user of exportTableData; let i = index\" >\n                            <td rowspan=\"2\">{{user.firstname}} {{user.lastname}}</td>\n                            <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                <div *ngIf=\"user.timesheet[j] && user.timesheet[j].check\">{{user.timesheet[j].value | number:'1.0-1'}}</div>\n                            </td>\n                        </tr> -->\n                    </tbody>\n                </table>\n            </div>\n        </div>\n    </div>\n</div>\n");
 
 /***/ }),
 
@@ -90,22 +90,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DefectReportsComponent", function() { return DefectReportsComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-export-as */ "./node_modules/ngx-export-as/fesm2015/ngx-export-as.js");
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
-/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../../core/services/authentication.service */ "./src/app/core/services/authentication.service.ts");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/index.js");
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(date_fns__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../../../../environments/environment */ "./src/environments/environment.ts");
-/* harmony import */ var ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ngx-bootstrap/chronos */ "./node_modules/ngx-bootstrap/chronos/fesm5/ngx-bootstrap-chronos.js");
-/* harmony import */ var ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-bootstrap/locale */ "./node_modules/ngx-bootstrap/locale/fesm5/ngx-bootstrap-locale.js");
-/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
-/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(datatables_net__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
-/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(datatables_net_bs4__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-export-as */ "./node_modules/ngx-export-as/fesm2015/ngx-export-as.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../../core/services/authentication.service */ "./src/app/core/services/authentication.service.ts");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(date_fns__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../../../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-bootstrap/chronos */ "./node_modules/ngx-bootstrap/chronos/fesm5/ngx-bootstrap-chronos.js");
+/* harmony import */ var ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-bootstrap/locale */ "./node_modules/ngx-bootstrap/locale/fesm5/ngx-bootstrap-locale.js");
+/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
+/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(datatables_net__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(datatables_net_bs4__WEBPACK_IMPORTED_MODULE_15__);
 
 
 
@@ -119,23 +120,28 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-Object(ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_11__["defineLocale"])('vi', ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_12__["viLocale"]);
+
+Object(ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_12__["defineLocale"])('vi', ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_13__["viLocale"]);
 
 
 var DefectReportsComponent = /** @class */ (function () {
-    function DefectReportsComponent(translate, http, datePipe, authenticationService, exportAsService) {
+    function DefectReportsComponent(translate, http, datePipe, authenticationService, sanitizer, exportAsService) {
         var _this = this;
         this.translate = translate;
         this.http = http;
         this.datePipe = datePipe;
         this.authenticationService = authenticationService;
+        this.sanitizer = sanitizer;
         this.exportAsService = exportAsService;
-        this.apiUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_10__["environment"].apiUrl;
-        this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_6__["Subject"]();
+        this.apiUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_11__["environment"].apiUrl;
+        this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_7__["Subject"]();
         this.dtOptions = {};
         this.currentMonth = this.datePipe.transform(new Date(), 'yyyy/MM');
         this.month = this.datePipe.transform(new Date(), 'yyyy/MM');
         this.defects = [];
+        this.leaves = [];
+        this.holidays = [];
+        this.workingInMonth = 0;
         this.exportTableData = [];
         this.daysInMonth = [{}];
         this.isPageLoaded = false;
@@ -158,12 +164,15 @@ var DefectReportsComponent = /** @class */ (function () {
     };
     DefectReportsComponent.prototype.loadDatatable = function () {
         var _this = this;
+        this.getWorkingDays(this.month);
         this.http.post(this.apiUrl + '/api/defect/defect-report', { month: this.month }, {})
             .subscribe(function (resp) {
             _this.exportTableData = resp.data;
+            _this.leaves = resp.leaves;
+            _this.holidays = resp.holidays;
             _this.exportTableData.forEach(function (element, index) {
                 var timesheetconvert = _this.exportTableDataArray(element.timesheet);
-                console.log(timesheetconvert);
+                // console.log(timesheetconvert);
                 element.timesheet = timesheetconvert.data;
                 element.timesheet_total = timesheetconvert.total;
                 var timesheetconvertOT = _this.exportTableDataArray(element.timesheet_ot);
@@ -188,6 +197,19 @@ var DefectReportsComponent = /** @class */ (function () {
         });
         return;
     };
+    DefectReportsComponent.prototype.getWorkingDays = function (month) {
+        var _a = month.split('/').map(Number), year = _a[0], monthStr = _a[1];
+        var daysInMonth = new Date(year, monthStr, 0).getDate();
+        var workingDays = 0;
+        for (var day = 1; day <= daysInMonth; day++) {
+            var current = new Date(year, monthStr - 1, day);
+            var dow = current.getDay();
+            if (dow !== 0 && dow !== 6) {
+                workingDays++;
+            }
+        }
+        this.workingInMonth = workingDays;
+    };
     DefectReportsComponent.prototype.exportTableDataArray = function (data) {
         var total = 0;
         var dataReturn = Object.keys(data).map(function (key) {
@@ -202,6 +224,78 @@ var DefectReportsComponent = /** @class */ (function () {
         });
         return { total: total, data: dataReturn };
     };
+    DefectReportsComponent.prototype.getTimesheetTotal = function (user) {
+        var timesheet_total = user.timesheet_total;
+        this.holidays.forEach(function (element, index) {
+            timesheet_total = timesheet_total + 8.5;
+        });
+        this.leaves.forEach(function (element, index) {
+            if (user.id == element.user_id && element.leave_type_id == 1) {
+                if (element.duration == 'half') {
+                    if (element.duration_type == 'first_half') {
+                        timesheet_total = timesheet_total + 4;
+                    }
+                    else {
+                        timesheet_total = timesheet_total + 4.5;
+                    }
+                }
+                else {
+                    timesheet_total = timesheet_total + 8.5;
+                }
+            }
+        });
+        return timesheet_total;
+    };
+    DefectReportsComponent.prototype.getTimesheetByDay = function (user, j) {
+        var currentDate = new Date(this.month + "/" + (j + 1));
+        var currentDay = currentDate.getDate();
+        var holiday = this.holidays.find(function (element) {
+            var holidayDate = new Date(element.date);
+            return currentDay === holidayDate.getDate();
+        });
+        if (holiday) {
+            return this.sanitizer.bypassSecurityTrustHtml('<div style="background-color:#1ab394;">8.5</div>');
+        }
+        var timesheet_total = 0;
+        for (var _i = 0, _a = this.leaves; _i < _a.length; _i++) {
+            var element = _a[_i];
+            var leave_date = new Date(element.leave_date);
+            if (user.id == element.user_id && currentDay === leave_date.getDate()) {
+                if (element.leave_type_id == 2) {
+                    if (element.duration == 'half') {
+                        return this.sanitizer.bypassSecurityTrustHtml("<div style=\"background-color:#cf5050;\">" + Number(user.timesheet[j].value).toFixed(1) + "</div>");
+                    }
+                    else {
+                        return this.sanitizer.bypassSecurityTrustHtml('<div style="background-color:#cf5050;">OFF</div>');
+                    }
+                }
+                else {
+                    if (element.duration == 'half') {
+                        if (element.duration_type == 'first_half') {
+                            timesheet_total = timesheet_total + 4;
+                        }
+                        else {
+                            timesheet_total = timesheet_total + 4.5;
+                        }
+                    }
+                    else {
+                        return this.sanitizer.bypassSecurityTrustHtml('<div style="background-color:#808ad6;">8.5</div>');
+                    }
+                }
+            }
+        }
+        if (timesheet_total > 0) {
+            // console.log(timesheet_total);
+            // console.log(user.timesheet[j].value+'------');
+            return this.sanitizer.bypassSecurityTrustHtml("<div style=\"background-color:#F39C12;\">" + Number(user.timesheet[j].value + timesheet_total).toFixed(1) + "</div>");
+        }
+        else {
+            if (user.timesheet[j] && user.timesheet[j].check) {
+                return this.sanitizer.bypassSecurityTrustHtml("<div>" + Number(user.timesheet[j].value).toFixed(1) + "</div>");
+            }
+        }
+        return '';
+    };
     DefectReportsComponent.prototype.compareValues = function (timesheet, working_hours) {
         var isEqual = Number(timesheet.value) === Number(working_hours);
         var todayCheck = new Date(timesheet.key);
@@ -209,9 +303,9 @@ var DefectReportsComponent = /** @class */ (function () {
         var weekOfMonth = this.getWeekOfMonth(todayCheck);
         // const isSecondOrFourthWeek = (weekOfMonth === 2 || weekOfMonth === 4);
         var newDate = new Date();
-        var today = Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["startOfDay"])(new Date(newDate.getFullYear(), newDate.getMonth(), 25));
-        var currentWeekMonday = Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["startOfWeek"])(today, { weekStartsOn: 1 });
-        var isWeekdayAndFuture = todayCheck > currentWeekMonday && Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["getDay"])(todayCheck) >= 1 && Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["getDay"])(todayCheck) <= 5;
+        var today = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfDay"])(new Date(newDate.getFullYear(), newDate.getMonth(), 25));
+        var currentWeekMonday = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfWeek"])(today, { weekStartsOn: 1 });
+        var isWeekdayAndFuture = todayCheck > currentWeekMonday && Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["getDay"])(todayCheck) >= 1 && Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["getDay"])(todayCheck) <= 5;
         return isEqual;
         // (isSaturday && isSecondOrFourthWeek) ||
         //  isWeekdayAndFuture;
@@ -223,10 +317,10 @@ var DefectReportsComponent = /** @class */ (function () {
         return Math.ceil((dayOfMonth + firstDayOfWeek) / 7);
     };
     DefectReportsComponent.prototype.nextMonth = function () {
-        this.changeMonth(Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["addMonths"])(this.month, 1));
+        this.changeMonth(Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["addMonths"])(this.month, 1));
     };
     DefectReportsComponent.prototype.preMonth = function () {
-        this.changeMonth(Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["subMonths"])(this.month, 1));
+        this.changeMonth(Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["subMonths"])(this.month, 1));
     };
     DefectReportsComponent.prototype.changeMonth = function (selectedDate) {
         this.month = this.datePipe.transform(selectedDate, 'yyyy/MM');
@@ -234,11 +328,11 @@ var DefectReportsComponent = /** @class */ (function () {
         this.loadDatatable();
     };
     DefectReportsComponent.prototype.getTotalDaysInMonth = function (date) {
-        var start = Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["startOfMonth"])(date);
-        var end = Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["endOfMonth"])(date);
+        var start = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfMonth"])(date);
+        var end = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["endOfMonth"])(date);
         var daysInMonth = [];
         for (var d = start; d <= end; d.setDate(d.getDate() + 1)) {
-            daysInMonth.push({ date: Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["format"])(new Date(d), 'YYYY-MM-DD'), stt: Number(Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["format"])(new Date(d), 'd')), day: Object(date_fns__WEBPACK_IMPORTED_MODULE_9__["getDate"])(new Date(d)) });
+            daysInMonth.push({ date: Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["format"])(new Date(d), 'YYYY-MM-DD'), stt: Number(Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["format"])(new Date(d), 'd')), day: Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["getDate"])(new Date(d)) });
         }
         return daysInMonth;
     };
@@ -265,15 +359,16 @@ var DefectReportsComponent = /** @class */ (function () {
         });
     };
     DefectReportsComponent.ctorParameters = function () { return [
-        { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"] },
-        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
-        { type: _angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"] },
-        { type: _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_8__["AuthenticationService"] },
-        { type: ngx_export_as__WEBPACK_IMPORTED_MODULE_3__["ExportAsService"] }
+        { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"] },
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] },
+        { type: _angular_common__WEBPACK_IMPORTED_MODULE_8__["DatePipe"] },
+        { type: _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_9__["AuthenticationService"] },
+        { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["DomSanitizer"] },
+        { type: ngx_export_as__WEBPACK_IMPORTED_MODULE_4__["ExportAsService"] }
     ]; };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_5__["DataTableDirective"], { static: true }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", angular_datatables__WEBPACK_IMPORTED_MODULE_5__["DataTableDirective"])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_6__["DataTableDirective"], { static: true }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", angular_datatables__WEBPACK_IMPORTED_MODULE_6__["DataTableDirective"])
     ], DefectReportsComponent.prototype, "dtElement", void 0);
     DefectReportsComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
@@ -281,11 +376,12 @@ var DefectReportsComponent = /** @class */ (function () {
             template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./defect-reports.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/components/defect-reports/defect-reports.component.html")).default,
             styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./defect-reports.component.scss */ "./src/app/modules/pm/reports/components/defect-reports/defect-reports.component.scss")).default]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__["TranslateService"],
-            _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
-            _angular_common__WEBPACK_IMPORTED_MODULE_7__["DatePipe"],
-            _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_8__["AuthenticationService"],
-            ngx_export_as__WEBPACK_IMPORTED_MODULE_3__["ExportAsService"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_8__["DatePipe"],
+            _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_9__["AuthenticationService"],
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["DomSanitizer"],
+            ngx_export_as__WEBPACK_IMPORTED_MODULE_4__["ExportAsService"]])
     ], DefectReportsComponent);
     return DefectReportsComponent;
 }());

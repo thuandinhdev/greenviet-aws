@@ -950,16 +950,23 @@ class DefectRepository
     public function getDefectForReport($request)
     {
         $input = $request->all();
-        $userList = User::get();
+        $userList = User::where('is_active', 1)->get();
         $setting = Setting::select([ 'dependent', 'personal'])->first();
-        $startOfMonth = Carbon::parse($input['month'].'/01')->startOfMonth();
-        $endOfMonth = Carbon::parse($input['month'].'/01')->endOfMonth();
+        $startOfMonth = Carbon::createFromFormat('Y/m', $input['month'])->startOfMonth();
+        $endOfMonth   = Carbon::createFromFormat('Y/m', $input['month'])->endOfMonth();
+
+        $holidays = DB::table('gv_holidays')->whereBetween('date', [$startOfMonth->format('Y-m-d'), $endOfMonth->format('Y-m-d')])->get();
+        $leaves = DB::table('gv_leaves')->whereBetween('leave_date', [$startOfMonth->format('Y-m-d'), $endOfMonth->format('Y-m-d')])
+            ->where('leave_type_id', '<', 3)
+            ->whereIn('status', [1, 2])->select('*', DB::raw('DATE_FORMAT(leave_date, "%Y-%m-%d") as formatted_date'))->get();
+            
         $query = DB::table('gv_timesheets')
                 ->where(
                 function ($querys) {
                     $querys->where('status', 2)
                         ->orWhere('module_id', 7);
                 })
+                ->whereNotNull('project_id')
                 ->whereBetween('start_time', [$startOfMonth->format('Y-m-d'), $endOfMonth->format('Y-m-d')])
                 ->select(DB::raw('DATE(start_time) as date'), DB::raw('SUM(decimal_time) as total_decimal_time'), 'ot_rate')
                 ->groupBy(DB::raw('DATE(start_time)'), 'ot_rate');
@@ -1010,7 +1017,9 @@ class DefectRepository
             $value->dependents_amount = $value->dependents * $setting->dependent;
             $value->personal_amount = $setting->personal;
         }
-        return ['data'=>$userList];
+        
+        return ['data'=>$userList, 'holidays'=>$holidays, 'leaves'=>$leaves];
+        // return ['data'=>$userList];
 
 
         // $defects_table = config('core.acl.defects_table');

@@ -1163,8 +1163,14 @@ var MyTimesheetComponent = /** @class */ (function () {
                             }
                         }
                         else {
-                            _this.draftShow = false;
-                            _this.draftNotifyShow = false;
+                            if (_this.actionWeek.status == 3) {
+                                _this.draftShow = true;
+                                _this.draftNotifyShow = false;
+                            }
+                            else {
+                                _this.draftShow = false;
+                                _this.draftNotifyShow = false;
+                            }
                         }
                         resp.data.forEach(function (element, index) {
                             var dataPush = { task_id: element.module_related_id, status: element.timesheets[0].status, approved1: element.timesheets[0].approved1, assign_to: element.assign_to, assign_members: element.assign_members, full_name: element.project_name + ' - ' + element.related_name, monday: { hours: 0, note: "", date: _this.startOfWeek }, tuesday: { hours: 0, note: "", date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_12__["addDays"])(_this.startOfWeek, 1), 'yyyy/MM/dd') }, wednesday: { hours: 0, note: "", date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_12__["addDays"])(_this.startOfWeek, 2), 'yyyy/MM/dd') }, thursday: { hours: 0, note: "", date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_12__["addDays"])(_this.startOfWeek, 3), 'yyyy/MM/dd') }, friday: { hours: 0, note: "", date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_12__["addDays"])(_this.startOfWeek, 4), 'yyyy/MM/dd') }, saturday: { hours: 0, note: "", date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_12__["addDays"])(_this.startOfWeek, 5), 'yyyy/MM/dd') }, sunday: { hours: 0, note: "", date: _this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_12__["addDays"])(_this.startOfWeek, 6), 'yyyy/MM/dd') } };
