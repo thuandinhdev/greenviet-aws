@@ -204,7 +204,7 @@ class LeaveRepository
             ->leftJoin($user_table . ' as reject', 'reject.id', '=', $leaves_table . '.reject_id');
         $checkRole = DB::table('gv_user_role_department')->where('user_id', $user->id)->first();
 
-        if (!$user->hasRole('admin') && !$user->is_super_admin && !$user->is_super_admin && $checkRole->department_id != 6) {
+        if (!$user->hasRole('admin') && !$user->is_super_admin && !$user->is_super_admin && $checkRole->department_id != 6 && $checkRole->department_id != 3) {
             $childUser = DB::table('gv_teams')->join('gv_teams_members',  'gv_teams.id', '=', 'gv_teams_members.team_id')->where('gv_teams.team_leader', $user->id)->pluck('gv_teams_members.user_id');
             $childUser->push($user->id);
             if($checkRole->department_id == 3){
