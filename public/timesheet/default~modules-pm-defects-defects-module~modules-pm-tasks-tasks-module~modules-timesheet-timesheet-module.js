@@ -1661,7 +1661,7 @@ var MyTimesheetComponent = /** @class */ (function () {
         return hours + decimalMinutes;
     };
     MyTimesheetComponent.prototype.isDisabled = function (data) {
-        if (this.datePipe.transform(new Date(), 'yyyy/MM/dd HH:mm') >= this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_12__["addHours"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_12__["addDays"])(data.date, this.time_days), this.time_hours), 'yyyy/MM/dd HH:mm') && data.status != 3) {
+        if (this.datePipe.transform(new Date(), 'yyyy/MM/dd HH:mm') >= this.datePipe.transform(Object(date_fns__WEBPACK_IMPORTED_MODULE_12__["addHours"])(Object(date_fns__WEBPACK_IMPORTED_MODULE_12__["addDays"])(data.date, this.time_days), this.time_hours), 'yyyy/MM/dd HH:mm') && this.actionWeek.status != 3) {
             return true;
         }
         return false;
