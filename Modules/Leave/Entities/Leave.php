@@ -56,6 +56,8 @@ class Leave extends Model
         'workallowance',
         'total',
         'approved1',
+        'add_salary',
+        'cd',
         'approved2',
         'status',
     ];

@@ -78,6 +78,7 @@ class UserRepository
     {
         return User::with(['departments', 'roles'])
             ->where('is_client', false)
+            ->where('is_active', 1)
             ->orderBy('username')
             ->get();
     }
@@ -222,16 +223,28 @@ class UserRepository
                     }]
                 )->first()->userRoles;
             }
+            $user->projects_count = DB::table('gv_timesheets')->where('created_user_id', $user->id)->where('module_id', 2)->where('status', 2)->distinct('project_id')->count();
+            $user->tasks_count = DB::table('gv_timesheets')->where('created_user_id', $user->id)->where('module_id', 2)->where('status', 2)->distinct('module_related_id')->count();
+            $user->teams = DB::table('gv_teams')
+            ->join('gv_teams_members', 'gv_teams_members.team_id', '=', 'gv_teams.id')
+            ->join('gv_users', 'gv_users.id', '=', 'gv_teams.team_leader')
+            ->where(function($q) use ($user) {
+                $q->where('gv_teams_members.user_id', $user->id)
+                ->orWhere('gv_teams.team_leader', $user->id);
+            })
+            ->select('gv_teams.*', 'gv_users.username as lead_username')
+            ->distinct()
+            ->get();
 
-            if ($user->is_client) {
-                // $user->projects_count = $user->projects()->whereNotIn('status', [4, 5])->count();
-                $user->projects_count = Project::where('assign_to', $id)->count();
-                $user->tasks_count = Task::where('assign_to', $id)->count();
-            } else {
-                // $user->projects_count = $user->projects(true)->whereNotIn('status', [4, 5])->count();
-                $user->projects_count = Project::where('assign_to', $id)->count();
-                $user->tasks_count = Task::where('assign_to', $id)->count();
-            }
+            // if ($user->is_client) {
+            //     // $user->projects_count = $user->projects()->whereNotIn('status', [4, 5])->count();
+            //     $user->projects_count = Project::where('assign_to', $id)->count();
+            //     $user->tasks_count = Task::where('assign_to', $id)->count();
+            // } else {
+            //     // $user->projects_count = $user->projects(true)->whereNotIn('status', [4, 5])->count();
+            //     $user->projects_count = Project::where('assign_to', $id)->count();
+            //     $user->tasks_count = Task::where('assign_to', $id)->count();
+            // }
 
             $project_comment = ProjectComment::select(\DB::raw('count(*) as projectComment'))
                 ->where('user_id', $id)
@@ -286,6 +299,9 @@ class UserRepository
             foreach ($user->contract_list as $key => $value) {
                 $value->used = DB::table('gv_leaves')->where('user_id', $id)->where('status', 2)->where('contract_id', $value->id)->count();
             }
+
+            $user->timesheet_project = DB::table('gv_timesheets')->where('created_user_id', $user->id)->where('module_id', 2)->where('status', 2)->sum('decimal_time');
+            $user->timesheet_cost = DB::table('gv_timesheets')->where('created_user_id', $user->id)->where('module_id', 2)->where('status', 2)->sum('cost');
         }
 
         return $user;
@@ -558,7 +574,13 @@ class UserRepository
 
             $totalFiltered = $userLists->count();
         }
-
+        
+        $active = (clone $userLists)->where('is_active', 1)->count();
+        $deactive = (clone $userLists)->where('is_active', 0)->count();
+        $statusfilterId = $request->input('statusfilterId');
+        if ($statusfilterId !== null && $statusfilterId !== '' && $statusfilterId !== 'all') {
+            $userLists->where('is_active', (int) $statusfilterId);
+        }
         $userLists = $userLists->offset($start)
             ->limit($limit)
             ->orderBy($order, $dir === 'desc' ? 'desc' : 'asc')
@@ -571,6 +593,7 @@ class UserRepository
             "draw" => intval($request->input('draw')),
             "recordsTotal" => intval($totalData),
             "recordsFiltered" => intval($totalFiltered),
+            "other"=>['active'=>$active, 'deactive'=>$deactive],
             "data" => $userLists,
         );
 

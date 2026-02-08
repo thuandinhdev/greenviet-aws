@@ -1,5 +1,18 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["modules-pm-reports-reports-module"],{
 
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/components/allowance-reports/allowance-reports.component.html":
+/*!****************************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/components/allowance-reports/allowance-reports.component.html ***!
+  \****************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<!-- Card header -->\n<div class=\"pl-0 pr-0 border-bottom\">\n    <div class=\"card-header pl-0 pr-0 border-bottom\">\n        <h4 class=\"main-title mt-2\"><span>Work allowance</span></h4>\n        <div class=\"card-buttons d-flex\" *ngIf=\"isPageLoaded\">\n            <input\n                class=\"btn btn-create mb-0\"\n                bsDaterangepicker\n                [(ngModel)]=\"selectedRange\"\n                (ngModelChange)=\"onRangeChange($event)\"\n                [bsConfig]=\"datepickerConfig\"\n                style=\"cursor: pointer; padding: 6px 10px; min-width: 260px;\"\n            />\n            <ng-select [searchable]=\"true\"\n            [items]=\"projects\"\n            [selectOnTab]=\"true\"\n            [multiple]=\"true\"\n            bindLabel=\"project_name\"\n            style=\"width: 600px; \"\n            bindValue=\"id\"\n            labelForId=\"project_id\"\n            (change)=\"projectChange($event)\"\n            placeholder=\"{{'tasks.create.placeholders.placeholder6' | translate }}\">\n            <ng-template ng-option-tmp let-item=\"item\">{{item.project_name}}</ng-template>\n            </ng-select>\n            <a class=\"btn btn-create mb-0 ml-5\" style=\"background: #32bdd9 !important; color: #fff !important;\" (click)=\"loadDatatable()\">Submit</a>\n            <a class=\"btn btn-create mb-0\" style=\"background: #34a853 !important; color: #fff !important;\"  (click)=\"exportFiles()\">Export</a>\n            <!-- <div class=\"btn calender-day\" (click)=\"preMonth()\">\n                <i class=\"calendar-icon fa fa-chevron-left\"></i>\n            </div>\n            <div class=\"ml-2\">\n                <a class=\"btn btn-create mb-0\" id=\"calendar-filter\" (bsValueChange)=\"changeMonth($event)\" #dp1=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" ><i class=\"fa fa-calendar-plus-o\"></i></a>\n            </div>\n            <div class=\"mr-2\">\n               <input type=\"text\" class=\"form-control\" [(ngModel)]=\"month\" readonly />\n            </div>\n            <div class=\"btn calender-day\" (click)=\"nextMonth()\"  *ngIf=\"month <= currentMonth\">\n                <i class=\"calendar-icon fa fa-chevron-right\"></i>\n            </div> -->\n        </div>\n    </div>\n</div>\n<!-- Card body -->\n<div class=\"card-body pt-3 overflow-x-scroll overflow-y-hidden\">\n    <div class=\"row\">\n        <div class=\"col-lg-12 mb-3\">\n            <div class=\"table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl\">\n                <table class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"defects_table\">\n                    <thead>\n                        <tr>\n                            <th>#</th>\n                            <th class=\"sortable\" (click)=\"sortBy('firstname')\">{{'leaves.create.fields.user' | translate}}\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('projects')\">Projects\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('firstname')\">Reason\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('created_at')\">{{'leaves.columns.request_date' | translate}}\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('leave_date')\">{{'leaves.columns.leave_date' | translate}}\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('total')\">Value(VNĐ)\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <!-- <th>Projects</th> -->\n                            <!-- <th>Reason</th> -->\n                            <!-- <th>{{'leaves.columns.request_date' | translate}}</th>\n                            <th>{{'leaves.columns.leave_date' | translate}}</th> -->\n                            <!-- <th>Value(VNĐ)</th> -->\n                            <th>Approve1</th>\n                            <th>Approve2</th>\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"leavesData?.length != 0\">\n                        <tr *ngFor=\"let leave of leavesData; index as i\">\n                            <td class=\"text-center\">{{ i + 1 }}</td>\n                            <td>{{leave.firstname}} {{leave.lastname}}</td>\n                            <!-- <td><div [innerHTML]=\"leave.reason\"></div></td> -->\n                            <td>{{leave.projects}}</td>\n                            <td>{{leave.workAllowance}}</td>\n                            <td>{{ leave.created_at | dateTimeFormatFilter: loginUser.settings.date_format }}</td>\n                            <td>{{ leave.leave_date | dateTimeFormatFilter: loginUser.settings.date_format }}</td>\n                            <td>{{ leave.total | number:'1.0-0'}}</td>\n                            <td class=\"people-lists\">\n                                <a [routerLink]=\"['/users/profile', leave.approved1]\" class=\"btn btn-profile-info rounded-circle\" placement=\"top\" tooltip=\"{{leave.approved1_firstname}} {{leave.approved1_lastname}}\" *ngIf=\"leave.approved1\">\n                                    <img *ngIf=\"leave.approved1_avatar\" src=\"{{apiUrl}}/uploads/profile/{{leave.approved1_avatar}}\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                    <img *ngIf=\"!leave.approved1_avatar\" src=\"../assets/img/profile_small.jpg\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                </a>\n                            </td>\n                            <td class=\"people-lists\">\n                                <a [routerLink]=\"['/users/profile', leave.approved2]\" class=\"btn btn-profile-info rounded-circle\" placement=\"top\" tooltip=\"{{leave.approved2_firstname}} {{leave.approved2_lastname}}\" *ngIf=\"leave.approved2\">\n                                    <img *ngIf=\"leave.approved2_avatar\" src=\"{{apiUrl}}/uploads/profile/{{leave.approved2_avatar}}\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                    <img *ngIf=\"!leave.approved2_avatar\" src=\"../assets/img/profile_small.jpg\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                </a>\n                            </td>\n                        </tr>\n                        <tr style=\"background-color: rgba(160, 136, 0, 0.11);\">\n                            <td colspan=\"5\"><b>Total:</b></td>\n                            <td colspan=\"5\"><b>{{totalData | number:'1.0-0'}}</b></td>\n                        </tr>\n                    </tbody>\n                </table>\n                <!-- <table class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"defects_table\">\n                    <thead>\n                        <tr class=\"display_all\">\n                            <th>Full Name</th>\n                            <th>Date</th>\n                            <th>Description</th>\n                            <th>Value(VNĐ)</th>\n                        </tr>\n                    </thead>\n                    <tbody >\n                        <tr>\n                            <td> Lê Phương Dũng </td>\n                            <td> 9/5/2025 </td>\n                            <td>Starry, Bến Lức LA,  Xe hơi bao tài xế </td>\n                            <td>250.000</td>\n                        </tr>\n                        <tr>\n                            <td> Lê Phương Dũng </td>\n                            <td> 9/5/2025 </td>\n                            <td>Starry, Bến Lức LA,  Xe hơi bao tài xế </td>\n                            <td>250.000</td>\n                        </tr>\n                        <tr>\n                            <td> Lê Phương Dũng </td>\n                            <td> 9/5/2025 </td>\n                            <td>Starry, Bến Lức LA,  Xe hơi bao tài xế </td>\n                            <td>250.000</td>\n                        </tr>\n                        <tr>\n                            <td> Lê Phương Dũng </td>\n                            <td> 9/5/2025 </td>\n                            <td>Starry, Bến Lức LA,  Xe hơi bao tài xế </td>\n                            <td>250.000</td>\n                        </tr>\n                        <tr>\n                            <td> Lê Phương Dũng </td>\n                            <td> 9/5/2025 </td>\n                            <td>Starry, Bến Lức LA,  Xe hơi bao tài xế </td>\n                            <td>250.000</td>\n                        </tr>\n                        <tr>\n                            <td> Lê Phương Dũng </td>\n                            <td> 9/5/2025 </td>\n                            <td>Starry, Bến Lức LA,  Xe hơi bao tài xế </td>\n                            <td>250.000</td>\n                        </tr>\n                        <tr>\n                            <td> Lê Phương Dũng </td>\n                            <td> 9/5/2025 </td>\n                            <td>Starry, Bến Lức LA,  Xe hơi bao tài xế </td>\n                            <td>250.000</td>\n                        </tr>\n                        <tr>\n                            <td> Lê Phương Dũng </td>\n                            <td> 9/5/2025 </td>\n                            <td>Starry, Bến Lức LA,  Xe hơi bao tài xế </td>\n                            <td>250.000</td>\n                        </tr>\n                        <tr>\n                            <td> Lê Phương Dũng </td>\n                            <td> 9/5/2025 </td>\n                            <td>Starry, Bến Lức LA,  Xe hơi bao tài xế </td>\n                            <td>250.000</td>\n                        </tr>\n                        <tr>\n                            <td colspan=\"3\"> Total </td>\n                            <td>2.250.000</td>\n                        </tr>\n                    </tbody>\n                </table> -->\n                <!-- <table class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"export_table\" style=\"display: none;\">\n                    <thead>\n                        <tr class=\"display_all\">\n                            <th>Full Name</th>\n                            <th>Total</th>\n                            <th *ngFor=\"let day of daysInMonth; let i = index\">\n                                <div *ngIf=\"day.stt==0\">CN-{{day.day}}</div>\n                                <div *ngIf=\"day.stt>0\">T{{day.stt + 1}}-{{day.day}}</div>\n                            </th>\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"exportTableData?.length != 0\">\n                        <ng-container *ngFor=\"let user of exportTableData; let i = index\">\n                            <tr>\n                                <td rowspan=\"2\">{{user.firstname}} {{user.lastname}}</td>\n                                <td>{{ getTimesheetTotal(user) }}</td>\n                                <ng-container *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <td [innerHTML]=\"getTimesheetByDay(user, j)\"></td>\n                                </ng-container>\n                            </tr>\n                            <tr style=\"background-color: rgba(160, 136, 0, 0.11);text-align: center;\">\n                                <td>{{user.timesheet_ot_total}}</td>\n                                <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <div *ngIf=\"user.timesheet_ot[j] && user.timesheet_ot[j].value && user.timesheet_ot[j].value > 0\">{{user.timesheet_ot[j].value | number:'1.0-1'}}</div>\n                                </td>\n                            </tr>\n                        </ng-container>\n                    </tbody>\n                </table> -->\n            </div>\n        </div>\n    </div>\n</div>\n");
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/components/defect-reports/defect-reports.component.html":
 /*!**********************************************************************************************************************************!*\
   !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/components/defect-reports/defect-reports.component.html ***!
@@ -9,7 +22,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<!-- Card header -->\n<div class=\"pl-0 pr-0 border-bottom\">\n    <div class=\"card-header pl-0 pr-0 border-bottom\">\n        <h4 class=\"main-title mt-2\"><span>Standard working hours per month: {{workingInMonth * 8.5}}h</span></h4>\n        <div class=\"card-buttons d-flex\" *ngIf=\"isPageLoaded\">\n            <a class=\"btn btn-create mb-0\" style=\"background: #34a853 !important; color: #fff !important;\" (click)=\"exportFiles()\">Export</a>\n            <div class=\"btn calender-day\" (click)=\"preMonth()\">\n                <i class=\"calendar-icon fa fa-chevron-left\"></i>\n            </div>\n            <div class=\"ml-2\">\n                <a class=\"btn btn-create mb-0\" id=\"calendar-filter\" (bsValueChange)=\"changeMonth($event)\" #dp1=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" ><i class=\"fa fa-calendar-plus-o\"></i></a>\n            </div>\n            <div class=\"mr-2\">\n               <input type=\"text\" class=\"form-control\" [(ngModel)]=\"month\" readonly />\n            </div>\n            <div class=\"btn calender-day\" (click)=\"nextMonth()\"  *ngIf=\"month <= currentMonth\">\n                <i class=\"calendar-icon fa fa-chevron-right\"></i>\n            </div>\n        </div>\n    </div>\n</div>\n<!-- Card body -->\n<div class=\"card-body pt-3 overflow-x-scroll overflow-y-hidden\">\n    <div class=\"row\">\n        <div class=\"col-lg-12 mb-3\">\n            <div class=\"table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl\">\n                <table class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"defects_table\">\n                    <thead>\n                        <tr class=\"display_all\">\n                            <th>Full Name</th>\n                            <th>Total</th>\n                            <th *ngFor=\"let day of daysInMonth; let i = index\">\n                                <div *ngIf=\"day.stt==0\">CN<br>{{day.day}}</div>\n                                <div *ngIf=\"day.stt>0\">T{{day.stt + 1}}<br>{{day.day}}</div>\n                            </th>\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"exportTableData?.length != 0\">\n                        <ng-container *ngFor=\"let user of exportTableData; let i = index\">\n                            <tr>\n                                <td rowspan=\"2\">{{user.firstname}} {{user.lastname}}</td>\n                                <!-- <td>{{user.timesheet_total}}</td>\n                                <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <div *ngIf=\"user.timesheet[j] && user.timesheet[j].check\">{{user.timesheet[j].value | number:'1.0-1'}}</div>\n                                </td> -->\n\n                                <td>{{ getTimesheetTotal(user) }}</td>\n                                <ng-container *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <td [innerHTML]=\"getTimesheetByDay(user, j)\"></td>\n                                    <!-- <div *ngIf=\"user.timesheet[j] && user.timesheet[j].check\">{{user.timesheet[j].value | number:'1.0-1'}}</div> -->\n                                </ng-container>\n                            </tr>\n                            <tr style=\"background-color: rgba(160, 136, 0, 0.11);text-align: center;\">\n                                <td>{{user.timesheet_ot_total}}</td>\n                                <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <div *ngIf=\"user.timesheet_ot[j] && user.timesheet_ot[j].value && user.timesheet_ot[j].value > 0\">{{user.timesheet_ot[j].value | number:'1.0-1'}}</div>\n                                </td>\n                            </tr>\n                        </ng-container>\n                        <!-- <tr *ngFor=\"let user of exportTableData; let i = index\" >\n                            <td rowspan=\"2\">{{user.firstname}} {{user.lastname}}</td>\n                            <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                <div *ngIf=\"user.timesheet[j] && user.timesheet[j].check\">{{user.timesheet[j].value | number:'1.0-1'}}</div>\n                            </td>\n                        </tr> -->\n                    </tbody>\n                </table>\n                <table class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"export_table\" style=\"display: none;\">\n                    <thead>\n                        <tr class=\"display_all\">\n                            <th>Full Name</th>\n                            <th>Total</th>\n                            <th *ngFor=\"let day of daysInMonth; let i = index\">\n                                <div *ngIf=\"day.stt==0\">CN-{{day.day}}</div>\n                                <div *ngIf=\"day.stt>0\">T{{day.stt + 1}}-{{day.day}}</div>\n                            </th>\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"exportTableData?.length != 0\">\n                        <ng-container *ngFor=\"let user of exportTableData; let i = index\">\n                            <tr>\n                                <td rowspan=\"2\">{{user.firstname}} {{user.lastname}}</td>\n                                <!-- <td>{{user.timesheet_total}}</td>\n                                <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <div *ngIf=\"user.timesheet[j] && user.timesheet[j].check\">{{user.timesheet[j].value | number:'1.0-1'}}</div>\n                                </td> -->\n\n                                <td>{{ getTimesheetTotal(user) }}</td>\n                                <ng-container *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <td [innerHTML]=\"getTimesheetByDay(user, j)\"></td>\n                                    <!-- <div *ngIf=\"user.timesheet[j] && user.timesheet[j].check\">{{user.timesheet[j].value | number:'1.0-1'}}</div> -->\n                                </ng-container>\n                            </tr>\n                            <tr style=\"background-color: rgba(160, 136, 0, 0.11);text-align: center;\">\n                                <td>{{user.timesheet_ot_total}}</td>\n                                <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <div *ngIf=\"user.timesheet_ot[j] && user.timesheet_ot[j].value && user.timesheet_ot[j].value > 0\">{{user.timesheet_ot[j].value | number:'1.0-1'}}</div>\n                                </td>\n                            </tr>\n                        </ng-container>\n                        <!-- <tr *ngFor=\"let user of exportTableData; let i = index\" >\n                            <td rowspan=\"2\">{{user.firstname}} {{user.lastname}}</td>\n                            <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                <div *ngIf=\"user.timesheet[j] && user.timesheet[j].check\">{{user.timesheet[j].value | number:'1.0-1'}}</div>\n                            </td>\n                        </tr> -->\n                    </tbody>\n                </table>\n            </div>\n        </div>\n    </div>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<!-- Card header -->\n<div class=\"pl-0 pr-0 border-bottom\">\n    <div class=\"card-header pl-0 pr-0 border-bottom\">\n        <h4 class=\"main-title mt-2\"><span>Standard working hours per month: {{workingInMonth * 8.5}}h</span></h4>\n        <div class=\"card-buttons d-flex\" *ngIf=\"isPageLoaded\">\n            <input\n                class=\"btn btn-create mb-0\"\n                bsDaterangepicker\n                [(ngModel)]=\"selectedRange\"\n                (ngModelChange)=\"onRangeChange($event)\"\n                [bsConfig]=\"datepickerConfig\"\n                style=\"cursor: pointer; padding: 6px 10px; min-width: 260px;\"\n            />\n            <a class=\"btn btn-create mb-0\" style=\"background: #34a853 !important; color: #fff !important;\" (click)=\"exportFiles()\">Export</a>\n            <!-- <div class=\"btn calender-day\" (click)=\"preMonth()\">\n                <i class=\"calendar-icon fa fa-chevron-left\"></i>\n            </div>\n            <div class=\"ml-2\">\n                <a class=\"btn btn-create mb-0\" id=\"calendar-filter\" (bsValueChange)=\"changeMonth($event)\" #dp1=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" ><i class=\"fa fa-calendar-plus-o\"></i></a>\n            </div>\n            <div class=\"mr-2\">\n               <input type=\"text\" class=\"form-control\" [(ngModel)]=\"month\" readonly />\n            </div>\n            <div class=\"btn calender-day\" (click)=\"nextMonth()\"  *ngIf=\"month <= currentMonth\">\n                <i class=\"calendar-icon fa fa-chevron-right\"></i>\n            </div> -->\n        </div>\n    </div>\n</div>\n<!-- Card body -->\n<div class=\"card-body pt-3 overflow-x-scroll overflow-y-hidden\">\n    <div class=\"row\">\n        <div class=\"col-lg-12 mb-3\">\n            <div class=\"table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl\">\n                <table class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"defects_table\">\n                    <thead>\n                        <tr class=\"display_all\">\n                            <th style=\"min-width: 250px;\">Full Name</th>\n                            <th>Total</th>\n                            <th *ngFor=\"let day of daysInMonth; let i = index\">\n                                <div *ngIf=\"day.stt==0\">CN<br>{{day.day}}</div>\n                                <div *ngIf=\"day.stt>0\">T{{day.stt + 1}}<br>{{day.day}}</div>\n                            </th>\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"exportTableData?.length != 0\">\n                        <ng-container *ngFor=\"let user of exportTableData; let i = index\">\n                            <tr>\n                                <td rowspan=\"2\">{{user.lastname}} {{user.firstname}}</td>\n\n                                <td><div class=\"cell\">{{ getTimesheetTotal(user) }}</div></td>\n                                <ng-container *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <td [innerHTML]=\"getTimesheetByDay(user, j)\"></td>\n                                </ng-container>\n                            </tr>\n                            <tr style=\"background-color: rgba(160, 136, 0, 0.11);text-align: center;\">\n                                <td><div class=\"cell\">{{user.timesheet_ot_total}}</div></td>\n                                <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <div *ngIf=\"user.timesheet_ot[j] && user.timesheet_ot[j].value && user.timesheet_ot[j].value > 0\">{{user.timesheet_ot[j].value | number:'1.0-1'}}</div>\n                                </td>\n                            </tr>\n                        </ng-container>\n                    </tbody>\n                </table>\n                <!-- <table class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"export_table\" style=\"display: none;\">\n                    <thead>\n                        <tr class=\"display_all\">\n                            <th>Full Name</th>\n                            <th>Total</th>\n                            <th *ngFor=\"let day of daysInMonth; let i = index\">\n                                <div *ngIf=\"day.stt==0\">CN-{{day.day}}</div>\n                                <div *ngIf=\"day.stt>0\">T{{day.stt + 1}}-{{day.day}}</div>\n                            </th>\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"exportTableData?.length != 0\">\n                        <ng-container *ngFor=\"let user of exportTableData; let i = index\">\n                            <tr>\n                                <td rowspan=\"2\">{{user.firstname}} {{user.lastname}}</td>\n                                <td>{{ getTimesheetTotal(user) }}</td>\n                                <ng-container *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <td [innerHTML]=\"getTimesheetByDay(user, j)\"></td>\n                                </ng-container>\n                            </tr>\n                            <tr style=\"background-color: rgba(160, 136, 0, 0.11);text-align: center;\">\n                                <td>{{user.timesheet_ot_total}}</td>\n                                <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <div *ngIf=\"user.timesheet_ot[j] && user.timesheet_ot[j].value && user.timesheet_ot[j].value > 0\">{{user.timesheet_ot[j].value | number:'1.0-1'}}</div>\n                                </td>\n                            </tr>\n                        </ng-container>\n                    </tbody>\n                </table> -->\n            </div>\n        </div>\n        <div class=\"col-lg-12\">\n                <div class=\"cell mr-2 table-cell-red\" title=\"Nghỉ không phép (Half)\">Nghỉ không phép</div>\n                <div class=\"cell mr-2 table-cell-indigo\" title=\"Nghỉ có phép (Full)\">Nghỉ có phép (Full)</div>\n                <div class=\"cell mr-2 table-cell-yellow\" title=\"Nghỉ có phép (Half)\">Nghỉ có phép (Half)</div>\n        </div>\n    </div>\n</div>\n");
 
 /***/ }),
 
@@ -26,6 +39,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/components/payment-reports/payment-reports.component.html":
+/*!************************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/components/payment-reports/payment-reports.component.html ***!
+  \************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<!-- Card header -->\n<div class=\"pl-0 pr-0 border-bottom\">\n    <div class=\"card-header pl-0 pr-0 border-bottom\">\n        <div class=\"btn-group mr-2 mb-2\">\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'chart' }\" (click)=\"filterByStatus('chart')\" btnRadio=\"chart\" tabindex=\"0\" role=\"button\">Chart</label>\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'all' }\" (click)=\"filterByStatus('all')\" btnRadio=\"success\" tabindex=\"0\" role=\"button\">ALL</label>\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'success' }\" (click)=\"filterByStatus('success')\" btnRadio=\"success\" tabindex=\"0\" role=\"button\">Success</label>\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'pending' }\" (click)=\"filterByStatus('pending')\" btnRadio=\"pending\" tabindex=\"0\" role=\"button\">Pending</label>\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'overdue' }\" (click)=\"filterByStatus('overdue')\" btnRadio=\"overdue\" tabindex=\"0\" role=\"button\">Overdue</label>\n        </div>\n        <div class=\"card-buttons d-flex\" *ngIf=\"isPageLoaded\">\n            <input\n                class=\"btn btn-create mb-0\"\n                bsDatepicker\n                [(ngModel)]=\"selectedRangeStart\"\n                (ngModelChange)=\"onRangeChangeMonth($event, 'start')\"\n                [bsConfig]=\"datepickerConfig\"\n                style=\"cursor: pointer; padding: 6px 10px; min-width: 100px;\"\n            />\n            <input\n                class=\"btn btn-create mb-0\"\n                bsDatepicker\n                [(ngModel)]=\"selectedRangeEnd\"\n                (ngModelChange)=\"onRangeChangeMonth($event, 'end')\"\n                [bsConfig]=\"datepickerConfig\"\n                style=\"cursor: pointer; padding: 6px 10px; min-width: 100px;\"\n            />\n            <ng-select [searchable]=\"true\"\n            [items]=\"projects\"\n            [selectOnTab]=\"true\"\n            [multiple]=\"true\"\n            bindLabel=\"project_name\"\n            style=\"max-width: 400px;\"\n            bindValue=\"id\"\n            labelForId=\"project_id\"\n            (change)=\"projectChange($event)\"\n            placeholder=\"{{'tasks.create.placeholders.placeholder6' | translate }}\">\n            <ng-template ng-option-tmp let-item=\"item\">{{item.project_name}}</ng-template>\n            </ng-select>\n            <ng-select [searchable]=\"true\"\n            [items]=\"leaders\"\n            [selectOnTab]=\"true\"\n            [multiple]=\"true\"\n            bindLabel=\"username\"\n            style=\"max-width: 400px;\"\n            bindValue=\"id\"\n            labelForId=\"id\"\n            (change)=\"leaderChange($event)\"\n            placeholder=\"Leader\">\n            <ng-template ng-option-tmp let-item=\"item\">{{item.username}}</ng-template>\n            </ng-select>\n            <a class=\"btn btn-create mb-0 ml-5\" style=\"background: #32bdd9 !important; color: #fff !important;\" (click)=\"loadDatatable()\">Submit</a>\n            <a class=\"btn btn-create mb-0\" style=\"background: #34a853 !important; color: #fff !important;\" (click)=\"exportFiles()\" *ngIf=\" FilterKey != 'chart'\">Export</a>\n            <!-- <div class=\"btn calender-day\" (click)=\"preMonth()\" *ngIf=\"FilterKey != 'overdue'\">\n                <i class=\"calendar-icon fa fa-chevron-left\"></i>\n            </div>\n            <div class=\"ml-2\" *ngIf=\"FilterKey != 'overdue'\">\n                <a class=\"btn btn-create mb-0\" id=\"calendar-filter\" (bsValueChange)=\"changeMonth($event)\" #dp1=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" ><i class=\"fa fa-calendar-plus-o\"></i></a>\n            </div>\n            <div class=\"mr-2\" *ngIf=\"FilterKey != 'overdue'\">\n               <input type=\"text\" class=\"form-control\" [(ngModel)]=\"month\" readonly />\n            </div>\n            <div class=\"btn calender-day\" (click)=\"nextMonth()\"  *ngIf=\"month <= currentMonth && FilterKey != 'overdue'\">\n                <i class=\"calendar-icon fa fa-chevron-right\"></i>\n            </div> -->\n        </div>\n    </div>\n</div>\n<!-- Card body -->\n<div class=\"card-body pt-3 overflow-x-scroll overflow-y-hidden\">\n    <div class=\"row\">\n        <div class=\"col-lg-12 mb-3\">\n            <div class=\"table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl\" *ngIf=\" FilterKey != 'chart'\">\n                <table datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\" class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" >\n                    <thead>\n                        <tr>\n                            <th>#</th>\n                            <th class=\"sortable\" (click)=\"sortBy('project_name')\">Project\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('price')\">Amount\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('description')\">Note\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('cash_flow')\">Cash Flow\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('estimated_date')\">Estimated date\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('invoice_date')\">Invoice date\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('payment_date')\">Payment date\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <!-- <th>Project</th>\n                            <th>Amount</th>\n                            <th>Note</th>\n                            <th>Cash Flow</th>\n                            <th>Estimated date</th>\n                            <th>Invoice date</th>\n                            <th>Payment date</th> -->\n                            <th>Status</th>\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"payments?.length > 0\">\n                        <tr *ngFor=\"let item of payments; index as i\">\n                            <td class=\"text-center\">{{ i + 1 }}</td>\n                            <td>{{item.project_name}}</td>\n                            <td>{{item.price| number:'1.0-0'}}</td>\n                            <td>{{item.description}}</td>\n                            <td>\n                                <div class=\"budges-status\">\n                                    <span class=\"open\" *ngIf=\"item.cash_flow == 1\">Company Revenue</span>\n                                    <span class=\"medium\" *ngIf=\"item.cash_flow == 2\">Collection on Behalf</span>\n                                </div>\n                            </td>\n                            <td>{{ item.estimated_date }}</td>\n                            <td>{{ item.invoice_date }}</td>\n                            <td>{{ item.payment_date }}</td>\n                            <td>\n                                <div class=\"budges-status\">\n                                    <span class=\"completed\"\n                                      *ngIf=\"item.payment_date\">\n                                      Paid\n                                    </span>\n                                    <span class=\"in_progress\"\n                                      *ngIf=\"!item.payment_date && item.invoice_date\">\n                                      Invoiced\n                                    </span>\n                                    <span class=\"unpaid\"\n                                      *ngIf=\"!item.payment_date && !item.invoice_date\">\n                                      Unpaid\n                                    </span>\n                                </div>\n                            </td>\n                        </tr>\n                        <tr style=\"background-color: rgba(160, 136, 0, 0.11);\">\n                            <td></td>\n                            <td>Total:</td>\n                            <td>{{totalAmount| number:'1.0-0'}}</td>\n                            <td></td>\n                            <td></td>\n                            <td></td>\n                            <td></td>\n                            <td></td>\n                            <td></td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n\n            <!-- <canvas baseChart\n            [datasets]=\"lineChartData\"\n            [labels]=\"lineChartLabels\"\n            [options]=\"lineChartOptions\"\n            [legend]=\"true\"\n            [chartType]=\"'line'\" *ngIf=\" FilterKey == 'chart'\">\n            </canvas> -->\n            <div class=\"row\" *ngIf=\"FilterKey === 'chart'\">\n                <div class=\"col-12\" >\n                <div class=\"card \">\n                    <div class=\"card-header\">\n                        <h4 class=\"card-title\">LINE Chart</h4>\n                    </div>\n                    <div class=\"card-body\">\n                        <div class=\"card-block\">\n                            <div >\n                                <canvas\n                                    baseChart\n                                    [datasets]=\"lineChartData\"\n                                    [labels]=\"lineChartLabels\"\n                                    [options]=\"lineChartOptions\"\n                                    [legend]=\"true\"\n                                    [chartType]=\"'line'\">\n                                </canvas>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"card \">\n                    <div class=\"card-header\">\n                        <h4 class=\"card-title\">BAR Chart</h4>\n                    </div>\n                    <div class=\"card-body\">\n                        <div class=\"card-block\">\n                            <div >\n                                <canvas\n                                    baseChart\n                                    [datasets]=\"barChartData\"\n                                    [labels]=\"barChartLabels\"\n                                    [options]=\"barChartOptions\"\n                                    [legend]=\"true\"\n                                    [chartType]=\"'bar'\">\n                                </canvas>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n                <!-- LINE CHART -->\n                <!-- <div class=\"col-12 chart-wrapper mb-5\">\n                  <h4 class=\"chart-title\">\n                    LINE Chart\n                  </h4>\n              \n                  <canvas\n                    baseChart\n                    [datasets]=\"lineChartData\"\n                    [labels]=\"lineChartLabels\"\n                    [options]=\"lineChartOptions\"\n                    [legend]=\"true\"\n                    [chartType]=\"'line'\">\n                  </canvas>\n                </div> -->\n              \n                <!-- COLUMN CHART -->\n                <!-- <div class=\"col-12 chart-wrapper mt-5\">\n                  <h4 class=\"chart-title\">\n                    BAR Chart\n                  </h4>\n              \n                  <canvas\n                    baseChart\n                    [datasets]=\"barChartData\"\n                    [labels]=\"barChartLabels\"\n                    [options]=\"barChartOptions\"\n                    [legend]=\"true\"\n                    [chartType]=\"'bar'\">\n                  </canvas>\n                </div> -->\n              \n              </div>\n              \n        </div>\n    </div>\n</div>\n");
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/components/project-reports/project-reports.component.html":
 /*!************************************************************************************************************************************!*\
   !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/components/project-reports/project-reports.component.html ***!
@@ -35,7 +61,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<!-- Card header -->\n<div class=\"pl-0 pr-0 border-bottom\">\n    <h4 class=\"main-title mt-2\"><span>{{'reports.headings.project_report' | translate}}</span></h4>\n</div>\n<!-- Card body -->\n<div class=\"card-body pt-3 overflow-x-scroll overflow-y-hidden\">\n    <div class=\"row\">\n        <div class=\"col-lg-12 mb-3\">\n            <div class=\"table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl\">\n                <table datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\" class=\"table table-bordered table-hover b4-datatable\" id=\"projects_table\">\n                    <thead>\n                        <tr class=\"display_all\">\n                            <th>{{'projects.columns.id' | translate}}</th>\n                            <th>{{'projects.columns.project_name' | translate}}</th>\n                            <th>{{'projects.columns.start' | translate}}</th>\n                            <th>{{'projects.columns.end' | translate}}</th>\n                            <th>{{'projects.columns.output_cost' | translate}}/{{'projects.columns.input_cost' | translate}}</th>\n                            <th>Work allowance</th>\n                            <th>Payment</th>\n                            <!-- <th>{{'projects.columns.progress' | translate}}</th> -->\n                            <th>{{'projects.columns.creator' | translate}}</th>\n                            <th>{{'projects.columns.assigned_To' | translate}}</th>\n                            <th>{{'projects.columns.status' | translate}}</th>\n                            <!-- <th>{{'projects.columns.billing' | translate}}</th>\n                            <th>{{'projects.columns.budget' | translate}}</th>\n                            <th>{{'projects.columns.client' | translate}}</th> -->\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"projects?.length != 0\">\n                        <tr *ngFor=\"let project of projects\">\n                            <td>{{project.generated_id}}</td>\n                            <td>{{project.project_name}}</td>\n                            <td>{{project.start_date | date: 'yyyy-MM-dd' }}</td>\n                            <td>{{project.end_date | date: 'yyyy-MM-dd' }}</td>\n                            <!-- <td>\n                                <ng-container *ngIf=\"project.actual_hours else elseBlock4;\">{{project.actual_hours}}</ng-container>\n                                <ng-template #elseBlock4>-</ng-template>\n                            </td> -->\n                            <td class=\"budges-status\">\n                                <div class=\"budges-status\">\n                                    <span class=\"medium\" *ngIf=\"project.price_rate >= project.cost\">{{project.cost | number:'1.0-0'}}/{{project.price_rate | number:'1.0-0'}}</span>\n                                    <span class=\"urgent\" *ngIf=\"project.price_rate < project.cost\">{{project.cost | number:'1.0-0'}}/{{project.price_rate | number:'1.0-0'}}</span>\n                                </div>\n                            </td>\n                            <td>\n                                {{project.workallowance | number:'1.0-0'}}\n                            </td>\n                            <td class=\"budges-status\">\n                                <div class=\"budges-status\">\n                                    <span class=\"medium\" *ngIf=\"project.payment >= project.paymentTotal\">{{project.payment | number:'1.0-0'}}/{{project.paymentTotal | number:'1.0-0'}}</span>\n                                    <span class=\"urgent\" *ngIf=\"project.payment < project.paymentTotal\">{{project.payment | number:'1.0-0'}}/{{project.paymentTotal | number:'1.0-0'}}</span>\n                                </div>\n                            </td>\n                            <!-- <td>{{project.progress}}%</td> -->\n                            <td class=\"people-lists\">\n                                <a [routerLink]=\"['/users/profile', project.created_id]\" class=\"btn btn-profile-info rounded-circle text-dark\" tooltip=\"{{project.created_firstname}} {{project.created_lastname}}\">\n                                    <img *ngIf=\"project.created_avatar\" src=\"{{apiUrl}}/uploads/profile/{{project.created_avatar}}\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                    <img *ngIf=\"!project.created_avatar\" src=\"../assets/img/profile_small.jpg\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                </a>\n                            </td>\n                            <td class=\"people-lists\">\n                                <ng-container *ngIf=\"project.assign_members == 'Unassign' || project.assign_members == '' || project.assign_members == null; else elseBlock1;\">\n                                    <a href=\"javascript:void(0);\" class=\"btn btn-profile-danger rounded-circle popover-item text-dark\" placement=\"top\" tooltip=\"{{'common.unassigned' | translate}}\">\n                                        <img src=\"../assets/img/unassign.jpg\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                    </a>\n                                </ng-container>\n                                <ng-template #elseBlock1>\n                                    <ng-container *ngFor=\"let user_id of project.assign_members | stringToArrayFilter index as i; odd as isOdd; even as isEven\">\n                                        <a *ngIf=\"userLists[user_id]\" [routerLink]=\"['/users/profile', user_id]\" tooltip=\"{{userLists[user_id].firstname}} {{userLists[user_id].lastname}}\" class=\"btn rounded-circle popover-item text-dark\" [ngClass]=\"{'btn-profile-info': isOdd, 'btn-profile-danger': isEven}\">\n                                            <img *ngIf=\"userLists[user_id].avatar\" src=\"{{apiUrl}}/uploads/profile/{{userLists[user_id].avatar}}\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                            <img *ngIf=\"!userLists[user_id].avatar\" src=\"../assets/img/profile_small.jpg\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                        </a>\n                                    </ng-container>\n                                </ng-template>\n                            </td>\n                            <td class=\"budges-status\">\n                                <ng-container *ngFor=\"let status of ('projects.status' | translate)\">\n                                    <span class=\"badge {{status.class}}\" *ngIf=\"status.id == project.status\">{{status.label}}</span>\n                                </ng-container>\n                            </td>\n                            <!-- <td>\n                                <ng-container *ngIf=\"project.billing_type; else elseBlock2;\">\n                                    <ng-container *ngFor=\"let type of ('projects.billing_types' | translate)\">\n                                        <span class=\"badge badge-secondary\" *ngIf=\"type.id == project.billing_type\">{{type.label}}</span>\n                                    </ng-container>\n                                </ng-container>\n                                <ng-template #elseBlock2>-</ng-template>\n                            </td>\n                            <td>\n                                <ng-container *ngIf=\"project.price_rate else elseBlock3;\">{{project.price_rate}}</ng-container>\n                                <ng-template #elseBlock3>-</ng-template>\n                            </td>\n                            <td class=\"people-lists\">\n                                <ng-container *ngIf=\"project.client_id; else elseBlock5;\">\n                                    <a [routerLink]=\"['/users/profile', project.client_id]\" class=\"btn btn-profile-info rounded-circle text-dark\" tooltip=\"{{project.client_firstname}} {{project.client_lastname}}\">\n                                        <img *ngIf=\"project.client_avatar\" src=\"{{apiUrl}}/uploads/profile/{{project.client_avatar}}\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                        <img *ngIf=\"!project.client_avatar\" src=\"../assets/img/profile_small.jpg\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                    </a>\n                                </ng-container>\n                                <ng-template #elseBlock5>-</ng-template>\n                            </td> -->\n                        </tr>\n                    </tbody>\n                    <tfoot>\n                        <tr>\n                            <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'projects.columns.id' | translate}}\" name=\"generated_id\" />\n                            </th>\n                            <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'projects.columns.project_name' | translate}}\" name=\"project_name\" />\n                            </th>\n                            <th>\n                                <!-- <input type=\"text\" class=\"form-control\" placeholder=\"{{'projects.columns.start' | translate}}\" name=\"start_date\" /> -->\n                            </th>\n                            <th>\n                                <!-- <input type=\"text\" class=\"form-control\" placeholder=\"{{'projects.columns.end' | translate}}\" name=\"end_date\" /> -->\n                            </th>\n                            <th>\n                                <!-- <input type=\"text\" class=\"form-control\" placeholder=\"{{'projects.columns.hours' | translate}}\" name=\"hours\" /> -->\n                            </th>\n                            <!-- <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'projects.columns.progress' | translate}}\" name=\"progress\" />\n                            </th> -->\n                            <th>\n                                <!-- <input type=\"text\" class=\"form-control\" placeholder=\"{{'projects.columns.creator' | translate}}\" name=\"created\" /> -->\n                            </th>\n                            <th>\n                                <!-- <input type=\"text\" class=\"form-control\" placeholder=\"{{'projects.columns.assigned_To' | translate}}\" name=\"assigned\" /> -->\n                            </th>\n                            <th>\n                                <!-- <input type=\"text\" class=\"form-control\" placeholder=\"{{'projects.columns.status' | translate}}\" name=\"status\" /> -->\n                            </th>\n                            <th>\n                                <!-- <input type=\"text\" class=\"form-control\" placeholder=\"{{'projects.columns.status' | translate}}\" name=\"status\" /> -->\n                            </th>\n                            <th>\n                                <!-- <input type=\"text\" class=\"form-control\" placeholder=\"{{'projects.columns.status' | translate}}\" name=\"status\" /> -->\n                            </th>\n                            <!-- <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'projects.columns.billing' | translate}}\" name=\"billing\" />\n                            </th>\n                            <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'projects.columns.budget' | translate}}\" name=\"budget\" />\n                            </th>\n                            <th>\n                                <input type=\"text\" class=\"form-control\" placeholder=\"{{'projects.columns.client' | translate}}\" name=\"client\" />\n                            </th> -->\n                        </tr>\n                    </tfoot>\n                    <tfoot *ngIf=\"projects?.length == 0\" class=\"tfoot_dt\">\n                        <tr>\n                            <td colspan=\"10\" class=\"text-center\">\n                                <img src=\"assets/img/norecord-img.png\" width=\"50\">\n                                <p class=\"mt-1\">{{ 'common.empty_message.projects' | translate }}</p>\n                            </td>\n                        </tr>\n                    </tfoot>\n                </table>\n            </div>\n        </div>\n    </div>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<!-- Card header -->\n<div class=\"pl-0 pr-0 border-bottom\">\n    <div class=\"card-header pl-0 pr-0 border-bottom\">\n        <h4 class=\"main-title mt-2\"><span>{{'reports.headings.project_report' | translate}}</span></h4>\n        <ng-select [searchable]=\"true\"\n            [items]=\"leaders\"\n            [selectOnTab]=\"true\"\n            [multiple]=\"true\"\n            bindLabel=\"username\"\n            style=\"width: 400px;\"\n            bindValue=\"id\"\n            labelForId=\"id\"\n            (change)=\"leaderChange($event)\"\n            placeholder=\"Leader\">\n            <ng-template ng-option-tmp let-item=\"item\">{{item.username}}</ng-template>\n        </ng-select>\n        <div class=\"card-buttons d-flex\">\n            <a class=\"btn btn-create mb-0 ml-5\" style=\"background: #32bdd9 !important; color: #fff !important;\" (click)=\"rerender()\">Submit</a>\n            <a class=\"btn btn-create mb-0\" style=\"background: #34a853 !important; color: #fff !important;\" (click)=\"exportFiles()\" *ngIf=\" FilterKey != 'chart'\">Export</a>\n        </div>\n    </div>\n</div>\n<!-- Card body -->\n<div class=\"card-body pt-3 overflow-x-scroll overflow-y-hidden\">\n    <div class=\"row btn-filters mb-3\" *ngIf=\"isPageLoaded\">\n        <div class=\"col-sm-12\">\n            <button class=\"btn btn-raised open\" type=\"button\" [ngClass]=\"{ 'active': statusfilterId == 1 }\" (click)=\"filterByStatus(1)\">\n                <p>{{'common.status.open' | translate}}</p>\n                <span class=\"badge badge-light\">{{countStatus.open}}</span>\n            </button>\n            <button class=\"btn btn-raised in_progress\" type=\"button\" [ngClass]=\"{ 'active': statusfilterId ==2  }\" (click)=\"filterByStatus(2)\">\n                <p>{{'common.status.in_progress' | translate}}</p>\n                <span class=\"badge badge-light\">{{countStatus.inProgress}}</span>\n            </button>\n            <button class=\"btn btn-raised on_hold\" type=\"button\" [ngClass]=\"{ 'active': statusfilterId == 3 }\" (click)=\"filterByStatus(3)\">\n                <p>{{'common.status.on_hold' | translate}}</p>\n                <span class=\"badge badge-light\">{{countStatus.onHold}}</span>\n            </button>\n            <button class=\"btn btn-raised cancel\" type=\"button\" [ngClass]=\"{ 'active': statusfilterId == 4 }\" (click)=\"filterByStatus(4)\">\n                <p>{{'common.status.cancel' | translate}}</p>\n                <span class=\"badge badge-light\">{{countStatus.cancel}}</span>\n            </button>\n            <button class=\"btn btn-raised completed\" type=\"button\" [ngClass]=\"{ 'active': statusfilterId == 5 }\" (click)=\"filterByStatus(5)\">\n                <p>{{'common.status.completed' | translate}}</p>\n                <span class=\"badge badge-light\">{{countStatus.completed}}</span>\n            </button>\n            <button class=\"btn btn-raised overdue\" type=\"button\" [ngClass]=\"{ 'active': statusfilterId == 6 }\" (click)=\"filterByStatus(6)\">\n                <p>{{'common.status.overdue' | translate}}</p>\n                <span class=\"badge badge-light\">{{countStatus.overdue}}</span>\n            </button>\n            <!-- <button class=\"btn btn-raised btn-secondary\" type=\"button\" [ngClass]=\"{ 'active': statusfilterId == 0 }\" [routerLink]=\"['/projects']\">\n                <p>{{'common.status.total' | translate}}</p>\n                <span class=\"badge badge-light\">{{countStatus.all}}</span>\n            </button> -->\n        </div>\n    </div>\n    <div class=\"row\">\n        <div class=\"col-lg-12 mb-3\">\n            <div class=\"table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl\">\n                <table datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\" class=\"table table-bordered table-hover b4-datatable\" id=\"projects_table\">\n                    <thead>\n                        <tr class=\"display_all\">\n                            <th>{{'projects.columns.id' | translate}}</th>\n                            <th>{{'projects.columns.project_name' | translate}}</th>\n                            <th>{{'projects.columns.start' | translate}}</th>\n                            <th>{{'projects.columns.end' | translate}}</th>\n                            <th>Actual Hours</th>\n                            <th>{{'projects.columns.output_cost' | translate}}/{{'projects.columns.input_cost' | translate}}</th>\n                            <th>Work allowance</th>\n                            <th>Payment</th>\n                            <th>{{'projects.columns.creator' | translate}}</th>\n                            <th>{{'projects.columns.assigned_To' | translate}}</th>\n                            <th>{{'projects.columns.status' | translate}}</th>\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"projects?.length != 0\">\n                        <ng-container *ngFor=\"let project of projects; index as i\">\n                        <tr>\n                            <td (click)=\"togglePayments(i)\" style=\"cursor:pointer;\">\n                                <ng-container  *ngIf=\"project.payments && project.payments.length > 0\">\n                                    <i class=\"fa\" [ngClass]=\"expandedProjectId === project.id ? 'fa-minus-circle' : 'fa-plus-circle'\"\n                                    style=\"cursor: pointer;\"\n                                    (click)=\"toggleExpand(project.id)\"></i>\n                                </ng-container>\n                                {{project.generated_id}}\n                            </td>\n                            <td>{{project.project_name}}</td>\n                            <td>{{project.start_date | date: 'yyyy-MM-dd' }}</td>\n                            <td>{{project.end_date | date: 'yyyy-MM-dd' }}</td>\n                            <td class=\"budges-status\"><span class=\"medium\">{{project.total_actual_hours | number:'1.0-0'}}</span></td>\n                            <td class=\"budges-status\">\n                                <div class=\"budges-status\">\n                                    <span class=\"medium\" *ngIf=\"project.price_rate >= project.cost\">{{project.cost | number:'1.0-0'}}/{{project.price_rate | number:'1.0-0'}}</span>\n                                    <span class=\"urgent\" *ngIf=\"project.price_rate < project.cost\">{{project.cost | number:'1.0-0'}}/{{project.price_rate | number:'1.0-0'}}</span>\n                                </div>\n                            </td>\n                            <td>\n                                {{project.workallowance | number:'1.0-0'}}\n                            </td>\n                            <td class=\"budges-status\">\n                                <div class=\"budges-status\">\n                                    <span class=\"medium\" *ngIf=\"project.payment >= project.paymentTotal\">{{project.payment | number:'1.0-0'}}/{{project.paymentTotal | number:'1.0-0'}}</span>\n                                    <span class=\"urgent\" *ngIf=\"project.payment < project.paymentTotal\">{{project.payment | number:'1.0-0'}}/{{project.paymentTotal | number:'1.0-0'}}</span>\n                                </div>\n                            </td>\n                            <td class=\"people-lists\">\n                                <a [routerLink]=\"['/users/profile', project.created_id]\" class=\"btn btn-profile-info rounded-circle text-dark\" tooltip=\"{{project.created_firstname}} {{project.created_lastname}}\">\n                                    <img *ngIf=\"project.created_avatar\" src=\"{{apiUrl}}/uploads/profile/{{project.created_avatar}}\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                    <img *ngIf=\"!project.created_avatar\" src=\"../assets/img/profile_small.jpg\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                </a>\n                            </td>\n                            <!-- <td class=\"people-lists\">\n                                <ng-container *ngIf=\"project.assign_members == 'Unassign' || project.assign_members == '' || project.assign_members == null; else elseBlock1;\">\n                                    <a href=\"javascript:void(0);\" class=\"btn btn-profile-danger rounded-circle popover-item text-dark\" placement=\"top\" tooltip=\"{{'common.unassigned' | translate}}\">\n                                        <img src=\"../assets/img/unassign.jpg\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                    </a>\n                                </ng-container>\n                                <ng-template #elseBlock1>\n                                    <ng-container *ngFor=\"let user_id of project.assign_members | stringToArrayFilter index as i; odd as isOdd; even as isEven\">\n                                        <a *ngIf=\"userLists[user_id]\" [routerLink]=\"['/users/profile', user_id]\" tooltip=\"{{userLists[user_id].firstname}} {{userLists[user_id].lastname}}\" class=\"btn rounded-circle popover-item text-dark\" [ngClass]=\"{'btn-profile-info': isOdd, 'btn-profile-danger': isEven}\">\n                                            <img *ngIf=\"userLists[user_id].avatar\" src=\"{{apiUrl}}/uploads/profile/{{userLists[user_id].avatar}}\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                            <img *ngIf=\"!userLists[user_id].avatar\" src=\"../assets/img/profile_small.jpg\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                        </a>\n                                    </ng-container>\n                                </ng-template>\n                            </td> -->\n                            <td class=\"people-lists\">\n                                <ng-container *ngIf=\"project.assign_to == null; else elseBlock\">\n                                    <a href=\"javascript:void(0);\" class=\"btn btn-profile-danger rounded-circle popover-item text-dark\" placement=\"top\" tooltip=\"{{'common.unassigned' | translate}}\">\n                                        <img src=\"../assets/img/unassign.jpg\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                    </a>\n                                </ng-container>\n                                <ng-template #elseBlock>\n                                    <ng-container *ngFor=\"let user of teamsProject\">\n                                        <a *ngIf=\"user.id == project.assign_to\" [routerLink]=\"['/users/profile', user.id]\" tooltip=\"{{user.firstname}} {{user.lastname}}\" class=\"btn rounded-circle popover-item text-dark\" [ngClass]=\"{'btn-profile-info': isOdd, 'btn-profile-danger': isEven}\">\n                                            <img *ngIf=\"user.avatar && user.avatar != null\" src=\"{{apiUrl}}/uploads/profile/{{user.avatar}}\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                            <img *ngIf=\"!user.avatar ||  user.avatar == null\" src=\"../assets/img/profile_small.jpg\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                                        </a>\n                                    </ng-container>\n                                </ng-template>\n                            </td>\n                            <td class=\"budges-status\">\n                                <ng-container *ngFor=\"let status of ('projects.status' | translate)\">\n                                    <span class=\"badge {{status.class}}\" *ngIf=\"status.id == project.status\">{{status.label}}</span>\n                                </ng-container>\n                            </td>\n                        </tr>\n                        <tr *ngIf=\"expandedRowIndex === i\">\n                            <td colspan=\"11\" style=\"background: #fafafa;\">\n                              <table class=\"table table-sm table-bordered mt-2 mb-2\">\n                                <thead>\n                                  <tr class=\"bg-light\">\n                                    <th style=\"width: 50px;\">#</th>\n                                    <th *ngxPermissionsOnly=\"['admin', 'super_admin']\">Amount</th>\n                                    <th>Note</th>\n                                    <th>Cash Flow</th>\n                                    <th>Estimated date</th>\n                                    <th>Invoice date</th>\n                                    <th>Payment date</th>\n                                    <th>Status</th>\n                                  </tr>\n                                </thead>\n                                <tbody>\n                                  <tr *ngFor=\"let payment of project.payments; index as t\">\n                                    <td>{{ t + 1 }}</td>\n                                    <td *ngxPermissionsOnly=\"['admin', 'super_admin']\">{{ payment.price | number:'1.0-0'}}</td>\n                                    <td>{{ payment.description }}</td>\n                                    <td>\n                                        <div class=\"budges-status\">\n                                            <span class=\"open\" *ngIf=\"payment.cash_flow == 1\">Company Revenue</span>\n                                            <span class=\"medium\" *ngIf=\"payment.cash_flow == 2\">Collection on Behalf</span>\n                                        </div>\n                                    </td>\n                                    <td>{{ payment.estimated_date }}</td>\n                                    <td>{{ payment.invoice_date }}</td>\n                                    <td>{{ payment.payment_date }}</td>\n                                    <td>\n                                        <div class=\"budges-status\">\n                                            <span class=\"completed\"\n                                              *ngIf=\"payment.payment_date\">\n                                              Paid\n                                            </span>\n                                            <span class=\"in_progress\"\n                                              *ngIf=\"!payment.payment_date && payment.invoice_date\">\n                                              Invoiced\n                                            </span>\n                                            <span class=\"unpaid\"\n                                              *ngIf=\"!payment.payment_date && !payment.invoice_date\">\n                                              Unpaid\n                                            </span>\n                                        </div>\n                                    </td>\n                                  </tr>\n                                  <tr>\n                                    <td>Total:</td>\n                                    <td>{{ project.total_payment.total | number:'1.0-0'}}</td>\n                                    <td></td>\n                                    <td></td>\n                                    <td>{{ project.total_payment.total_estimated | number:'1.0-0'}}</td>\n                                    <td>{{ project.total_payment.total_invoice | number:'1.0-0'}}</td>\n                                    <td>{{ project.total_payment.total_payment | number:'1.0-0'}}</td>\n                                    <td></td>\n                                  </tr>\n                                </tbody>\n                              </table>\n                            </td>\n                          </tr>\n                    </ng-container>\n                    </tbody>\n                    <!-- <tfoot *ngIf=\"projects?.length == 0\" class=\"tfoot_dt\">\n                        <tr>\n                            <td colspan=\"11\" class=\"text-center\">\n                                <img src=\"assets/img/norecord-img.png\" width=\"50\">\n                                <p class=\"mt-1\">{{ 'common.empty_message.projects' | translate }}</p>\n                            </td>\n                        </tr>\n                    </tfoot> -->\n                </table>\n            </div>\n        </div>\n    </div>\n</div>\n");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/components/salary-reports/salary-reports.component.html":
+/*!**********************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/components/salary-reports/salary-reports.component.html ***!
+  \**********************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<!-- Card header -->\n<div class=\"pl-0 pr-0 border-bottom\">\n    <div class=\"card-header pl-0 pr-0 border-bottom\">\n        <div class=\"btn-group mr-2 mb-2\">\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': salaryFilterKey === 'salary' }\" (click)=\"filterByStatus('salary')\" btnRadio=\"salary\" tabindex=\"0\" role=\"button\">Salary</label>\n            <!-- <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': salaryFilterKey === 'timesheet' }\" (click)=\"filterByStatus('timesheet')\" btnRadio=\"timesheet\" tabindex=\"0\" role=\"button\">Timesheet</label> -->\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': salaryFilterKey === 'log' }\" (click)=\"filterByStatus('log')\" btnRadio=\"timesheet\" tabindex=\"0\" role=\"button\">File Log</label>\n        </div>\n        <div class=\"card-buttons d-flex\" *ngIf=\"isPageLoaded && salaryFilterKey != 'log'\">\n            <a class=\"btn btn-create mb-0\" style=\"background: #34a853 !important; color: #fff !important;\" (click)=\"exportFiles()\">Export</a>\n            <div class=\"btn calender-day\" (click)=\"preMonth()\">\n                <i class=\"calendar-icon fa fa-chevron-left\"></i>\n            </div>\n            <div class=\"ml-2\">\n                <a class=\"btn btn-create mb-0\" id=\"calendar-filter\" (bsValueChange)=\"changeMonth($event)\" #dp1=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" ><i class=\"fa fa-calendar-plus-o\"></i></a>\n            </div>\n            <div class=\"mr-2\">\n               <input type=\"text\" class=\"form-control\" [(ngModel)]=\"month\" readonly />\n            </div>\n            <div class=\"btn calender-day\" (click)=\"nextMonth()\"  *ngIf=\"month <= currentMonth\">\n                <i class=\"calendar-icon fa fa-chevron-right\"></i>\n            </div>\n        </div>\n    </div>\n</div>\n<!-- Card body -->\n<div class=\"card-body pt-3 overflow-x-scroll overflow-y-hidden\">\n    <div class=\"row\">\n        <div class=\"col-lg-12 mb-3\">\n            <div class=\"table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl table-wrapper\">\n                <table class=\"table table-bordered table-hover b4-datatable scroll-table\" width=\"100%\" id=\"defects_table\" id=\"defects_table\" *ngIf=\"salaryFilterKey == 'salary'\">\n                    <thead>\n                        <tr style=\"background-color: #fff; color: #000;text-align: center; vertical-align: middle;\">\n                          <th rowspan=\"3\" class=\"sticky-col stt-col\">STT</th>\n                          <th rowspan=\"3\" style=\"min-width: 250px;\">Họ và tên</th>\n                          <th rowspan=\"3\">Lương Chính<br>Thực theo thỏa<br>thuận</th>\n                          <th colspan=\"3\"></th>\n                          <th colspan=\"11\" style=\"background-color: #f2dada;\">Tổng thu nhập người lao động</th>\n                          <th colspan=\"7\" style=\"background-color: #ffff66;\">Tổng thu nhập không chịu thuế TNCN</th>\n                          <th colspan=\"2\" style=\"background-color: #35cc9a;\">Khấu trừ thuế TNCN NLĐ</th>\n                          <th colspan=\"5\" style=\"background-color: #c1f2f7;\">Lương thực nhận</th>\n                          <th colspan=\"3\">Chi phí doanh nghiệp</th>\n                        </tr>\n                        <tr style=\"background-color: #fff; color: #000;text-align: center; vertical-align: middle;\">\n                            <th colspan=\"3\">Lương tháng hiện tại (Full)</th>\n                            <th colspan=\"3\" style=\"background-color: #f2dada;\">Lương chi tiết <br>(theo thời gian làm việc)</th>\n                            <th colspan=\"2\" style=\"background-color: #f2dada;\">LươnLương OT</th>\n                            <th rowspan=\"2\" style=\"background-color: #f2dada;\">Các khoản điều<br>chỉnh giảm - / tăng +</th>\n                            <th rowspan=\"2\" style=\"background-color: #f2dada;\">Thưởng đột xuất<br>/ Lễ/ tết </th>\n                            <th colspan=\"3\" style=\"background-color: #f2dada;\">PHỤ CẤP THEO QUY CHẾ CÔNG TY</th>\n                            <th rowspan=\"2\" style=\"background-color: #f2dada;\">Tổng <br>Thu nhập </th>\n                            <th colspan=\"2\" style=\"background-color: #ffff66;\">Người phụ thuộc</th>\n                            <th rowspan=\"2\" style=\"background-color: #ffff66;\">Giảm trừ<br>bản thân</th>\n                            <th rowspan=\"2\" style=\"background-color: #ffff66;\">Ăn/ <br>ĐT/CT/Xăng</th>\n                            <th rowspan=\"2\" style=\"background-color: #ffff66;\">OT</th>\n                            <th style=\"background-color: #ffff66;\">BHBB</th>\n                            <th rowspan=\"2\" style=\"background-color: #ffff66;\">TỔNG</th>\n                            <th rowspan=\"2\" style=\"background-color: #35cc9a;\">Thu nhập chịu<br> thuế TNCN</th>\n                            <th rowspan=\"2\" style=\"background-color: #35cc9a;\">Thuế TNCN</th>\n                            <th style=\"background-color: #c1f2f7;\">BHBB <br>Thực tế</th>\n                            <th style=\"background-color: #c1f2f7;\">Khấu trừ <br>ĐPCĐ</th>\n                            <th rowspan=\"2\" style=\"background-color: #c1f2f7;\">Khác</th>\n                            <th rowspan=\"2\" style=\"background-color: #c1f2f7;\">UNC ngày <br>25/09/2025</th>\n                            <th rowspan=\"2\" style=\"background-color: #c1f2f7;\">Tổng</th>\n                            <th>BHBB</th>\n                            <th>KPCĐ</th>\n                            <th rowspan=\"2\">Tổng</th>\n                          </tr>\n                        <tr style=\"background-color: #fff; color: #000;text-align: center; vertical-align: middle;\">\n                          <th>Lương cơ bản</th>\n                          <th>Hiệu quả công việc</th>\n                          <th>Tổng lương</th>\n                          <th style=\"background-color: #f2dada;\">Thời gian LV<br> (Ngày) </th>\n                          <th style=\"background-color: #f2dada;\">Lương LV</th>\n                          <th style=\"background-color: #f2dada;\">Nghỉ phép<br> được hưởng lương</th>\n                          <th style=\"background-color: #f2dada;\">Ngày</th>\n                          <th style=\"background-color: #f2dada;\">Lương</th>\n                          <th style=\"background-color: #f2dada;\">Ăn trưa</th>\n                          <th style=\"background-color: #f2dada;\">Điện thoại<br> / xăng</th>\n                          <th style=\"background-color: #f2dada;\">Đi công trình</th>\n                          <th style=\"background-color: #ffff66;\">Số NPT</th>\n                          <th style=\"background-color: #ffff66;\">Giảm trừ</th>\n                          <th style=\"background-color: #ffff66; color:red;\">{{settings.bhbb}}%</th>\n                          <th style=\"background-color: #c1f2f7; color:red;\">{{settings.bhbb}}%</th>\n                          <th style=\"background-color: #c1f2f7; color:red;\">{{settings.dpcd}}%</th>\n                          <th style=\"color:red;\">{{settings.dnbhbb}}%</th>\n                          <th style=\"color:red;\">{{settings.dndpcd}}%</th>\n                        </tr>\n                      </thead>\n\n                    <tbody *ngIf=\"exportTableData?.length != 0\">\n                        <ng-container *ngFor=\"let user of exportTableData; let i = index\">\n                            <tr>\n                                <td>{{i+1}}</td>\n                                <td>{{user.lastname}} {{user.firstname}}</td>\n                                <td style=\"text-align: right;\">{{user.salary_total| number:'1.0-0'}}</td>\n                                <td style=\"text-align: right;\">{{user.salary_basic| number:'1.0-0'}}</td>\n                                <td style=\"text-align: right;\">{{user.salary_performance| number:'1.0-0'}}</td>\n                                <td style=\"text-align: right;\">{{user.salary_total_real| number:'1.0-0'}}</td>\n                                <td style=\"text-align: right;\">{{user.salary_working_day| number:'1.0-1'}}</td>\n                                <td style=\"text-align: right;\">{{user.salary_working_salary| number:'1.0-0'}}</td>\n                                <td style=\"text-align: right;\">{{user.salary_leave_salary| number:'1.0-0'}}</td>\n                                <td style=\"text-align: right;\">{{user.salary_ot_working_day| number:'1.0-1'}}</td>\n                                <td style=\"text-align: right;\">{{user.salary_ot_working_salary | number:'1.0-0'}}</td>\n                                <td>-</td>\n                                <td>-</td>\n                                <td style=\"text-align: right;\">{{user.salary_lunch| number:'1.0-0'}}</td>\n                                <td>-</td>\n                                <td style=\"text-align: right;\">{{user.allowance| number:'1.0-0'}}</td>\n                                <td style=\"text-align: right;color:red;\">{{user.salary_sum_of_sums| number:'1.0-0'}}</td>\n                                <td style=\"text-align: right;\" >{{user.dependents}}</td>\n                                <td style=\"text-align: right;\">{{user.salary_dependents| number:'1.0-0'}}</td>\n                                <td style=\"text-align: right;\" >{{settings.personal| number:'1.0-0'}}</td>\n                                <td style=\"text-align: right;\">{{ (user.salary_lunch > 730000 ? 730000 : user.salary_lunch) + user.allowance | number:'1.0-0' }}</td>\n                                <td>-</td>\n                                <td style=\"text-align: right;\">{{user.salary_BHBB| number:'1.0-0'}}</td>\n                                <td style=\"text-align: right;color:red;\">{{user.salary_personal_income_taxt| number:'1.0-0'}}</td>\n                                <td style=\"text-align: right;\">\n                                    {{ (user.salary_sum_of_sums - user.salary_personal_income_taxt) <= 0  ?  0 : (user.salary_sum_of_sums - user.salary_personal_income_taxt) | number:'1.0-0' }}\n                                </td>\n                                <td style=\"text-align: right;\">{{ getPersonalIncomeTax((user.salary_sum_of_sums - user.salary_personal_income_taxt) <= 0  ?  0 : (user.salary_sum_of_sums - user.salary_personal_income_taxt)) | number:'1.0-0' }}</td>\n                                <td style=\"text-align: right;\">{{user.salary_BHBB| number:'1.0-0'}}</td>\n                                <td style=\"text-align: right;\">{{ (user.salary_basic * settings.dpcd / 100) > 234000 ? '234,000' : (user.salary_basic * settings.dpcd / 100) | number:'1.0-0' }}</td>\n                                <td>-</td>\n                                <td>-</td>\n                                <td style=\"text-align: right;color:red;\">{{user.salary_sum_of_sums - user.salary_BHBB - getPersonalIncomeTax((user.salary_sum_of_sums - user.salary_personal_income_taxt) <= 0  ?  0 : (user.salary_sum_of_sums - user.salary_personal_income_taxt))| number:'1.0-0'}}</td>\n                                <td style=\"text-align: right;\">{{user.salary_basic*settings.dnbhbb/100 - user.salary_BHBB| number:'1.0-0'}}</td>\n                                <td style=\"text-align: right;\">{{user.salary_basic*settings.dndpcd/100| number:'1.0-0'}}</td>\n                                <td style=\"text-align: right;\">{{user.salary_sum_of_sums + (user.salary_basic*settings.dnbhbb/100 - user.salary_BHBB) + (user.salary_basic*settings.dndpcd/100)| number:'1.0-0'}}</td>\n                            </tr>\n                        </ng-container>\n                        <tr style=\"background-color: rgba(160, 136, 0, 0.11);\">\n                            <td colspan=\"2\"><b>Tổng cộng</b></td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total1| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total2| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total3| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total4| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total5| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total6| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total7| number:'1.0-0'}}</b></td>\n                            <td>-</td>\n                            <td>-</td>\n                            <td>-</td>\n                            <td>-</td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total12| number:'1.0-0'}}</b></td>\n                            <td>-</td>\n                            <td>-</td>\n                            <td style=\"text-align: right;color:red;\"><b>{{totalSalary.total15| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;\" ><b>{{totalSalary.total16| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total17| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;\" ><b>{{totalSalary.total18| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total19| number:'1.0-0'}}</b></td>\n                            <td>-</td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total21| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;color:red;\"><b>{{totalSalary.total22| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total23| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total24| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total25| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total26| number:'1.0-0'}}</b></td>\n                            <td>-</td>\n                            <td>-</td>\n                            <td style=\"text-align: right;color:red;\"><b>{{totalSalary.total29| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total30| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total31| number:'1.0-0'}}</b></td>\n                            <td style=\"text-align: right;\"><b>{{totalSalary.total32| number:'1.0-0'}}</b></td>\n                        </tr>\n\n                    </tbody>\n                </table>\n                <table class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"defects_table\" *ngIf=\"salaryFilterKey == 'timesheet'\">\n                    <thead>\n                        <tr class=\"display_all\">\n                            <th rowspan=\"2\">Full Name</th>\n                            <th *ngFor=\"let day of daysInMonth; let i = index\">\n                                <div *ngIf=\"day.stt==0\">CN</div>\n                                <div *ngIf=\"day.stt>0\">T{{day.stt + 1}}</div>\n                            </th>\n                            <th rowspan=\"2\">Ngày<br>thường</th>\n                            <th rowspan=\"2\">Ngày<br>nghỉ</th>\n                            <th rowspan=\"2\">TỔNG<br>NGÀY<br>CÔNG</th>\n                            <th rowspan=\"2\">NGÀY<br>CÔNG<br>CHUẨN</th>\n                        </tr>\n                        <tr class=\"display_all\">\n                            <th *ngFor=\"let day of daysInMonth; let i = index\">\n                                {{day.day}}\n                            </th>\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"exportTableData?.length != 0\">\n                        <ng-container *ngFor=\"let user of exportTableData; let i = index\">\n                            <tr>\n                                <td rowspan=\"2\">{{user.lastname}} {{user.firstname}}</td>\n                                <ng-container *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <td [innerHTML]=\"getTimesheetByDay(user, j)\"></td>\n                                </ng-container>\n                                <td>{{ user.total_day }}</td>\n                                <td>{{ user.total_leave }}</td>\n                                <td>{{ user.total_total }}</td>\n                                <td>{{ workingInMonth }}</td>\n                            </tr>\n                            <tr style=\"background-color: rgba(160, 136, 0, 0.11);text-align: center;\">\n                                <td *ngFor=\"let day of daysInMonth; let j = index\">\n                                    <div *ngIf=\"user.timesheet_ot[j] && user.timesheet_ot[j].value && user.timesheet_ot[j].value > 0\">{{user.timesheet_ot[j].value | number:'1.0-0'}}</div>\n                                </td>\n                                <td></td>\n                                <td></td>\n                                <td>{{user.timesheet_ot_total}}</td>\n                                <td></td>\n                            </tr>\n                        </ng-container>\n                    </tbody>\n                </table>\n                <app-file-browser *ngIf=\"salaryFilterKey == 'log'\"></app-file-browser>\n            </div>\n        </div>\n    </div>\n</div>\n");
 
 /***/ }),
 
@@ -52,6 +91,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/components/user-reports/user-reports.component.html":
+/*!******************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/components/user-reports/user-reports.component.html ***!
+  \******************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<!-- Card header -->\n<div class=\"pl-0 pr-0 border-bottom\">\n    <div class=\"card-header pl-0 pr-0 border-bottom\">\n        <div class=\"btn-group mr-2 mb-2\" style=\"height:42px;\">\n          <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'user_list' }\" (click)=\"filterByStatus('user_list')\" btnRadio=\"user_list\" tabindex=\"0\" role=\"button\">All Users</label>\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'user_detail' }\" (click)=\"filterByStatus('user_detail')\" btnRadio=\"user_detail\" tabindex=\"0\" role=\"button\">User Detail</label>\n            <!-- <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'profile' }\" (click)=\"filterByStatus('profile')\" btnRadio=\"profile\" tabindex=\"0\" role=\"button\">Profile</label> -->\n            <!-- <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'normal' }\" (click)=\"filterByStatus('normal')\" btnRadio=\"normal\" tabindex=\"0\" role=\"button\">Normal</label>\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'ot' }\" (click)=\"filterByStatus('ot')\" btnRadio=\"ot\" tabindex=\"0\" role=\"button\">OT</label> -->\n        </div>\n        <div class=\"col-sm-3\" *ngIf=\"FilterKey === 'user_detail'\">\n            <form>\n                <div class=\"form-group\">\n                    <ng-select\n                        [searchable]=\"true\"\n                        [items]=\"users\"\n                        [selectOnTab]=\"true\"\n                        [multiple]=\"false\"\n                        [selectableGroup]=\"false\"\n                        bindLabel=\"username\"\n                        bindValue=\"id\"\n                        labelForId=\"user_id\"\n                        placeholder=\"{{'timesheet.filter.placeholders.placeholder5' | translate }}\"\n                        (change)=\"changeUser($event)\">\n                        <ng-template ng-label-tmp let-item=\"item\">\n                            {{item.username}}\n                        </ng-template>\n                    </ng-select>\n                </div>\n            </form>\n        </div>\n        <input\n            class=\"btn btn-create mb-0\"\n            bsDaterangepicker\n            [(ngModel)]=\"selectedRange\"\n            (ngModelChange)=\"onRangeChange($event)\"\n            [bsConfig]=\"datepickerConfig\"\n            style=\"cursor: pointer; padding: 6px 10px; min-width: 260px; \"\n        />\n        <ng-select [searchable]=\"true\"\n          [items]=\"projects\"\n          [selectOnTab]=\"true\"\n          [multiple]=\"true\"\n          bindLabel=\"project_name\"\n          style=\"width: 600px; \"\n          bindValue=\"id\"\n          labelForId=\"project_id\"\n          (change)=\"projectChange($event)\"\n          placeholder=\"{{'tasks.create.placeholders.placeholder6' | translate }}\">\n          <ng-template ng-option-tmp let-item=\"item\">{{item.project_name}}</ng-template>\n        </ng-select>\n        <a class=\"btn btn-create mb-0\" style=\"background: #32bdd9 !important; color: #fff !important;\" (click)=\"submitFormFilter()\">Submit</a>\n        <!-- <div class=\"card-buttons d-flex\" *ngIf=\"isPageLoaded && FilterKey === 'user_list'\">\n            <div class=\"btn calender-day\" (click)=\"preMonth()\">\n                <i class=\"calendar-icon fa fa-chevron-left\"></i>\n            </div>\n            <div class=\"ml-2\">\n                <a class=\"btn btn-create mb-0\" id=\"calendar-filter\" (bsValueChange)=\"changeMonth($event)\" #dp1=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" ><i class=\"fa fa-calendar-plus-o\"></i></a>\n            </div>\n            <div class=\"mr-2\">\n               <input type=\"text\" class=\"form-control\" [(ngModel)]=\"month\" readonly />\n            </div>\n            <div class=\"btn calender-day\" (click)=\"nextMonth()\"  *ngIf=\"month <= currentMonth\">\n                <i class=\"calendar-icon fa fa-chevron-right\"></i>\n            </div>\n        </div> -->\n    </div>\n</div>\n<!-- Card body -->\n<div class=\"card-body pt-3 overflow-x-scroll overflow-y-hidden\">\n    <div class=\"row\">\n        <div class=\"col-lg-12 mb-3\">\n            <div class=\"table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl\">\n                <app-user-detail [userId]=\"users_id\" [dataCall]=\"dataCall\" *ngIf=\"users_id && FilterKey === 'user_detail'\"></app-user-detail>\n                <span class=\"card-title text-warning\" *ngIf=\"!users_id && FilterKey === 'user_detail'\"><b> Please select a user to view details.\"</b></span>\n                <table datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\" class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"users_table\"  *ngIf=\"FilterKey == 'user_list'\">\n                  <thead>\n                    <tr>\n                      <th>{{'users.columns.photo' | translate}}</th>\n                      <th class=\"sortable\" (click)=\"sortBy('firstname')\">{{'users.columns.first_name' | translate}}\n                        <span class=\"sort-icons\" >\n                            <i class=\"sort-up\"></i>\n                            <i class=\"sort-down\"></i>\n                        </span>\n                      </th>\n                      <th class=\"sortable\" (click)=\"sortBy('lastname')\">{{'users.columns.last_name' | translate}}\n                        <span class=\"sort-icons\" >\n                            <i class=\"sort-up\"></i>\n                            <i class=\"sort-down\"></i>\n                        </span>\n                      </th>\n                      <th class=\"sortable\" (click)=\"sortBy('paid_leave')\">Remaining leave\n                        <span class=\"sort-icons\" >\n                            <i class=\"sort-up\"></i>\n                            <i class=\"sort-down\"></i>\n                        </span>\n                      </th>\n                      <th class=\"sortable\" (click)=\"sortBy('is_active')\">Status\n                        <span class=\"sort-icons\" >\n                            <i class=\"sort-up\"></i>\n                            <i class=\"sort-down\"></i>\n                        </span>\n                      </th>\n                      <th>{{'users.columns.departments_roles' | translate}}</th>\n                      <th class=\"sortable\" (click)=\"sortBy('total')\">Total hour (Standard:{{workingInMonth*8.5| number:'1.0-1'}})\n                        <span class=\"sort-icons\" >\n                            <i class=\"sort-up\"></i>\n                            <i class=\"sort-down\"></i>\n                        </span>\n                      </th>\n                      <th class=\"sortable\" (click)=\"sortBy('billable_cost')\">Billable(VNĐ)\n                        <span class=\"sort-icons\" >\n                            <i class=\"sort-up\"></i>\n                            <i class=\"sort-down\"></i>\n                        </span>\n                      </th>\n                      <th class=\"sortable\" (click)=\"sortBy('project_billable')\">\tBillable(quantity)\n                        <span class=\"sort-icons\" >\n                            <i class=\"sort-up\"></i>\n                            <i class=\"sort-down\"></i>\n                        </span>\n                      </th>\n                      <th class=\"sortable\" (click)=\"sortBy('billable_ratio')\">\tBillable Ratio\n                        <span class=\"sort-icons\" >\n                            <i class=\"sort-up\"></i>\n                            <i class=\"sort-down\"></i>\n                        </span>\n                      </th>\n                      <th class=\"sortable\" (click)=\"sortBy('non_billable_cost')\">\tNon-Billable(VNĐ)\n                        <span class=\"sort-icons\" >\n                            <i class=\"sort-up\"></i>\n                            <i class=\"sort-down\"></i>\n                        </span>\n                      </th>\n                      <th class=\"sortable\" (click)=\"sortBy('project_non_billable')\">\tNon-Billable(quantity)\n                        <span class=\"sort-icons\" >\n                            <i class=\"sort-up\"></i>\n                            <i class=\"sort-down\"></i>\n                        </span>\n                      </th>\n                      <th class=\"sortable\" (click)=\"sortBy('non_billable_ratio')\">Non-Billable Ratio\n                        <span class=\"sort-icons\" >\n                            <i class=\"sort-up\"></i>\n                            <i class=\"sort-down\"></i>\n                        </span>\n                      </th>\n\n\n\n                      <!-- <th>{{'users.columns.photo' | translate}}</th>\n                      <th>{{'users.columns.first_name' | translate}}</th>\n                      <th>{{'users.columns.last_name' | translate}}</th> -->\n                      <!-- <th>{{'users.columns.username' | translate}}</th>\n                      <th>{{'users.columns.email' | translate}}</th> -->\n                      <!-- <th>Remaining leave</th>\n                      <th>{{'users.columns.status' | translate}}</th>\n                      <th>{{'users.columns.departments_roles' | translate}}</th>\n                      <th>Total hour (Standard:{{workingInMonth*8.5| number:'1.0-1'}})</th> -->\n                      <!-- <th>Total Cost(VNĐ)</th> -->\n                      <!-- <th>Billable(VNĐ)</th>\n                      <th>Billable(quantity)</th>\n                      <th>Billable Ratio</th>\n                      <th>Non-Billable(VNĐ)</th>\n                      <th>Non-Billable(quantity)</th>\n                      <th>Non-Billable Ratio</th> -->\n                    </tr>\n                  </thead>\n                  <tbody *ngIf=\"users?.length != 0\">\n                    <ng-container *ngFor=\"let user of users; index as i\">\n                    <tr  *ngIf=\"(user.project_billable+user.project_non_billable) > 0\">\n                      <td class=\"people-lists\">\n                        <a [routerLink]=\"['/users/profile', user.id]\" class=\"btn btn-profile-info rounded-circle text-dark\" placement=\"top\" tooltip=\"{{user.firstname}} {{user.lastname}}\">\n                          <img *ngIf=\"user.avatar\" src=\"{{apiUrl}}/uploads/profile/{{user.avatar}}\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                          <img *ngIf=\"!user.avatar\" src=\"../assets/img/profile_small.jpg\" class=\"img-sm rounded-circle\" alt=\"Profile\" />\n                        </a>\n                      </td>\n                      <td>\n                        {{user.firstname}}\n                      </td>\n                      <td>\n                        {{user.lastname}}\n                      </td>\n                      <!-- <td>\n                        <a [routerLink]=\"['profile', user.id]\" tooltip=\"{{'common.view' | translate}}\">{{user.username}}</a>\n                      </td>\n                      <td>\n                        {{user.email}}\n                      </td> -->\n                      <td>\n                        {{user.paid_leave}}\n                      </td>\n                      <td class=\"text-center\">\n                        <div class=\"budges-status\">\n                          <span class=\"completed\" *ngIf=\"user.is_active == '1'\">{{'common.status.active' | translate}}</span>\n                          <span class=\"cancel\" *ngIf=\"user.is_active == '0'\">{{'common.status.deactive' | translate}}</span>\n                        </div>\n                      </td>\n                      <td class=\"budges-status\">\n                        <span class=\"completed\">{{user.department_role.role_name}} ({{user.department_role.department_name}})</span>\n                      </td>\n                      <td>\n                        <span class=\"completed\">{{user.timesheet_billable+user.timesheet_non_billable| number:'1.0-1'}}</span>\n                      </td>\n                      <!-- <td>\n                        <div class=\"budges-status\" style=\"display: inline-flex; align-items: center; gap: 4px;justify-content: flex-end; width: 100%;\">\n                          {{(user.timesheet_billable+user.timesheet_non_billable)*user.salarytohour| number:'1.0-0'}}\n                          <span class=\"open\">{{user.project_billable+user.project_non_billable}}</span>\n                        </div>\n                      </td> -->\n                      <td>\n                        {{(user.timesheet_billable)*user.salarytohour| number:'1.0-0'}}\n                        <!-- <div class=\"budges-status\" style=\"display: inline-flex; align-items: center; gap: 4px;justify-content: flex-end; width: 100%;\">\n                          <span class=\"open\">{{user.project_billable}}</span>\n                        </div> -->\n                      </td>\n                      <td>{{user.project_billable}}</td>\n                      <td>{{user.timesheet_billable/(user.timesheet_non_billable+user.timesheet_billable) * 100}}%</td>\n                      <td>\n                        {{(user.timesheet_non_billable)*user.salarytohour| number:'1.0-0'}}\n                        <!-- <div class=\"budges-status\" style=\"display: inline-flex; align-items: center; gap: 4px;justify-content: flex-end; width: 100%;\">\n                          {{(user.timesheet_non_billable)*user.salarytohour| number:'1.0-0'}}\n                          <span class=\"open\">{{user.project_non_billable}}</span>\n                        </div> -->\n                      </td>\n                      <td>{{user.project_non_billable}}</td>\n                      <td>{{user.timesheet_non_billable/(user.timesheet_non_billable+user.timesheet_billable) * 100}}%</td>\n                    </tr>\n                    </ng-container>\n                  </tbody>\n                </table>\n                <!-- <table class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" id=\"defects_table\" *ngIf=\"users_id && salaryFilterKey != 'profile'\">\n                    <thead>\n                      <tr class=\"display_all\">\n                        <th></th>\n                        <th *ngFor=\"let key of usersTimesheetTable | keyvalue\">\n                          <div class=\"fw-bold\">\n                            PROJECT: {{ key.key.split('__')[0] }}\n                          </div>\n                          <div>TASK: {{ key.key.split('__')[1] }}</div>\n                        </th>\n                        <th>Total</th>\n                      </tr>\n                    </thead>\n                    <tbody>\n                      <tr *ngFor=\"let day of daysInMonth\">\n                        <td>\n                            <b>{{(day.day < 10 ? '0' + day.day : day.day)}}</b>\n                        </td>\n\n                        <td *ngFor=\"let key of usersTimesheetTable | keyvalue\">\n                          <ng-container *ngIf=\"key.value[month +'-' + (day.day < 10 ? '0' + day.day : day.day)] as tasks\">\n                            <div *ngFor=\"let t of tasks\">\n                              <b>{{ t.decimal_time }}</b>\n                              <span *ngIf=\"t.note\"> - Note: {{ t.note }}</span>\n                            </div>\n                          </ng-container>\n                        </td>\n                        <td [innerHTML]=\"getTotalByDay(usersTimesheetTable, day.day)\"></td>\n                      </tr>\n                      <tr style=\"background-color: rgba(160, 136, 0, 0.11);\">\n                        <td>\n                            <b>Total</b>\n                        </td>\n\n                        <td *ngFor=\"let element of usersTimesheetTable | keyvalue\">\n                            <div [innerHTML]=\"getTotalByTask(element.value)\"></div>\n                        </td>\n                        <td [innerHTML]=\"getGrandTotal(usersTimesheetTable)\"></td>\n                      </tr>\n                    </tbody>\n                  </table> -->\n            </div>\n        </div>\n    </div>\n</div>\n");
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/pages/reports/reports.component.html":
 /*!***************************************************************************************************************!*\
   !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/pages/reports/reports.component.html ***!
@@ -61,7 +113,512 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<section class=\"detail-page\">\n\t<div class=\"card\">\n\t\t<tabset class=\"nav nav-tabs d-flex justify-content-center mb-2\">\n\t\t\t<tab customClass=\"text-left\" id=\"3\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-user-circle\"></i><span class=\"mt-1 ml-1\">TimeSheet</span></div></ng-template>\n\t\t\t\t<app-defect-reports *ngIf=\"getActiveReportTab('3')\"></app-defect-reports>\n\t\t\t</tab>\n\t\t\t<tab customClass=\"text-left active\" id=\"1\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-product-hunt\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.project_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-project-reports *ngIf=\"getActiveReportTab('1')\"></app-project-reports>\n\t\t\t</tab>\n\t\t\t<tab customClass=\"text-left\" id=\"2\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-tasks\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.task_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-task-reports *ngIf=\"getActiveReportTab('2')\"></app-task-reports>\n\t\t\t</tab>\n\t\t\t<!-- <tab customClass=\"text-left\" id=\"4\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-ticket\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.incident_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-incident-reports *ngIf=\"getActiveReportTab('4')\"></app-incident-reports>\n\t\t\t</tab> -->\n\t\t</tabset>\n\t</div>\n</section>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<section class=\"detail-page\">\n\t<div class=\"card\">\n\t\t<tabset class=\"nav nav-tabs d-flex justify-content-center mb-2\">\n\t\t\t<tab customClass=\"text-left\" id=\"1\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-calendar\"></i><span class=\"mt-1 ml-1\">TimeSheet</span></div></ng-template>\n\t\t\t\t<app-defect-reports *ngIf=\"getActiveReportTab('1')\"></app-defect-reports>\n\t\t\t</tab>\n\t\t\t<tab customClass=\"text-left\" id=\"2\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-money-bill\"></i><span class=\"mt-1 ml-1\">Salary</span></div></ng-template>\n\t\t\t\t<app-salary-reports *ngIf=\"getActiveReportTab('2')\"></app-salary-reports>\n\t\t\t</tab>\n\t\t\t<tab customClass=\"text-left\" id=\"4\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-user\"></i><span class=\"mt-1 ml-1\">Users</span></div></ng-template>\n\t\t\t\t<app-user-reports *ngIf=\"getActiveReportTab('4')\"></app-user-reports>\n\t\t\t</tab>\n\t\t\t<tab customClass=\"text-left\" id=\"5\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-briefcase\"></i><span class=\"mt-1 ml-1\">Work allowance</span></div></ng-template>\n\t\t\t\t<app-allowance-reports *ngIf=\"getActiveReportTab('5')\"></app-allowance-reports>\n\t\t\t</tab>\n\t\t\t<tab customClass=\"text-left active\" id=\"6\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-tasks\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.project_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-project-reports *ngIf=\"getActiveReportTab('6')\"></app-project-reports>\n\t\t\t</tab>\n\t\t\t<tab customClass=\"text-left\" id=\"3\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-credit-card\"></i><span class=\"mt-1 ml-1\">Payment</span></div></ng-template>\n\t\t\t\t<app-payment-reports *ngIf=\"getActiveReportTab('3')\"></app-payment-reports>\n\t\t\t</tab>\n\t\t\t<!-- <tab customClass=\"text-left\" id=\"2\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-tasks\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.task_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-task-reports *ngIf=\"getActiveReportTab('2')\"></app-task-reports>\n\t\t\t</tab> -->\n\t\t\t<!-- <tab customClass=\"text-left\" id=\"4\" (selectTab)=\"setActiveReportTab($event)\">\n\t\t\t\t<ng-template tabHeading><div class=\"d-flex\"><i class=\"fa fa-ticket\"></i><span class=\"mt-1 ml-1\">{{'reports.headings.incident_report' | translate}}</span></div></ng-template>\n\t\t\t\t<app-incident-reports *ngIf=\"getActiveReportTab('4')\"></app-incident-reports>\n\t\t\t</tab> -->\n\t\t</tabset>\n\t</div>\n</section>\n");
+
+/***/ }),
+
+/***/ "./src/app/core/services/timesheet.service.ts":
+/*!****************************************************!*\
+  !*** ./src/app/core/services/timesheet.service.ts ***!
+  \****************************************************/
+/*! exports provided: TimesheetService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TimesheetService", function() { return TimesheetService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../environments/environment */ "./src/environments/environment.ts");
+
+
+
+
+var TimesheetService = /** @class */ (function () {
+    function TimesheetService(http) {
+        this.http = http;
+        this.apiUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].apiUrl;
+    }
+    TimesheetService.prototype.getTimesheetsByModule = function (params) {
+        return this.http.post(this.apiUrl + "/api/get-timesheets", params);
+    };
+    TimesheetService.prototype.getTimesheetsByCalendar = function (params) {
+        return this.http.post(this.apiUrl + "/api/get-timesheets-calendar", params);
+    };
+    TimesheetService.prototype.getUserSelect = function () {
+        return this.http.get(this.apiUrl + "/api/get-user-select");
+    };
+    TimesheetService.prototype.getUserMonthSelect = function (params) {
+        return this.http.post(this.apiUrl + "/api/get-user-month-select", params);
+    };
+    TimesheetService.prototype.create = function (params) {
+        return this.http.post(this.apiUrl + "/api/timesheets", params);
+    };
+    TimesheetService.prototype.saveTimeSheet = function (params) {
+        return this.http.post(this.apiUrl + "/api/save-timesheet", params);
+    };
+    TimesheetService.prototype.approvedTimeSheet = function (params) {
+        return this.http.post(this.apiUrl + "/api/approved-timesheet", params);
+    };
+    TimesheetService.prototype.disapprovedTimeSheet = function (params) {
+        return this.http.post(this.apiUrl + "/api/disapproved-timesheet", params);
+    };
+    TimesheetService.prototype.update = function (timesheet) {
+        return this.http.put(this.apiUrl + "/api/timesheets/" + timesheet.id, timesheet);
+    };
+    TimesheetService.prototype.delete = function (id) {
+        return this.http.delete(this.apiUrl + "/api/timesheets/" + id);
+    };
+    TimesheetService.prototype.getTimeLogs = function () {
+        return this.http.get(this.apiUrl + "/api/timer-logs");
+    };
+    TimesheetService.prototype.createTimeLog = function (params) {
+        return this.http.post(this.apiUrl + "/api/timer-logs", params);
+    };
+    TimesheetService.prototype.exportTimeSheet = function (params) {
+        return this.http.post(this.apiUrl + "/api/export-timeSheet", params);
+    };
+    TimesheetService.prototype.deleteTimeLog = function (id) {
+        return this.http.delete(this.apiUrl + "/api/timer-logs/" + id);
+    };
+    TimesheetService.prototype.getHolidaysLeavesForUser = function (params) {
+        return this.http.post(this.apiUrl + "/api/getHolidaysLeavesForUser", params);
+    };
+    TimesheetService.ctorParameters = function () { return [
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+    ]; };
+    TimesheetService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+            providedIn: 'root'
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]])
+    ], TimesheetService);
+    return TimesheetService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/modules/pm/reports/components/allowance-reports/allowance-reports.component.scss":
+/*!**************************************************************************************************!*\
+  !*** ./src/app/modules/pm/reports/components/allowance-reports/allowance-reports.component.scss ***!
+  \**************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("@charset \"UTF-8\";\n::ng-deep .odd {\n  display: none;\n}\nth.sortable {\n  position: relative;\n  cursor: pointer;\n  padding-right: 20px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.sort-icons {\n  position: absolute;\n  right: 6px;\n  top: 50%;\n  -ms-transform: translateY(-50%);\n      transform: translateY(-50%);\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  font-size: 9px;\n  line-height: 8px;\n  color: #6c757d;\n}\n.sort-up::before {\n  content: \"▲\";\n}\n.sort-down::before {\n  content: \"▼\";\n}\nth.sortable:hover .sort-icons {\n  color: #000;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvYWxsb3dhbmNlLXJlcG9ydHMvYWxsb3dhbmNlLXJlcG9ydHMuY29tcG9uZW50LnNjc3MiLCIvQXBwbGljYXRpb25zL01BTVAvaHRkb2NzL2dyZWVudmlldC1waGFzZTIvYW5ndWxhci9zcmMvYXBwL21vZHVsZXMvcG0vcmVwb3J0cy9jb21wb25lbnRzL2FsbG93YW5jZS1yZXBvcnRzL2FsbG93YW5jZS1yZXBvcnRzLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLGdCQUFnQjtBQ0FoQjtFQUNJLGFBQUE7QURFSjtBQ0FBO0VBQ0Usa0JBQUE7RUFDQSxlQUFBO0VBQ0EsbUJBQUE7RUFDQSx5QkFBQTtLQUFBLHNCQUFBO01BQUEscUJBQUE7VUFBQSxpQkFBQTtBREdGO0FDQUE7RUFDRSxrQkFBQTtFQUNBLFVBQUE7RUFDQSxRQUFBO0VBQ0EsK0JBQUE7TUFBQSwyQkFBQTtFQUNBLG9CQUFBO0VBQUEsYUFBQTtFQUNBLDBCQUFBO01BQUEsc0JBQUE7RUFDQSxjQUFBO0VBQ0EsZ0JBQUE7RUFDQSxjQUFBO0FER0Y7QUNBQTtFQUNFLFlBQUE7QURHRjtBQ0FBO0VBQ0UsWUFBQTtBREdGO0FDQUE7RUFDRSxXQUFBO0FER0YiLCJmaWxlIjoic3JjL2FwcC9tb2R1bGVzL3BtL3JlcG9ydHMvY29tcG9uZW50cy9hbGxvd2FuY2UtcmVwb3J0cy9hbGxvd2FuY2UtcmVwb3J0cy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIkBjaGFyc2V0IFwiVVRGLThcIjtcbjo6bmctZGVlcCAub2RkIHtcbiAgZGlzcGxheTogbm9uZTtcbn1cblxudGguc29ydGFibGUge1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIGN1cnNvcjogcG9pbnRlcjtcbiAgcGFkZGluZy1yaWdodDogMjBweDtcbiAgdXNlci1zZWxlY3Q6IG5vbmU7XG59XG5cbi5zb3J0LWljb25zIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICByaWdodDogNnB4O1xuICB0b3A6IDUwJTtcbiAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC01MCUpO1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICBmb250LXNpemU6IDlweDtcbiAgbGluZS1oZWlnaHQ6IDhweDtcbiAgY29sb3I6ICM2Yzc1N2Q7XG59XG5cbi5zb3J0LXVwOjpiZWZvcmUge1xuICBjb250ZW50OiBcIuKWslwiO1xufVxuXG4uc29ydC1kb3duOjpiZWZvcmUge1xuICBjb250ZW50OiBcIuKWvFwiO1xufVxuXG50aC5zb3J0YWJsZTpob3ZlciAuc29ydC1pY29ucyB7XG4gIGNvbG9yOiAjMDAwO1xufSIsIjo6bmctZGVlcCAub2RkIHtcbiAgICBkaXNwbGF5OiBub25lXG59XG50aC5zb3J0YWJsZSB7XG4gIHBvc2l0aW9uOiByZWxhdGl2ZTtcbiAgY3Vyc29yOiBwb2ludGVyO1xuICBwYWRkaW5nLXJpZ2h0OiAyMHB4O1xuICB1c2VyLXNlbGVjdDogbm9uZTtcbn1cblxuLnNvcnQtaWNvbnMge1xuICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gIHJpZ2h0OiA2cHg7XG4gIHRvcDogNTAlO1xuICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTUwJSk7XG4gIGRpc3BsYXk6IGZsZXg7XG4gIGZsZXgtZGlyZWN0aW9uOiBjb2x1bW47XG4gIGZvbnQtc2l6ZTogOXB4O1xuICBsaW5lLWhlaWdodDogOHB4O1xuICBjb2xvcjogIzZjNzU3ZDtcbn1cblxuLnNvcnQtdXA6OmJlZm9yZSB7XG4gIGNvbnRlbnQ6IFwi4payXCI7XG59XG5cbi5zb3J0LWRvd246OmJlZm9yZSB7XG4gIGNvbnRlbnQ6IFwi4pa8XCI7XG59XG5cbnRoLnNvcnRhYmxlOmhvdmVyIC5zb3J0LWljb25zIHtcbiAgY29sb3I6ICMwMDA7XG59XG4iXX0= */");
+
+/***/ }),
+
+/***/ "./src/app/modules/pm/reports/components/allowance-reports/allowance-reports.component.ts":
+/*!************************************************************************************************!*\
+  !*** ./src/app/modules/pm/reports/components/allowance-reports/allowance-reports.component.ts ***!
+  \************************************************************************************************/
+/*! exports provided: AllowanceReportsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AllowanceReportsComponent", function() { return AllowanceReportsComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-export-as */ "./node_modules/ngx-export-as/fesm2015/ngx-export-as.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../../core/services/authentication.service */ "./src/app/core/services/authentication.service.ts");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(date_fns__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../../../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-bootstrap/chronos */ "./node_modules/ngx-bootstrap/chronos/fesm5/ngx-bootstrap-chronos.js");
+/* harmony import */ var _core_services_project_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../../../../core/services/project.service */ "./src/app/core/services/project.service.ts");
+/* harmony import */ var ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ngx-bootstrap/locale */ "./node_modules/ngx-bootstrap/locale/fesm5/ngx-bootstrap-locale.js");
+/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
+/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(datatables_net__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(datatables_net_bs4__WEBPACK_IMPORTED_MODULE_16__);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Object(ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_12__["defineLocale"])('vi', ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_14__["viLocale"]);
+
+
+var AllowanceReportsComponent = /** @class */ (function () {
+    function AllowanceReportsComponent(translate, http, datePipe, authenticationService, sanitizer, projectService, exportAsService) {
+        var _this = this;
+        this.translate = translate;
+        this.http = http;
+        this.datePipe = datePipe;
+        this.authenticationService = authenticationService;
+        this.sanitizer = sanitizer;
+        this.projectService = projectService;
+        this.exportAsService = exportAsService;
+        this.apiUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_11__["environment"].apiUrl;
+        this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_7__["Subject"]();
+        this.dtOptions = {};
+        this.currentMonth = this.datePipe.transform(new Date(), 'yyyy-MM');
+        this.month = this.datePipe.transform(new Date(), 'yyyy-MM');
+        this.defects = [];
+        this.leaves = [];
+        this.leavesData = [];
+        this.holidays = [];
+        this.workingInMonth = 0;
+        this.totalData = 0;
+        this.exportTableData = [];
+        this.daysInMonth = [{}];
+        this.sortField = '';
+        this.sortDir = 'asc';
+        this.project = [];
+        this.isPageLoaded = false;
+        this.exportAsConfig = {
+            type: 'csv',
+            elementIdOrContent: 'export_table',
+        };
+        this.selectedRange = [];
+        this.datepickerConfig = {
+            // dateInputFormat: 'YYYY-MM',
+            rangeInputFormat: 'YYYY-MM-DD',
+            dateInputFormat: 'YYYY-MM-DD',
+            containerClass: 'theme-red',
+            // minMode: 'month',
+            // maxDate: new Date(),
+            locale: 'vi',
+        };
+        this.authenticationService.loginUser.subscribe(function (x) { return _this.loginUser = x; });
+    }
+    AllowanceReportsComponent.prototype.ngOnInit = function () {
+        // this.month = this.datePipe.transform("2025-08", 'yyyy-MM');
+        var start = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfMonth"])(new Date());
+        var end = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["endOfMonth"])(new Date());
+        this.selectedRange = [start, end];
+        this.daysInMonth = this.getTotalDaysInMonth(this.month);
+        this.getProjects();
+        this.loadDatatable();
+    };
+    AllowanceReportsComponent.prototype.getProjects = function () {
+        var _this = this;
+        this.projectService.getProject()
+            .subscribe(function (data) {
+            _this.projects = data;
+        });
+    };
+    AllowanceReportsComponent.prototype.loadDatatable = function () {
+        var _this = this;
+        this.getWorkingDays(this.month);
+        this.http.post(this.apiUrl + '/api/leaves/leaves-report', { month: this.month, project: this.project, selectedRange: { start: this.datePipe.transform(this.selectedRange[0], 'yyyy-MM-dd'), end: this.datePipe.transform(this.selectedRange[1], 'yyyy-MM-dd') } }, {})
+            .subscribe(function (resp) {
+            _this.leavesData = resp.data;
+            _this.totalData = 0;
+            _this.leavesData.forEach(function (element, index) {
+                _this.totalData += element.total;
+                var parsed = _this.parseReason(element.reason);
+                element.projects = parsed.projects;
+                element.workAllowance = parsed.allowance;
+            });
+        });
+        this.isPageLoaded = true;
+        return;
+    };
+    AllowanceReportsComponent.prototype.sortBy = function (field) {
+        var _this = this;
+        if (!this.leavesData || this.leavesData.length === 0)
+            return;
+        // toggle direction
+        if (this.sortField === field) {
+            this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
+        }
+        else {
+            this.sortField = field;
+            this.sortDir = 'asc';
+        }
+        this.leavesData.sort(function (a, b) {
+            var v1 = a[field];
+            var v2 = b[field];
+            // normalize string
+            if (typeof v1 === 'string')
+                v1 = v1.toLowerCase();
+            if (typeof v2 === 'string')
+                v2 = v2.toLowerCase();
+            // null / undefined
+            if (v1 == null)
+                return 1;
+            if (v2 == null)
+                return -1;
+            if (v1 < v2)
+                return _this.sortDir === 'asc' ? -1 : 1;
+            if (v1 > v2)
+                return _this.sortDir === 'asc' ? 1 : -1;
+            return 0;
+        });
+    };
+    AllowanceReportsComponent.prototype.parseReason = function (reason) {
+        var result = {
+            projects: '',
+            allowance: ''
+        };
+        if (!reason)
+            return result;
+        // Chuẩn hoá <br> thành xuống dòng
+        var text = reason.replace(/<br\s*\/?>/gi, '\n');
+        // Tách theo keyword
+        var projectMatch = text.match(/Projects:\s*\n([\s\S]*?)(?=\nWork Allowance:|$)/);
+        var allowanceMatch = text.match(/Work Allowance:\s*\n([\s\S]*)/);
+        if (projectMatch) {
+            result.projects = projectMatch[1].trim();
+        }
+        if (allowanceMatch) {
+            result.allowance = allowanceMatch[1].trim();
+        }
+        return result;
+    };
+    AllowanceReportsComponent.prototype.projectChange = function (event) {
+        this.project = event;
+        // this.getUsers();
+    };
+    AllowanceReportsComponent.prototype.onRangeChange = function (range) {
+        console.log(range);
+        if (!range || !Array.isArray(range) || range.length !== 2)
+            return;
+        var rawStart = range[0], rawEnd = range[1];
+        var startDate = (rawStart instanceof Date) ? rawStart : new Date(rawStart);
+        var endDate = (rawEnd instanceof Date) ? rawEnd : new Date(rawEnd);
+        // this.selectedRange = [ startOfDay(startDate), endOfDay(endDate) ];
+        this.month = this.datePipe.transform(startDate, 'yyyy-MM');
+        this.daysInMonth = this.getDaysBetween(this.selectedRange[0], this.selectedRange[1]);
+        // this.loadDatatable();
+    };
+    AllowanceReportsComponent.prototype.getDaysBetween = function (start, end) {
+        var s = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+        var e = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+        var days = [];
+        for (var d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) {
+            var cur = new Date(d);
+            days.push({
+                date: this.datePipe.transform(cur, 'yyyy-MM-dd'),
+                stt: cur.getDay(),
+                day: cur.getDate()
+            });
+        }
+        return days;
+    };
+    AllowanceReportsComponent.prototype.getWorkingDays = function (month) {
+        var _a = month.split('/').map(Number), year = _a[0], monthStr = _a[1];
+        var daysInMonth = new Date(year, monthStr, 0).getDate();
+        var workingDays = 0;
+        for (var day = 1; day <= daysInMonth; day++) {
+            var current = new Date(year, monthStr - 1, day);
+            var dow = current.getDay();
+            if (dow !== 0 && dow !== 6) {
+                workingDays++;
+            }
+        }
+        this.workingInMonth = workingDays;
+    };
+    AllowanceReportsComponent.prototype.exportTableDataArray = function (data) {
+        var total = 0;
+        var dataReturn = Object.keys(data).map(function (key) {
+            var value = parseFloat(data[key]);
+            if (isNaN(value))
+                value = 0;
+            total += value;
+            return {
+                key: key,
+                value: value
+            };
+        });
+        return { total: total, data: dataReturn };
+    };
+    AllowanceReportsComponent.prototype.getTimesheetTotal = function (user) {
+        var timesheet_total = user.timesheet_total;
+        this.holidays.forEach(function (element, index) {
+            timesheet_total = timesheet_total + 8.5;
+        });
+        this.leaves.forEach(function (element, index) {
+            if (user.id == element.user_id && element.leave_type_id == 1) {
+                if (element.duration == 'half') {
+                    if (element.duration_type == 'first_half') {
+                        timesheet_total = timesheet_total + 4;
+                    }
+                    else {
+                        timesheet_total = timesheet_total + 4.5;
+                    }
+                }
+                else {
+                    timesheet_total = timesheet_total + 8.5;
+                }
+            }
+        });
+        return timesheet_total;
+    };
+    AllowanceReportsComponent.prototype.getTimesheetByDay = function (user, j) {
+        var currentDate = new Date(this.month + "/" + (j + 1));
+        var currentDay = currentDate.getDate();
+        var holiday = this.holidays.find(function (element) {
+            var holidayDate = new Date(element.date);
+            return currentDay === holidayDate.getDate();
+        });
+        if (holiday) {
+            return ('<div class="cell table-cell-green" title="Holiday">8.5</div>');
+        }
+        var timesheet_total = 0;
+        for (var _i = 0, _a = this.leaves; _i < _a.length; _i++) {
+            var element = _a[_i];
+            var leave_date = new Date(element.leave_date);
+            if (user.id == element.user_id && currentDay === leave_date.getDate()) {
+                if (element.leave_type_id == 2) {
+                    if (element.duration == 'half') {
+                        return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell table-cell-red\" title=\"Ngh\u1EC9 kh\u00F4ng ph\u00E9p (Half)\">" + Number(user.timesheet[j].value).toFixed(1) + "</div>");
+                    }
+                    else {
+                        return this.sanitizer.bypassSecurityTrustHtml('<div class="cell table-cell-red" title="Nghỉ không phép (Full)">OFF</div>');
+                    }
+                }
+                else {
+                    if (element.duration == 'half') {
+                        if (element.duration_type == 'first_half') {
+                            timesheet_total = timesheet_total + 4;
+                        }
+                        else {
+                            timesheet_total = timesheet_total + 4.5;
+                        }
+                    }
+                    else {
+                        return this.sanitizer.bypassSecurityTrustHtml('<div class="cell table-cell-indigo" title="Nghỉ có phép (Full)">8.5</div>');
+                    }
+                }
+            }
+        }
+        if (timesheet_total > 0) {
+            return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell table-cell-yellow\" title=\"Ngh\u1EC9 c\u00F3 ph\u00E9p (Half)\">" + Number(user.timesheet[j].value + timesheet_total).toFixed(1) + "</div>");
+        }
+        else {
+            if (user.timesheet[j] && user.timesheet[j].check) {
+                return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell\">" + Number(user.timesheet[j].value).toFixed(1) + "</div>");
+            }
+        }
+        return '';
+    };
+    AllowanceReportsComponent.prototype.compareValues = function (timesheet, working_hours) {
+        var isEqual = Number(timesheet.value) === Number(working_hours);
+        var todayCheck = new Date(timesheet.key);
+        var isSaturday = todayCheck.getDay() === 6;
+        var weekOfMonth = this.getWeekOfMonth(todayCheck);
+        // const isSecondOrFourthWeek = (weekOfMonth === 2 || weekOfMonth === 4);
+        var newDate = new Date();
+        var today = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfDay"])(new Date(newDate.getFullYear(), newDate.getMonth(), 25));
+        var currentWeekMonday = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfWeek"])(today, { weekStartsOn: 1 });
+        var isWeekdayAndFuture = todayCheck > currentWeekMonday && Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["getDay"])(todayCheck) >= 1 && Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["getDay"])(todayCheck) <= 5;
+        return isEqual;
+        // (isSaturday && isSecondOrFourthWeek) ||
+        //  isWeekdayAndFuture;
+    };
+    AllowanceReportsComponent.prototype.getWeekOfMonth = function (date) {
+        var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+        var firstDayOfWeek = firstDay.getDay();
+        var dayOfMonth = date.getDate();
+        return Math.ceil((dayOfMonth + firstDayOfWeek) / 7);
+    };
+    AllowanceReportsComponent.prototype.nextMonth = function () {
+        this.changeMonth(Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["addMonths"])(this.month, 1));
+    };
+    AllowanceReportsComponent.prototype.preMonth = function () {
+        this.changeMonth(Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["subMonths"])(this.month, 1));
+    };
+    AllowanceReportsComponent.prototype.changeMonth = function (selectedDate) {
+        this.month = this.datePipe.transform(selectedDate, 'yyyy-MM');
+        // this.month = this.datePipe.transform("2025-08", 'yyyy-MM');
+        this.daysInMonth = this.getTotalDaysInMonth(this.month);
+        this.loadDatatable();
+    };
+    AllowanceReportsComponent.prototype.getTotalDaysInMonth = function (date) {
+        var start = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfMonth"])(date);
+        var end = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["endOfMonth"])(date);
+        var daysInMonth = [];
+        for (var d = start; d <= end; d.setDate(d.getDate() + 1)) {
+            daysInMonth.push({ date: Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["format"])(new Date(d), 'YYYY-MM-DD'), stt: Number(Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["format"])(new Date(d), 'd')), day: Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["getDate"])(new Date(d)) });
+        }
+        return daysInMonth;
+    };
+    AllowanceReportsComponent.prototype.exportFiles = function () {
+        var _this = this;
+        this.http.post(this.apiUrl + '/api/defect/export-work-allowance', { data: this.leavesData, month: this.month, action: 'work-allowance', totalData: this.totalData }, { responseType: 'blob' })
+            .subscribe(function (blob) {
+            var link = document.createElement('a');
+            var url = window.URL.createObjectURL(blob);
+            link.href = url;
+            link.download = 'work-allowance_' + _this.month + '.xlsx';
+            link.click();
+            window.URL.revokeObjectURL(url);
+        });
+    };
+    AllowanceReportsComponent.prototype.ngOnDestroy = function () {
+        this.dtTrigger.unsubscribe();
+    };
+    AllowanceReportsComponent.prototype.rerender = function () {
+        var _this = this;
+        this.dtElement.dtInstance.then(function (dtInstance) {
+            dtInstance.destroy();
+            setTimeout(function () {
+                _this.dtTrigger.next();
+                if (_this.exportTableData.length > 0) {
+                    $('.tfoot_dt').addClass('d-none');
+                }
+                else {
+                    $('.tfoot_dt').removeClass('d-none');
+                }
+            });
+        });
+    };
+    AllowanceReportsComponent.ctorParameters = function () { return [
+        { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"] },
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] },
+        { type: _angular_common__WEBPACK_IMPORTED_MODULE_8__["DatePipe"] },
+        { type: _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_9__["AuthenticationService"] },
+        { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["DomSanitizer"] },
+        { type: _core_services_project_service__WEBPACK_IMPORTED_MODULE_13__["ProjectService"] },
+        { type: ngx_export_as__WEBPACK_IMPORTED_MODULE_4__["ExportAsService"] }
+    ]; };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_6__["DataTableDirective"], { static: true }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", angular_datatables__WEBPACK_IMPORTED_MODULE_6__["DataTableDirective"])
+    ], AllowanceReportsComponent.prototype, "dtElement", void 0);
+    AllowanceReportsComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-allowance-reports',
+            template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./allowance-reports.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/components/allowance-reports/allowance-reports.component.html")).default,
+            styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./allowance-reports.component.scss */ "./src/app/modules/pm/reports/components/allowance-reports/allowance-reports.component.scss")).default]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_8__["DatePipe"],
+            _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_9__["AuthenticationService"],
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["DomSanitizer"],
+            _core_services_project_service__WEBPACK_IMPORTED_MODULE_13__["ProjectService"],
+            ngx_export_as__WEBPACK_IMPORTED_MODULE_4__["ExportAsService"]])
+    ], AllowanceReportsComponent);
+    return AllowanceReportsComponent;
+}());
+
+
 
 /***/ }),
 
@@ -74,7 +631,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("::ng-deep .odd {\n  display: none;\n}\n\n.table-bordered {\n  border-collapse: collapse;\n  width: 100%;\n}\n\n.table-bordered td {\n  border: 1px solid black;\n  padding: 8px;\n  text-align: left;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9BcHBsaWNhdGlvbnMvTUFNUC9odGRvY3MvZ3YtZGV2ZWxvcGVyL2FuZ3VsYXIvc3JjL2FwcC9tb2R1bGVzL3BtL3JlcG9ydHMvY29tcG9uZW50cy9kZWZlY3QtcmVwb3J0cy9kZWZlY3QtcmVwb3J0cy5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvZGVmZWN0LXJlcG9ydHMvZGVmZWN0LXJlcG9ydHMuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxhQUFBO0FDQ0o7O0FERUE7RUFDSSx5QkFBQTtFQUNBLFdBQUE7QUNDSjs7QURFRTtFQUNFLHVCQUFBO0VBQ0EsWUFBQTtFQUNBLGdCQUFBO0FDQ0oiLCJmaWxlIjoic3JjL2FwcC9tb2R1bGVzL3BtL3JlcG9ydHMvY29tcG9uZW50cy9kZWZlY3QtcmVwb3J0cy9kZWZlY3QtcmVwb3J0cy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIjo6bmctZGVlcCAub2RkIHtcbiAgICBkaXNwbGF5OiBub25lXG59XG5cbi50YWJsZS1ib3JkZXJlZCB7XG4gICAgYm9yZGVyLWNvbGxhcHNlOiBjb2xsYXBzZTtcbiAgICB3aWR0aDogMTAwJTtcbiAgfVxuICBcbiAgLnRhYmxlLWJvcmRlcmVkIHRkIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCBibGFjaztcbiAgICBwYWRkaW5nOiA4cHg7IFxuICAgIHRleHQtYWxpZ246IGxlZnQ7IFxuICB9XG4gICIsIjo6bmctZGVlcCAub2RkIHtcbiAgZGlzcGxheTogbm9uZTtcbn1cblxuLnRhYmxlLWJvcmRlcmVkIHtcbiAgYm9yZGVyLWNvbGxhcHNlOiBjb2xsYXBzZTtcbiAgd2lkdGg6IDEwMCU7XG59XG5cbi50YWJsZS1ib3JkZXJlZCB0ZCB7XG4gIGJvcmRlcjogMXB4IHNvbGlkIGJsYWNrO1xuICBwYWRkaW5nOiA4cHg7XG4gIHRleHQtYWxpZ246IGxlZnQ7XG59Il19 */");
+/* harmony default export */ __webpack_exports__["default"] = ("::ng-deep .odd {\n  display: none;\n}\n\n.table-bordered {\n  border-collapse: collapse;\n  width: 100%;\n}\n\n.table-bordered td {\n  border: 1px solid black;\n  padding: 8px;\n  text-align: left;\n}\n\n.b4-datatable > thead > tr > th {\n  border: 1px solid black;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9BcHBsaWNhdGlvbnMvTUFNUC9odGRvY3MvZ3JlZW52aWV0LXBoYXNlMi9hbmd1bGFyL3NyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvZGVmZWN0LXJlcG9ydHMvZGVmZWN0LXJlcG9ydHMuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL21vZHVsZXMvcG0vcmVwb3J0cy9jb21wb25lbnRzL2RlZmVjdC1yZXBvcnRzL2RlZmVjdC1yZXBvcnRzLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksYUFBQTtBQ0NKOztBREVBO0VBQ0kseUJBQUE7RUFDQSxXQUFBO0FDQ0o7O0FERUU7RUFDRSx1QkFBQTtFQUNBLFlBQUE7RUFDQSxnQkFBQTtBQ0NKOztBRENFO0VBQ0UsdUJBQUE7QUNFSiIsImZpbGUiOiJzcmMvYXBwL21vZHVsZXMvcG0vcmVwb3J0cy9jb21wb25lbnRzL2RlZmVjdC1yZXBvcnRzL2RlZmVjdC1yZXBvcnRzLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiOjpuZy1kZWVwIC5vZGQge1xuICAgIGRpc3BsYXk6IG5vbmVcbn1cblxuLnRhYmxlLWJvcmRlcmVkIHtcbiAgICBib3JkZXItY29sbGFwc2U6IGNvbGxhcHNlO1xuICAgIHdpZHRoOiAxMDAlO1xuICB9XG4gIFxuICAudGFibGUtYm9yZGVyZWQgdGQge1xuICAgIGJvcmRlcjogMXB4IHNvbGlkIGJsYWNrO1xuICAgIHBhZGRpbmc6IDhweDsgXG4gICAgdGV4dC1hbGlnbjogbGVmdDsgXG4gIH1cbiAgLmI0LWRhdGF0YWJsZSA+IHRoZWFkID4gdHIgPiB0aCB7XG4gICAgYm9yZGVyOiAxcHggc29saWQgYmxhY2s7XG4gIH0iLCI6Om5nLWRlZXAgLm9kZCB7XG4gIGRpc3BsYXk6IG5vbmU7XG59XG5cbi50YWJsZS1ib3JkZXJlZCB7XG4gIGJvcmRlci1jb2xsYXBzZTogY29sbGFwc2U7XG4gIHdpZHRoOiAxMDAlO1xufVxuXG4udGFibGUtYm9yZGVyZWQgdGQge1xuICBib3JkZXI6IDFweCBzb2xpZCBibGFjaztcbiAgcGFkZGluZzogOHB4O1xuICB0ZXh0LWFsaWduOiBsZWZ0O1xufVxuXG4uYjQtZGF0YXRhYmxlID4gdGhlYWQgPiB0ciA+IHRoIHtcbiAgYm9yZGVyOiAxcHggc29saWQgYmxhY2s7XG59Il19 */");
 
 /***/ }),
 
@@ -125,6 +682,13 @@ Object(ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_12__["defineLocale"])('vi'
 
 
 var DefectReportsComponent = /** @class */ (function () {
+    // datepickerConfig = {
+    //     // dateInputFormat: 'YYYY-MM',
+    //     containerClass: 'theme-red',
+    //     minMode: 'month',
+    //     maxDate: new Date(),
+    //     locale: 'vi',
+    // };
     function DefectReportsComponent(translate, http, datePipe, authenticationService, sanitizer, exportAsService) {
         var _this = this;
         this.translate = translate;
@@ -136,8 +700,8 @@ var DefectReportsComponent = /** @class */ (function () {
         this.apiUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_11__["environment"].apiUrl;
         this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_7__["Subject"]();
         this.dtOptions = {};
-        this.currentMonth = this.datePipe.transform(new Date(), 'yyyy/MM');
-        this.month = this.datePipe.transform(new Date(), 'yyyy/MM');
+        this.currentMonth = this.datePipe.transform(new Date(), 'yyyy-MM');
+        this.month = this.datePipe.transform(new Date(), 'yyyy-MM');
         this.defects = [];
         this.leaves = [];
         this.holidays = [];
@@ -149,30 +713,43 @@ var DefectReportsComponent = /** @class */ (function () {
             type: 'csv',
             elementIdOrContent: 'export_table',
         };
+        this.selectedRange = [];
         this.datepickerConfig = {
-            dateInputFormat: 'YYYY-MM',
+            rangeInputFormat: 'YYYY-MM-DD',
+            dateInputFormat: 'YYYY-MM-DD',
             containerClass: 'theme-red',
-            minMode: 'month',
-            maxDate: new Date(),
-            locale: 'vi',
+            // minMode: 'day',
+            // maxDate: new Date(),
+            locale: 'vi'
         };
         this.authenticationService.loginUser.subscribe(function (x) { return _this.loginUser = x; });
     }
     DefectReportsComponent.prototype.ngOnInit = function () {
+        // this.month = this.datePipe.transform("2025-08", 'yyyy-MM');
+        var start = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfMonth"])(new Date());
+        var end = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["endOfMonth"])(new Date());
+        this.selectedRange = [start, end];
         this.daysInMonth = this.getTotalDaysInMonth(this.month);
         this.loadDatatable();
     };
     DefectReportsComponent.prototype.loadDatatable = function () {
         var _this = this;
-        this.getWorkingDays(this.month);
-        this.http.post(this.apiUrl + '/api/defect/defect-report', { month: this.month }, {})
+        console.log(this.selectedRange);
+        this.getWorkingDays(this.month, this.selectedRange);
+        // , selectedRange:{start:this.datePipe.transform(this.selectedRange[0], 'yyyy-MM-dd'), end:this.datePipe.transform(this.selectedRange[1], 'yyyy-MM-dd')}
+        this.http.post(this.apiUrl + '/api/defect/defect-report', { month: this.month, daysInMonth: this.daysInMonth, selectedRange: { start: this.datePipe.transform(this.selectedRange[0], 'yyyy-MM-dd'), end: this.datePipe.transform(this.selectedRange[1], 'yyyy-MM-dd') } }, {})
             .subscribe(function (resp) {
             _this.exportTableData = resp.data;
-            _this.leaves = resp.leaves;
+            // this.leaves = resp.leaves;
+            _this.leaves = resp.leaves.filter(function (leave) {
+                if (leave.leave_type_id === 3) {
+                    return false; // ❌ xoá leave này
+                }
+                return true; // ✅ giữ lại
+            });
             _this.holidays = resp.holidays;
             _this.exportTableData.forEach(function (element, index) {
                 var timesheetconvert = _this.exportTableDataArray(element.timesheet);
-                // console.log(timesheetconvert);
                 element.timesheet = timesheetconvert.data;
                 element.timesheet_total = timesheetconvert.total;
                 var timesheetconvertOT = _this.exportTableDataArray(element.timesheet_ot);
@@ -185,6 +762,9 @@ var DefectReportsComponent = /** @class */ (function () {
                         element.actual_working_day++;
                     }
                 });
+                element.total_day = _this.getTimesheetTotalExport(element, 'day');
+                element.total_leave = _this.getTimesheetTotalExport(element, 'leave');
+                element.total_total = _this.getTimesheetTotalExport(element, 'total');
             });
             // console.log(this.exportTableData);
             // this.defects = resp.data;
@@ -197,14 +777,17 @@ var DefectReportsComponent = /** @class */ (function () {
         });
         return;
     };
-    DefectReportsComponent.prototype.getWorkingDays = function (month) {
-        var _a = month.split('/').map(Number), year = _a[0], monthStr = _a[1];
-        var daysInMonth = new Date(year, monthStr, 0).getDate();
+    DefectReportsComponent.prototype.getWorkingDays = function (month, range) {
+        if (!range || range.length !== 2) {
+            this.workingInMonth = 0;
+            return;
+        }
+        var start = new Date(range[0]);
+        var end = new Date(range[1]);
         var workingDays = 0;
-        for (var day = 1; day <= daysInMonth; day++) {
-            var current = new Date(year, monthStr - 1, day);
-            var dow = current.getDay();
-            if (dow !== 0 && dow !== 6) {
+        for (var d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+            var day = d.getDay(); // 0 = CN, 6 = T7
+            if (day !== 0 && day !== 6) {
                 workingDays++;
             }
         }
@@ -246,6 +829,73 @@ var DefectReportsComponent = /** @class */ (function () {
         });
         return timesheet_total;
     };
+    DefectReportsComponent.prototype.getTimesheetTotalExport = function (user, type) {
+        if (type === void 0) { type = false; }
+        // let timesheet_total = user.timesheet_total;
+        var timesheet_leave = 0;
+        var timesheet_holiday = 0;
+        var timesheet_day = 0;
+        this.holidays.forEach(function (element, index) {
+            timesheet_holiday += 8.5;
+        });
+        this.leaves.forEach(function (element, index) {
+            if (user.id == element.user_id && element.leave_type_id == 1) {
+                if (element.duration == 'half') {
+                    if (element.duration_type == 'first_half') {
+                        timesheet_leave = timesheet_leave + 4;
+                    }
+                    else {
+                        timesheet_leave = timesheet_leave + 4.5;
+                    }
+                }
+                else {
+                    timesheet_leave += 8.5;
+                }
+            }
+        });
+        user.timesheet.forEach(function (element, index) {
+            if (element) {
+                switch (element.value) {
+                    case 8.5:
+                        timesheet_day += 8.5;
+                        break;
+                    case 4.5:
+                        timesheet_day += 4.5;
+                        break;
+                    case 4:
+                        timesheet_day += 4;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        var total = 0;
+        switch (type) {
+            case 'day':
+                total = timesheet_day + timesheet_holiday;
+                break;
+            case 'leave':
+                total = timesheet_leave;
+                break;
+            case 'total':
+                total = timesheet_day + timesheet_holiday + timesheet_leave;
+                break;
+        }
+        return total;
+    };
+    DefectReportsComponent.prototype.exportFiles = function () {
+        var _this = this;
+        this.http.post(this.apiUrl + '/api/defect/export-timesheet', { data: this.exportTableData, daysInMonth: this.daysInMonth, workingInMonth: this.workingInMonth, month: this.month, holidays: this.holidays, leaves: this.leaves, action: 'time' }, { responseType: 'blob' })
+            .subscribe(function (blob) {
+            var link = document.createElement('a');
+            var url = window.URL.createObjectURL(blob);
+            link.href = url;
+            link.download = 'timesheet_' + _this.datePipe.transform(_this.selectedRange[0], 'yyyy-MM-dd') + _this.datePipe.transform(_this.selectedRange[1], 'yyyy-MM-dd') + '.xlsx';
+            link.click();
+            window.URL.revokeObjectURL(url);
+        });
+    };
     DefectReportsComponent.prototype.getTimesheetByDay = function (user, j) {
         var currentDate = new Date(this.month + "/" + (j + 1));
         var currentDay = currentDate.getDate();
@@ -254,7 +904,7 @@ var DefectReportsComponent = /** @class */ (function () {
             return currentDay === holidayDate.getDate();
         });
         if (holiday) {
-            return this.sanitizer.bypassSecurityTrustHtml('<div style="background-color:#1ab394;">8.5</div>');
+            return ('<div class="cell table-cell-green" title="Holiday">8.5</div>');
         }
         var timesheet_total = 0;
         for (var _i = 0, _a = this.leaves; _i < _a.length; _i++) {
@@ -263,10 +913,10 @@ var DefectReportsComponent = /** @class */ (function () {
             if (user.id == element.user_id && currentDay === leave_date.getDate()) {
                 if (element.leave_type_id == 2) {
                     if (element.duration == 'half') {
-                        return this.sanitizer.bypassSecurityTrustHtml("<div style=\"background-color:#cf5050;\">" + Number(user.timesheet[j].value).toFixed(1) + "</div>");
+                        return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell table-cell-red\" title=\"Ngh\u1EC9 kh\u00F4ng ph\u00E9p (Half)\">" + Number(user.timesheet[j].value).toFixed(1) + "</div>");
                     }
                     else {
-                        return this.sanitizer.bypassSecurityTrustHtml('<div style="background-color:#cf5050;">OFF</div>');
+                        return this.sanitizer.bypassSecurityTrustHtml('<div class="cell table-cell-red" title="Nghỉ không phép (Full)">OFF</div>');
                     }
                 }
                 else {
@@ -279,19 +929,17 @@ var DefectReportsComponent = /** @class */ (function () {
                         }
                     }
                     else {
-                        return this.sanitizer.bypassSecurityTrustHtml('<div style="background-color:#808ad6;">8.5</div>');
+                        return this.sanitizer.bypassSecurityTrustHtml('<div class="cell table-cell-indigo" title="Nghỉ có phép (Full)">8.5</div>');
                     }
                 }
             }
         }
         if (timesheet_total > 0) {
-            // console.log(timesheet_total);
-            // console.log(user.timesheet[j].value+'------');
-            return this.sanitizer.bypassSecurityTrustHtml("<div style=\"background-color:#F39C12;\">" + Number(user.timesheet[j].value + timesheet_total).toFixed(1) + "</div>");
+            return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell table-cell-yellow\" title=\"Ngh\u1EC9 c\u00F3 ph\u00E9p (Half)\">" + Number(user.timesheet[j].value + timesheet_total).toFixed(1) + "</div>");
         }
         else {
             if (user.timesheet[j] && user.timesheet[j].check) {
-                return this.sanitizer.bypassSecurityTrustHtml("<div>" + Number(user.timesheet[j].value).toFixed(1) + "</div>");
+                return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell\">" + Number(user.timesheet[j].value).toFixed(1) + "</div>");
             }
         }
         return '';
@@ -323,9 +971,35 @@ var DefectReportsComponent = /** @class */ (function () {
         this.changeMonth(Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["subMonths"])(this.month, 1));
     };
     DefectReportsComponent.prototype.changeMonth = function (selectedDate) {
-        this.month = this.datePipe.transform(selectedDate, 'yyyy/MM');
+        this.month = this.datePipe.transform(selectedDate, 'yyyy-MM');
         this.daysInMonth = this.getTotalDaysInMonth(this.month);
         this.loadDatatable();
+    };
+    DefectReportsComponent.prototype.onRangeChange = function (range) {
+        console.log(range);
+        if (!range || !Array.isArray(range) || range.length !== 2)
+            return;
+        var rawStart = range[0], rawEnd = range[1];
+        var startDate = (rawStart instanceof Date) ? rawStart : new Date(rawStart);
+        var endDate = (rawEnd instanceof Date) ? rawEnd : new Date(rawEnd);
+        // this.selectedRange = [ startOfDay(startDate), endOfDay(endDate) ];
+        this.month = this.datePipe.transform(startDate, 'yyyy-MM');
+        this.daysInMonth = this.getDaysBetween(this.selectedRange[0], this.selectedRange[1]);
+        this.loadDatatable();
+    };
+    DefectReportsComponent.prototype.getDaysBetween = function (start, end) {
+        var s = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+        var e = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+        var days = [];
+        for (var d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) {
+            var cur = new Date(d);
+            days.push({
+                date: this.datePipe.transform(cur, 'yyyy-MM-dd'),
+                stt: cur.getDay(),
+                day: cur.getDate()
+            });
+        }
+        return days;
     };
     DefectReportsComponent.prototype.getTotalDaysInMonth = function (date) {
         var start = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfMonth"])(date);
@@ -336,10 +1010,10 @@ var DefectReportsComponent = /** @class */ (function () {
         }
         return daysInMonth;
     };
-    DefectReportsComponent.prototype.exportFiles = function (type) {
-        this.exportAsService.save(this.exportAsConfig, 'Timesheet').subscribe(function () {
-        });
-    };
+    // exportFiles(type) {
+    //     this.exportAsService.save(this.exportAsConfig, 'Timesheet').subscribe(() => {
+    //     });
+    // }
     DefectReportsComponent.prototype.ngOnDestroy = function () {
         this.dtTrigger.unsubscribe();
     };
@@ -399,7 +1073,7 @@ var DefectReportsComponent = /** @class */ (function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("::ng-deep .odd {\n  display: none;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9BcHBsaWNhdGlvbnMvTUFNUC9odGRvY3MvZ3YtZGV2ZWxvcGVyL2FuZ3VsYXIvc3JjL2FwcC9tb2R1bGVzL3BtL3JlcG9ydHMvY29tcG9uZW50cy9pbmNpZGVudC1yZXBvcnRzL2luY2lkZW50LXJlcG9ydHMuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL21vZHVsZXMvcG0vcmVwb3J0cy9jb21wb25lbnRzL2luY2lkZW50LXJlcG9ydHMvaW5jaWRlbnQtcmVwb3J0cy5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGFBQUE7QUNDSiIsImZpbGUiOiJzcmMvYXBwL21vZHVsZXMvcG0vcmVwb3J0cy9jb21wb25lbnRzL2luY2lkZW50LXJlcG9ydHMvaW5jaWRlbnQtcmVwb3J0cy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIjo6bmctZGVlcCAub2RkIHtcbiAgICBkaXNwbGF5OiBub25lXG59IiwiOjpuZy1kZWVwIC5vZGQge1xuICBkaXNwbGF5OiBub25lO1xufSJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = ("::ng-deep .odd {\n  display: none;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9BcHBsaWNhdGlvbnMvTUFNUC9odGRvY3MvZ3JlZW52aWV0LXBoYXNlMi9hbmd1bGFyL3NyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvaW5jaWRlbnQtcmVwb3J0cy9pbmNpZGVudC1yZXBvcnRzLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9tb2R1bGVzL3BtL3JlcG9ydHMvY29tcG9uZW50cy9pbmNpZGVudC1yZXBvcnRzL2luY2lkZW50LXJlcG9ydHMuY29tcG9uZW50LnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSxhQUFBO0FDQ0oiLCJmaWxlIjoic3JjL2FwcC9tb2R1bGVzL3BtL3JlcG9ydHMvY29tcG9uZW50cy9pbmNpZGVudC1yZXBvcnRzL2luY2lkZW50LXJlcG9ydHMuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6Om5nLWRlZXAgLm9kZCB7XG4gICAgZGlzcGxheTogbm9uZVxufSIsIjo6bmctZGVlcCAub2RkIHtcbiAgZGlzcGxheTogbm9uZTtcbn0iXX0= */");
 
 /***/ }),
 
@@ -645,6 +1319,531 @@ var IncidentReportsComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/modules/pm/reports/components/payment-reports/payment-reports.component.scss":
+/*!**********************************************************************************************!*\
+  !*** ./src/app/modules/pm/reports/components/payment-reports/payment-reports.component.scss ***!
+  \**********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("@charset \"UTF-8\";\n::ng-deep .odd {\n  display: none;\n}\n.chart-wrapper {\n  width: 90%;\n}\n.chart-title {\n  font-size: 28px;\n  font-weight: 600;\n  margin-bottom: 12px;\n  color: #333;\n}\n/* đảm bảo canvas full width */\n.chart-wrapper canvas {\n  width: 100% !important;\n  max-width: 100%;\n}\nth.sortable {\n  position: relative;\n  cursor: pointer;\n  padding-right: 20px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.sort-icons {\n  position: absolute;\n  right: 6px;\n  top: 50%;\n  -ms-transform: translateY(-50%);\n      transform: translateY(-50%);\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  font-size: 9px;\n  line-height: 8px;\n  color: #6c757d;\n}\n.sort-up::before {\n  content: \"▲\";\n}\n.sort-down::before {\n  content: \"▼\";\n}\nth.sortable:hover .sort-icons {\n  color: #000;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvcGF5bWVudC1yZXBvcnRzL3BheW1lbnQtcmVwb3J0cy5jb21wb25lbnQuc2NzcyIsIi9BcHBsaWNhdGlvbnMvTUFNUC9odGRvY3MvZ3JlZW52aWV0LXBoYXNlMi9hbmd1bGFyL3NyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvcGF5bWVudC1yZXBvcnRzL3BheW1lbnQtcmVwb3J0cy5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxnQkFBZ0I7QUNBaEI7RUFDSSxhQUFBO0FERUo7QUNDQTtFQUNJLFVBQUE7QURFSjtBQ0NFO0VBQ0UsZUFBQTtFQUNBLGdCQUFBO0VBQ0EsbUJBQUE7RUFDQSxXQUFBO0FERUo7QUNDRSw4QkFBQTtBQUNBO0VBQ0Usc0JBQUE7RUFDQSxlQUFBO0FERUo7QUNDRTtFQUNFLGtCQUFBO0VBQ0EsZUFBQTtFQUNBLG1CQUFBO0VBQ0EseUJBQUE7S0FBQSxzQkFBQTtNQUFBLHFCQUFBO1VBQUEsaUJBQUE7QURFSjtBQ0NFO0VBQ0Usa0JBQUE7RUFDQSxVQUFBO0VBQ0EsUUFBQTtFQUNBLCtCQUFBO01BQUEsMkJBQUE7RUFDQSxvQkFBQTtFQUFBLGFBQUE7RUFDQSwwQkFBQTtNQUFBLHNCQUFBO0VBQ0EsY0FBQTtFQUNBLGdCQUFBO0VBQ0EsY0FBQTtBREVKO0FDQ0U7RUFDRSxZQUFBO0FERUo7QUNDRTtFQUNFLFlBQUE7QURFSjtBQ0NFO0VBQ0UsV0FBQTtBREVKIiwiZmlsZSI6InNyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvcGF5bWVudC1yZXBvcnRzL3BheW1lbnQtcmVwb3J0cy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIkBjaGFyc2V0IFwiVVRGLThcIjtcbjo6bmctZGVlcCAub2RkIHtcbiAgZGlzcGxheTogbm9uZTtcbn1cblxuLmNoYXJ0LXdyYXBwZXIge1xuICB3aWR0aDogOTAlO1xufVxuXG4uY2hhcnQtdGl0bGUge1xuICBmb250LXNpemU6IDI4cHg7XG4gIGZvbnQtd2VpZ2h0OiA2MDA7XG4gIG1hcmdpbi1ib3R0b206IDEycHg7XG4gIGNvbG9yOiAjMzMzO1xufVxuXG4vKiDEkeG6o20gYuG6o28gY2FudmFzIGZ1bGwgd2lkdGggKi9cbi5jaGFydC13cmFwcGVyIGNhbnZhcyB7XG4gIHdpZHRoOiAxMDAlICFpbXBvcnRhbnQ7XG4gIG1heC13aWR0aDogMTAwJTtcbn1cblxudGguc29ydGFibGUge1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIGN1cnNvcjogcG9pbnRlcjtcbiAgcGFkZGluZy1yaWdodDogMjBweDtcbiAgdXNlci1zZWxlY3Q6IG5vbmU7XG59XG5cbi5zb3J0LWljb25zIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICByaWdodDogNnB4O1xuICB0b3A6IDUwJTtcbiAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC01MCUpO1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICBmb250LXNpemU6IDlweDtcbiAgbGluZS1oZWlnaHQ6IDhweDtcbiAgY29sb3I6ICM2Yzc1N2Q7XG59XG5cbi5zb3J0LXVwOjpiZWZvcmUge1xuICBjb250ZW50OiBcIuKWslwiO1xufVxuXG4uc29ydC1kb3duOjpiZWZvcmUge1xuICBjb250ZW50OiBcIuKWvFwiO1xufVxuXG50aC5zb3J0YWJsZTpob3ZlciAuc29ydC1pY29ucyB7XG4gIGNvbG9yOiAjMDAwO1xufSIsIjo6bmctZGVlcCAub2RkIHtcbiAgICBkaXNwbGF5OiBub25lXG59XG5cbi5jaGFydC13cmFwcGVyIHtcbiAgICB3aWR0aDogOTAlO1xuICB9XG4gIFxuICAuY2hhcnQtdGl0bGUge1xuICAgIGZvbnQtc2l6ZTogMjhweDtcbiAgICBmb250LXdlaWdodDogNjAwO1xuICAgIG1hcmdpbi1ib3R0b206IDEycHg7XG4gICAgY29sb3I6ICMzMzM7XG4gIH1cbiAgXG4gIC8qIMSR4bqjbSBi4bqjbyBjYW52YXMgZnVsbCB3aWR0aCAqL1xuICAuY2hhcnQtd3JhcHBlciBjYW52YXMge1xuICAgIHdpZHRoOiAxMDAlICFpbXBvcnRhbnQ7XG4gICAgbWF4LXdpZHRoOiAxMDAlO1xuICB9XG4gIFxuICB0aC5zb3J0YWJsZSB7XG4gICAgcG9zaXRpb246IHJlbGF0aXZlO1xuICAgIGN1cnNvcjogcG9pbnRlcjtcbiAgICBwYWRkaW5nLXJpZ2h0OiAyMHB4O1xuICAgIHVzZXItc2VsZWN0OiBub25lO1xuICB9XG4gIFxuICAuc29ydC1pY29ucyB7XG4gICAgcG9zaXRpb246IGFic29sdXRlO1xuICAgIHJpZ2h0OiA2cHg7XG4gICAgdG9wOiA1MCU7XG4gICAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC01MCUpO1xuICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgZmxleC1kaXJlY3Rpb246IGNvbHVtbjtcbiAgICBmb250LXNpemU6IDlweDtcbiAgICBsaW5lLWhlaWdodDogOHB4O1xuICAgIGNvbG9yOiAjNmM3NTdkO1xuICB9XG4gIFxuICAuc29ydC11cDo6YmVmb3JlIHtcbiAgICBjb250ZW50OiBcIuKWslwiO1xuICB9XG4gIFxuICAuc29ydC1kb3duOjpiZWZvcmUge1xuICAgIGNvbnRlbnQ6IFwi4pa8XCI7XG4gIH1cbiAgXG4gIHRoLnNvcnRhYmxlOmhvdmVyIC5zb3J0LWljb25zIHtcbiAgICBjb2xvcjogIzAwMDtcbiAgfVxuICAiXX0= */");
+
+/***/ }),
+
+/***/ "./src/app/modules/pm/reports/components/payment-reports/payment-reports.component.ts":
+/*!********************************************************************************************!*\
+  !*** ./src/app/modules/pm/reports/components/payment-reports/payment-reports.component.ts ***!
+  \********************************************************************************************/
+/*! exports provided: PaymentReportsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PaymentReportsComponent", function() { return PaymentReportsComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-export-as */ "./node_modules/ngx-export-as/fesm2015/ngx-export-as.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../../core/services/authentication.service */ "./src/app/core/services/authentication.service.ts");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(date_fns__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../../../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-bootstrap/chronos */ "./node_modules/ngx-bootstrap/chronos/fesm5/ngx-bootstrap-chronos.js");
+/* harmony import */ var ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-bootstrap/locale */ "./node_modules/ngx-bootstrap/locale/fesm5/ngx-bootstrap-locale.js");
+/* harmony import */ var _core_services_project_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../../../core/services/project.service */ "./src/app/core/services/project.service.ts");
+/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
+/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(datatables_net__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(datatables_net_bs4__WEBPACK_IMPORTED_MODULE_16__);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Object(ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_12__["defineLocale"])('vi', ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_13__["viLocale"]);
+
+
+var PaymentReportsComponent = /** @class */ (function () {
+    function PaymentReportsComponent(translate, http, datePipe, authenticationService, sanitizer, projectService, exportAsService) {
+        var _this = this;
+        this.translate = translate;
+        this.http = http;
+        this.datePipe = datePipe;
+        this.authenticationService = authenticationService;
+        this.sanitizer = sanitizer;
+        this.projectService = projectService;
+        this.exportAsService = exportAsService;
+        this.apiUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_11__["environment"].apiUrl;
+        this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_7__["Subject"]();
+        this.dtOptions = {};
+        this.currentMonth = this.datePipe.transform(new Date(), 'yyyy-MM');
+        this.month = this.datePipe.transform(new Date(), 'yyyy-MM');
+        this.defects = [];
+        this.leaders = [];
+        this.leader = [];
+        this.leaves = [];
+        this.project = [];
+        this.payments = [];
+        this.holidays = [];
+        this.workingInMonth = 0;
+        this.totalAmount = 0;
+        this.sortField = '';
+        this.sortDir = 'asc';
+        this.exportTableData = [];
+        this.daysInMonth = [{}];
+        this.isPageLoaded = false;
+        this.exportAsConfig = {
+            type: 'csv',
+            elementIdOrContent: 'export_table',
+        };
+        this.FilterKey = 'chart';
+        this.selectedRange = [];
+        this.selectedRangeStart = this.datePipe.transform(new Date(), 'yyyy-MM');
+        this.selectedRangeEnd = this.datePipe.transform(new Date(), 'yyyy-MM');
+        this.datepickerConfig = {
+            // dateInputFormat: 'YYYY-MM',
+            // rangeInputFormat: 'YYYY-MM-DD',
+            // dateInputFormat: 'YYYY-MM-DD',
+            dateInputFormat: 'YYYY-MM',
+            minMode: 'month',
+            containerClass: 'theme-red',
+            // minMode: 'month',
+            // maxDate: new Date(),
+            locale: 'vi',
+        };
+        this.lineChartLabels = [];
+        this.lineChartData = [
+            { data: [], label: 'Estimated', borderColor: '#007bff', backgroundColor: 'transparent' },
+            { data: [], label: 'Invoiced', borderColor: '#ff5722', backgroundColor: 'transparent' },
+            { data: [], label: 'Paid', borderColor: '#ff5722', backgroundColor: 'transparent' }
+        ];
+        this.lineChartOptions = {
+            responsive: true,
+            scales: {
+                yAxes: [
+                    {
+                        ticks: {
+                            callback: function (value) {
+                                if (value === 0)
+                                    return '0 ₫';
+                                return value.toLocaleString('vi-VN') + ' ₫';
+                            }
+                        }
+                    }
+                ],
+                xAxes: [
+                    {
+                        ticks: {
+                            autoSkip: false
+                        }
+                    }
+                ]
+            },
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem, data) {
+                        var val = tooltipItem.yLabel || 0;
+                        return val.toLocaleString('vi-VN') + ' ₫';
+                    }
+                }
+            }
+        };
+        this.barChartData = [
+            { data: [], label: 'Estimated', borderColor: '#007bff', backgroundColor: 'transparent' },
+            { data: [], label: 'Invoiced', borderColor: '#ff5722', backgroundColor: 'transparent' },
+            { data: [], label: 'Paid', borderColor: '#ff5722', backgroundColor: 'transparent' }
+        ];
+        this.barChartLabels = [];
+        this.barChartOptions = {
+            responsive: true,
+            maintainAspectRatio: true,
+            legend: {
+                position: 'bottom'
+            },
+            scales: {
+                yAxes: [
+                    {
+                        ticks: {
+                            callback: function (value) {
+                                return value.toLocaleString('vi-VN') + ' ₫';
+                            }
+                        }
+                    }
+                ]
+            },
+            tooltips: {
+                callbacks: {
+                    label: function (tooltipItem) {
+                        var val = tooltipItem.yLabel || 0;
+                        return val.toLocaleString('vi-VN') + ' ₫';
+                    }
+                }
+            }
+        };
+        this.authenticationService.loginUser.subscribe(function (x) { return _this.loginUser = x; });
+    }
+    PaymentReportsComponent.prototype.normalizeMonth = function (date) {
+        var d = new Date(date);
+        var y = d.getFullYear();
+        var m = ('0' + (d.getMonth() + 1)).slice(-2);
+        return y + "-" + m;
+    };
+    PaymentReportsComponent.prototype.generateMonthRange = function (start, end) {
+        var result = [];
+        var cur = new Date(start + '-01');
+        var endDate = new Date(end + '-01');
+        while (cur <= endDate) {
+            var y = cur.getFullYear();
+            var m = ('0' + (cur.getMonth() + 1)).slice(-2);
+            result.push(y + "-" + m);
+            cur.setMonth(cur.getMonth() + 1);
+        }
+        return result;
+    };
+    PaymentReportsComponent.prototype.buildThreeLineChartCumulative = function (items) {
+        var _this = this;
+        var months = this.generateMonthRange(this.selectedRangeStart, // '2025-01'
+        this.selectedRangeEnd // '2025-12'
+        );
+        var estimateMap = new Map();
+        var invoiceMap = new Map();
+        var paymentMap = new Map();
+        months.forEach(function (m) {
+            estimateMap.set(m, 0);
+            invoiceMap.set(m, 0);
+            paymentMap.set(m, 0);
+        });
+        items.forEach(function (i) {
+            var price = Number(i.price) || 0;
+            // 1️⃣ Estimated (full)
+            if (i.estimated_date) {
+                var m = _this.normalizeMonth(i.estimated_date);
+                if (estimateMap.has(m)) {
+                    estimateMap.set(m, estimateMap.get(m) + price);
+                }
+            }
+            // 2️⃣ Invoiced but unpaid
+            if (i.invoice_date) {
+                var m = _this.normalizeMonth(i.invoice_date);
+                if (invoiceMap.has(m)) {
+                    invoiceMap.set(m, invoiceMap.get(m) + price);
+                }
+            }
+            // 3️⃣ Paid (actual)
+            if (i.payment_date) {
+                var m = _this.normalizeMonth(i.payment_date);
+                if (paymentMap.has(m)) {
+                    paymentMap.set(m, paymentMap.get(m) + price);
+                }
+            }
+        });
+        // raw theo tháng
+        var estimateRaw = months.map(function (m) { return estimateMap.get(m) || 0; });
+        var invoiceRaw = months.map(function (m) { return invoiceMap.get(m) || 0; });
+        var paymentRaw = months.map(function (m) { return paymentMap.get(m) || 0; });
+        // 🔥 cộng dồn
+        var estimateData = this.cumulative(estimateRaw);
+        var invoiceData = this.cumulative(invoiceRaw);
+        var paymentData = this.cumulative(paymentRaw);
+        this.lineChartLabels = months;
+        this.lineChartData = [
+            {
+                label: 'Estimated (Planned)',
+                data: estimateData,
+                borderColor: 'rgba(255, 141, 96, 0.8)',
+                backgroundColor: 'transparent',
+                fill: false
+            },
+            {
+                label: 'Invoiced (Unpaid)',
+                data: invoiceData,
+                borderColor: 'rgba(0, 157, 160, 0.8)',
+                backgroundColor: 'transparent',
+                fill: false
+            },
+            {
+                label: 'Paid (Actual)',
+                data: paymentData,
+                fill: false,
+                borderColor: 'rgba(255, 200, 87, 0.8)',
+                backgroundColor: 'transparent'
+            }
+        ];
+    };
+    PaymentReportsComponent.prototype.sortBy = function (field) {
+        var _this = this;
+        if (!this.payments || this.payments.length === 0)
+            return;
+        // toggle direction
+        if (this.sortField === field) {
+            this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
+        }
+        else {
+            this.sortField = field;
+            this.sortDir = 'asc';
+        }
+        this.payments.sort(function (a, b) {
+            var v1 = a[field];
+            var v2 = b[field];
+            // normalize string
+            if (typeof v1 === 'string')
+                v1 = v1.toLowerCase();
+            if (typeof v2 === 'string')
+                v2 = v2.toLowerCase();
+            // null / undefined
+            if (v1 == null)
+                return 1;
+            if (v2 == null)
+                return -1;
+            if (v1 < v2)
+                return _this.sortDir === 'asc' ? -1 : 1;
+            if (v1 > v2)
+                return _this.sortDir === 'asc' ? 1 : -1;
+            return 0;
+        });
+    };
+    PaymentReportsComponent.prototype.buildThreeColumnChart = function (items) {
+        var _this = this;
+        var months = this.generateMonthRange(this.selectedRangeStart, // '2025-01'
+        this.selectedRangeEnd // '2025-12'
+        );
+        var estimateMap = new Map();
+        var invoiceMap = new Map();
+        var paymentMap = new Map();
+        months.forEach(function (m) {
+            estimateMap.set(m, 0);
+            invoiceMap.set(m, 0);
+            paymentMap.set(m, 0);
+        });
+        items.forEach(function (i) {
+            var price = Number(i.price) || 0;
+            // 1️⃣ Estimated - full
+            if (i.estimated_date) {
+                var m = _this.normalizeMonth(i.estimated_date);
+                if (estimateMap.has(m)) {
+                    estimateMap.set(m, estimateMap.get(m) + price);
+                }
+            }
+            // 2️⃣ Invoice chưa payment
+            if (i.invoice_date) {
+                var m = _this.normalizeMonth(i.invoice_date);
+                if (invoiceMap.has(m)) {
+                    invoiceMap.set(m, invoiceMap.get(m) + price);
+                }
+            }
+            // 3️⃣ Payment
+            if (i.payment_date) {
+                var m = _this.normalizeMonth(i.payment_date);
+                if (paymentMap.has(m)) {
+                    paymentMap.set(m, paymentMap.get(m) + price);
+                }
+            }
+        });
+        this.barChartLabels = months;
+        this.barChartData = [
+            {
+                label: 'Estimated (Planned)',
+                data: months.map(function (m) { return estimateMap.get(m) || 0; }),
+                backgroundColor: 'rgba(255, 141, 96, 0.8)',
+                borderColor: 'rgba(255, 141, 96, 1)'
+            },
+            {
+                label: 'Invoiced (Unpaid)',
+                data: months.map(function (m) { return invoiceMap.get(m) || 0; }),
+                backgroundColor: 'rgba(0, 157, 160, 0.8)',
+                borderColor: 'rgba(0, 157, 160, 1)'
+            },
+            {
+                label: 'Paid (Actual)',
+                data: months.map(function (m) { return paymentMap.get(m) || 0; }),
+                backgroundColor: 'rgba(255, 200, 87, 0.8)',
+                borderColor: 'rgba(255, 200, 87, 1)'
+            }
+        ];
+    };
+    PaymentReportsComponent.prototype.cumulative = function (data) {
+        var sum = 0;
+        return data.map(function (v) { return (sum += v); });
+    };
+    PaymentReportsComponent.prototype.ngOnInit = function () {
+        var currentYear = new Date().getFullYear();
+        this.selectedRangeStart = currentYear + "-01";
+        this.selectedRangeEnd = currentYear + "-12";
+        var start = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfMonth"])(new Date());
+        var end = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["endOfMonth"])(new Date());
+        this.selectedRange = [start, end];
+        this.loadDatatable();
+        this.getProjects();
+    };
+    PaymentReportsComponent.prototype.getProjects = function () {
+        var _this = this;
+        this.projectService.getProject()
+            .subscribe(function (data) {
+            _this.projects = data;
+        });
+    };
+    PaymentReportsComponent.prototype.projectChange = function (event) {
+        this.project = event;
+        // this.getUsers();
+    };
+    PaymentReportsComponent.prototype.leaderChange = function (event) {
+        this.leader = event;
+        // this.getUsers();
+    };
+    PaymentReportsComponent.prototype.filterByStatus = function (key) {
+        this.FilterKey = key;
+        this.loadDatatable();
+    };
+    PaymentReportsComponent.prototype.loadDatatable = function () {
+        var _this = this;
+        if (this.selectedRangeStart > this.selectedRangeEnd) {
+            alert('ranger date erorr');
+        }
+        else {
+            this.totalAmount = 0;
+            this.http.post(this.apiUrl + '/api/todos/list-report', { month: this.month, project: this.project, leader: this.leader, module_id: 'all', 'filterKey': this.FilterKey, selectedRange: { start: this.datePipe.transform(this.selectedRange[0], 'yyyy-MM-dd'), end: this.datePipe.transform(this.selectedRange[1], 'yyyy-MM-dd') }, rangerMonth: { start: this.selectedRangeStart, end: this.selectedRangeEnd } }, {})
+                .subscribe(function (resp) {
+                _this.payments = resp.data;
+                _this.leaders = resp['leader'];
+                // this.buildChartFromData(resp.data);
+                if (_this.FilterKey == 'chart') {
+                    _this.buildThreeLineChartCumulative(resp.data);
+                    _this.buildThreeColumnChart(resp.data);
+                }
+                else {
+                    _this.payments.forEach(function (item) {
+                        _this.totalAmount += item.price;
+                    });
+                }
+                _this.isPageLoaded = true;
+            });
+        }
+    };
+    PaymentReportsComponent.prototype.onRangeChangeMonth = function (selectedDate, action) {
+        if (action == 'start') {
+            this.selectedRangeStart = this.datePipe.transform(selectedDate, 'yyyy-MM');
+        }
+        else {
+            this.selectedRangeEnd = this.datePipe.transform(selectedDate, 'yyyy-MM');
+        }
+    };
+    PaymentReportsComponent.prototype.onRangeChange = function (range) {
+        console.log(range);
+        if (!range || !Array.isArray(range) || range.length !== 2)
+            return;
+        var rawStart = range[0], rawEnd = range[1];
+        var startDate = (rawStart instanceof Date) ? rawStart : new Date(rawStart);
+        var endDate = (rawEnd instanceof Date) ? rawEnd : new Date(rawEnd);
+        // this.selectedRange = [ startOfDay(startDate), endOfDay(endDate) ];
+        this.month = this.datePipe.transform(startDate, 'yyyy-MM');
+        this.daysInMonth = this.getDaysBetween(this.selectedRange[0], this.selectedRange[1]);
+        // this.loadDatatable();
+    };
+    PaymentReportsComponent.prototype.getDaysBetween = function (start, end) {
+        var s = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+        var e = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+        var days = [];
+        for (var d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) {
+            var cur = new Date(d);
+            days.push({
+                date: this.datePipe.transform(cur, 'yyyy-MM-dd'),
+                stt: cur.getDay(),
+                day: cur.getDate()
+            });
+        }
+        return days;
+    };
+    PaymentReportsComponent.prototype.nextMonth = function () {
+        this.changeMonth(Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["addMonths"])(this.month, 1));
+    };
+    PaymentReportsComponent.prototype.preMonth = function () {
+        this.changeMonth(Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["subMonths"])(this.month, 1));
+    };
+    PaymentReportsComponent.prototype.changeMonth = function (selectedDate) {
+        this.month = this.datePipe.transform(selectedDate, 'yyyy-MM');
+        this.loadDatatable();
+    };
+    PaymentReportsComponent.prototype.exportFiles = function () {
+        var _this = this;
+        this.http.post(this.apiUrl + '/api/defect/export-payment', { data: this.payments, month: this.month, action: 'payment', filterKey: this.FilterKey }, { responseType: 'blob' })
+            .subscribe(function (blob) {
+            var link = document.createElement('a');
+            var url = window.URL.createObjectURL(blob);
+            link.href = url;
+            link.download = 'payment_' + _this.month + '.xlsx';
+            link.click();
+            window.URL.revokeObjectURL(url);
+        });
+    };
+    PaymentReportsComponent.prototype.ngOnDestroy = function () {
+        this.dtTrigger.unsubscribe();
+    };
+    PaymentReportsComponent.prototype.rerender = function () {
+        var _this = this;
+        this.dtElement.dtInstance.then(function (dtInstance) {
+            dtInstance.destroy();
+            setTimeout(function () {
+                _this.dtTrigger.next();
+                if (_this.exportTableData.length > 0) {
+                    $('.tfoot_dt').addClass('d-none');
+                }
+                else {
+                    $('.tfoot_dt').removeClass('d-none');
+                }
+            });
+        });
+    };
+    PaymentReportsComponent.ctorParameters = function () { return [
+        { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"] },
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] },
+        { type: _angular_common__WEBPACK_IMPORTED_MODULE_8__["DatePipe"] },
+        { type: _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_9__["AuthenticationService"] },
+        { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["DomSanitizer"] },
+        { type: _core_services_project_service__WEBPACK_IMPORTED_MODULE_14__["ProjectService"] },
+        { type: ngx_export_as__WEBPACK_IMPORTED_MODULE_4__["ExportAsService"] }
+    ]; };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_6__["DataTableDirective"], { static: true }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", angular_datatables__WEBPACK_IMPORTED_MODULE_6__["DataTableDirective"])
+    ], PaymentReportsComponent.prototype, "dtElement", void 0);
+    PaymentReportsComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-payment-reports',
+            template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./payment-reports.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/components/payment-reports/payment-reports.component.html")).default,
+            styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./payment-reports.component.scss */ "./src/app/modules/pm/reports/components/payment-reports/payment-reports.component.scss")).default]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_8__["DatePipe"],
+            _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_9__["AuthenticationService"],
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["DomSanitizer"],
+            _core_services_project_service__WEBPACK_IMPORTED_MODULE_14__["ProjectService"],
+            ngx_export_as__WEBPACK_IMPORTED_MODULE_4__["ExportAsService"]])
+    ], PaymentReportsComponent);
+    return PaymentReportsComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/modules/pm/reports/components/project-reports/project-reports.component.scss":
 /*!**********************************************************************************************!*\
   !*** ./src/app/modules/pm/reports/components/project-reports/project-reports.component.scss ***!
@@ -654,7 +1853,7 @@ var IncidentReportsComponent = /** @class */ (function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("::ng-deep .odd {\n  display: none;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9BcHBsaWNhdGlvbnMvTUFNUC9odGRvY3MvZ3YtZGV2ZWxvcGVyL2FuZ3VsYXIvc3JjL2FwcC9tb2R1bGVzL3BtL3JlcG9ydHMvY29tcG9uZW50cy9wcm9qZWN0LXJlcG9ydHMvcHJvamVjdC1yZXBvcnRzLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9tb2R1bGVzL3BtL3JlcG9ydHMvY29tcG9uZW50cy9wcm9qZWN0LXJlcG9ydHMvcHJvamVjdC1yZXBvcnRzLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksYUFBQTtBQ0NKIiwiZmlsZSI6InNyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvcHJvamVjdC1yZXBvcnRzL3Byb2plY3QtcmVwb3J0cy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIjo6bmctZGVlcCAub2RkIHtcbiAgICBkaXNwbGF5OiBub25lXG59IiwiOjpuZy1kZWVwIC5vZGQge1xuICBkaXNwbGF5OiBub25lO1xufSJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = ("::ng-deep .odd {\n  display: none;\n}\n\ntr.expanded-row td {\n  background-color: #f9f9f9;\n  border-top: none;\n}\n\n.fa {\n  color: #007bff;\n  font-size: 18px;\n}\n\n.fa:hover {\n  color: #0056b3;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9BcHBsaWNhdGlvbnMvTUFNUC9odGRvY3MvZ3JlZW52aWV0LXBoYXNlMi9hbmd1bGFyL3NyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvcHJvamVjdC1yZXBvcnRzL3Byb2plY3QtcmVwb3J0cy5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvcHJvamVjdC1yZXBvcnRzL3Byb2plY3QtcmVwb3J0cy5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGFBQUE7QUNDSjs7QURHQTtFQUNJLHlCQUFBO0VBQ0EsZ0JBQUE7QUNBSjs7QURFQTtFQUNBLGNBQUE7RUFDQSxlQUFBO0FDQ0E7O0FERUE7RUFDQSxjQUFBO0FDQ0EiLCJmaWxlIjoic3JjL2FwcC9tb2R1bGVzL3BtL3JlcG9ydHMvY29tcG9uZW50cy9wcm9qZWN0LXJlcG9ydHMvcHJvamVjdC1yZXBvcnRzLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiOjpuZy1kZWVwIC5vZGQge1xuICAgIGRpc3BsYXk6IG5vbmVcbn1cblxuXG50ci5leHBhbmRlZC1yb3cgdGQge1xuICAgIGJhY2tncm91bmQtY29sb3I6ICNmOWY5Zjk7XG4gICAgYm9yZGVyLXRvcDogbm9uZTtcbn1cbi5mYSB7XG5jb2xvcjogIzAwN2JmZjtcbmZvbnQtc2l6ZTogMThweDtcbn1cblxuLmZhOmhvdmVyIHtcbmNvbG9yOiAjMDA1NmIzO1xufVxuIiwiOjpuZy1kZWVwIC5vZGQge1xuICBkaXNwbGF5OiBub25lO1xufVxuXG50ci5leHBhbmRlZC1yb3cgdGQge1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZjlmOWY5O1xuICBib3JkZXItdG9wOiBub25lO1xufVxuXG4uZmEge1xuICBjb2xvcjogIzAwN2JmZjtcbiAgZm9udC1zaXplOiAxOHB4O1xufVxuXG4uZmE6aG92ZXIge1xuICBjb2xvcjogIzAwNTZiMztcbn0iXX0= */");
 
 /***/ }),
 
@@ -678,10 +1877,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_services_user_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../../core/services/user.service */ "./src/app/core/services/user.service.ts");
 /* harmony import */ var _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../../core/services/authentication.service */ "./src/app/core/services/authentication.service.ts");
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../../../environments/environment */ "./src/environments/environment.ts");
-/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
-/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(datatables_net__WEBPACK_IMPORTED_MODULE_10__);
-/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
-/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(datatables_net_bs4__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _core_services_team_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../../../../core/services/team.service */ "./src/app/core/services/team.service.ts");
+/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
+/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(datatables_net__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(datatables_net_bs4__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
+/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_13__);
+
+
 
 
 
@@ -695,10 +1899,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var ProjectReportsComponent = /** @class */ (function () {
-    function ProjectReportsComponent(translate, http, userService, authenticationService, exportAsService) {
+    function ProjectReportsComponent(translate, http, teamService, userService, authenticationService, exportAsService) {
         var _this = this;
         this.translate = translate;
         this.http = http;
+        this.teamService = teamService;
         this.userService = userService;
         this.authenticationService = authenticationService;
         this.exportAsService = exportAsService;
@@ -707,7 +1912,12 @@ var ProjectReportsComponent = /** @class */ (function () {
         this.isPageLoaded = false;
         this.dtOptions = {};
         this.projects = [];
+        this.leaders = [];
+        this.leader = [];
         this.userLists = [];
+        this.teamsProject = [];
+        this.expandedProjectId = null;
+        this.expandedRowIndex = null;
         this.exportAsConfig = {
             type: 'pdf',
             elementIdOrContent: 'projects_table',
@@ -716,6 +1926,7 @@ var ProjectReportsComponent = /** @class */ (function () {
     }
     ProjectReportsComponent.prototype.ngOnInit = function () {
         this.getUserkeyBy();
+        this.getTeams();
         this.loadProjectDatatable();
     };
     ProjectReportsComponent.prototype.getUserkeyBy = function () {
@@ -723,6 +1934,29 @@ var ProjectReportsComponent = /** @class */ (function () {
         this.userService.getUserkeyBy().subscribe(function (data) {
             _this.userLists = data;
         });
+    };
+    ProjectReportsComponent.prototype.togglePayments = function (index) {
+        this.expandedRowIndex = this.expandedRowIndex === index ? null : index;
+    };
+    ProjectReportsComponent.prototype.toggleExpand = function (projectId) {
+        if (this.expandedProjectId === projectId) {
+            this.expandedProjectId = null; // đóng nếu click lại
+        }
+        else {
+            this.expandedProjectId = projectId; // mở project mới
+        }
+    };
+    ProjectReportsComponent.prototype.getTeams = function () {
+        var _this = this;
+        this.teamService.getAll()
+            .subscribe(function (data) {
+            _this.teamsProject = data;
+            // this.teams = data;
+        });
+    };
+    ProjectReportsComponent.prototype.filterByStatus = function (statusID) {
+        this.statusfilterId = statusID;
+        this.rerender();
     };
     ProjectReportsComponent.prototype.loadProjectDatatable = function () {
         var _this = this;
@@ -775,32 +2009,12 @@ var ProjectReportsComponent = /** @class */ (function () {
                 }, {
                     'sortable': false,
                     'target': [9]
+                }, {
+                    'sortable': false,
+                    'target': [10]
                 },
             ],
-            buttons: [
-                {
-                    extend: 'csv',
-                    title: this.translate.instant('reports.headings.project_report'),
-                    className: "btn btn-datatable-gredient",
-                    action: function (e, dt, node, config) {
-                        that.exportFiles('csv');
-                    }
-                }, {
-                    extend: 'excel',
-                    title: this.translate.instant('reports.headings.project_report'),
-                    className: "btn btn-datatable-gredient",
-                    action: function (e, dt, node, config) {
-                        that.exportFiles('xlsx');
-                    }
-                }, {
-                    extend: 'pdf',
-                    title: this.translate.instant('reports.headings.project_report'),
-                    className: "btn btn-datatable-gredient",
-                    action: function (e, dt, node, config) {
-                        that.exportFiles('pdf');
-                    }
-                }
-            ],
+            buttons: [],
             language: {
                 "sEmptyTable": this.translate.instant('common.datatable.sEmptyTable'),
                 "sInfo": this.translate.instant('common.datatable.sInfo'),
@@ -825,10 +2039,71 @@ var ProjectReportsComponent = /** @class */ (function () {
                 }
             },
             ajax: function (dataTablesParameters, callback) {
+                dataTablesParameters.statusfilterId = _this.statusfilterId;
+                dataTablesParameters.leader = _this.leader;
                 _this.http
                     .post(_this.apiUrl + '/api/projects/project-report', dataTablesParameters, {})
                     .subscribe(function (resp) {
                     _this.projects = resp.data;
+                    _this.leaders = resp['leader'];
+                    _this.countStatus = resp['statusCount'];
+                    _this.projects.forEach(function (element) {
+                        element.type = (function () {
+                            try {
+                                var parsed = JSON.parse(element.type);
+                                if (Array.isArray(parsed)) {
+                                    return parsed;
+                                }
+                                return [parsed];
+                            }
+                            catch (e) {
+                                if (Object(lodash__WEBPACK_IMPORTED_MODULE_13__["isNumber"])(element.type)) {
+                                    return [element.type];
+                                }
+                                else {
+                                    return [];
+                                }
+                            }
+                        })();
+                        element.hashtag = (function () {
+                            try {
+                                var parsed = JSON.parse(element.hashtag);
+                                if (Array.isArray(parsed)) {
+                                    return parsed;
+                                }
+                                return [parsed];
+                            }
+                            catch (e) {
+                                if (Object(lodash__WEBPACK_IMPORTED_MODULE_13__["isNumber"])(element.hashtag)) {
+                                    return [element.hashtag];
+                                }
+                                else {
+                                    return [];
+                                }
+                            }
+                        })();
+                        if (typeof element.payments === 'string') {
+                            element.payments = JSON.parse(element.payments || '[]');
+                        }
+                        if (!Array.isArray(element.payments)) {
+                            element.payments = [];
+                        }
+                        var total = { total: 0, total_invoice: 0, total_payment: 0, total_estimated: 0 };
+                        element.payments.forEach(function (payment) {
+                            var price = Number(payment.price) || 0;
+                            total.total += price;
+                            if (payment.payment_date) {
+                                total.total_payment += price;
+                            }
+                            else if (payment.invoice_date) {
+                                total.total_invoice += price;
+                            }
+                            else {
+                                total.total_estimated += price;
+                            }
+                        });
+                        element.total_payment = total;
+                    });
                     _this.isPageLoaded = true;
                     callback({
                         recordsTotal: resp.recordsTotal,
@@ -839,9 +2114,23 @@ var ProjectReportsComponent = /** @class */ (function () {
             }
         };
     };
-    ProjectReportsComponent.prototype.exportFiles = function (type) {
-        this.exportAsConfig.type = type;
-        this.exportAsService.save(this.exportAsConfig, this.translate.instant('reports.headings.project_report')).subscribe(function () { });
+    ProjectReportsComponent.prototype.exportFiles = function () {
+        this.http.post(this.apiUrl + '/api/defect/export-projects', {}, { responseType: 'blob' })
+            .subscribe(function (blob) {
+            var link = document.createElement('a');
+            var url = window.URL.createObjectURL(blob);
+            link.href = url;
+            link.download = 'projects.xlsx';
+            link.click();
+            window.URL.revokeObjectURL(url);
+        });
+    };
+    // exportFiles(type) {
+    // 	this.exportAsConfig.type = type;
+    // 	this.exportAsService.save(this.exportAsConfig, this.translate.instant('reports.headings.project_report')).subscribe(() => {});
+    // }
+    ProjectReportsComponent.prototype.leaderChange = function (event) {
+        this.leader = event;
     };
     ProjectReportsComponent.prototype.ngOnDestroy = function () {
         this.dtTrigger.unsubscribe();
@@ -877,6 +2166,7 @@ var ProjectReportsComponent = /** @class */ (function () {
     ProjectReportsComponent.ctorParameters = function () { return [
         { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"] },
         { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
+        { type: _core_services_team_service__WEBPACK_IMPORTED_MODULE_10__["TeamService"] },
         { type: _core_services_user_service__WEBPACK_IMPORTED_MODULE_7__["UserService"] },
         { type: _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_8__["AuthenticationService"] },
         { type: ngx_export_as__WEBPACK_IMPORTED_MODULE_4__["ExportAsService"] }
@@ -893,11 +2183,588 @@ var ProjectReportsComponent = /** @class */ (function () {
         }),
         tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"],
             _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"],
+            _core_services_team_service__WEBPACK_IMPORTED_MODULE_10__["TeamService"],
             _core_services_user_service__WEBPACK_IMPORTED_MODULE_7__["UserService"],
             _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_8__["AuthenticationService"],
             ngx_export_as__WEBPACK_IMPORTED_MODULE_4__["ExportAsService"]])
     ], ProjectReportsComponent);
     return ProjectReportsComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/modules/pm/reports/components/salary-reports/salary-reports.component.scss":
+/*!********************************************************************************************!*\
+  !*** ./src/app/modules/pm/reports/components/salary-reports/salary-reports.component.scss ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("::ng-deep .odd {\n  display: none;\n}\n\n.table-bordered {\n  border-collapse: collapse;\n  width: 100%;\n}\n\n.table-bordered td {\n  border: 1px solid black;\n  padding: 8px;\n  text-align: left;\n}\n\n.b4-datatable > thead > tr > th {\n  border: 1px solid black;\n}\n\n.table-wrapper {\n  width: 100%;\n  height: calc(100vh - 486px);\n  overflow: auto;\n  -webkit-overflow-scrolling: touch;\n}\n\n.fixed-col-table {\n  border-collapse: collapse;\n  width: 100%;\n  min-width: 900px;\n  background: #fff;\n}\n\n.fixed-col-table th, .fixed-col-table td {\n  padding: 8px 10px;\n  border: 1px solid #e0e0e0;\n  white-space: nowrap;\n  overflow: hidden;\n}\n\n.fixed-col-table thead th {\n  position: -webkit-sticky;\n  position: sticky;\n  top: 0;\n  z-index: 5;\n  background: #fafafa;\n}\n\n.fixed-col-table th.col-col1, .fixed-col-table td.col-col1 {\n  position: -webkit-sticky;\n  position: sticky;\n  left: 0;\n  background: #fff;\n  z-index: 10;\n}\n\n.fixed-col-table th.col-col2, .fixed-col-table td.col-col2 {\n  position: -webkit-sticky;\n  position: sticky;\n  left: 80px;\n  background: #fff;\n  z-index: 9;\n}\n\n.fixed-col-table thead th.col-col1,\n.fixed-col-table thead th.col-col2 {\n  z-index: 20;\n}\n\n.overflow-x-scroll {\n  overflow-x: hidden;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9BcHBsaWNhdGlvbnMvTUFNUC9odGRvY3MvZ3JlZW52aWV0LXBoYXNlMi9hbmd1bGFyL3NyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvc2FsYXJ5LXJlcG9ydHMvc2FsYXJ5LXJlcG9ydHMuY29tcG9uZW50LnNjc3MiLCJzcmMvYXBwL21vZHVsZXMvcG0vcmVwb3J0cy9jb21wb25lbnRzL3NhbGFyeS1yZXBvcnRzL3NhbGFyeS1yZXBvcnRzLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksYUFBQTtBQ0NKOztBREVBO0VBQ0kseUJBQUE7RUFDQSxXQUFBO0FDQ0o7O0FERUU7RUFDRSx1QkFBQTtFQUNBLFlBQUE7RUFDQSxnQkFBQTtBQ0NKOztBRENFO0VBQ0UsdUJBQUE7QUNFSjs7QURBRTtFQUNFLFdBQUE7RUFDQSwyQkFBQTtFQUNBLGNBQUE7RUFDQSxpQ0FBQTtBQ0dKOztBREFFO0VBQ0UseUJBQUE7RUFDQSxXQUFBO0VBQ0EsZ0JBQUE7RUFDQSxnQkFBQTtBQ0dKOztBRERJO0VBQ0UsaUJBQUE7RUFDQSx5QkFBQTtFQUNBLG1CQUFBO0VBQ0EsZ0JBQUE7QUNHTjs7QURBSTtFQUNFLHdCQUFBO0VBQUEsZ0JBQUE7RUFDQSxNQUFBO0VBQ0EsVUFBQTtFQUNBLG1CQUFBO0FDRU47O0FERUk7RUFDRSx3QkFBQTtFQUFBLGdCQUFBO0VBQ0EsT0FBQTtFQUNBLGdCQUFBO0VBQ0EsV0FBQTtBQ0FOOztBRElJO0VBQ0Usd0JBQUE7RUFBQSxnQkFBQTtFQUNBLFVBQUE7RUFDQSxnQkFBQTtFQUNBLFVBQUE7QUNGTjs7QURLSTs7RUFFRSxXQUFBO0FDSE47O0FETUU7RUFDRSxrQkFBQTtBQ0hKIiwiZmlsZSI6InNyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvc2FsYXJ5LXJlcG9ydHMvc2FsYXJ5LXJlcG9ydHMuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6Om5nLWRlZXAgLm9kZCB7XG4gICAgZGlzcGxheTogbm9uZVxufVxuXG4udGFibGUtYm9yZGVyZWQge1xuICAgIGJvcmRlci1jb2xsYXBzZTogY29sbGFwc2U7XG4gICAgd2lkdGg6IDEwMCU7XG4gIH1cbiAgXG4gIC50YWJsZS1ib3JkZXJlZCB0ZCB7XG4gICAgYm9yZGVyOiAxcHggc29saWQgYmxhY2s7XG4gICAgcGFkZGluZzogOHB4OyBcbiAgICB0ZXh0LWFsaWduOiBsZWZ0OyBcbiAgfVxuICAuYjQtZGF0YXRhYmxlID4gdGhlYWQgPiB0ciA+IHRoIHtcbiAgICBib3JkZXI6IDFweCBzb2xpZCBibGFjaztcbiAgfVxuICAudGFibGUtd3JhcHBlciB7XG4gICAgd2lkdGg6IDEwMCU7XG4gICAgaGVpZ2h0OiBjYWxjKDEwMHZoIC0gNDg2cHgpO1xuICAgIG92ZXJmbG93OiBhdXRvO1xuICAgIC13ZWJraXQtb3ZlcmZsb3ctc2Nyb2xsaW5nOiB0b3VjaDtcbiAgfVxuICBcbiAgLmZpeGVkLWNvbC10YWJsZSB7XG4gICAgYm9yZGVyLWNvbGxhcHNlOiBjb2xsYXBzZTtcbiAgICB3aWR0aDogMTAwJTtcbiAgICBtaW4td2lkdGg6IDkwMHB4O1xuICAgIGJhY2tncm91bmQ6ICNmZmY7XG4gIFxuICAgIHRoLCB0ZCB7XG4gICAgICBwYWRkaW5nOiA4cHggMTBweDtcbiAgICAgIGJvcmRlcjogMXB4IHNvbGlkICNlMGUwZTA7XG4gICAgICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICAgICAgb3ZlcmZsb3c6IGhpZGRlbjtcbiAgICB9XG4gIFxuICAgIHRoZWFkIHRoIHtcbiAgICAgIHBvc2l0aW9uOiBzdGlja3k7XG4gICAgICB0b3A6IDA7XG4gICAgICB6LWluZGV4OiA1O1xuICAgICAgYmFja2dyb3VuZDogI2ZhZmFmYTtcbiAgICB9XG4gIFxuICAgIC8vIEPhu5l0IDFcbiAgICB0aC5jb2wtY29sMSwgdGQuY29sLWNvbDEge1xuICAgICAgcG9zaXRpb246IHN0aWNreTtcbiAgICAgIGxlZnQ6IDA7XG4gICAgICBiYWNrZ3JvdW5kOiAjZmZmO1xuICAgICAgei1pbmRleDogMTA7XG4gICAgfVxuICBcbiAgICAvLyBD4buZdCAyXG4gICAgdGguY29sLWNvbDIsIHRkLmNvbC1jb2wyIHtcbiAgICAgIHBvc2l0aW9uOiBzdGlja3k7XG4gICAgICBsZWZ0OiA4MHB4OyAvLyBi4bqxbmcgd2lkdGggY+G7mXQgMVxuICAgICAgYmFja2dyb3VuZDogI2ZmZjtcbiAgICAgIHotaW5kZXg6IDk7XG4gICAgfVxuICBcbiAgICB0aGVhZCB0aC5jb2wtY29sMSxcbiAgICB0aGVhZCB0aC5jb2wtY29sMiB7XG4gICAgICB6LWluZGV4OiAyMDtcbiAgICB9XG4gIH1cbiAgLm92ZXJmbG93LXgtc2Nyb2xsIHtcbiAgICBvdmVyZmxvdy14OiBoaWRkZW47XG4gIH0iLCI6Om5nLWRlZXAgLm9kZCB7XG4gIGRpc3BsYXk6IG5vbmU7XG59XG5cbi50YWJsZS1ib3JkZXJlZCB7XG4gIGJvcmRlci1jb2xsYXBzZTogY29sbGFwc2U7XG4gIHdpZHRoOiAxMDAlO1xufVxuXG4udGFibGUtYm9yZGVyZWQgdGQge1xuICBib3JkZXI6IDFweCBzb2xpZCBibGFjaztcbiAgcGFkZGluZzogOHB4O1xuICB0ZXh0LWFsaWduOiBsZWZ0O1xufVxuXG4uYjQtZGF0YXRhYmxlID4gdGhlYWQgPiB0ciA+IHRoIHtcbiAgYm9yZGVyOiAxcHggc29saWQgYmxhY2s7XG59XG5cbi50YWJsZS13cmFwcGVyIHtcbiAgd2lkdGg6IDEwMCU7XG4gIGhlaWdodDogY2FsYygxMDB2aCAtIDQ4NnB4KTtcbiAgb3ZlcmZsb3c6IGF1dG87XG4gIC13ZWJraXQtb3ZlcmZsb3ctc2Nyb2xsaW5nOiB0b3VjaDtcbn1cblxuLmZpeGVkLWNvbC10YWJsZSB7XG4gIGJvcmRlci1jb2xsYXBzZTogY29sbGFwc2U7XG4gIHdpZHRoOiAxMDAlO1xuICBtaW4td2lkdGg6IDkwMHB4O1xuICBiYWNrZ3JvdW5kOiAjZmZmO1xufVxuLmZpeGVkLWNvbC10YWJsZSB0aCwgLmZpeGVkLWNvbC10YWJsZSB0ZCB7XG4gIHBhZGRpbmc6IDhweCAxMHB4O1xuICBib3JkZXI6IDFweCBzb2xpZCAjZTBlMGUwO1xuICB3aGl0ZS1zcGFjZTogbm93cmFwO1xuICBvdmVyZmxvdzogaGlkZGVuO1xufVxuLmZpeGVkLWNvbC10YWJsZSB0aGVhZCB0aCB7XG4gIHBvc2l0aW9uOiBzdGlja3k7XG4gIHRvcDogMDtcbiAgei1pbmRleDogNTtcbiAgYmFja2dyb3VuZDogI2ZhZmFmYTtcbn1cbi5maXhlZC1jb2wtdGFibGUgdGguY29sLWNvbDEsIC5maXhlZC1jb2wtdGFibGUgdGQuY29sLWNvbDEge1xuICBwb3NpdGlvbjogc3RpY2t5O1xuICBsZWZ0OiAwO1xuICBiYWNrZ3JvdW5kOiAjZmZmO1xuICB6LWluZGV4OiAxMDtcbn1cbi5maXhlZC1jb2wtdGFibGUgdGguY29sLWNvbDIsIC5maXhlZC1jb2wtdGFibGUgdGQuY29sLWNvbDIge1xuICBwb3NpdGlvbjogc3RpY2t5O1xuICBsZWZ0OiA4MHB4O1xuICBiYWNrZ3JvdW5kOiAjZmZmO1xuICB6LWluZGV4OiA5O1xufVxuLmZpeGVkLWNvbC10YWJsZSB0aGVhZCB0aC5jb2wtY29sMSxcbi5maXhlZC1jb2wtdGFibGUgdGhlYWQgdGguY29sLWNvbDIge1xuICB6LWluZGV4OiAyMDtcbn1cblxuLm92ZXJmbG93LXgtc2Nyb2xsIHtcbiAgb3ZlcmZsb3cteDogaGlkZGVuO1xufSJdfQ== */");
+
+/***/ }),
+
+/***/ "./src/app/modules/pm/reports/components/salary-reports/salary-reports.component.ts":
+/*!******************************************************************************************!*\
+  !*** ./src/app/modules/pm/reports/components/salary-reports/salary-reports.component.ts ***!
+  \******************************************************************************************/
+/*! exports provided: SalaryReportsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SalaryReportsComponent", function() { return SalaryReportsComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-export-as */ "./node_modules/ngx-export-as/fesm2015/ngx-export-as.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../../core/services/authentication.service */ "./src/app/core/services/authentication.service.ts");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(date_fns__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../../../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-bootstrap/chronos */ "./node_modules/ngx-bootstrap/chronos/fesm5/ngx-bootstrap-chronos.js");
+/* harmony import */ var ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-bootstrap/locale */ "./node_modules/ngx-bootstrap/locale/fesm5/ngx-bootstrap-locale.js");
+/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
+/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(datatables_net__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(datatables_net_bs4__WEBPACK_IMPORTED_MODULE_15__);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Object(ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_12__["defineLocale"])('vi', ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_13__["viLocale"]);
+
+
+var SalaryReportsComponent = /** @class */ (function () {
+    function SalaryReportsComponent(translate, http, datePipe, authenticationService, sanitizer, exportAsService) {
+        var _this = this;
+        this.translate = translate;
+        this.http = http;
+        this.datePipe = datePipe;
+        this.authenticationService = authenticationService;
+        this.sanitizer = sanitizer;
+        this.exportAsService = exportAsService;
+        this.apiUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_11__["environment"].apiUrl;
+        this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_7__["Subject"]();
+        this.dtOptions = {};
+        this.currentMonth = this.datePipe.transform(new Date(), 'yyyy-MM');
+        this.month = this.datePipe.transform(new Date(), 'yyyy-MM');
+        this.defects = [];
+        this.leaves = [];
+        this.totalSalary = {};
+        this.settings = { personal: 0, dependent: 0 };
+        this.holidays = [];
+        this.workingInMonth = 0;
+        this.salaryFilterKey = 'salary';
+        this.exportTableData = [];
+        this.daysInMonth = [{}];
+        this.isPageLoaded = false;
+        this.exportAsConfig = {
+            type: 'csv',
+            elementIdOrContent: 'export_table',
+        };
+        this.datepickerConfig = {
+            dateInputFormat: 'YYYY-MM',
+            containerClass: 'theme-red',
+            minMode: 'month',
+            maxDate: new Date(),
+            locale: 'vi',
+        };
+        this.authenticationService.loginUser.subscribe(function (x) { return _this.loginUser = x; });
+    }
+    SalaryReportsComponent.prototype.ngOnInit = function () {
+        // this.month = this.datePipe.transform("2025-08", 'yyyy-MM');
+        this.daysInMonth = this.getTotalDaysInMonth(this.month);
+        this.loadDatatable();
+    };
+    SalaryReportsComponent.prototype.loadDatatable = function () {
+        var _this = this;
+        this.getWorkingDays(this.month);
+        this.http.post(this.apiUrl + '/api/defect/defect-report', { month: this.month, action: 'salary' }, {})
+            .subscribe(function (resp) {
+            _this.exportTableData = resp.data;
+            _this.leaves = resp.leaves;
+            _this.holidays = resp.holidays;
+            _this.settings = resp.settings;
+            _this.exportTableData.forEach(function (element, index) {
+                var timesheetconvert = _this.exportTableDataArray(element.timesheet);
+                element.timesheet = timesheetconvert.data;
+                element.timesheet_total = timesheetconvert.total;
+                var timesheetconvertOT = _this.exportTableDataArray(element.timesheet_ot);
+                element.timesheet_ot = timesheetconvertOT.data;
+                element.timesheet_ot_total = timesheetconvertOT.total;
+                element.actual_working_day = 0;
+                element.timesheet.forEach(function (element2, index2) {
+                    element2.check = _this.compareValues(element2, 8.5);
+                    if (element2.check) {
+                        element.actual_working_day++;
+                    }
+                });
+                element.allowance = 0;
+                // this.leaves.forEach((leave) => {
+                //     // if(element.id == leave.user_id && leave.leave_type_id == 3 && leave.add_salary == 1){
+                //     if(element.id == leave.user_id && leave.leave_type_id == 3){
+                //         element.allowance += leave.total;
+                //     }
+                // });
+                _this.leaves = _this.leaves.filter(function (leave) {
+                    if (element.id === leave.user_id && leave.leave_type_id === 3) {
+                        element.allowance += leave.total;
+                        return false; // ❌ xoá leave này
+                    }
+                    return true; // ✅ giữ lại
+                });
+                element.total_day = _this.getTimesheetTotal(element, 'day');
+                element.total_leave = _this.getTimesheetTotal(element, 'leave');
+                element.total_total = _this.getTimesheetTotal(element, 'total');
+            });
+            _this.getSalaryByUser();
+            _this.isPageLoaded = true;
+        });
+        return;
+    };
+    SalaryReportsComponent.prototype.getWorkingDays = function (month) {
+        var _a = month.split('-').map(Number), year = _a[0], monthStr = _a[1];
+        var daysInMonth = new Date(year, monthStr, 0).getDate();
+        var workingDays = 0;
+        for (var day = 1; day <= daysInMonth; day++) {
+            var current = new Date(year, monthStr - 1, day);
+            var dow = current.getDay();
+            if (dow !== 0 && dow !== 6) {
+                workingDays++;
+            }
+        }
+        this.workingInMonth = workingDays;
+    };
+    SalaryReportsComponent.prototype.filterByStatus = function (key) {
+        this.salaryFilterKey = key;
+    };
+    SalaryReportsComponent.prototype.exportTableDataArray = function (data) {
+        var total = 0;
+        var dataReturn = Object.keys(data).map(function (key) {
+            var value = parseFloat(data[key]);
+            if (isNaN(value))
+                value = 0;
+            total += value;
+            return {
+                key: key,
+                value: value
+            };
+        });
+        return { total: total, data: dataReturn };
+    };
+    SalaryReportsComponent.prototype.getTimesheetTotal = function (user, type) {
+        if (type === void 0) { type = false; }
+        // let timesheet_total = user.timesheet_total;
+        var timesheet_leave = 0;
+        var timesheet_holiday = 0;
+        var timesheet_day = 0;
+        this.holidays.forEach(function (element, index) {
+            timesheet_holiday += 1;
+        });
+        this.leaves.forEach(function (element, index) {
+            if (user.id == element.user_id && element.leave_type_id == 1) {
+                if (element.duration == 'half') {
+                    timesheet_leave += 0.5;
+                }
+                else {
+                    timesheet_leave += 1;
+                }
+            }
+        });
+        // console.log(user.timesheet);
+        user.timesheet.forEach(function (element, index) {
+            if (element) {
+                switch (element.value) {
+                    case 8.5:
+                    case "8.5":
+                        timesheet_day += 1;
+                        break;
+                    case 4.5:
+                    case "4.5":
+                        timesheet_day += 0.5;
+                        break;
+                    case 4:
+                    case "4":
+                        timesheet_day += 0.5;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+        var total = 0;
+        switch (type) {
+            case 'day':
+                total = timesheet_day + timesheet_holiday;
+                break;
+            case 'leave':
+                total = timesheet_leave;
+                break;
+            case 'total':
+                total = timesheet_day + timesheet_holiday + timesheet_leave;
+                break;
+        }
+        return total;
+    };
+    SalaryReportsComponent.prototype.getTimesheetByDay = function (user, j) {
+        var currentDate = new Date(this.month + "/" + (j + 1));
+        var currentDay = currentDate.getDate();
+        var holiday = this.holidays.find(function (element) {
+            var holidayDate = new Date(element.date);
+            return currentDay === holidayDate.getDate();
+        });
+        if (holiday) {
+            return ('<div class="cell table-cell-green" title="Holiday">L</div>');
+        }
+        var timesheet_total = 0;
+        for (var _i = 0, _a = this.leaves; _i < _a.length; _i++) {
+            var element = _a[_i];
+            var leave_date = new Date(element.leave_date);
+            if (user.id == element.user_id && currentDay === leave_date.getDate()) {
+                if (element.leave_type_id == 2) {
+                    if (element.duration == 'half') {
+                        return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell table-cell-red\" title=\"Ngh\u1EC9 kh\u00F4ng ph\u00E9p (Half)\">/</div>");
+                    }
+                    else {
+                        return this.sanitizer.bypassSecurityTrustHtml('<div class="cell table-cell-red" title="Nghỉ không phép (Full)"></div>');
+                    }
+                }
+                else {
+                    if (element.duration == 'half') {
+                        if (element.duration_type == 'first_half') {
+                            timesheet_total = timesheet_total + 4;
+                        }
+                        else {
+                            timesheet_total = timesheet_total + 4.5;
+                        }
+                    }
+                    else {
+                        return this.sanitizer.bypassSecurityTrustHtml('<div class="cell table-cell-indigo" title="Nghỉ có phép (Full)">P</div>');
+                    }
+                }
+            }
+        }
+        if (timesheet_total > 0) {
+            return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell table-cell-yellow\" title=\"Ngh\u1EC9 c\u00F3 ph\u00E9p (Half)\">/</div>");
+        }
+        else {
+            if (user.timesheet[j] && user.timesheet[j].check) {
+                if (user.timesheet[j].value == 8.5) {
+                    return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell\">x</div>");
+                }
+                else {
+                    return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell\"></div>");
+                }
+            }
+        }
+        return '';
+    };
+    // getSalaryByUser(user: any, j: any, action: any) {
+    SalaryReportsComponent.prototype.getSalaryByUser = function () {
+        var _this = this;
+        this.totalSalary.total1 = 0;
+        this.totalSalary.total2 = 0;
+        this.totalSalary.total3 = 0;
+        this.totalSalary.total4 = 0;
+        this.totalSalary.total5 = 0;
+        this.totalSalary.total6 = 0;
+        this.totalSalary.total7 = 0;
+        this.totalSalary.total8 = 0;
+        this.totalSalary.total9 = 0;
+        this.totalSalary.total10 = 0;
+        this.totalSalary.total11 = 0;
+        this.totalSalary.total12 = 0;
+        this.totalSalary.total13 = 0;
+        this.totalSalary.total14 = 0;
+        this.totalSalary.total15 = 0;
+        this.totalSalary.total16 = 0;
+        this.totalSalary.total17 = 0;
+        this.totalSalary.total18 = 0;
+        this.totalSalary.total19 = 0;
+        this.totalSalary.total20 = 0;
+        this.totalSalary.total21 = 0;
+        this.totalSalary.total22 = 0;
+        this.totalSalary.total23 = 0;
+        this.totalSalary.total24 = 0;
+        this.totalSalary.total25 = 0;
+        this.totalSalary.total26 = 0;
+        this.totalSalary.total27 = 0;
+        this.totalSalary.total28 = 0;
+        this.totalSalary.total29 = 0;
+        this.totalSalary.total30 = 0;
+        this.totalSalary.total31 = 0;
+        this.totalSalary.total32 = 0;
+        this.exportTableData.forEach(function (user, index) {
+            var res = '0';
+            var timesheet_day = 0;
+            var timesheet_ot_day = 0;
+            var salary1day = (user.contract.basic + user.contract.performance) / (_this.workingInMonth);
+            user.salary_basic = 0;
+            user.salary_performance = 0;
+            user.salary_lunch = 0;
+            user.salary_total = 0;
+            user.salary_working_day = 0;
+            user.salary_working_salary = 0;
+            user.salary_leave_salary = 0;
+            user.salary_sum_of_sums = 0;
+            user.salary_dependents = 0;
+            user.salary_BHBB = 0;
+            user.salary_personal_income_taxt = 0;
+            user.salary_ot_working_day = 0;
+            user.salary_ot_working_salary = 0;
+            if (user.contract && user.contract.id) {
+                user.salary_basic = user.contract.basic;
+                user.salary_performance = user.contract.performance;
+                user.salary_total_real = user.contract.basic + user.contract.performance;
+                user.salary_lunch = user.contract.lunch;
+                user.salary_total = user.contract.basic + user.contract.performance;
+                user.timesheet.forEach(function (element, index) {
+                    if (element) {
+                        switch (element.value) {
+                            case 8.5:
+                                timesheet_day += 1;
+                                break;
+                            case 4.5:
+                                timesheet_day += 0.5;
+                                break;
+                            case 4:
+                                timesheet_day += 0.5;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+                user.timesheet_ot.forEach(function (element, index) {
+                    if (element) {
+                        timesheet_ot_day += element.value;
+                    }
+                });
+                user.salary_working_day = timesheet_day;
+                user.salary_working_salary = user.salary_working_day * salary1day;
+                user.salary_ot_working_day = timesheet_ot_day;
+                user.salary_ot_working_salary = timesheet_ot_day * salary1day / 8.5 * 1.5;
+                var leave_day_1 = 0;
+                _this.holidays.forEach(function (element, index) {
+                    leave_day_1 += 1;
+                });
+                _this.leaves.forEach(function (element, index) {
+                    if (user.id == element.user_id && element.leave_type_id == 1) {
+                        if (element.duration == 'half') {
+                            leave_day_1 += 0.5;
+                        }
+                        else {
+                            leave_day_1 += 1;
+                        }
+                    }
+                });
+                user.salary_leave_salary = leave_day_1 * salary1day;
+                user.salary_sum_of_sums = user.contract.lunch + user.salary_leave_salary + user.salary_working_salary + user.allowance + user.salary_ot_working_salary;
+                user.salary_dependents = user.dependents * _this.settings.dependent;
+                user.salary_BHBB = user.salary_basic * _this.settings.bhbb / 100;
+                user.salary_personal_income_taxt = user.salary_dependents + _this.settings.personal + (Math.min(user.salary_lunch, 730000) + user.allowance) + user.salary_BHBB;
+                _this.totalSalary.total1 += user.salary_total;
+                _this.totalSalary.total2 += user.salary_basic;
+                _this.totalSalary.total3 += user.salary_performance;
+                _this.totalSalary.total4 += user.salary_total_real;
+                _this.totalSalary.total5 += user.salary_working_day;
+                _this.totalSalary.total6 += user.salary_working_salary;
+                _this.totalSalary.total7 += user.salary_leave_salary;
+                _this.totalSalary.total8 += 0;
+                _this.totalSalary.total9 += 0;
+                _this.totalSalary.total10 += 0;
+                _this.totalSalary.total11 += 0;
+                _this.totalSalary.total12 += user.salary_lunch;
+                _this.totalSalary.total13 += 0;
+                _this.totalSalary.total14 += 0;
+                _this.totalSalary.total15 += user.salary_sum_of_sums;
+                _this.totalSalary.total16 += user.dependents;
+                _this.totalSalary.total17 += user.salary_dependents;
+                _this.totalSalary.total18 += _this.settings.personal;
+                _this.totalSalary.total19 += user.salary_lunch;
+                _this.totalSalary.total20 += 0;
+                _this.totalSalary.total21 += user.salary_BHBB;
+                _this.totalSalary.total22 += user.salary_personal_income_taxt;
+                _this.totalSalary.total23 += ((user.salary_sum_of_sums - user.salary_personal_income_taxt) <= 0 ? 0 : (user.salary_sum_of_sums - user.salary_personal_income_taxt));
+                _this.totalSalary.total24 += (_this.getPersonalIncomeTax((user.salary_sum_of_sums - user.salary_personal_income_taxt) <= 0 ? 0 : (user.salary_sum_of_sums - user.salary_personal_income_taxt)));
+                _this.totalSalary.total25 += user.salary_BHBB;
+                _this.totalSalary.total26 += (user.salary_basic * _this.settings.dpcd / 100) > 234000 ? 234000 : (user.salary_basic * _this.settings.dpcd / 100);
+                _this.totalSalary.total27 += 0;
+                _this.totalSalary.total28 += 0;
+                _this.totalSalary.total29 += user.salary_sum_of_sums - user.salary_BHBB - _this.getPersonalIncomeTax((user.salary_sum_of_sums - user.salary_personal_income_taxt) <= 0 ? 0 : (user.salary_sum_of_sums - user.salary_personal_income_taxt));
+                _this.totalSalary.total30 += user.salary_basic * _this.settings.dnbhbb / 100 - user.salary_BHBB;
+                _this.totalSalary.total31 += user.salary_basic * _this.settings.dndpcd / 100;
+                _this.totalSalary.total32 += user.salary_sum_of_sums + (user.salary_basic * _this.settings.dnbhbb / 100 - user.salary_BHBB) + (user.salary_basic * _this.settings.dndpcd / 100);
+            }
+        });
+    };
+    SalaryReportsComponent.prototype.formatNumber = function (res) {
+        return new Intl.NumberFormat('vi-VN').format(Number(res));
+    };
+    SalaryReportsComponent.prototype.getPersonalIncomeTax = function (AA39) {
+        if (AA39 <= 0)
+            return 0;
+        var tax = 0;
+        if (AA39 <= 5000000) {
+            tax = AA39 * 0.05;
+        }
+        else if (AA39 <= 10000000) {
+            tax = 250000 + (AA39 - 5000000) * 0.10;
+        }
+        else if (AA39 <= 18000000) {
+            tax = 750000 + (AA39 - 10000000) * 0.15;
+        }
+        else if (AA39 <= 32000000) {
+            tax = 1950000 + (AA39 - 18000000) * 0.20;
+        }
+        else if (AA39 <= 52000000) {
+            tax = 4750000 + (AA39 - 32000000) * 0.25;
+        }
+        else if (AA39 <= 80000000) {
+            tax = 9750000 + (AA39 - 52000000) * 0.30;
+        }
+        else {
+            tax = 18150000 + (AA39 - 80000000) * 0.35;
+        }
+        return Math.round(tax);
+    };
+    SalaryReportsComponent.prototype.compareValues = function (timesheet, working_hours) {
+        var isEqual = Number(timesheet.value) === Number(working_hours);
+        var todayCheck = new Date(timesheet.key);
+        var isSaturday = todayCheck.getDay() === 6;
+        var weekOfMonth = this.getWeekOfMonth(todayCheck);
+        // const isSecondOrFourthWeek = (weekOfMonth === 2 || weekOfMonth === 4);
+        var newDate = new Date();
+        var today = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfDay"])(new Date(newDate.getFullYear(), newDate.getMonth(), 25));
+        var currentWeekMonday = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfWeek"])(today, { weekStartsOn: 1 });
+        var isWeekdayAndFuture = todayCheck > currentWeekMonday && Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["getDay"])(todayCheck) >= 1 && Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["getDay"])(todayCheck) <= 5;
+        return isEqual;
+        // (isSaturday && isSecondOrFourthWeek) ||
+        //  isWeekdayAndFuture;
+    };
+    SalaryReportsComponent.prototype.getWeekOfMonth = function (date) {
+        var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+        var firstDayOfWeek = firstDay.getDay();
+        var dayOfMonth = date.getDate();
+        return Math.ceil((dayOfMonth + firstDayOfWeek) / 7);
+    };
+    SalaryReportsComponent.prototype.nextMonth = function () {
+        this.changeMonth(Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["addMonths"])(this.month, 1));
+    };
+    SalaryReportsComponent.prototype.preMonth = function () {
+        this.changeMonth(Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["subMonths"])(this.month, 1));
+    };
+    SalaryReportsComponent.prototype.changeMonth = function (selectedDate) {
+        this.month = this.datePipe.transform(selectedDate, 'yyyy-MM');
+        // this.month = this.datePipe.transform("2025-08", 'yyyy-MM');
+        this.daysInMonth = this.getTotalDaysInMonth(this.month);
+        this.loadDatatable();
+    };
+    SalaryReportsComponent.prototype.getTotalDaysInMonth = function (date) {
+        var start = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfMonth"])(date);
+        var end = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["endOfMonth"])(date);
+        var daysInMonth = [];
+        for (var d = start; d <= end; d.setDate(d.getDate() + 1)) {
+            daysInMonth.push({ date: Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["format"])(new Date(d), 'YYYY-MM-DD'), stt: Number(Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["format"])(new Date(d), 'd')), day: Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["getDate"])(new Date(d)) });
+        }
+        return daysInMonth;
+    };
+    SalaryReportsComponent.prototype.exportFiles = function () {
+        if (this.salaryFilterKey === 'salary') {
+            this.exportFilesSalary();
+        }
+        if (this.salaryFilterKey === 'timesheet') {
+            this.exportFilesTimeSheet();
+        }
+    };
+    SalaryReportsComponent.prototype.exportFilesSalary = function () {
+        var _this = this;
+        this.http.post(this.apiUrl + '/api/defect/export-salary', { month: this.month, data: this.exportTableData, workingInMonth: this.workingInMonth, settings: this.settings, daysInMonth: this.daysInMonth, holidays: this.holidays, leaves: this.leaves }, { responseType: 'blob' })
+            .subscribe(function (blob) {
+            var link = document.createElement('a');
+            var url = window.URL.createObjectURL(blob);
+            link.href = url;
+            link.download = 'salary_' + _this.month + '.xlsx';
+            link.click();
+            window.URL.revokeObjectURL(url);
+        });
+    };
+    SalaryReportsComponent.prototype.exportFilesTimeSheet = function () {
+        var _this = this;
+        this.http.post(this.apiUrl + '/api/defect/export-timesheet', { data: this.exportTableData, daysInMonth: this.daysInMonth, workingInMonth: this.workingInMonth, month: this.month, holidays: this.holidays, leaves: this.leaves, action: 'day' }, { responseType: 'blob' })
+            .subscribe(function (blob) {
+            var link = document.createElement('a');
+            var url = window.URL.createObjectURL(blob);
+            link.href = url;
+            link.download = 'timesheet_' + _this.month + '.xlsx';
+            link.click();
+            window.URL.revokeObjectURL(url);
+        });
+    };
+    SalaryReportsComponent.prototype.ngOnDestroy = function () {
+        this.dtTrigger.unsubscribe();
+    };
+    SalaryReportsComponent.prototype.rerender = function () {
+        var _this = this;
+        this.dtElement.dtInstance.then(function (dtInstance) {
+            dtInstance.destroy();
+            setTimeout(function () {
+                _this.dtTrigger.next();
+                if (_this.exportTableData.length > 0) {
+                    $('.tfoot_dt').addClass('d-none');
+                }
+                else {
+                    $('.tfoot_dt').removeClass('d-none');
+                }
+            });
+        });
+    };
+    SalaryReportsComponent.ctorParameters = function () { return [
+        { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"] },
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] },
+        { type: _angular_common__WEBPACK_IMPORTED_MODULE_8__["DatePipe"] },
+        { type: _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_9__["AuthenticationService"] },
+        { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["DomSanitizer"] },
+        { type: ngx_export_as__WEBPACK_IMPORTED_MODULE_4__["ExportAsService"] }
+    ]; };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_6__["DataTableDirective"], { static: true }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", angular_datatables__WEBPACK_IMPORTED_MODULE_6__["DataTableDirective"])
+    ], SalaryReportsComponent.prototype, "dtElement", void 0);
+    SalaryReportsComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-salary-reports',
+            template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./salary-reports.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/components/salary-reports/salary-reports.component.html")).default,
+            styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./salary-reports.component.scss */ "./src/app/modules/pm/reports/components/salary-reports/salary-reports.component.scss")).default]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_8__["DatePipe"],
+            _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_9__["AuthenticationService"],
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["DomSanitizer"],
+            ngx_export_as__WEBPACK_IMPORTED_MODULE_4__["ExportAsService"]])
+    ], SalaryReportsComponent);
+    return SalaryReportsComponent;
 }());
 
 
@@ -913,7 +2780,7 @@ var ProjectReportsComponent = /** @class */ (function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("::ng-deep .odd {\n  display: none;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9BcHBsaWNhdGlvbnMvTUFNUC9odGRvY3MvZ3YtZGV2ZWxvcGVyL2FuZ3VsYXIvc3JjL2FwcC9tb2R1bGVzL3BtL3JlcG9ydHMvY29tcG9uZW50cy90YXNrLXJlcG9ydHMvdGFzay1yZXBvcnRzLmNvbXBvbmVudC5zY3NzIiwic3JjL2FwcC9tb2R1bGVzL3BtL3JlcG9ydHMvY29tcG9uZW50cy90YXNrLXJlcG9ydHMvdGFzay1yZXBvcnRzLmNvbXBvbmVudC5zY3NzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0ksYUFBQTtBQ0NKIiwiZmlsZSI6InNyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvdGFzay1yZXBvcnRzL3Rhc2stcmVwb3J0cy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIjo6bmctZGVlcCAub2RkIHtcbiAgICBkaXNwbGF5OiBub25lXG59IiwiOjpuZy1kZWVwIC5vZGQge1xuICBkaXNwbGF5OiBub25lO1xufSJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = ("::ng-deep .odd {\n  display: none;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9BcHBsaWNhdGlvbnMvTUFNUC9odGRvY3MvZ3JlZW52aWV0LXBoYXNlMi9hbmd1bGFyL3NyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvdGFzay1yZXBvcnRzL3Rhc2stcmVwb3J0cy5jb21wb25lbnQuc2NzcyIsInNyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvdGFzay1yZXBvcnRzL3Rhc2stcmVwb3J0cy5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGFBQUE7QUNDSiIsImZpbGUiOiJzcmMvYXBwL21vZHVsZXMvcG0vcmVwb3J0cy9jb21wb25lbnRzL3Rhc2stcmVwb3J0cy90YXNrLXJlcG9ydHMuY29tcG9uZW50LnNjc3MiLCJzb3VyY2VzQ29udGVudCI6WyI6Om5nLWRlZXAgLm9kZCB7XG4gICAgZGlzcGxheTogbm9uZVxufSIsIjo6bmctZGVlcCAub2RkIHtcbiAgZGlzcGxheTogbm9uZTtcbn0iXX0= */");
 
 /***/ }),
 
@@ -1174,6 +3041,624 @@ var TaskReportsComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/modules/pm/reports/components/user-reports/user-reports.component.scss":
+/*!****************************************************************************************!*\
+  !*** ./src/app/modules/pm/reports/components/user-reports/user-reports.component.scss ***!
+  \****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("@charset \"UTF-8\";\n::ng-deep .odd {\n  display: none;\n}\nth.sortable {\n  position: relative;\n  cursor: pointer;\n  padding-right: 20px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none;\n}\n.sort-icons {\n  position: absolute;\n  right: 6px;\n  top: 50%;\n  -ms-transform: translateY(-50%);\n      transform: translateY(-50%);\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  font-size: 9px;\n  line-height: 8px;\n  color: #6c757d;\n}\n.sort-up::before {\n  content: \"▲\";\n}\n.sort-down::before {\n  content: \"▼\";\n}\nth.sortable:hover .sort-icons {\n  color: #000;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvdXNlci1yZXBvcnRzL3VzZXItcmVwb3J0cy5jb21wb25lbnQuc2NzcyIsIi9BcHBsaWNhdGlvbnMvTUFNUC9odGRvY3MvZ3JlZW52aWV0LXBoYXNlMi9hbmd1bGFyL3NyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvdXNlci1yZXBvcnRzL3VzZXItcmVwb3J0cy5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxnQkFBZ0I7QUNBaEI7RUFDSSxhQUFBO0FERUo7QUNDQTtFQUNJLGtCQUFBO0VBQ0EsZUFBQTtFQUNBLG1CQUFBO0VBQ0EseUJBQUE7S0FBQSxzQkFBQTtNQUFBLHFCQUFBO1VBQUEsaUJBQUE7QURFSjtBQ0NFO0VBQ0Usa0JBQUE7RUFDQSxVQUFBO0VBQ0EsUUFBQTtFQUNBLCtCQUFBO01BQUEsMkJBQUE7RUFDQSxvQkFBQTtFQUFBLGFBQUE7RUFDQSwwQkFBQTtNQUFBLHNCQUFBO0VBQ0EsY0FBQTtFQUNBLGdCQUFBO0VBQ0EsY0FBQTtBREVKO0FDQ0U7RUFDRSxZQUFBO0FERUo7QUNDRTtFQUNFLFlBQUE7QURFSjtBQ0NFO0VBQ0UsV0FBQTtBREVKIiwiZmlsZSI6InNyYy9hcHAvbW9kdWxlcy9wbS9yZXBvcnRzL2NvbXBvbmVudHMvdXNlci1yZXBvcnRzL3VzZXItcmVwb3J0cy5jb21wb25lbnQuc2NzcyIsInNvdXJjZXNDb250ZW50IjpbIkBjaGFyc2V0IFwiVVRGLThcIjtcbjo6bmctZGVlcCAub2RkIHtcbiAgZGlzcGxheTogbm9uZTtcbn1cblxudGguc29ydGFibGUge1xuICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gIGN1cnNvcjogcG9pbnRlcjtcbiAgcGFkZGluZy1yaWdodDogMjBweDtcbiAgdXNlci1zZWxlY3Q6IG5vbmU7XG59XG5cbi5zb3J0LWljb25zIHtcbiAgcG9zaXRpb246IGFic29sdXRlO1xuICByaWdodDogNnB4O1xuICB0b3A6IDUwJTtcbiAgdHJhbnNmb3JtOiB0cmFuc2xhdGVZKC01MCUpO1xuICBkaXNwbGF5OiBmbGV4O1xuICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICBmb250LXNpemU6IDlweDtcbiAgbGluZS1oZWlnaHQ6IDhweDtcbiAgY29sb3I6ICM2Yzc1N2Q7XG59XG5cbi5zb3J0LXVwOjpiZWZvcmUge1xuICBjb250ZW50OiBcIuKWslwiO1xufVxuXG4uc29ydC1kb3duOjpiZWZvcmUge1xuICBjb250ZW50OiBcIuKWvFwiO1xufVxuXG50aC5zb3J0YWJsZTpob3ZlciAuc29ydC1pY29ucyB7XG4gIGNvbG9yOiAjMDAwO1xufSIsIjo6bmctZGVlcCAub2RkIHtcbiAgICBkaXNwbGF5OiBub25lXG59XG5cbnRoLnNvcnRhYmxlIHtcbiAgICBwb3NpdGlvbjogcmVsYXRpdmU7XG4gICAgY3Vyc29yOiBwb2ludGVyO1xuICAgIHBhZGRpbmctcmlnaHQ6IDIwcHg7XG4gICAgdXNlci1zZWxlY3Q6IG5vbmU7XG4gIH1cbiAgXG4gIC5zb3J0LWljb25zIHtcbiAgICBwb3NpdGlvbjogYWJzb2x1dGU7XG4gICAgcmlnaHQ6IDZweDtcbiAgICB0b3A6IDUwJTtcbiAgICB0cmFuc2Zvcm06IHRyYW5zbGF0ZVkoLTUwJSk7XG4gICAgZGlzcGxheTogZmxleDtcbiAgICBmbGV4LWRpcmVjdGlvbjogY29sdW1uO1xuICAgIGZvbnQtc2l6ZTogOXB4O1xuICAgIGxpbmUtaGVpZ2h0OiA4cHg7XG4gICAgY29sb3I6ICM2Yzc1N2Q7XG4gIH1cbiAgXG4gIC5zb3J0LXVwOjpiZWZvcmUge1xuICAgIGNvbnRlbnQ6IFwi4payXCI7XG4gIH1cbiAgXG4gIC5zb3J0LWRvd246OmJlZm9yZSB7XG4gICAgY29udGVudDogXCLilrxcIjtcbiAgfVxuICBcbiAgdGguc29ydGFibGU6aG92ZXIgLnNvcnQtaWNvbnMge1xuICAgIGNvbG9yOiAjMDAwO1xuICB9Il19 */");
+
+/***/ }),
+
+/***/ "./src/app/modules/pm/reports/components/user-reports/user-reports.component.ts":
+/*!**************************************************************************************!*\
+  !*** ./src/app/modules/pm/reports/components/user-reports/user-reports.component.ts ***!
+  \**************************************************************************************/
+/*! exports provided: UserReportsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserReportsComponent", function() { return UserReportsComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var ngx_export_as__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-export-as */ "./node_modules/ngx-export-as/fesm2015/ngx-export-as.js");
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
+/* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../../../core/services/authentication.service */ "./src/app/core/services/authentication.service.ts");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! date-fns */ "./node_modules/date-fns/index.js");
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(date_fns__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../../../../environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-bootstrap/chronos */ "./node_modules/ngx-bootstrap/chronos/fesm5/ngx-bootstrap-chronos.js");
+/* harmony import */ var ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-bootstrap/locale */ "./node_modules/ngx-bootstrap/locale/fesm5/ngx-bootstrap-locale.js");
+/* harmony import */ var _core_services_project_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../../../../core/services/project.service */ "./src/app/core/services/project.service.ts");
+/* harmony import */ var _core_services_timesheet_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../../../../../core/services/timesheet.service */ "./src/app/core/services/timesheet.service.ts");
+/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
+/* harmony import */ var datatables_net__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(datatables_net__WEBPACK_IMPORTED_MODULE_16__);
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! datatables.net-bs4 */ "./node_modules/datatables.net-bs4/js/dataTables.bootstrap4.js");
+/* harmony import */ var datatables_net_bs4__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(datatables_net_bs4__WEBPACK_IMPORTED_MODULE_17__);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Object(ngx_bootstrap_chronos__WEBPACK_IMPORTED_MODULE_12__["defineLocale"])('vi', ngx_bootstrap_locale__WEBPACK_IMPORTED_MODULE_13__["viLocale"]);
+
+
+var UserReportsComponent = /** @class */ (function () {
+    function UserReportsComponent(translate, http, datePipe, authenticationService, timesheetService, sanitizer, projectService, exportAsService) {
+        var _this = this;
+        this.translate = translate;
+        this.http = http;
+        this.datePipe = datePipe;
+        this.authenticationService = authenticationService;
+        this.timesheetService = timesheetService;
+        this.sanitizer = sanitizer;
+        this.projectService = projectService;
+        this.exportAsService = exportAsService;
+        this.apiUrl = _environments_environment__WEBPACK_IMPORTED_MODULE_11__["environment"].apiUrl;
+        this.dtTrigger = new rxjs__WEBPACK_IMPORTED_MODULE_7__["Subject"]();
+        this.dtOptions = {};
+        this.currentMonth = this.datePipe.transform(new Date(), 'yyyy-MM');
+        this.month = this.datePipe.transform(new Date(), 'yyyy-MM');
+        this.defects = [];
+        this.leaves = [];
+        this.users = [];
+        this.sortField = '';
+        this.sortDir = 'asc';
+        this.usersTimesheet = [];
+        this.usersTimesheetTable = [];
+        this.holidays = [];
+        this.project = [];
+        this.department = [];
+        this.workingInMonth = 0;
+        this.FilterKey = 'user_list';
+        this.exportTableData = [];
+        this.dataCall = {};
+        this.daysInMonth = [{}];
+        this.isPageLoaded = false;
+        this.exportAsConfig = {
+            type: 'csv',
+            elementIdOrContent: 'export_table',
+        };
+        this.selectedRange = [];
+        this.datepickerConfig = {
+            rangeInputFormat: 'YYYY-MM-DD',
+            dateInputFormat: 'YYYY-MM-DD',
+            // dateInputFormat: 'YYYY-MM',
+            containerClass: 'theme-red',
+            // minMode: 'month',
+            // maxDate: new Date(),
+            locale: 'vi',
+        };
+        this.authenticationService.loginUser.subscribe(function (x) { return _this.loginUser = x; });
+    }
+    UserReportsComponent.prototype.ngOnInit = function () {
+        var start = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfMonth"])(new Date());
+        var end = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["endOfMonth"])(new Date());
+        this.selectedRange = [start, end];
+        this.daysInMonth = this.getTotalDaysInMonth(this.month);
+        this.getProjects();
+        this.getUsers();
+        this.loadDatatable();
+    };
+    UserReportsComponent.prototype.getProjects = function () {
+        var _this = this;
+        this.projectService.getProject()
+            .subscribe(function (data) {
+            _this.projects = data;
+        });
+    };
+    UserReportsComponent.prototype.projectChange = function (event) {
+        this.project = event;
+        // this.getUsers();
+    };
+    UserReportsComponent.prototype.submitFormFilter = function () {
+        var _this = this;
+        if (this.FilterKey == 'user_detail') {
+            this.FilterKey = null; // tắt
+            this.dataCall = { users_id: this.users_id, project: this.project, selectedRange: { start: this.datePipe.transform(this.selectedRange[0], 'yyyy-MM-dd'), end: this.datePipe.transform(this.selectedRange[1], 'yyyy-MM-dd') } };
+            setTimeout(function () {
+                _this.FilterKey = 'user_detail';
+            });
+        }
+        else {
+            this.getUsers();
+        }
+    };
+    UserReportsComponent.prototype.sortBy = function (field) {
+        var _this = this;
+        if (!this.users || this.users.length === 0)
+            return;
+        // toggle direction
+        if (this.sortField === field) {
+            this.sortDir = this.sortDir === 'asc' ? 'desc' : 'asc';
+        }
+        else {
+            this.sortField = field;
+            this.sortDir = 'asc';
+        }
+        this.users.sort(function (a, b) {
+            var v1 = a[field];
+            var v2 = b[field];
+            // normalize string
+            if (typeof v1 === 'string')
+                v1 = v1.toLowerCase();
+            if (typeof v2 === 'string')
+                v2 = v2.toLowerCase();
+            // null / undefined
+            if (v1 == null)
+                return 1;
+            if (v2 == null)
+                return -1;
+            if (v1 < v2)
+                return _this.sortDir === 'asc' ? -1 : 1;
+            if (v1 > v2)
+                return _this.sortDir === 'asc' ? 1 : -1;
+            return 0;
+        });
+    };
+    UserReportsComponent.prototype.getUsers = function () {
+        var _this = this;
+        this.timesheetService.getUserMonthSelect({ project: this.project, selectedRange: { start: this.datePipe.transform(this.selectedRange[0], 'yyyy-MM-dd'), end: this.datePipe.transform(this.selectedRange[1], 'yyyy-MM-dd') } }).subscribe(function (data) {
+            // if(data['role']['department_name'] != 'Administration' && data['role']['department_name'] != 'BOD'){
+            //     const allUsers = data['data'] || [];
+            //     this.users = allUsers.filter(user => {
+            //         return this.loginUser && user.id !== this.loginUser.id;
+            //     });
+            // } else {
+            //     this.users = data['data'];
+            // }
+            _this.getWorkingDays(_this.month, _this.selectedRange);
+            _this.users = data['data'];
+            _this.users.forEach(function (element, index) {
+                element.salarytohour = 0;
+                element.timesheet_billable = Number(element.timesheet_billable);
+                element.timesheet_non_billable = Number(element.timesheet_non_billable);
+                element.timesheet_non_billable = Number(element.timesheet_non_billable);
+                element.total = element.timesheet_billable + element.timesheet_non_billable;
+                element.non_billable_ratio = element.timesheet_non_billable / element.total;
+                if (element.contract && element.contract.salary) {
+                    element.salarytohour = Number(element.contract.salary) / _this.workingInMonth / 8.5;
+                }
+                element.billable_cost = element.timesheet_billable * element.salarytohour;
+                element.non_billable_cost = element.timesheet_non_billable * element.salarytohour;
+            });
+            _this.department = data['role'];
+        });
+    };
+    UserReportsComponent.prototype.getTotalByDay = function (usersTimesheetTable, day) {
+        var dayStr = day < 10 ? '0' + day : day.toString();
+        var dateKey = this.month + "-" + dayStr;
+        var total = 0;
+        for (var userKey in usersTimesheetTable) {
+            var userDays = usersTimesheetTable[userKey];
+            var tasks = userDays[dateKey];
+            if (tasks && tasks.length) {
+                total += tasks.reduce(function (sum, t) { return sum + (parseFloat(t.decimal_time) || 0); }, 0);
+            }
+        }
+        if (this.FilterKey == 'normal') {
+            var currentDate = new Date(dateKey);
+            var currentDay_1 = currentDate.getDate();
+            var holiday = this.holidays.find(function (element) {
+                var holidayDate = new Date(element.date);
+                return currentDay_1 === holidayDate.getDate();
+            });
+            if (holiday) {
+                return ('<div class="cell table-cell-green" title="Holiday">8.5</div>');
+            }
+            var timesheet_total = 0;
+            for (var _i = 0, _a = this.leaves; _i < _a.length; _i++) {
+                var element = _a[_i];
+                var leave_date = new Date(element.leave_date);
+                if (this.users_id == element.user_id && currentDay_1 === leave_date.getDate()) {
+                    if (element.leave_type_id == 2) {
+                        if (element.duration == 'half') {
+                            return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell table-cell-red\" title=\"Ngh\u1EC9 kh\u00F4ng ph\u00E9p (Half)\">" + Number(total).toFixed(1) + "</div>");
+                        }
+                        else {
+                            return this.sanitizer.bypassSecurityTrustHtml('<div class="cell table-cell-red" title="Nghỉ không phép (Full)">OFF</div>');
+                        }
+                    }
+                    else {
+                        if (element.duration == 'half') {
+                            if (element.duration_type == 'first_half') {
+                                timesheet_total = timesheet_total + 4;
+                            }
+                            else {
+                                timesheet_total = timesheet_total + 4.5;
+                            }
+                        }
+                        else {
+                            return this.sanitizer.bypassSecurityTrustHtml('<div class="cell table-cell-indigo" title="Nghỉ có phép (Full)">8.5</div>');
+                        }
+                    }
+                }
+            }
+            if (timesheet_total > 0) {
+                return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell table-cell-yellow\" title=\"Ngh\u1EC9 c\u00F3 ph\u00E9p (Half)\">" + Number(total + timesheet_total).toFixed(1) + "</div>");
+            }
+            else {
+                if (total > 0) {
+                    return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell\">" + Number(total).toFixed(1) + "</div>");
+                }
+            }
+            return '';
+        }
+        else {
+            return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell\">" + Number(total).toFixed(1) + "</div>");
+        }
+    };
+    UserReportsComponent.prototype.loadDatatable = function () {
+        var _this = this;
+        this.getWorkingDays(this.month, this.selectedRange);
+        this.http.post(this.apiUrl + '/api/defect/defect-report', { month: this.month, action: 'user', daysInMonth: this.daysInMonth, selectedRange: { start: this.datePipe.transform(this.selectedRange[0], 'yyyy-MM-dd'), end: this.datePipe.transform(this.selectedRange[1], 'yyyy-MM-dd') } }, {})
+            .subscribe(function (resp) {
+            _this.usersTimesheet = resp.data;
+            _this.leaves = resp.leaves;
+            _this.holidays = resp.holidays;
+            if (_this.users_id && _this.users_id != '' && _this.users_id != 'my') {
+                _this.usersTimesheetTable = [];
+                _this.usersTimesheet.forEach(function (element, index) {
+                    if (_this.users_id == element.id) {
+                        _this.usersTimesheetTable = _this.groupTimesheetByProject(element);
+                    }
+                });
+            }
+            _this.isPageLoaded = true;
+        });
+        return;
+    };
+    // getWorkingDays(month) {
+    //     const [year, monthStr] = month.split('-').map(Number);
+    //     const daysInMonth = new Date(year, monthStr, 0).getDate();
+    //     let workingDays = 0;
+    //     for (let day = 1; day <= daysInMonth; day++) {
+    //       const current = new Date(year, monthStr - 1, day);
+    //       const dow = current.getDay();
+    //       if (dow !== 0 && dow !== 6) {
+    //         workingDays++;
+    //       }
+    //     }
+    //     this.workingInMonth = workingDays;
+    // }
+    UserReportsComponent.prototype.getWorkingDays = function (month, range) {
+        if (!range || range.length !== 2) {
+            this.workingInMonth = 0;
+            return;
+        }
+        var start = new Date(range[0]);
+        var end = new Date(range[1]);
+        var workingDays = 0;
+        for (var d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+            var day = d.getDay(); // 0 = CN, 6 = T7
+            if (day !== 0 && day !== 6) {
+                workingDays++;
+            }
+        }
+        this.workingInMonth = workingDays;
+    };
+    UserReportsComponent.prototype.exportTableDataArray = function (data) {
+        var total = 0;
+        var dataReturn = Object.keys(data).map(function (key) {
+            var value = parseFloat(data[key]);
+            if (isNaN(value))
+                value = 0;
+            total += value;
+            return {
+                key: key,
+                value: value
+            };
+        });
+        return { total: total, data: dataReturn };
+    };
+    UserReportsComponent.prototype.getTimesheetTotal = function (user) {
+        var timesheet_total = user.timesheet_total;
+        this.holidays.forEach(function (element, index) {
+            timesheet_total = timesheet_total + 8.5;
+        });
+        this.leaves.forEach(function (element, index) {
+            if (user.id == element.user_id && element.leave_type_id == 1) {
+                if (element.duration == 'half') {
+                    if (element.duration_type == 'first_half') {
+                        timesheet_total = timesheet_total + 4;
+                    }
+                    else {
+                        timesheet_total = timesheet_total + 4.5;
+                    }
+                }
+                else {
+                    timesheet_total = timesheet_total + 8.5;
+                }
+            }
+        });
+        return timesheet_total;
+    };
+    UserReportsComponent.prototype.getTimesheetByDay = function (user, j) {
+        var currentDate = new Date(this.month + "-" + (j + 1));
+        var currentDay = currentDate.getDate();
+        var holiday = this.holidays.find(function (element) {
+            var holidayDate = new Date(element.date);
+            return currentDay === holidayDate.getDate();
+        });
+        if (holiday) {
+            return ('<div class="cell table-cell-green" title="Holiday">8.5</div>');
+        }
+        var timesheet_total = 0;
+        for (var _i = 0, _a = this.leaves; _i < _a.length; _i++) {
+            var element = _a[_i];
+            var leave_date = new Date(element.leave_date);
+            if (user.id == element.user_id && currentDay === leave_date.getDate()) {
+                if (element.leave_type_id == 2) {
+                    if (element.duration == 'half') {
+                        return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell table-cell-red\" title=\"Ngh\u1EC9 kh\u00F4ng ph\u00E9p (Half)\">" + Number(user.timesheet[j].value).toFixed(1) + "</div>");
+                    }
+                    else {
+                        return this.sanitizer.bypassSecurityTrustHtml('<div class="cell table-cell-red" title="Nghỉ không phép (Full)">OFF</div>');
+                    }
+                }
+                else {
+                    if (element.duration == 'half') {
+                        if (element.duration_type == 'first_half') {
+                            timesheet_total = timesheet_total + 4;
+                        }
+                        else {
+                            timesheet_total = timesheet_total + 4.5;
+                        }
+                    }
+                    else {
+                        return this.sanitizer.bypassSecurityTrustHtml('<div class="cell table-cell-indigo" title="Nghỉ có phép (Full)">8.5</div>');
+                    }
+                }
+            }
+        }
+        if (timesheet_total > 0) {
+            return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell table-cell-yellow\" title=\"Ngh\u1EC9 c\u00F3 ph\u00E9p (Half)\">" + Number(user.timesheet[j].value + timesheet_total).toFixed(1) + "</div>");
+        }
+        else {
+            if (user.timesheet[j] && user.timesheet[j].check) {
+                return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell\">" + Number(user.timesheet[j].value).toFixed(1) + "</div>");
+            }
+        }
+        return '';
+    };
+    UserReportsComponent.prototype.compareValues = function (timesheet, working_hours) {
+        var isEqual = Number(timesheet.value) === Number(working_hours);
+        var todayCheck = new Date(timesheet.key);
+        var isSaturday = todayCheck.getDay() === 6;
+        var weekOfMonth = this.getWeekOfMonth(todayCheck);
+        // const isSecondOrFourthWeek = (weekOfMonth === 2 || weekOfMonth === 4);
+        var newDate = new Date();
+        var today = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfDay"])(new Date(newDate.getFullYear(), newDate.getMonth(), 25));
+        var currentWeekMonday = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfWeek"])(today, { weekStartsOn: 1 });
+        var isWeekdayAndFuture = todayCheck > currentWeekMonday && Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["getDay"])(todayCheck) >= 1 && Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["getDay"])(todayCheck) <= 5;
+        return isEqual;
+        // (isSaturday && isSecondOrFourthWeek) ||
+        //  isWeekdayAndFuture;
+    };
+    UserReportsComponent.prototype.getWeekOfMonth = function (date) {
+        var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+        var firstDayOfWeek = firstDay.getDay();
+        var dayOfMonth = date.getDate();
+        return Math.ceil((dayOfMonth + firstDayOfWeek) / 7);
+    };
+    UserReportsComponent.prototype.nextMonth = function () {
+        this.changeMonth(Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["addMonths"])(this.month, 1));
+    };
+    UserReportsComponent.prototype.preMonth = function () {
+        this.changeMonth(Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["subMonths"])(this.month, 1));
+    };
+    UserReportsComponent.prototype.filterByStatus = function (key) {
+        var _this = this;
+        this.FilterKey = key;
+        this.usersTimesheetTable = [];
+        this.usersTimesheet.forEach(function (element, index) {
+            if (_this.users_id == element.id) {
+                _this.usersTimesheetTable = _this.groupTimesheetByProject(element);
+            }
+        });
+    };
+    UserReportsComponent.prototype.changeMonth = function (selectedDate) {
+        this.month = this.datePipe.transform(selectedDate, 'yyyy-MM');
+        this.daysInMonth = this.getTotalDaysInMonth(this.month);
+        // this.loadDatatable();
+        this.getUsers();
+    };
+    UserReportsComponent.prototype.getTotalDaysInMonth = function (date) {
+        var start = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfMonth"])(date);
+        var end = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["endOfMonth"])(date);
+        var daysInMonth = [];
+        for (var d = start; d <= end; d.setDate(d.getDate() + 1)) {
+            daysInMonth.push({ date: Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["format"])(new Date(d), 'YYYY-MM-DD'), stt: Number(Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["format"])(new Date(d), 'd')), day: Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["getDate"])(new Date(d)) });
+        }
+        return daysInMonth;
+    };
+    UserReportsComponent.prototype.onRangeChange = function (range) {
+        if (!range || !Array.isArray(range) || range.length !== 2)
+            return;
+        var rawStart = range[0], rawEnd = range[1];
+        var startDate = (rawStart instanceof Date) ? rawStart : new Date(rawStart);
+        var endDate = (rawEnd instanceof Date) ? rawEnd : new Date(rawEnd);
+        // this.selectedRange = [ startOfDay(startDate), endOfDay(endDate) ];
+        this.month = this.datePipe.transform(startDate, 'yyyy-MM');
+        this.daysInMonth = this.getDaysBetween(this.selectedRange[0], this.selectedRange[1]);
+        // this.getUsers();
+    };
+    UserReportsComponent.prototype.getDaysBetween = function (start, end) {
+        var s = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+        var e = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+        var days = [];
+        for (var d = new Date(s); d <= e; d.setDate(d.getDate() + 1)) {
+            var cur = new Date(d);
+            days.push({
+                date: this.datePipe.transform(cur, 'yyyy-MM-dd'),
+                stt: cur.getDay(),
+                day: cur.getDate()
+            });
+        }
+        return days;
+    };
+    UserReportsComponent.prototype.exportFiles = function (type) {
+        this.exportAsService.save(this.exportAsConfig, 'Timesheet').subscribe(function () {
+        });
+    };
+    UserReportsComponent.prototype.ngOnDestroy = function () {
+        this.dtTrigger.unsubscribe();
+    };
+    UserReportsComponent.prototype.rerender = function () {
+        var _this = this;
+        this.exportTableData.forEach(function (element, index) {
+            if (element.id == _this.users_id) {
+                // console.log(element);
+            }
+        });
+        // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        // 	dtInstance.destroy();
+        // 	setTimeout(() => {
+        // 		this.dtTrigger.next();
+        // 		if(this.exportTableData.length > 0) {
+        // 			$('.tfoot_dt').addClass('d-none');
+        // 		} else {
+        // 			$('.tfoot_dt').removeClass('d-none');
+        // 		}
+        // 	});
+        // });
+    };
+    UserReportsComponent.prototype.changeUser = function (event) {
+        var _this = this;
+        if (event) {
+            this.users_id = event.id;
+        }
+        else {
+            this.users_id = '';
+        }
+        this.usersTimesheetTable = [];
+        this.usersTimesheet.forEach(function (element, index) {
+            if (_this.users_id == element.id) {
+                _this.usersTimesheetTable = _this.groupTimesheetByProject(element);
+            }
+        });
+        this.dataCall = { users_id: this.users_id, project: this.project, selectedRange: { start: this.datePipe.transform(this.selectedRange[0], 'yyyy-MM-dd'), end: this.datePipe.transform(this.selectedRange[1], 'yyyy-MM-dd') } };
+        this.rerender();
+    };
+    UserReportsComponent.prototype.groupTimesheetByProject = function (user) {
+        var grouped = {};
+        if (this.FilterKey == 'normal') {
+            user.timesheet.forEach(function (t) {
+                var key = t.project_name + "__" + t.task_name;
+                if (!grouped[key])
+                    grouped[key] = {};
+                if (!grouped[key][t.date])
+                    grouped[key][t.date] = [];
+                grouped[key][t.date].push(t);
+            });
+        }
+        else {
+            // OT
+            user.timesheet_ot.forEach(function (t) {
+                var key = t.project_name + "__" + t.task_name;
+                if (!grouped[key])
+                    grouped[key] = {};
+                if (!grouped[key][t.date])
+                    grouped[key][t.date] = [];
+                grouped[key][t.date].push(t);
+            });
+        }
+        return grouped;
+    };
+    UserReportsComponent.prototype.getTotalByTask = function (value) {
+        var total = 0;
+        for (var dateKey in value) {
+            var tasks = value[dateKey];
+            if (Array.isArray(tasks)) {
+                total += tasks.reduce(function (sum, t) {
+                    return sum + (parseFloat(t.decimal_time) || 0);
+                }, 0);
+            }
+        }
+        return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell\">" + total + "</div>");
+        // const totalByTask: any = {};
+        // for (const userKey in data) {
+        //   const userDays = data[userKey];
+        //   for (const dateKey in userDays) {
+        //     const tasks = userDays[dateKey];
+        //     tasks.forEach((t: any) => {
+        //       const taskKey = `${t.project_name}__${t.task_name}`;
+        //       if (!totalByTask[taskKey]) totalByTask[taskKey] = 0;
+        //       totalByTask[taskKey] += parseFloat(t.decimal_time) || 0;
+        //     });
+        //   }
+        // }
+        // return this.sanitizer.bypassSecurityTrustHtml(  `<div class="cell">${Number(totalByTask).toFixed(1)}</div>`);
+    };
+    UserReportsComponent.prototype.getGrandTotal = function (usersTimesheetTable) {
+        // console.log(usersTimesheetTable);
+        var total = 0;
+        for (var userKey in usersTimesheetTable) {
+            var userDays = usersTimesheetTable[userKey];
+            for (var dateKey in userDays) {
+                var tasks = userDays[dateKey];
+                total += tasks.reduce(function (sum, t) { return sum + (parseFloat(t.decimal_time) || 0); }, 0);
+            }
+        }
+        return this.sanitizer.bypassSecurityTrustHtml("<div class=\"cell\">" + Number(total).toFixed(1) + "</div>");
+    };
+    UserReportsComponent.ctorParameters = function () { return [
+        { type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"] },
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"] },
+        { type: _angular_common__WEBPACK_IMPORTED_MODULE_8__["DatePipe"] },
+        { type: _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_9__["AuthenticationService"] },
+        { type: _core_services_timesheet_service__WEBPACK_IMPORTED_MODULE_15__["TimesheetService"] },
+        { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["DomSanitizer"] },
+        { type: _core_services_project_service__WEBPACK_IMPORTED_MODULE_14__["ProjectService"] },
+        { type: ngx_export_as__WEBPACK_IMPORTED_MODULE_4__["ExportAsService"] }
+    ]; };
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(angular_datatables__WEBPACK_IMPORTED_MODULE_6__["DataTableDirective"], { static: true }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", angular_datatables__WEBPACK_IMPORTED_MODULE_6__["DataTableDirective"])
+    ], UserReportsComponent.prototype, "dtElement", void 0);
+    UserReportsComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+            selector: 'app-user-reports',
+            template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./user-reports.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/modules/pm/reports/components/user-reports/user-reports.component.html")).default,
+            styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./user-reports.component.scss */ "./src/app/modules/pm/reports/components/user-reports/user-reports.component.scss")).default]
+        }),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_ngx_translate_core__WEBPACK_IMPORTED_MODULE_5__["TranslateService"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_8__["DatePipe"],
+            _core_services_authentication_service__WEBPACK_IMPORTED_MODULE_9__["AuthenticationService"],
+            _core_services_timesheet_service__WEBPACK_IMPORTED_MODULE_15__["TimesheetService"],
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_2__["DomSanitizer"],
+            _core_services_project_service__WEBPACK_IMPORTED_MODULE_14__["ProjectService"],
+            ngx_export_as__WEBPACK_IMPORTED_MODULE_4__["ExportAsService"]])
+    ], UserReportsComponent);
+    return UserReportsComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/modules/pm/reports/pages/reports/reports.component.scss":
 /*!*************************************************************************!*\
   !*** ./src/app/modules/pm/reports/pages/reports/reports.component.scss ***!
@@ -1203,7 +3688,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ReportsComponent = /** @class */ (function () {
     function ReportsComponent() {
-        this.activeActiveReportTab = '3';
+        this.activeActiveReportTab = '1';
     }
     ReportsComponent.prototype.ngOnInit = function () { };
     ReportsComponent.prototype.setActiveReportTab = function ($event) {
@@ -1298,13 +3783,41 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ngx-translate/core */ "./node_modules/@ngx-translate/core/fesm5/ngx-translate-core.js");
 /* harmony import */ var _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ngx-translate/http-loader */ "./node_modules/@ngx-translate/http-loader/fesm5/ngx-translate-http-loader.js");
 /* harmony import */ var angular_datatables__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! angular-datatables */ "./node_modules/angular-datatables/index.js");
-/* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../../shared/shared.module */ "./src/app/shared/shared.module.ts");
-/* harmony import */ var _reports_routing_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./reports-routing.module */ "./src/app/modules/pm/reports/reports-routing.module.ts");
-/* harmony import */ var _components_project_reports_project_reports_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/project-reports/project-reports.component */ "./src/app/modules/pm/reports/components/project-reports/project-reports.component.ts");
-/* harmony import */ var _components_task_reports_task_reports_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/task-reports/task-reports.component */ "./src/app/modules/pm/reports/components/task-reports/task-reports.component.ts");
-/* harmony import */ var _components_defect_reports_defect_reports_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/defect-reports/defect-reports.component */ "./src/app/modules/pm/reports/components/defect-reports/defect-reports.component.ts");
-/* harmony import */ var _components_incident_reports_incident_reports_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/incident-reports/incident-reports.component */ "./src/app/modules/pm/reports/components/incident-reports/incident-reports.component.ts");
-/* harmony import */ var _pages_reports_reports_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./pages/reports/reports.component */ "./src/app/modules/pm/reports/pages/reports/reports.component.ts");
+/* harmony import */ var ng2_file_upload__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ng2-file-upload */ "./node_modules/ng2-file-upload/fesm5/ng2-file-upload.js");
+/* harmony import */ var ngx_filesaver__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-filesaver */ "./node_modules/ngx-filesaver/fesm5/ngx-filesaver.js");
+/* harmony import */ var ngx_permissions__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-permissions */ "./node_modules/ngx-permissions/ngx-permissions.umd.js");
+/* harmony import */ var ngx_permissions__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(ngx_permissions__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var ngx_editor__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ngx-editor */ "./node_modules/ngx-editor/fesm5/ngx-editor.js");
+/* harmony import */ var ngx_bootstrap_progressbar__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ngx-bootstrap/progressbar */ "./node_modules/ngx-bootstrap/progressbar/fesm5/ngx-bootstrap-progressbar.js");
+/* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../../../shared/shared.module */ "./src/app/shared/shared.module.ts");
+/* harmony import */ var _reports_routing_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./reports-routing.module */ "./src/app/modules/pm/reports/reports-routing.module.ts");
+/* harmony import */ var _admin_todo_todo_module__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ../../admin/todo/todo.module */ "./src/app/modules/admin/todo/todo.module.ts");
+/* harmony import */ var _components_project_reports_project_reports_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/project-reports/project-reports.component */ "./src/app/modules/pm/reports/components/project-reports/project-reports.component.ts");
+/* harmony import */ var _components_task_reports_task_reports_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/task-reports/task-reports.component */ "./src/app/modules/pm/reports/components/task-reports/task-reports.component.ts");
+/* harmony import */ var _components_defect_reports_defect_reports_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/defect-reports/defect-reports.component */ "./src/app/modules/pm/reports/components/defect-reports/defect-reports.component.ts");
+/* harmony import */ var _components_user_reports_user_reports_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/user-reports/user-reports.component */ "./src/app/modules/pm/reports/components/user-reports/user-reports.component.ts");
+/* harmony import */ var _components_allowance_reports_allowance_reports_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/allowance-reports/allowance-reports.component */ "./src/app/modules/pm/reports/components/allowance-reports/allowance-reports.component.ts");
+/* harmony import */ var _components_payment_reports_payment_reports_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./components/payment-reports/payment-reports.component */ "./src/app/modules/pm/reports/components/payment-reports/payment-reports.component.ts");
+/* harmony import */ var _components_salary_reports_salary_reports_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/salary-reports/salary-reports.component */ "./src/app/modules/pm/reports/components/salary-reports/salary-reports.component.ts");
+/* harmony import */ var _components_incident_reports_incident_reports_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./components/incident-reports/incident-reports.component */ "./src/app/modules/pm/reports/components/incident-reports/incident-reports.component.ts");
+/* harmony import */ var _pages_reports_reports_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./pages/reports/reports.component */ "./src/app/modules/pm/reports/pages/reports/reports.component.ts");
+/* harmony import */ var _file_browser_pages_file_browser_file_browser_component__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./../../file-browser/pages/file-browser/file-browser.component */ "./src/app/modules/file-browser/pages/file-browser/file-browser.component.ts");
+/* harmony import */ var _file_browser_components_upload_files_model_upload_files_model_component__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./../../file-browser/components/upload-files-model/upload-files-model.component */ "./src/app/modules/file-browser/components/upload-files-model/upload-files-model.component.ts");
+/* harmony import */ var _file_browser_components_create_folder_model_create_folder_model_component__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./../../file-browser/components/create-folder-model/create-folder-model.component */ "./src/app/modules/file-browser/components/create-folder-model/create-folder-model.component.ts");
+/* harmony import */ var _file_browser_components_edit_folder_modal_edit_folder_modal_component__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./../../file-browser/components/edit-folder-modal/edit-folder-modal.component */ "./src/app/modules/file-browser/components/edit-folder-modal/edit-folder-modal.component.ts");
+/* harmony import */ var _file_browser_components_edit_file_modal_edit_file_modal_component__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./../../file-browser/components/edit-file-modal/edit-file-modal.component */ "./src/app/modules/file-browser/components/edit-file-modal/edit-file-modal.component.ts");
+/* harmony import */ var _admin_user_user_module__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./../../admin/user/user.module */ "./src/app/modules/admin/user/user.module.ts");
+/* harmony import */ var ng2_charts__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ng2-charts */ "./node_modules/ng2-charts/fesm5/ng2-charts.js");
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1324,32 +3837,64 @@ __webpack_require__.r(__webpack_exports__);
 
 ;
 
+
+
+
+
+
+// import { UserDetailComponent } from './../../admin/user/pages/user-detail/user-detail.component';
+// import { UserDetailUpdateComponent } from './../../admin/user/components/user-detail-update/user-detail-update.component';
+// import { UserProjectsComponent } from './../../admin/user/components/user-projects/user-projects.component';
+// import { UserTasksComponent } from './../../admin/user/components/user-tasks/user-tasks.component';
+
+
 var ReportsModule = /** @class */ (function () {
     function ReportsModule() {
     }
     ReportsModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
-                _components_project_reports_project_reports_component__WEBPACK_IMPORTED_MODULE_13__["ProjectReportsComponent"],
-                _components_task_reports_task_reports_component__WEBPACK_IMPORTED_MODULE_14__["TaskReportsComponent"],
-                _components_defect_reports_defect_reports_component__WEBPACK_IMPORTED_MODULE_15__["DefectReportsComponent"],
-                _components_incident_reports_incident_reports_component__WEBPACK_IMPORTED_MODULE_16__["IncidentReportsComponent"],
-                _pages_reports_reports_component__WEBPACK_IMPORTED_MODULE_17__["ReportsComponent"]
+                _components_project_reports_project_reports_component__WEBPACK_IMPORTED_MODULE_19__["ProjectReportsComponent"],
+                _components_task_reports_task_reports_component__WEBPACK_IMPORTED_MODULE_20__["TaskReportsComponent"],
+                _components_defect_reports_defect_reports_component__WEBPACK_IMPORTED_MODULE_21__["DefectReportsComponent"],
+                _components_user_reports_user_reports_component__WEBPACK_IMPORTED_MODULE_22__["UserReportsComponent"],
+                _components_allowance_reports_allowance_reports_component__WEBPACK_IMPORTED_MODULE_23__["AllowanceReportsComponent"],
+                _components_payment_reports_payment_reports_component__WEBPACK_IMPORTED_MODULE_24__["PaymentReportsComponent"],
+                _components_salary_reports_salary_reports_component__WEBPACK_IMPORTED_MODULE_25__["SalaryReportsComponent"],
+                _components_incident_reports_incident_reports_component__WEBPACK_IMPORTED_MODULE_26__["IncidentReportsComponent"],
+                _pages_reports_reports_component__WEBPACK_IMPORTED_MODULE_27__["ReportsComponent"],
+                _file_browser_pages_file_browser_file_browser_component__WEBPACK_IMPORTED_MODULE_28__["FileBrowserComponent"],
+                _file_browser_components_upload_files_model_upload_files_model_component__WEBPACK_IMPORTED_MODULE_29__["UploadFilesModelComponent"],
+                _file_browser_components_create_folder_model_create_folder_model_component__WEBPACK_IMPORTED_MODULE_30__["CreateFolderModelComponent"],
+                _file_browser_components_edit_folder_modal_edit_folder_modal_component__WEBPACK_IMPORTED_MODULE_31__["EditFolderModalComponent"],
+                _file_browser_components_edit_folder_modal_edit_folder_modal_component__WEBPACK_IMPORTED_MODULE_31__["EditFolderModalComponent"],
+                // UserDetailComponent,
+                // UserDetailUpdateComponent,
+                // UserProjectsComponent,
+                // UserTasksComponent,
+                _file_browser_components_edit_file_modal_edit_file_modal_component__WEBPACK_IMPORTED_MODULE_32__["EditFileModalComponent"]
             ],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
-                _reports_routing_module__WEBPACK_IMPORTED_MODULE_12__["ReportsRoutingModule"],
+                _reports_routing_module__WEBPACK_IMPORTED_MODULE_17__["ReportsRoutingModule"],
                 _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormsModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_4__["ReactiveFormsModule"],
+                ng2_charts__WEBPACK_IMPORTED_MODULE_34__["ChartsModule"],
                 _ng_select_ng_select__WEBPACK_IMPORTED_MODULE_7__["NgSelectModule"],
                 angular_datatables__WEBPACK_IMPORTED_MODULE_10__["DataTablesModule"],
                 ngx_export_as__WEBPACK_IMPORTED_MODULE_6__["ExportAsModule"],
+                ng2_file_upload__WEBPACK_IMPORTED_MODULE_11__["FileUploadModule"],
+                ngx_filesaver__WEBPACK_IMPORTED_MODULE_12__["FileSaverModule"],
+                ngx_bootstrap_progressbar__WEBPACK_IMPORTED_MODULE_15__["ProgressbarModule"].forRoot(),
+                ngx_editor__WEBPACK_IMPORTED_MODULE_14__["NgxEditorModule"],
+                ngx_permissions__WEBPACK_IMPORTED_MODULE_13__["NgxPermissionsModule"],
                 ngx_bootstrap__WEBPACK_IMPORTED_MODULE_5__["TooltipModule"].forRoot(),
                 ngx_bootstrap__WEBPACK_IMPORTED_MODULE_5__["DatepickerModule"].forRoot(),
                 ngx_bootstrap__WEBPACK_IMPORTED_MODULE_5__["BsDatepickerModule"].forRoot(),
                 ngx_bootstrap__WEBPACK_IMPORTED_MODULE_5__["ModalModule"].forRoot(),
                 ngx_bootstrap__WEBPACK_IMPORTED_MODULE_5__["TabsModule"].forRoot(),
+                ngx_bootstrap__WEBPACK_IMPORTED_MODULE_5__["BsDropdownModule"],
                 _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateModule"].forChild({
                     loader: {
                         provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateLoader"],
@@ -1357,7 +3902,15 @@ var ReportsModule = /** @class */ (function () {
                         deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClient"]]
                     }
                 }),
-                _shared_shared_module__WEBPACK_IMPORTED_MODULE_11__["SharedModule"]
+                _shared_shared_module__WEBPACK_IMPORTED_MODULE_16__["SharedModule"],
+                _admin_todo_todo_module__WEBPACK_IMPORTED_MODULE_18__["TodoModule"],
+                _admin_user_user_module__WEBPACK_IMPORTED_MODULE_33__["UserModule"],
+            ],
+            entryComponents: [
+                _file_browser_components_upload_files_model_upload_files_model_component__WEBPACK_IMPORTED_MODULE_29__["UploadFilesModelComponent"],
+                _file_browser_components_edit_file_modal_edit_file_modal_component__WEBPACK_IMPORTED_MODULE_32__["EditFileModalComponent"],
+                _file_browser_components_create_folder_model_create_folder_model_component__WEBPACK_IMPORTED_MODULE_30__["CreateFolderModelComponent"],
+                _file_browser_components_edit_folder_modal_edit_folder_modal_component__WEBPACK_IMPORTED_MODULE_31__["EditFolderModalComponent"]
             ]
         })
     ], ReportsModule);

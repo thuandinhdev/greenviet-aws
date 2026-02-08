@@ -27,6 +27,7 @@ Route::group(
         Route::post('timesheets-report', 'TimesheetController@getTimesheetsReport');
         Route::post('getHolidaysLeavesForUser', 'TimesheetController@getHolidaysLeavesForUser');
         Route::get('get-user-select', 'TimesheetController@getUserSelect');
+        Route::post('get-user-month-select', 'TimesheetController@getUserMonthSelect');
         Route::resource('timesheets', 'TimesheetController');
         Route::resource('timer-logs', 'TimerLogsController');
     }

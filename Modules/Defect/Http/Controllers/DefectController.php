@@ -76,6 +76,11 @@ class DefectController extends Controller
         return $this->defectRepo->getAllDefects($request);
     }
 
+    public function exportProjects(Request $request)
+    {
+        return $this->defectRepo->exportProjects($request);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -318,6 +323,25 @@ class DefectController extends Controller
     public function getDefectForCalendar(Request $request)
     {
         return $this->defectRepo->getDefectForCalendar($request);
+    }
+    public function exportSalary(Request $request)
+    {
+        return $this->defectRepo->exportSalary($request);
+    }
+
+    public function exportTimesheet(Request $request)
+    {
+        return $this->defectRepo->exportTimesheet($request);
+    }
+
+    public function exportWorkAllowance(Request $request)
+    {
+        return $this->defectRepo->exportWorkAllowance($request);
+    }
+
+    public function exportPayment(Request $request)
+    {
+        return $this->defectRepo->exportPayment($request);
     }
 
     /**

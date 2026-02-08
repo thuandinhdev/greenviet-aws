@@ -70,7 +70,11 @@ class TimesheetController extends Controller
     {
         return $this->timesheetRepo->getUserSelect();
     }
-
+    public function getUserMonthSelect(Request $request)
+    {
+        return $this->timesheetRepo->getUserMonthSelect($request);
+    }
+    
     public function saveTimesheet(Request $request)
     {
         if ($this->timesheetRepo->saveTimesheet($request)) {
