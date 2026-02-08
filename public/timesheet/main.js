@@ -7813,8 +7813,6 @@ var LoginComponent = /** @class */ (function () {
         this.settingService = settingService;
         this.activatedRoute = activatedRoute;
         this.apiUrl = src_environments_environment__WEBPACK_IMPORTED_MODULE_9__["environment"].apiUrl;
-        this.email = 'thidang@greenviet.net';
-        this.pass = "Greenviet2024@";
         this.isFormSubmitted = false;
         this.activatedRoute.queryParams.subscribe(function (params) {
             var msg = params['msg'];
