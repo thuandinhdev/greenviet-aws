@@ -966,10 +966,10 @@ class DefectRepository
             $endOfMonth   = Carbon::createFromFormat('Y-m', $input['month'])->endOfMonth();
         }
 
-        $holidays = DB::table('gv_holidays')->whereBetween('date', [$startOfMonth->format('Y-m-d'), $endOfMonth->format('Y-m-d')])->get();
+        $holidays = DB::table('gv_holidays')->whereBetween('date', [$startOfMonth->format('Y-m-d'), $endOfMonth->format('Y-m-d')])->whereNull('deleted_at')->get();
         $leaves = DB::table('gv_leaves')->whereBetween('leave_date', [$startOfMonth->format('Y-m-d'), $endOfMonth->format('Y-m-d')])
             // ->where('leave_type_id', '<', 3)
-            ->whereIn('status', [1, 2])->select('*', DB::raw('DATE_FORMAT(leave_date, "%Y-%m-%d") as formatted_date'))->get();
+            ->whereIn('status', [1, 2, 6])->select('*', DB::raw('DATE_FORMAT(leave_date, "%Y-%m-%d") as formatted_date'))->get();
 
 
         if(isset($input['action']) && $input['action'] == 'user'){
