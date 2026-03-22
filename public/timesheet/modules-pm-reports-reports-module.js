@@ -48,7 +48,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<!-- Card header -->\n<div class=\"pl-0 pr-0 border-bottom\">\n    <div class=\"card-header pl-0 pr-0 border-bottom\">\n        <div class=\"btn-group mr-2 mb-2\">\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'chart' }\" (click)=\"filterByStatus('chart')\" btnRadio=\"chart\" tabindex=\"0\" role=\"button\">Chart</label>\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'all' }\" (click)=\"filterByStatus('all')\" btnRadio=\"success\" tabindex=\"0\" role=\"button\">ALL</label>\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'success' }\" (click)=\"filterByStatus('success')\" btnRadio=\"success\" tabindex=\"0\" role=\"button\">Success</label>\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'pending' }\" (click)=\"filterByStatus('pending')\" btnRadio=\"pending\" tabindex=\"0\" role=\"button\">Pending</label>\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'overdue' }\" (click)=\"filterByStatus('overdue')\" btnRadio=\"overdue\" tabindex=\"0\" role=\"button\">Overdue</label>\n        </div>\n        <div class=\"card-buttons d-flex\" *ngIf=\"isPageLoaded\">\n            <input\n                class=\"btn btn-create mb-0\"\n                bsDatepicker\n                [(ngModel)]=\"selectedRangeStart\"\n                (ngModelChange)=\"onRangeChangeMonth($event, 'start')\"\n                [bsConfig]=\"datepickerConfig\"\n                style=\"cursor: pointer; padding: 6px 10px; min-width: 100px;\"\n            />\n            <input\n                class=\"btn btn-create mb-0\"\n                bsDatepicker\n                [(ngModel)]=\"selectedRangeEnd\"\n                (ngModelChange)=\"onRangeChangeMonth($event, 'end')\"\n                [bsConfig]=\"datepickerConfig\"\n                style=\"cursor: pointer; padding: 6px 10px; min-width: 100px;\"\n            />\n            <ng-select [searchable]=\"true\"\n            [items]=\"projects\"\n            [selectOnTab]=\"true\"\n            [multiple]=\"true\"\n            bindLabel=\"project_name\"\n            style=\"max-width: 400px;\"\n            bindValue=\"id\"\n            labelForId=\"project_id\"\n            (change)=\"projectChange($event)\"\n            placeholder=\"{{'tasks.create.placeholders.placeholder6' | translate }}\">\n            <ng-template ng-option-tmp let-item=\"item\">{{item.project_name}}</ng-template>\n            </ng-select>\n            <ng-select [searchable]=\"true\"\n            [items]=\"leaders\"\n            [selectOnTab]=\"true\"\n            [multiple]=\"true\"\n            bindLabel=\"username\"\n            style=\"max-width: 400px;\"\n            bindValue=\"id\"\n            labelForId=\"id\"\n            (change)=\"leaderChange($event)\"\n            placeholder=\"Leader\">\n            <ng-template ng-option-tmp let-item=\"item\">{{item.username}}</ng-template>\n            </ng-select>\n            <a class=\"btn btn-create mb-0 ml-5\" style=\"background: #32bdd9 !important; color: #fff !important;\" (click)=\"loadDatatable()\">Submit</a>\n            <a class=\"btn btn-create mb-0\" style=\"background: #34a853 !important; color: #fff !important;\" (click)=\"exportFiles()\" *ngIf=\" FilterKey != 'chart'\">Export</a>\n            <!-- <div class=\"btn calender-day\" (click)=\"preMonth()\" *ngIf=\"FilterKey != 'overdue'\">\n                <i class=\"calendar-icon fa fa-chevron-left\"></i>\n            </div>\n            <div class=\"ml-2\" *ngIf=\"FilterKey != 'overdue'\">\n                <a class=\"btn btn-create mb-0\" id=\"calendar-filter\" (bsValueChange)=\"changeMonth($event)\" #dp1=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" ><i class=\"fa fa-calendar-plus-o\"></i></a>\n            </div>\n            <div class=\"mr-2\" *ngIf=\"FilterKey != 'overdue'\">\n               <input type=\"text\" class=\"form-control\" [(ngModel)]=\"month\" readonly />\n            </div>\n            <div class=\"btn calender-day\" (click)=\"nextMonth()\"  *ngIf=\"month <= currentMonth && FilterKey != 'overdue'\">\n                <i class=\"calendar-icon fa fa-chevron-right\"></i>\n            </div> -->\n        </div>\n    </div>\n</div>\n<!-- Card body -->\n<div class=\"card-body pt-3 overflow-x-scroll overflow-y-hidden\">\n    <div class=\"row\">\n        <div class=\"col-lg-12 mb-3\">\n            <div class=\"table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl\" *ngIf=\" FilterKey != 'chart'\">\n                <table datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\" class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" >\n                    <thead>\n                        <tr>\n                            <th>#</th>\n                            <th class=\"sortable\" (click)=\"sortBy('project_name')\">Project\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('price')\">Amount\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('description')\">Note\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('cash_flow')\">Cash Flow\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('estimated_date')\">Estimated date\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('invoice_date')\">Invoice date\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('payment_date')\">Payment date\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <!-- <th>Project</th>\n                            <th>Amount</th>\n                            <th>Note</th>\n                            <th>Cash Flow</th>\n                            <th>Estimated date</th>\n                            <th>Invoice date</th>\n                            <th>Payment date</th> -->\n                            <th>Status</th>\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"payments?.length > 0\">\n                        <tr *ngFor=\"let item of payments; index as i\">\n                            <td class=\"text-center\">{{ i + 1 }}</td>\n                            <td>{{item.project_name}}</td>\n                            <td>{{item.price| number:'1.0-0'}}</td>\n                            <td>{{item.description}}</td>\n                            <td>\n                                <div class=\"budges-status\">\n                                    <span class=\"open\" *ngIf=\"item.cash_flow == 1\">Company Revenue</span>\n                                    <span class=\"medium\" *ngIf=\"item.cash_flow == 2\">Collection on Behalf</span>\n                                </div>\n                            </td>\n                            <td>{{ item.estimated_date }}</td>\n                            <td>{{ item.invoice_date }}</td>\n                            <td>{{ item.payment_date }}</td>\n                            <td>\n                                <div class=\"budges-status\">\n                                    <span class=\"completed\"\n                                      *ngIf=\"item.payment_date\">\n                                      Paid\n                                    </span>\n                                    <span class=\"in_progress\"\n                                      *ngIf=\"!item.payment_date && item.invoice_date\">\n                                      Invoiced\n                                    </span>\n                                    <span class=\"unpaid\"\n                                      *ngIf=\"!item.payment_date && !item.invoice_date\">\n                                      Unpaid\n                                    </span>\n                                </div>\n                            </td>\n                        </tr>\n                        <tr style=\"background-color: rgba(160, 136, 0, 0.11);\">\n                            <td></td>\n                            <td>Total:</td>\n                            <td>{{totalAmount| number:'1.0-0'}}</td>\n                            <td></td>\n                            <td></td>\n                            <td></td>\n                            <td></td>\n                            <td></td>\n                            <td></td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n\n            <!-- <canvas baseChart\n            [datasets]=\"lineChartData\"\n            [labels]=\"lineChartLabels\"\n            [options]=\"lineChartOptions\"\n            [legend]=\"true\"\n            [chartType]=\"'line'\" *ngIf=\" FilterKey == 'chart'\">\n            </canvas> -->\n            <div class=\"row\" *ngIf=\"FilterKey === 'chart'\">\n                <div class=\"col-12\" >\n                <div class=\"card \">\n                    <div class=\"card-header\">\n                        <h4 class=\"card-title\">LINE Chart</h4>\n                    </div>\n                    <div class=\"card-body\">\n                        <div class=\"card-block\">\n                            <div >\n                                <canvas\n                                    baseChart\n                                    [datasets]=\"lineChartData\"\n                                    [labels]=\"lineChartLabels\"\n                                    [options]=\"lineChartOptions\"\n                                    [legend]=\"true\"\n                                    [chartType]=\"'line'\">\n                                </canvas>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"card \">\n                    <div class=\"card-header\">\n                        <h4 class=\"card-title\">BAR Chart</h4>\n                    </div>\n                    <div class=\"card-body\">\n                        <div class=\"card-block\">\n                            <div >\n                                <canvas\n                                    baseChart\n                                    [datasets]=\"barChartData\"\n                                    [labels]=\"barChartLabels\"\n                                    [options]=\"barChartOptions\"\n                                    [legend]=\"true\"\n                                    [chartType]=\"'bar'\">\n                                </canvas>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n                <!-- LINE CHART -->\n                <!-- <div class=\"col-12 chart-wrapper mb-5\">\n                  <h4 class=\"chart-title\">\n                    LINE Chart\n                  </h4>\n              \n                  <canvas\n                    baseChart\n                    [datasets]=\"lineChartData\"\n                    [labels]=\"lineChartLabels\"\n                    [options]=\"lineChartOptions\"\n                    [legend]=\"true\"\n                    [chartType]=\"'line'\">\n                  </canvas>\n                </div> -->\n              \n                <!-- COLUMN CHART -->\n                <!-- <div class=\"col-12 chart-wrapper mt-5\">\n                  <h4 class=\"chart-title\">\n                    BAR Chart\n                  </h4>\n              \n                  <canvas\n                    baseChart\n                    [datasets]=\"barChartData\"\n                    [labels]=\"barChartLabels\"\n                    [options]=\"barChartOptions\"\n                    [legend]=\"true\"\n                    [chartType]=\"'bar'\">\n                  </canvas>\n                </div> -->\n              \n              </div>\n              \n        </div>\n    </div>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<!-- Card header -->\n<div class=\"pl-0 pr-0 border-bottom\">\n    <div class=\"card-header pl-0 pr-0 border-bottom\">\n        <div class=\"btn-group mr-2 mb-2\">\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'chart' }\" (click)=\"filterByStatus('chart')\" btnRadio=\"chart\" tabindex=\"0\" role=\"button\">Chart</label>\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'all' }\" (click)=\"filterByStatus('all')\" btnRadio=\"success\" tabindex=\"0\" role=\"button\">ALL</label>\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'success' }\" (click)=\"filterByStatus('success')\" btnRadio=\"success\" tabindex=\"0\" role=\"button\">Success</label>\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'pending' }\" (click)=\"filterByStatus('pending')\" btnRadio=\"pending\" tabindex=\"0\" role=\"button\">Pending</label>\n            <label class=\"btn btn-secondary btn-toggle m-0\" [ngClass]=\"{ 'active': FilterKey === 'overdue' }\" (click)=\"filterByStatus('overdue')\" btnRadio=\"overdue\" tabindex=\"0\" role=\"button\">Overdue</label>\n        </div>\n        <div class=\"card-buttons d-flex\" *ngIf=\"isPageLoaded\">\n            <ng-select [searchable]=\"true\"\n                [items]=\"chart_types\"\n                [selectOnTab]=\"true\"\n                bindLabel=\"code\"\n                bindValue=\"id\"\n                style=\"margin-right:5px\"\n                labelForId=\"type\"\n                [(ngModel)]=\"chartType\"\n                (ngModelChange)=\"onChangeChartType($event)\"\n                placeholder=\"Chart Type\"\n                *ngIf=\"FilterKey == 'chart'\">\n            </ng-select>\n            <input\n                class=\"btn btn-create mb-0\"\n                bsDatepicker\n                [(ngModel)]=\"selectedRangeStart\"\n                (ngModelChange)=\"onRangeChangeMonth($event, 'start')\"\n                [bsConfig]=\"datepickerConfig\"\n                style=\"cursor: pointer; padding: 6px 10px; min-width: 100px;\"\n            />\n            <input\n                class=\"btn btn-create mb-0\"\n                bsDatepicker\n                [(ngModel)]=\"selectedRangeEnd\"\n                (ngModelChange)=\"onRangeChangeMonth($event, 'end')\"\n                [bsConfig]=\"datepickerConfig\"\n                style=\"cursor: pointer; padding: 6px 10px; min-width: 100px;\"\n            />\n            <ng-select [searchable]=\"true\"\n            [items]=\"projects\"\n            [selectOnTab]=\"true\"\n            [multiple]=\"true\"\n            bindLabel=\"project_name\"\n            style=\"max-width: 400px;\"\n            bindValue=\"id\"\n            labelForId=\"project_id\"\n            (change)=\"projectChange($event)\"\n            placeholder=\"{{'tasks.create.placeholders.placeholder6' | translate }}\">\n            <ng-template ng-option-tmp let-item=\"item\">{{item.project_name}}</ng-template>\n            </ng-select>\n            <ng-select [searchable]=\"true\"\n            [items]=\"leaders\"\n            [selectOnTab]=\"true\"\n            [multiple]=\"true\"\n            bindLabel=\"username\"\n            style=\"max-width: 400px;\"\n            bindValue=\"id\"\n            labelForId=\"id\"\n            (change)=\"leaderChange($event)\"\n            placeholder=\"Leader\">\n            <ng-template ng-option-tmp let-item=\"item\">{{item.username}}</ng-template>\n            </ng-select>\n            <a class=\"btn btn-create mb-0 ml-5\" style=\"background: #32bdd9 !important; color: #fff !important;\" (click)=\"loadDatatable()\">Submit</a>\n            <a class=\"btn btn-create mb-0\" style=\"background: #34a853 !important; color: #fff !important;\" (click)=\"exportFiles()\" *ngIf=\" FilterKey != 'chart'\">Export</a>\n            <!-- <div class=\"btn calender-day\" (click)=\"preMonth()\" *ngIf=\"FilterKey != 'overdue'\">\n                <i class=\"calendar-icon fa fa-chevron-left\"></i>\n            </div>\n            <div class=\"ml-2\" *ngIf=\"FilterKey != 'overdue'\">\n                <a class=\"btn btn-create mb-0\" id=\"calendar-filter\" (bsValueChange)=\"changeMonth($event)\" #dp1=\"bsDatepicker\" bsDatepicker [bsConfig]=\"datepickerConfig\" ><i class=\"fa fa-calendar-plus-o\"></i></a>\n            </div>\n            <div class=\"mr-2\" *ngIf=\"FilterKey != 'overdue'\">\n               <input type=\"text\" class=\"form-control\" [(ngModel)]=\"month\" readonly />\n            </div>\n            <div class=\"btn calender-day\" (click)=\"nextMonth()\"  *ngIf=\"month <= currentMonth && FilterKey != 'overdue'\">\n                <i class=\"calendar-icon fa fa-chevron-right\"></i>\n            </div> -->\n        </div>\n    </div>\n</div>\n<!-- Card body -->\n<div class=\"card-body pt-3 overflow-x-scroll overflow-y-hidden\">\n    <div class=\"row\">\n        <div class=\"col-lg-12 mb-3\">\n            <div class=\"table-responsive-xs table-responsive-sm table-responsive-md table-responsive-lg table-responsive-xl\" *ngIf=\" FilterKey != 'chart'\">\n                <table datatable [dtOptions]=\"dtOptions\" [dtTrigger]=\"dtTrigger\" class=\"table table-bordered table-hover b4-datatable\" width=\"100%\" >\n                    <thead>\n                        <tr>\n                            <th>#</th>\n                            <th class=\"sortable\" (click)=\"sortBy('project_name')\">Project\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('price')\">Amount\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('description')\">Note\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('cash_flow')\">Cash Flow\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('estimated_date')\">Estimated date\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('invoice_date')\">Invoice date\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <th class=\"sortable\" (click)=\"sortBy('payment_date')\">Payment date\n                                <span class=\"sort-icons\" >\n                                    <i class=\"sort-up\"></i>\n                                    <i class=\"sort-down\"></i>\n                                </span>\n                            </th>\n                            <!-- <th>Project</th>\n                            <th>Amount</th>\n                            <th>Note</th>\n                            <th>Cash Flow</th>\n                            <th>Estimated date</th>\n                            <th>Invoice date</th>\n                            <th>Payment date</th> -->\n                            <th>Status</th>\n                        </tr>\n                    </thead>\n                    <tbody *ngIf=\"payments?.length > 0\">\n                        <tr *ngFor=\"let item of payments; index as i\">\n                            <td class=\"text-center\">{{ i + 1 }}</td>\n                            <td>{{item.project_name}}</td>\n                            <td>{{item.price| number:'1.0-0'}}</td>\n                            <td>{{item.description}}</td>\n                            <td>\n                                <div class=\"budges-status\">\n                                    <span class=\"open\" *ngIf=\"item.cash_flow == 1\">Company Revenue</span>\n                                    <span class=\"medium\" *ngIf=\"item.cash_flow == 2\">Collection on Behalf</span>\n                                </div>\n                            </td>\n                            <td>{{ item.estimated_date }}</td>\n                            <td>{{ item.invoice_date }}</td>\n                            <td>{{ item.payment_date }}</td>\n                            <td>\n                                <div class=\"budges-status\">\n                                    <span class=\"completed\"\n                                      *ngIf=\"item.payment_date\">\n                                      Paid\n                                    </span>\n                                    <span class=\"in_progress\"\n                                      *ngIf=\"!item.payment_date && item.invoice_date\">\n                                      Invoiced\n                                    </span>\n                                    <span class=\"unpaid\"\n                                      *ngIf=\"!item.payment_date && !item.invoice_date\">\n                                      Unpaid\n                                    </span>\n                                </div>\n                            </td>\n                        </tr>\n                        <tr style=\"background-color: rgba(160, 136, 0, 0.11);\">\n                            <td></td>\n                            <td>Total:</td>\n                            <td>{{totalAmount| number:'1.0-0'}}</td>\n                            <td></td>\n                            <td></td>\n                            <td></td>\n                            <td></td>\n                            <td></td>\n                            <td></td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n\n            <!-- <canvas baseChart\n            [datasets]=\"lineChartData\"\n            [labels]=\"lineChartLabels\"\n            [options]=\"lineChartOptions\"\n            [legend]=\"true\"\n            [chartType]=\"'line'\" *ngIf=\" FilterKey == 'chart'\">\n            </canvas> -->\n            <div class=\"row\" *ngIf=\"FilterKey === 'chart'\">\n                <div class=\"col-12\" >\n                <div class=\"card \">\n                    <div class=\"card-header\">\n                        <h4 class=\"card-title\">LINE Chart community</h4>\n                    </div>\n                    <div class=\"card-body\">\n                        <div class=\"card-block\">\n                            <div >\n                                <canvas\n                                    baseChart\n                                    [datasets]=\"lineChartData\"\n                                    [labels]=\"lineChartLabels\"\n                                    [options]=\"lineChartOptions\"\n                                    [legend]=\"true\"\n                                    [chartType]=\"'line'\">\n                                </canvas>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"card \">\n                    <div class=\"card-header\">\n                        <h4 class=\"card-title\">LINE Chart</h4>\n                    </div>\n                    <div class=\"card-body\">\n                        <div class=\"card-block\">\n                            <div >\n                                <canvas\n                                    baseChart\n                                    [datasets]=\"lineChartData2\"\n                                    [labels]=\"lineChartLabels\"\n                                    [options]=\"lineChartOptions\"\n                                    [legend]=\"true\"\n                                    [chartType]=\"'line'\">\n                                </canvas>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"card \">\n                    <div class=\"card-header\">\n                        <h4 class=\"card-title\">BAR Chart</h4>\n                    </div>\n                    <div class=\"card-body\">\n                        <div class=\"card-block\">\n                            <div >\n                                <canvas\n                                    baseChart\n                                    [datasets]=\"barChartData\"\n                                    [labels]=\"barChartLabels\"\n                                    [options]=\"barChartOptions\"\n                                    [legend]=\"true\"\n                                    [chartType]=\"'bar'\">\n                                </canvas>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n                <!-- LINE CHART -->\n                <!-- <div class=\"col-12 chart-wrapper mb-5\">\n                  <h4 class=\"chart-title\">\n                    LINE Chart\n                  </h4>\n              \n                  <canvas\n                    baseChart\n                    [datasets]=\"lineChartData\"\n                    [labels]=\"lineChartLabels\"\n                    [options]=\"lineChartOptions\"\n                    [legend]=\"true\"\n                    [chartType]=\"'line'\">\n                  </canvas>\n                </div> -->\n              \n                <!-- COLUMN CHART -->\n                <!-- <div class=\"col-12 chart-wrapper mt-5\">\n                  <h4 class=\"chart-title\">\n                    BAR Chart\n                  </h4>\n              \n                  <canvas\n                    baseChart\n                    [datasets]=\"barChartData\"\n                    [labels]=\"barChartLabels\"\n                    [options]=\"barChartOptions\"\n                    [legend]=\"true\"\n                    [chartType]=\"'bar'\">\n                  </canvas>\n                </div> -->\n              \n              </div>\n              \n        </div>\n    </div>\n</div>\n");
 
 /***/ }),
 
@@ -1414,8 +1414,10 @@ var PaymentReportsComponent = /** @class */ (function () {
             elementIdOrContent: 'export_table',
         };
         this.FilterKey = 'chart';
+        this.chart_types = [{ id: 1, code: "month" }, { id: 2, code: "week" }];
         this.selectedRange = [];
         this.selectedRangeStart = this.datePipe.transform(new Date(), 'yyyy-MM');
+        this.chartType = 1;
         this.selectedRangeEnd = this.datePipe.transform(new Date(), 'yyyy-MM');
         this.datepickerConfig = {
             // dateInputFormat: 'YYYY-MM',
@@ -1430,9 +1432,9 @@ var PaymentReportsComponent = /** @class */ (function () {
         };
         this.lineChartLabels = [];
         this.lineChartData = [
-            { data: [], label: 'Estimated', borderColor: '#007bff', backgroundColor: 'transparent' },
-            { data: [], label: 'Invoiced', borderColor: '#ff5722', backgroundColor: 'transparent' },
-            { data: [], label: 'Paid', borderColor: '#ff5722', backgroundColor: 'transparent' }
+            { data: [], label: 'Estimated', borderColor: '#007bff', backgroundColor: 'transparent', lineTension: 0 },
+            { data: [], label: 'Invoiced', borderColor: '#ff5722', backgroundColor: 'transparent', lineTension: 0 },
+            { data: [], label: 'Paid', borderColor: '#ff5722', backgroundColor: 'transparent', lineTension: 0 }
         ];
         this.lineChartOptions = {
             responsive: true,
@@ -1519,13 +1521,22 @@ var PaymentReportsComponent = /** @class */ (function () {
     };
     PaymentReportsComponent.prototype.buildThreeLineChartCumulative = function (items) {
         var _this = this;
-        var months = this.generateMonthRange(this.selectedRangeStart, // '2025-01'
-        this.selectedRangeEnd // '2025-12'
-        );
+        // const months = this.generateMonthRange(
+        //     this.selectedRangeStart, // '2025-01'
+        //     this.selectedRangeEnd    // '2025-12'
+        // );
+        var getKey = function (date) {
+            return _this.chartType == 1
+                ? _this.normalizeMonth(date)
+                : _this.getWeekKey(date);
+        };
+        var labels = this.chartType == 1
+            ? this.generateMonthRange(this.selectedRangeStart, this.selectedRangeEnd)
+            : this.generateWeekRange(this.selectedRangeStart, this.selectedRangeEnd);
         var estimateMap = new Map();
         var invoiceMap = new Map();
         var paymentMap = new Map();
-        months.forEach(function (m) {
+        labels.forEach(function (m) {
             estimateMap.set(m, 0);
             invoiceMap.set(m, 0);
             paymentMap.set(m, 0);
@@ -1533,49 +1544,54 @@ var PaymentReportsComponent = /** @class */ (function () {
         items.forEach(function (i) {
             var price = Number(i.price) || 0;
             // 1️⃣ Estimated (full)
-            if (i.estimated_date) {
-                var m = _this.normalizeMonth(i.estimated_date);
+            if (i.estimated_date && !i.invoice_date && !i.payment_date) {
+                // const m = this.normalizeMonth(i.estimated_date);
+                var m = getKey(i.estimated_date);
                 if (estimateMap.has(m)) {
                     estimateMap.set(m, estimateMap.get(m) + price);
                 }
             }
             // 2️⃣ Invoiced but unpaid
-            if (i.invoice_date) {
-                var m = _this.normalizeMonth(i.invoice_date);
+            if (i.invoice_date && !i.payment_date) {
+                // const m = this.normalizeMonth(i.invoice_date);
+                var m = getKey(i.invoice_date);
                 if (invoiceMap.has(m)) {
                     invoiceMap.set(m, invoiceMap.get(m) + price);
                 }
             }
             // 3️⃣ Paid (actual)
             if (i.payment_date) {
-                var m = _this.normalizeMonth(i.payment_date);
+                // const m = this.normalizeMonth(i.payment_date);
+                var m = getKey(i.payment_date);
                 if (paymentMap.has(m)) {
                     paymentMap.set(m, paymentMap.get(m) + price);
                 }
             }
         });
         // raw theo tháng
-        var estimateRaw = months.map(function (m) { return estimateMap.get(m) || 0; });
-        var invoiceRaw = months.map(function (m) { return invoiceMap.get(m) || 0; });
-        var paymentRaw = months.map(function (m) { return paymentMap.get(m) || 0; });
+        var estimateRaw = labels.map(function (m) { return estimateMap.get(m) || 0; });
+        var invoiceRaw = labels.map(function (m) { return invoiceMap.get(m) || 0; });
+        var paymentRaw = labels.map(function (m) { return paymentMap.get(m) || 0; });
         // 🔥 cộng dồn
         var estimateData = this.cumulative(estimateRaw);
         var invoiceData = this.cumulative(invoiceRaw);
         var paymentData = this.cumulative(paymentRaw);
-        this.lineChartLabels = months;
+        this.lineChartLabels = labels;
         this.lineChartData = [
             {
                 label: 'Estimated (Planned)',
                 data: estimateData,
                 borderColor: 'rgba(255, 141, 96, 0.8)',
                 backgroundColor: 'transparent',
-                fill: false
+                lineTension: 0,
+                fill: false,
             },
             {
                 label: 'Invoiced (Unpaid)',
                 data: invoiceData,
                 borderColor: 'rgba(0, 157, 160, 0.8)',
                 backgroundColor: 'transparent',
+                lineTension: 0,
                 fill: false
             },
             {
@@ -1583,6 +1599,7 @@ var PaymentReportsComponent = /** @class */ (function () {
                 data: paymentData,
                 fill: false,
                 borderColor: 'rgba(255, 200, 87, 0.8)',
+                lineTension: 0,
                 backgroundColor: 'transparent'
             }
         ];
@@ -1619,60 +1636,95 @@ var PaymentReportsComponent = /** @class */ (function () {
             return 0;
         });
     };
+    PaymentReportsComponent.prototype.getWeekKey = function (date) {
+        var d = new Date(date);
+        var start = Object(date_fns__WEBPACK_IMPORTED_MODULE_10__["startOfWeek"])(d, { weekStartsOn: 1 });
+        var year = start.getFullYear();
+        var firstDay = new Date(year, 0, 1);
+        var diff = (start.getTime() - firstDay.getTime()) / 86400000;
+        var week = Math.ceil((diff + firstDay.getDay() + 1) / 7);
+        return year + "-W" + week.toString().padStart(2, '0');
+    };
+    PaymentReportsComponent.prototype.generateWeekRange = function (start, end) {
+        var result = [];
+        var current = new Date(start);
+        var endDate = new Date(end);
+        while (current <= endDate) {
+            var key = this.getWeekKey(current.toISOString());
+            if (!result.includes(key)) {
+                result.push(key);
+            }
+            current.setDate(current.getDate() + 7);
+        }
+        return result;
+    };
     PaymentReportsComponent.prototype.buildThreeColumnChart = function (items) {
         var _this = this;
-        var months = this.generateMonthRange(this.selectedRangeStart, // '2025-01'
-        this.selectedRangeEnd // '2025-12'
-        );
+        // const months = this.generateMonthRange(
+        //     this.selectedRangeStart, // '2025-01'
+        //     this.selectedRangeEnd    // '2025-12'
+        // );
+        var labels = this.chartType == 1
+            ? this.generateMonthRange(this.selectedRangeStart, this.selectedRangeEnd)
+            : this.generateWeekRange(this.selectedRangeStart, this.selectedRangeEnd);
         var estimateMap = new Map();
         var invoiceMap = new Map();
         var paymentMap = new Map();
-        months.forEach(function (m) {
+        labels.forEach(function (m) {
             estimateMap.set(m, 0);
             invoiceMap.set(m, 0);
             paymentMap.set(m, 0);
         });
+        var getKey = function (date) {
+            return _this.chartType == 1
+                ? _this.normalizeMonth(date)
+                : _this.getWeekKey(date);
+        };
         items.forEach(function (i) {
             var price = Number(i.price) || 0;
             // 1️⃣ Estimated - full
-            if (i.estimated_date) {
-                var m = _this.normalizeMonth(i.estimated_date);
+            if (i.estimated_date && !i.invoice_date && !i.payment_date) {
+                // const m = this.normalizeMonth(i.estimated_date);
+                var m = getKey(i.estimated_date);
                 if (estimateMap.has(m)) {
                     estimateMap.set(m, estimateMap.get(m) + price);
                 }
             }
             // 2️⃣ Invoice chưa payment
-            if (i.invoice_date) {
-                var m = _this.normalizeMonth(i.invoice_date);
+            if (i.invoice_date && !i.payment_date) {
+                // const m = this.normalizeMonth(i.invoice_date);
+                var m = getKey(i.invoice_date);
                 if (invoiceMap.has(m)) {
                     invoiceMap.set(m, invoiceMap.get(m) + price);
                 }
             }
             // 3️⃣ Payment
             if (i.payment_date) {
-                var m = _this.normalizeMonth(i.payment_date);
+                // const m = this.normalizeMonth(i.payment_date);
+                var m = getKey(i.payment_date);
                 if (paymentMap.has(m)) {
                     paymentMap.set(m, paymentMap.get(m) + price);
                 }
             }
         });
-        this.barChartLabels = months;
+        // this.barChartLabels = months;
+        this.barChartLabels = labels;
         this.barChartData = [
             {
                 label: 'Estimated (Planned)',
-                data: months.map(function (m) { return estimateMap.get(m) || 0; }),
+                data: labels.map(function (m) { return estimateMap.get(m) || 0; }),
                 backgroundColor: 'rgba(255, 141, 96, 0.8)',
                 borderColor: 'rgba(255, 141, 96, 1)'
             },
             {
                 label: 'Invoiced (Unpaid)',
-                data: months.map(function (m) { return invoiceMap.get(m) || 0; }),
+                data: labels.map(function (m) { return invoiceMap.get(m) || 0; }),
                 backgroundColor: 'rgba(0, 157, 160, 0.8)',
                 borderColor: 'rgba(0, 157, 160, 1)'
             },
             {
                 label: 'Paid (Actual)',
-                data: months.map(function (m) { return paymentMap.get(m) || 0; }),
+                data: labels.map(function (m) { return paymentMap.get(m) || 0; }),
                 backgroundColor: 'rgba(255, 200, 87, 0.8)',
                 borderColor: 'rgba(255, 200, 87, 1)'
             }
@@ -1743,6 +1795,9 @@ var PaymentReportsComponent = /** @class */ (function () {
         else {
             this.selectedRangeEnd = this.datePipe.transform(selectedDate, 'yyyy-MM');
         }
+    };
+    PaymentReportsComponent.prototype.onChangeChartType = function (dataChange) {
+        this.chartType = dataChange;
     };
     PaymentReportsComponent.prototype.onRangeChange = function (range) {
         console.log(range);
