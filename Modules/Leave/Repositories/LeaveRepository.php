@@ -331,13 +331,13 @@ class LeaveRepository
         $columns = array(
             0 => $leaves_table . '.id',
             1 => $user_table . '.firstname',
-            2 => $user_table . '.username',
-            3 => $leaves_table . '.reason',
-            4 => $leaves_table . '.created_at',
-            5 => $leaves_table . '.leave_date',
-            6 => $leave_types_table . '.leave_type',
-            7 => $leaves_table . '.duration',
-            8 => $leaves_table . '.Status',
+            // 2 => $user_table . '.username',
+            2 => $leaves_table . '.reason',
+            3 => $leaves_table . '.created_at',
+            4 => $leaves_table . '.leave_date',
+            5 => $leave_types_table . '.leave_type',
+            6 => $leaves_table . '.duration',
+            7 => $leaves_table . '.Status',
         );
 
         $input = $request->input();

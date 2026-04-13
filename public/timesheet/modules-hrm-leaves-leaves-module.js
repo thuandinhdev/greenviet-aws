@@ -1614,6 +1614,10 @@ var LeavesListComponent = /** @class */ (function () {
                     // 	'target': [2]
                     // }, {
                     'sortable': true,
+                    'target': [2]
+                }, {
+                    'sortable': true,
+                    'width': "5%",
                     'target': [3]
                 }, {
                     'sortable': true,
@@ -1624,7 +1628,7 @@ var LeavesListComponent = /** @class */ (function () {
                     'width': "5%",
                     'target': [5]
                 }, {
-                    'sortable': true,
+                    'sortable': false,
                     'width': "5%",
                     'target': [6]
                 }, {
@@ -1643,19 +1647,15 @@ var LeavesListComponent = /** @class */ (function () {
                     'sortable': false,
                     'width': "5%",
                     'target': [10]
-                }, {
-                    'sortable': false,
-                    'width': "5%",
-                    'target': [11]
                 },
                 {
                     'sortable': false,
                     'width': "5%",
-                    'target': [12]
+                    'target': [11]
                 }, {
                     'sortable': false,
                     'width': "5%",
-                    'target': [13]
+                    'target': [12]
                 }
             ],
             buttons: [],
