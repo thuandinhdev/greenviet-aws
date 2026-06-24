@@ -1707,6 +1707,7 @@ var LeavesListComponent = /** @class */ (function () {
                     draw: dataTablesParameters.draw,
                     length: dataTablesParameters.length,
                     order: dataTablesParameters.order,
+                    start: dataTablesParameters.start,
                     search: dataTablesParameters.search,
                     statusId: _this.statusfilterId,
                     user_id: _this.userId
