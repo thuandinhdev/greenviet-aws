@@ -1506,7 +1506,7 @@ var MyTimesheetComponent = /** @class */ (function () {
             this.toastr.error('Timesheet not entered!');
             return;
         }
-        if (checkSubmit && timesheetsSave.length > 0) {
+        if (checkSubmit) {
             if (action == 'draft') {
                 this.timesheetService.saveTimeSheet({ data: timesheetsSave, ot: timesheetsOTSave, rangeDate: { start: this.startOfWeek, end: this.endOfWeek }, action: action }).subscribe(function (data) {
                     _this.rerender();
