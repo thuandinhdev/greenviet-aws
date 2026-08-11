@@ -363,7 +363,7 @@ class TimesheetRepository
             })->values();
         $userAction = [];
         $userAction['status'] = 0;
-        if(count($groupedTimesheets) > 0){
+        if(count($groupedTimesheets) > 0 || count($groupedTimesheets_ot) > 0){
             $actionQuery = DB::table('gv_timesheets')->where('start_time', '>=', date('y-m-d H:i:s', strtotime($input['start']. ' 00:00:00')))
             ->where('start_time', '<', date('y-m-d H:i:s', strtotime($input['end']. ' 23:59:59')))->where('created_user_id', $input['user_id'])
             ->where('module_id', 2)
@@ -395,7 +395,7 @@ class TimesheetRepository
         }
 
         // if(count($groupedTimesheets) == 0 && $isMyTimesheet){
-        if(count($groupedTimesheets) == 0){
+        if(count($groupedTimesheets) == 0 && count($groupedTimesheets_ot) == 0){
             return $this->getTimesheetsDraft($input);
         } else {
             return  ['data'=>$groupedTimesheets, 'ot'=>$groupedTimesheets_ot, 'other'=>$userAction, 'action'=>'official'];
@@ -1283,13 +1283,13 @@ class TimesheetRepository
                     }
                     // --
                     // Add activities.
-                    createUserActivity(
-                        Timesheet::MODULE_NAME,
-                        $timesheet->id,
-                        $request->method(),
-                        $timesheet->note,
-                        $request->ip()
-                    );
+                    // createUserActivity(
+                    //     Timesheet::MODULE_NAME,
+                    //     $timesheet->id,
+                    //     $request->method(),
+                    //     $timesheet->note,
+                    //     $request->ip()
+                    // );
                 }
             } else {
                 $timesheet = Timesheet::findOrFail($value['id']);
@@ -1315,13 +1315,13 @@ class TimesheetRepository
                     }
                     // --
                     // Add activities
-                    createUserActivity(
-                        Timesheet::MODULE_NAME,
-                        $timesheet->id,
-                        $request->method(),
-                        $timesheet->note,
-                        $request->ip()
-                    );
+                    // createUserActivity(
+                    //     Timesheet::MODULE_NAME,
+                    //     $timesheet->id,
+                    //     $request->method(),
+                    //     $timesheet->note,
+                    //     $request->ip()
+                    // );
                 }
             }
         }
